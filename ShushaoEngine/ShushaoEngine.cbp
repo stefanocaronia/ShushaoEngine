@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="ShushaoEngine" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Option virtualFolders="components\;gameobjects\;objects\;GL\;shaders\;" />
+		<Build>
+			<Target title="Release">
+				<Option output="lib/ShushaoEngine" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="obj/" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-Wall" />
+					<Add option="-std=c++11" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add directory="D:/lib/mingw-dev-libs/SDL2/include/SDL2" />
+			<Add directory="D:/lib/mingw-dev-libs/SDL2_image/include/SDL2" />
+			<Add directory="D:/lib/mingw-dev-libs/glm" />
+			<Add directory="D:/lib/mingw-dev-libs/glew/include" />
+		</Compiler>
+		<Linker>
+			<Add option="-static-libgcc" />
+			<Add library="glew32" />
+			<Add library="mingw32" />
+			<Add library="opengl32" />
+			<Add library="SDL2main" />
+			<Add library="SDL2" />
+			<Add library="SDL2_image" />
+			<Add directory="D:/lib/mingw-dev-libs/SDL2/lib" />
+			<Add directory="D:/lib/mingw-dev-libs/SDL2_image/lib" />
+			<Add directory="D:/lib/mingw-dev-libs/glew/lib" />
+		</Linker>
+		<Unit filename="camera.cpp">
+			<Option virtualFolder="components/" />
+		</Unit>
+		<Unit filename="camera.h">
+			<Option virtualFolder="components/" />
+		</Unit>
+		<Unit filename="color.cpp">
+			<Option virtualFolder="objects/" />
+		</Unit>
+		<Unit filename="color.h">
+			<Option virtualFolder="objects/" />
+		</Unit>
+		<Unit filename="component.cpp" />
+		<Unit filename="component.h" />
+		<Unit filename="config.cpp" />
+		<Unit filename="config.h" />
+		<Unit filename="cycle.cpp" />
+		<Unit filename="cycle.h" />
+		<Unit filename="gamedata.cpp" />
+		<Unit filename="gamedata.h" />
+		<Unit filename="gameobject.cpp">
+			<Option virtualFolder="objects/" />
+		</Unit>
+		<Unit filename="gameobject.h">
+			<Option virtualFolder="objects/" />
+		</Unit>
+		<Unit filename="glgame.cpp">
+			<Option virtualFolder="GL/" />
+		</Unit>
+		<Unit filename="glgame.h">
+			<Option virtualFolder="GL/" />
+		</Unit>
+		<Unit filename="glmanager.cpp">
+			<Option virtualFolder="GL/" />
+		</Unit>
+		<Unit filename="glmanager.h">
+			<Option virtualFolder="GL/" />
+		</Unit>
+		<Unit filename="libs.h" />
+		<Unit filename="macros.h" />
+		<Unit filename="maincamera.cpp">
+			<Option virtualFolder="gameobjects/" />
+		</Unit>
+		<Unit filename="maincamera.h">
+			<Option virtualFolder="gameobjects/" />
+		</Unit>
+		<Unit filename="material.cpp">
+			<Option virtualFolder="objects/" />
+		</Unit>
+		<Unit filename="material.h">
+			<Option virtualFolder="objects/" />
+		</Unit>
+		<Unit filename="model.cpp">
+			<Option virtualFolder="GL/" />
+		</Unit>
+		<Unit filename="model.h">
+			<Option virtualFolder="GL/" />
+		</Unit>
+		<Unit filename="object.cpp" />
+		<Unit filename="object.h" />
+		<Unit filename="rect.cpp">
+			<Option virtualFolder="objects/" />
+		</Unit>
+		<Unit filename="rect.h">
+			<Option virtualFolder="objects/" />
+		</Unit>
+		<Unit filename="renderer.cpp">
+			<Option virtualFolder="components/" />
+		</Unit>
+		<Unit filename="renderer.h">
+			<Option virtualFolder="components/" />
+		</Unit>
+		<Unit filename="scene.cpp" />
+		<Unit filename="scene.h" />
+		<Unit filename="scenemanager.cpp" />
+		<Unit filename="scenemanager.h" />
+		<Unit filename="setime.cpp" />
+		<Unit filename="setime.h" />
+		<Unit filename="shader.cpp">
+			<Option virtualFolder="objects/" />
+		</Unit>
+		<Unit filename="shader.h">
+			<Option virtualFolder="objects/" />
+		</Unit>
+		<Unit filename="shaderprogram.cpp">
+			<Option virtualFolder="GL/" />
+		</Unit>
+		<Unit filename="shaderprogram.h">
+			<Option virtualFolder="GL/" />
+		</Unit>
+		<Unit filename="sprite.cpp">
+			<Option virtualFolder="objects/" />
+		</Unit>
+		<Unit filename="sprite.h">
+			<Option virtualFolder="objects/" />
+		</Unit>
+		<Unit filename="spriterenderer.cpp">
+			<Option virtualFolder="components/" />
+		</Unit>
+		<Unit filename="spriterenderer.h">
+			<Option virtualFolder="components/" />
+		</Unit>
+		<Unit filename="standard.frag">
+			<Option virtualFolder="shaders/" />
+		</Unit>
+		<Unit filename="standard.vert">
+			<Option virtualFolder="shaders/" />
+		</Unit>
+		<Unit filename="texture.cpp">
+			<Option virtualFolder="objects/" />
+		</Unit>
+		<Unit filename="texture.h">
+			<Option virtualFolder="objects/" />
+		</Unit>
+		<Unit filename="transform.cpp">
+			<Option virtualFolder="components/" />
+		</Unit>
+		<Unit filename="transform.h">
+			<Option virtualFolder="components/" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

@@ -30,6 +30,19 @@ namespace ShushaoEngine {
 		return obj;
 	}
 
+	void Scene::ScanActiveComponentsInScene() {
+		if (root == nullptr) return;
+
+		ActiveComponents.clear();
+        ActiveComponents = root->GetChildrenActiveComponents();
+	}
+
+	void Scene::run(BaseCycle cycle) {
+		for (Component* c : ActiveComponents) {
+			c->run(cycle);
+        }
+	}
+
 	vector<GameObject*> Scene::GetRootGameObjects() {
 
 		// TODO: I GAMEOBJECT CON PARENT ROOT

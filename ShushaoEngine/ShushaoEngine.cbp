@@ -25,6 +25,7 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-std=c++11" />
 			<Add directory="D:/lib/mingw-dev-libs/SDL2/include/SDL2" />
 			<Add directory="D:/lib/mingw-dev-libs/SDL2_image/include/SDL2" />
 			<Add directory="D:/lib/mingw-dev-libs/glm" />
@@ -42,6 +43,8 @@
 			<Add directory="D:/lib/mingw-dev-libs/SDL2_image/lib" />
 			<Add directory="D:/lib/mingw-dev-libs/glew/lib" />
 		</Linker>
+		<Unit filename="asset.cpp" />
+		<Unit filename="asset.h" />
 		<Unit filename="camera.cpp">
 			<Option virtualFolder="components/" />
 		</Unit>
@@ -114,6 +117,8 @@
 		<Unit filename="renderer.h">
 			<Option virtualFolder="components/" />
 		</Unit>
+		<Unit filename="resources.cpp" />
+		<Unit filename="resources.h" />
 		<Unit filename="scene.cpp" />
 		<Unit filename="scene.h" />
 		<Unit filename="scenemanager.cpp" />
@@ -125,12 +130,6 @@
 		</Unit>
 		<Unit filename="shader.h">
 			<Option virtualFolder="objects/" />
-		</Unit>
-		<Unit filename="shaderprogram.cpp">
-			<Option virtualFolder="GL/" />
-		</Unit>
-		<Unit filename="shaderprogram.h">
-			<Option virtualFolder="GL/" />
 		</Unit>
 		<Unit filename="sprite.cpp">
 			<Option virtualFolder="objects/" />

@@ -1,5 +1,10 @@
 #pragma once
 
+#include <map>
+#include <string>
+
+using namespace std;
+
 namespace Config {
 
 	extern int pixelPerUnit;
@@ -8,6 +13,9 @@ namespace Config {
 	extern int displayWidth;
 	extern int displayHeight;
 	extern bool Fullscreen;
+
+	extern map<int, string> Layers;
+	extern map<int, string> SortingLayers;
 
 
 }

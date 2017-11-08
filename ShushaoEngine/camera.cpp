@@ -1,4 +1,5 @@
 #include <glm.hpp>
+#include <iostream>
 
 #include "camera.h"
 #include "libs.h"

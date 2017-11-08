@@ -38,6 +38,8 @@ namespace ShushaoEngine {
 
 			void run(BaseCycle);
 
+			vector<Component*> GetChildrenActiveComponents();
+
 			bool GetActiveState();
 
 			template<class T>

@@ -1,5 +1,9 @@
+#include <iostream>
+
 #include "spriterenderer.h"
 #include "transform.h"
+
+using namespace std;
 
 namespace ShushaoEngine {
 
@@ -7,10 +11,12 @@ namespace ShushaoEngine {
 		cout << "[" << InstanceID << "] Sprite Renderer Constructor" << endl;
 		name = "Sprite Renderer";
 
-		shader = new Shader();
+		//shader = new Shader();
 	}
 
 	void SpriteRenderer::init() {
+
+		if (shader == nullptr) return;
 
 		cout << "[" << InstanceID << "] Sprite Renderer Init" << endl;
 
@@ -39,6 +45,8 @@ namespace ShushaoEngine {
 	}
 
 	void SpriteRenderer::renderCycle() {
+
+		if (shader == nullptr) return;
 
 		glBindVertexArray(sprite->VAO);
 		glUseProgram(shader->getProgram());

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_file>
 	<Workspace title="Shushao Workspace">
-		<Project filename="ShushaoGame/ShushaoGame.cbp" />
+		<Project filename="ShushaoGame/ShushaoGame.cbp">
+			<Depends filename="ShushaoEngine/ShushaoEngine.cbp" />
+		</Project>
 		<Project filename="ShushaoEngine/ShushaoEngine.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>

@@ -4,9 +4,9 @@
 #include "gamedata.h"
 #include "setime.h"
 #include "glmanager.h"
-#include "shaderprogram.h"
 #include "maincamera.h"
 #include "gameobject.h"
+#include "resources.h"
 #include "scenemanager.h"
 
 using namespace std;
@@ -17,6 +17,7 @@ namespace ShushaoEngine {
 
 		TITLE = title;
 	}
+
 	GLGame::~GLGame() {
 
 		//todo
@@ -41,7 +42,8 @@ namespace ShushaoEngine {
 			READY = true;
 		}
 
-		Scenes.activeScene->root->run(INIT);
+		Scenes.activeScene->ScanActiveComponentsInScene();
+		Scenes.activeScene->run(INIT);
 
 		if (READY) {
 
@@ -58,14 +60,14 @@ namespace ShushaoEngine {
 
 	void GLGame::fixedUpdateCycle() {
 
-		Scenes.activeScene->root->run(FIXED_UPDATE);
+		Scenes.activeScene->ScanActiveComponentsInScene();
 
 		Cycle::fixedUpdateCycle();
 	}
 
 	void GLGame::updateCycle() {
 
-		Scenes.activeScene->root->run(UPDATE);
+		Scenes.activeScene->run(UPDATE);
 
 		Cycle::updateCycle();
 	}
@@ -79,7 +81,7 @@ namespace ShushaoEngine {
 		// Cycle::renderCycle();
 		// invece di chiamare il metodo base lo riscrivo (per retrodatare il renderTime)
 
-		Scenes.activeScene->root->run(RENDER);
+		Scenes.activeScene->run(RENDER);
 
 		Render();
 
@@ -90,12 +92,11 @@ namespace ShushaoEngine {
 
 	void GLGame::exit() {
 
-		Scenes.activeScene->root->run(EXIT);
+		Scenes.activeScene->run(EXIT);
+
+		Resources::Clean();
 
 		GL.Quit();
 		Cycle::exit();
 	}
-
-
-
 }

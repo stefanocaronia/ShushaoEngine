@@ -35,6 +35,11 @@ namespace ShushaoEngine {
 			Transform* transform;
 
 			string tag;
+
+			// usati in Renderer ma necessari da qui
+			int sortingLayerID = 0; //Unique ID of the Renderer's sorting layer.
+			int sortingOrder = 0; //Renderer's order within a sorting layer.
+
 			vector<string>* tags;
 
 			void BroadcastMessage();	// Calls the method named methodName on every MonoBehaviour in this game object or any of its children.

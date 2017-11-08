@@ -12,6 +12,7 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-std=c++11" />
 					<Add option="-g" />
 				</Compiler>
 			</Target>
@@ -22,6 +23,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-std=c++11" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -39,13 +41,15 @@
 			<Add directory="D:/sviluppo/projects-cpp/Shushao/ShushaoEngine" />
 		</Compiler>
 		<Linker>
-			<Add library="glew32" />
-			<Add library="opengl32" />
-			<Add library="mingw32" />
-			<Add library="SDL2" />
-			<Add library="SDL2main" />
-			<Add library="SDL2_image" />
 			<Add library="libShushaoEngine" />
+			<Add library="glew32" />
+			<Add library="mingw32" />
+			<Add library="opengl32" />
+			<Add library="glu32" />
+			<Add library="gdi32" />
+			<Add library="SDL2main" />
+			<Add library="SDL2" />
+			<Add library="SDL2_image" />
 			<Add directory="D:/lib/mingw-dev-libs/SDL2/lib" />
 			<Add directory="D:/lib/mingw-dev-libs/SDL2_image/lib" />
 			<Add directory="D:/lib/mingw-dev-libs/glew/lib" />

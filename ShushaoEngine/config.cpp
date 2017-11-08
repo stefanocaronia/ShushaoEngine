@@ -11,4 +11,7 @@ namespace Config {
 	int displayHeight 		= (int)(displayWidth / displayAspect);
 	bool Fullscreen 		= false;
 
+	map<int, string> Layers = {{0, "Default"}};
+	map<int, string> SortingLayers = {{0, "Default"}};
+
 }

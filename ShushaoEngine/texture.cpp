@@ -1,3 +1,4 @@
+#include <iostream>
 #include <stdio.h>
 #include <string.h>
 #include <map>
@@ -13,9 +14,16 @@ namespace ShushaoEngine {
 		name = "Texture";
 	}
 
-	Texture::Texture(string n, string filename) {
+	Texture::Texture(string filename, string n) {
+		cout << "[" << InstanceID << "] Texture Constructor" << endl;
 		Load(filename);
 		name = n;
+	}
+
+	Texture::Texture(string filename) {
+		cout << "[" << InstanceID << "] Texture Constructor" << endl;
+		Load(filename);
+		name = basename(filename);
 	}
 
 	Texture::~Texture()	{

@@ -3,6 +3,7 @@
 #include "spriterenderer.h"
 
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
@@ -37,6 +38,41 @@ namespace ShushaoEngine {
 
 		transform = AddComponent<Transform>();
 	}
+
+	vector<Component*> GameObject::GetChildrenActiveComponents() {
+		if (!activeSelf) return vector<Component*>();
+
+		vector<Component*> activeComponents;
+
+		for (Component* c : Components) {
+			if (c->enabled) {
+				activeComponents.push_back(c);
+			}
+		}
+
+		for (Transform* t : *transform) {
+            vector<Component*> newComponents = t->gameObject->GetChildrenActiveComponents();
+            activeComponents.insert(activeComponents.end(), newComponents.begin(), newComponents.end());
+        }
+
+        sort(activeComponents.begin(), activeComponents.end(), []( Component* ca, Component* cb ) {
+
+			int sortingLayerA, sortingLayerB, orderInLayerA, orderInLayerB;
+
+			sortingLayerA = ca->sortingLayerID;
+			orderInLayerA = ca->sortingOrder;
+			sortingLayerB = cb->sortingLayerID;
+			orderInLayerB = cb->sortingOrder;
+
+			if (sortingLayerA == sortingLayerB) return orderInLayerA < orderInLayerB;
+			else return sortingLayerA < sortingLayerB;
+
+			return false;
+		});
+
+		return activeComponents;
+	}
+
 
 	void GameObject::run(BaseCycle cycle) {
 		//cout << "GameObject " << name << ": run " << to_string(cycle) << endl;

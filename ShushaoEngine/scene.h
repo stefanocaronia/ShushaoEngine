@@ -27,6 +27,10 @@ namespace ShushaoEngine {
 
 			vector<GameObject*> GetRootGameObjects();
 
+			void ScanActiveComponentsInScene();
+
+			void run(BaseCycle);
+
 			template<class T>
 			T* AddGameObject(string _name = typeid(T).name()) { // Adds a GameObject of class T (Prefab)
 				T* obj = new T();
@@ -37,11 +41,14 @@ namespace ShushaoEngine {
 				return obj;
 			}
 
+
+
 			GameObject* AddGameObject(string);
 
 			void AddGameObject(GameObject*);
 
 			vector<GameObject*> GameObjects;
+			vector<Component*> ActiveComponents;
 
 		private:
 	};

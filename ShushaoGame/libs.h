@@ -1,7 +1,5 @@
 #pragma once
 
-#define GLEW_STATIC
-
 #include <stdio.h>
 #include <string>
 #include <iostream>

@@ -1,6 +1,9 @@
+#include  <iostream>
+
 #include "sprite.h"
 #include "rect.h"
 
+using namespace std;
 
 namespace ShushaoEngine {
 

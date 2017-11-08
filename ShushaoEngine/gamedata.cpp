@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <map>
+#include <string>
 
 #include "gamedata.h"
 #include "camera.h"
@@ -59,9 +61,17 @@ namespace ShushaoEngine {
 
 	// inizializations of members
 
-	//Camera* GameData::activeCamera;
 	Scene* GameData::activeScene;
+
+	// FORSE DA ELIMINARE, SONO GESTITI NELLE SCENE
 	vector<Object*> GameData::Objects;
 	vector<Component*> GameData::Components;
+
+
+//
+	//for (int i = 1; i < 31; i++) {
+	//	GameData::Layers[i] = "";
+	//}
+	//GameData::SortingLayers[0] = "Default";
 
 }

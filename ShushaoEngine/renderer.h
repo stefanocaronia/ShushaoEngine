@@ -37,10 +37,10 @@ namespace ShushaoEngine {
 			// shadowCastingMode; //Does this object cast shadows?
 			//Material* sharedMaterial; //The shared material of this object.
 			//vector<Material*> sharedMaterials; //All the shared materials of this object.
-			int sortingLayerID; //Unique ID of the Renderer's sorting layer.
-			string sortingLayerName; //Name of the Renderer's sorting layer.
-			int sortingOrder; //Renderer's order within a sorting layer.
-			mat4x4 worldToLocalMatrix; //Matrix that transforms a point from world space into local space (Read Only).
+			int sortingLayerID = 0; //Unique ID of the Renderer's sorting layer.
+			int sortingOrder = 0; //Renderer's order within a sorting layer.
+			//string sortingLayerName; //Name of the Renderer's sorting layer.
+			//mat4x4 worldToLocalMatrix; //Matrix that transforms a point from world space into local space (Read Only).
 
 			// methods
 

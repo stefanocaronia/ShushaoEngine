@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "game.h"
 
 #include "setime.h"

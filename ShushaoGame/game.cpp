@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "libs.h"
 #include "game.h"
 #include "scenemanager.h"
 #include "resources.h"
@@ -32,10 +33,10 @@ Game::~Game() {
 void Game::Awake() {
 
 	Resources::Load<Texture>("assets/pancrazio.png");
+	Resources::Load<Texture>("assets/pancsmile.png");
 	Resources::Load<Shader>("shaders/standard");
+	Resources::Load<Shader>("shaders/standard", "shader2");
 
-	Shader* sha = Resources::Get<Shader>("standard");
-	cout << "Shader caricato: " << sha->name << endl;
 
 	//GameData::PrintAllObjects();
 
@@ -50,7 +51,7 @@ void Game::Awake() {
 	SceneManager::activeScene->activeCamera->transform->rotation = quat(0.0f, 0.0f, 0.0f, 0.0f);
 	SceneManager::activeScene->activeCamera->transform->up = vec3(0.0f, 1.0f, 0.0f);
 
-	// GameData::PrintAllObjects();
+	//GameData::PrintAllObjects();
 }
 
 void Game::Start() {

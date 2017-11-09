@@ -19,6 +19,12 @@ namespace ShushaoEngine {
 			virtual void exit();
 			virtual void init();
 
+			static string INIT;
+			static string UPDATE;
+			static string FIXED;
+			static string RENDER;
+			static string EXIT;
+
 		protected:
 
 			// pure virtual (devo implementare x forza)

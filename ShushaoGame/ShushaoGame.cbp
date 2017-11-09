@@ -39,11 +39,11 @@
 			<Add directory="D:/lib/mingw-dev-libs/SDL2_image/include/SDL2" />
 			<Add directory="D:/lib/mingw-dev-libs/glew/include" />
 			<Add directory="D:/lib/mingw-dev-libs/glm" />
-			<Add directory="D:/sviluppo/projects-cpp/Shushao/ShushaoEngine" />
+			<Add directory="../ShushaoEngine" />
 		</Compiler>
 		<Linker>
 			<Add library="libShushaoEngine" />
-			<Add library="glew32" />
+			<Add library="libglew32" />
 			<Add library="mingw32" />
 			<Add library="opengl32" />
 			<Add library="glu32" />
@@ -54,7 +54,7 @@
 			<Add directory="D:/lib/mingw-dev-libs/SDL2/lib" />
 			<Add directory="D:/lib/mingw-dev-libs/SDL2_image/lib" />
 			<Add directory="D:/lib/mingw-dev-libs/glew/lib" />
-			<Add directory="D:/sviluppo/projects-cpp/Shushao/ShushaoEngine/lib" />
+			<Add directory="../ShushaoEngine/lib" />
 		</Linker>
 		<Unit filename="assets/pancrazio.png" />
 		<Unit filename="assets/tattolino.jpg" />
@@ -62,7 +62,6 @@
 		<Unit filename="game.h" />
 		<Unit filename="level.cpp" />
 		<Unit filename="level.h" />
-		<Unit filename="libs.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="shaders/standard.frag" />
 		<Unit filename="shaders/standard.vert" />

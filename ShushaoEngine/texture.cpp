@@ -3,6 +3,7 @@
 #include <string.h>
 #include <map>
 
+#include "debug.h"
 #include "utility.h"
 #include "texture.h"
 
@@ -40,15 +41,16 @@ namespace ShushaoEngine {
 		Surface = IMG_Load(filename.c_str());
 
 		if (!Surface) {
-			//if (DEBUG) printf("IMG_Load: %s\n", IMG_GetError());
+			//printf("IMG_Load: %s\n", IMG_GetError());
+			LOG("IMG_Load " + Utility::toString(IMG_GetError()));
 			return false;
 		}
 
 		width = Surface->w;
 		height = Surface->h;
 
-		//int Mode = Surface->format->BytesPerPixel == 4 ? GL_RGBA : GL_RGB;
-		int Mode = GL_RGBA;
+		int Mode = Surface->format->BytesPerPixel == 4 ? GL_RGBA : GL_RGB;
+		//Mode = GL_RGB;
 
 		glGenTextures(1, &TextureID);
 		glBindTexture(GL_TEXTURE_2D, TextureID);
@@ -59,7 +61,7 @@ namespace ShushaoEngine {
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		//glGenerateMipmap(GL_TEXTURE_2D);
+		glGenerateMipmap(GL_TEXTURE_2D);
 
 		//SDLTexture = SDL_CreateTextureFromSurface(GLManager::gRenderer, Surface);
 

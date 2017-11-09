@@ -13,28 +13,26 @@ namespace ShushaoEngine {
 
 		public:
 
-			//static Cycle* game;
+			~SceneManager();
 
 			static Scene* activeScene;
 
+			static bool activeSceneSet;
+
 			template<class T>
-			static T& LoadScene() { // Adds a scene of class T
+			static T* LoadScene() { // Adds a scene of class T
 
 				// todo pause e restore dopo
 				T* scene = new T();
-				if (activeScene != nullptr) {
+				if (activeSceneSet) {
 					delete(activeScene);
 					GameData::DestroyAll();
 				}
-				SetActiveScene(*scene);
-				return *scene;
+				SetActiveScene(scene);
+				return scene;
 			}
 
-			static void SetActiveScene(Scene& scene) {
-				activeScene = &scene;
-				GameData::activeScene = &scene;
-			}
-
+			static void SetActiveScene(Scene*);
 			static void Clear();
 
 			/*template<class T>

@@ -1,12 +1,12 @@
 # pragma once
 
 #include "libs.h"
-#include "gameobject.h"
+#include "entity.h"
 #include "camera.h"
 
 using namespace ShushaoEngine;
 
-class MainCamera : public GameObject {
+class MainCamera : public Entity {
 	public:
 		MainCamera();
 		~MainCamera();

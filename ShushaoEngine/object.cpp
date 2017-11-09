@@ -1,8 +1,10 @@
 #include <string>
+#include <typeinfo>
 
 #include "object.h"
-#include "typeinfo.h"
 #include "gamedata.h"
+#include "utility.h"
+#include "debug.h"
 
 
 #include <iostream>
@@ -17,7 +19,7 @@ namespace ShushaoEngine {
 
 		GameData::RegisterObject(this);
 
-		cout << "[" << InstanceID << "] Object Constructor" << endl;
+		//LOG("[" + Utility::to_string(InstanceID) + "] Object Constructor");
 	}
 
 	Object::~Object() {
@@ -53,18 +55,18 @@ namespace ShushaoEngine {
 
 	/* 	TODO: Clones the object original and returns the clone.
 
-		This function makes a copy of an object in a similar way to the Duplicate command in the editor. If you are cloning a GameObject then you can also optionally
-		specify its position and rotation (these default to the original GameObject's position and rotation otherwise). If you are cloning a Component then the GameObject
+		This function makes a copy of an object in a similar way to the Duplicate command in the editor. If you are cloning a Entity then you can also optionally
+		specify its position and rotation (these default to the original Entity's position and rotation otherwise). If you are cloning a Component then the Entity
 		it is attached to will also be cloned, again with an optional position and rotation.
 
-		When you clone a GameObject or Component, all child objects and components will also be cloned with their properties set like those of the original object.
+		When you clone a Entity or Component, all child objects and components will also be cloned with their properties set like those of the original object.
 
 		By default the parent of the new object will be null, so it will not be a "sibling" of the original. However, you can still set the parent using the overloaded
 		methods. If a parent is specified and no position and rotation is specified, the position and rotation of the original will be used for the cloned object's local
 		position and rotation, or its world position and rotation if the instantiateInWorldSpace parameter is true. If the position and rotation is specified, they will
 		be used as the object's position and rotation in world space.
 
-		The active status of a GameObject at the time of cloning will be passed on, so if the original is inactive then the clone will be created in an inactive state too.
+		The active status of a Entity at the time of cloning will be passed on, so if the original is inactive then the clone will be created in an inactive state too.
 	*/
 
 	Object* Object::Instantiate(Object* original) {

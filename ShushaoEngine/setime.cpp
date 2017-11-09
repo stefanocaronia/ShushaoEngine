@@ -1,11 +1,18 @@
+#include "utility.h"
 #include "setime.h"
+
 #include <chrono>
+#include <math.h>
+#include <string>
+#include <sstream>
+#include <iostream>
 
 namespace ShushaoEngine {
 
+	using namespace std;
 	using namespace std::chrono;
 
-	float Time::getTime() {
+	float Time::GetTime() {
 		return (float) duration_cast<milliseconds>(high_resolution_clock::now() - startTime).count() / 1000.f;
 	}
 
@@ -20,11 +27,27 @@ namespace ShushaoEngine {
 	}
 
 	void Time::Update() {
-		realtimeSinceStartup = getTime();
+		realtimeSinceStartup = GetTime();
 		deltaTime = realtimeSinceStartup - time;
 		time = realtimeSinceStartup;
 		fixedDeltaTime = realtimeSinceStartup - fixedTime;
 		renderDeltaTime = realtimeSinceStartup - renderTime;
+	}
+
+	string Time::Clock() {
+
+		int mil = duration_cast<milliseconds>(high_resolution_clock::now() - startTime).count();
+
+		int mills = (int) (mil % 1000) ;
+		int seconds = (int) (mil / 1000) % 60 ;
+		int minutes = (int) ((mil / (1000*60)) % 60);
+		int hours   = (int) ((mil / (1000*60*60)) % 24);
+
+		ostringstream clock;
+
+		clock << Utility::zerofill(hours, 2) << ":" << Utility::zerofill(minutes, 2) << ":" << Utility::zerofill(seconds, 2)<< "." << Utility::zerofill(mills, 3);
+
+		return clock.str();
 	}
 
 	// static members definitions

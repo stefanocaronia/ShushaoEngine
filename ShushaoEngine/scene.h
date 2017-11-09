@@ -4,7 +4,8 @@
 #include <string>
 #include <typeinfo>
 
-#include "gameobject.h"
+#include "debug.h"
+#include "entity.h"
 
 using namespace std;
 
@@ -21,31 +22,31 @@ namespace ShushaoEngine {
 			int BuildIndex;
 			bool isLoaded = false;
 
-			GameObject* root;
+			Entity* root;
 
 			Camera* activeCamera;
 
-			vector<GameObject*> GetRootGameObjects();
+			vector<Entity*> GetRootEntitys();
 
 			void ScanActiveComponentsInScene();
 
-			void run(BaseCycle);
+			void run(string);
 
 			template<class T>
-			T* AddGameObject(string _name = typeid(T).name()) { // Adds a GameObject of class T (Prefab)
-				T* obj = new T();
-				obj->scene = this;
-				obj->name = _name;
+			T* AddEntity(string _name = typeid(T).name()) { // Adds a Entity of class T (Prefab)
+				T* entity = new T();
+				entity->scene = this;
+				entity->name = _name;
 
-				GameObjects.push_back(obj);
-				return obj;
+				Entities.push_back(entity);
+				return entity;
 			}
 
-			GameObject* AddGameObject(string);
+			Entity* AddEntity(string);
 
-			void AddGameObject(GameObject*);
+			void AddEntity(Entity*);
 
-			vector<GameObject*> GameObjects;
+			vector<Entity*> Entities;
 			vector<Component*> ActiveComponents;
 
 		private:

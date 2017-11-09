@@ -4,6 +4,7 @@
 #include "utility.h"
 #include "shader.h"
 #include "libs.h"
+#include "debug.h"
 
 using namespace std;
 
@@ -86,9 +87,6 @@ namespace ShushaoEngine {
 		if (!shaderCompilationLog(FragmentShaderID))
 			return false;
 
-		glDeleteShader(VertexShaderID);
-		glDeleteShader(FragmentShaderID);
-
 		return true;
 	}
 
@@ -105,6 +103,9 @@ namespace ShushaoEngine {
 		// Check the program
 		if (!programCompilationLog(programID))
 			return false;
+
+		glDeleteShader(VertexShaderID);
+		glDeleteShader(FragmentShaderID);
 
 		return true;
 	}

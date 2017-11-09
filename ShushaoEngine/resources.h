@@ -48,7 +48,7 @@ namespace ShushaoEngine {
 
 			static map<string, Object*> Assets;
 
-			static void Clean();
+			static void Clear();
 
 	};
 

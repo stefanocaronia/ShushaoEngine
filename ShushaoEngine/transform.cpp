@@ -66,7 +66,7 @@ namespace ShushaoEngine {
 	void Transform::update() {
 
 		glm::mat4 Translate = glm::translate(position);
-		glm::mat4 Scale = glm::scale(lossyScale);
+		glm::mat4 Scale = glm::scale(localScale);
 		glm::mat4 Rotate = glm::rotate(rotation[0],glm::vec3(rotation[1],rotation[2],rotation[3]));
 
 		M = Translate * Rotate * Scale;

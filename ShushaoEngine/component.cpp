@@ -1,5 +1,7 @@
+#include "debug.h"
 #include "component.h"
 #include "gamedata.h"
+#include "cycle.h"
 
 #include <iostream>
 
@@ -21,31 +23,33 @@ namespace ShushaoEngine {
 	}
 
 	Component::~Component() {
-		//OnDestroy();
+		LOG("Component Destructor: " + name + " di " + entity->name);
+		OnDestroy();
 		exit();
 	}
 
-	vector<Component*> Component::GetChildrenActiveComponents() {
+	vector<Component*> Component::GetActiveComponentsInChildren() {
 
-		cout << endl << " - cerco nei componenti di " << gameObject->name << endl;
+		//cout << endl << " - cerco nei componenti di " << entity->name << endl;
 
-		if (!gameObject->activeSelf) return vector<Component*>();
+		if (!entity->activeSelf) return vector<Component*>();
 
 		vector<Component*> activeComponents;
 
-		cout << " - trovati " << gameObject->Components.size() << endl;
+		//cout << " - trovati " << entity->Components.size() << endl;
 
-		for (Component* c : gameObject->Components) {
-			cout << " - controllo " << c->name << " di " << c->gameObject->name << endl;
+		for (Component* c : entity->Components) {
+			//cout << " - controllo " << c->name << " di " << c->entity->name << endl;
 			if (c->enabled) {
-				cout << " - attivo " << c->name << " di " << c->gameObject->name << endl;
+				//cout << " - attivo " << c->name << " di " << c->entity->name << endl;
 				activeComponents.push_back(c);
 			}
 		}
-		cout << " - ciclo i children di " << gameObject->name << endl;
-		for (Transform* t : gameObject->transform->children) {
-			cout << " - vado ad aprire i componenti di " << t->gameObject->name << endl;
-            vector<Component*> newComponents = t->GetChildrenActiveComponents();
+
+		//cout << " - ciclo i children di " << entity->name << endl;
+		for (Transform* t : entity->transform->children) {
+			//cout << " - vado ad aprire i componenti di " << t->entity->name << endl;
+            vector<Component*> newComponents = t->GetActiveComponentsInChildren();
             activeComponents.insert(activeComponents.end(), newComponents.begin(), newComponents.end());
         }
 
@@ -67,35 +71,25 @@ namespace ShushaoEngine {
 		return activeComponents;
 	}
 
-	void Component::run(BaseCycle cycle) {
+	// usato solo con i metodi di cycle della base class
+	void Component::run(string cycle) {
+		if (cycle == Cycle::INIT) init();
+		if (cycle == Cycle::UPDATE) update();
+		if (cycle == Cycle::RENDER) render();
+		if (cycle == Cycle::FIXED) fixed();
+		if (cycle == Cycle::EXIT) exit();
+	}
 
-		switch (cycle) {
-			case INIT:
-				init();
-				break;
-			case EXIT:
-				exit();
-				break;
-			case UPDATE:
-				update();
-				break;
-			case FIXED_UPDATE:
-				fixed();
-				break;
-			case RENDER:
-				render();
-				break;
-		}
+	// usato per i metodi custom delle classi derivate (riceve i messages)
+	void Component::call(string method) {
+		// riscritto nelle derived
 	}
 
 	bool Component::isActiveAndEnabled() {
-		return enabled && gameObject->activeSelf && gameObject->activeInHierarchy;
+		return enabled && entity->activeSelf && entity->activeInHierarchy;
 	}
 
-
 	void Component::init() {
-		// to implement in derived classes
-
 		Awake();
 	}
 

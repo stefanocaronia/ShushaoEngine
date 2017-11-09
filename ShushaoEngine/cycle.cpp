@@ -5,6 +5,7 @@
 #include "scenemanager.h"
 #include "resources.h"
 #include "config.h"
+#include "debug.h"
 
 #include <iostream>
 #include <string>
@@ -19,7 +20,11 @@ namespace ShushaoEngine {
 	}
 
 	Cycle::~Cycle() {
-		// to do
+		LOG("Cycle Destructor");
+
+		SceneManager::Clear();
+		Resources::Clear();
+		System::Clear();
 	}
 
 	void Cycle::init() {
@@ -39,7 +44,7 @@ namespace ShushaoEngine {
 	void Cycle::run() {
 
 		SceneManager::activeScene->ScanActiveComponentsInScene();
-		SceneManager::activeScene->run(INIT);
+		SceneManager::activeScene->run(Cycle::INIT);
 
 		GLManager::SetFullscreen(Config::Fullscreen);
 		GLManager::Clear(SceneManager::activeScene->activeCamera->backgroundColor.r, SceneManager::activeScene->activeCamera->backgroundColor.g, SceneManager::activeScene->activeCamera->backgroundColor.b, 1.0f, 1.0f);
@@ -63,7 +68,7 @@ namespace ShushaoEngine {
 				fixed();
 			}
 
-			SceneManager::activeScene->run(UPDATE);
+			SceneManager::activeScene->run(Cycle::UPDATE);
 			update();
 
 			if (Time::renderDeltaTime >= Time::frameLimitDuration) {
@@ -71,17 +76,16 @@ namespace ShushaoEngine {
 			}
 		}
 
-		End();
 		exit();
 	}
 
 	void Cycle::render() {
-		Time::renderTime = Time::getTime();
+		Time::renderTime = Time::GetTime();
 
 		GLManager::Reset();
 		GLManager::View = SceneManager::activeScene->activeCamera->getViewMatrix();
 
-		SceneManager::activeScene->run(RENDER);
+		SceneManager::activeScene->run(Cycle::RENDER);
 
 		Render();
 
@@ -91,22 +95,28 @@ namespace ShushaoEngine {
 	}
 
 	void Cycle::update() {
-		Time::realtimeSinceStartup = Time::getTime();
+		Time::realtimeSinceStartup = Time::GetTime();
 		Update();
 	}
 
 	void Cycle::fixed() {
-		Time::fixedTime = Time::getTime();
+		Time::fixedTime = Time::GetTime();
 		Time::inFixedTimeStep = true;
 		FixedUpdate();
 		Time::inFixedTimeStep = false;
 	}
 
 	void Cycle::exit() {
-		SceneManager::activeScene->run(EXIT);
-		Resources::Clean();
+		LOG("IN CYCLE EXIT");
+		End();
+		SceneManager::activeScene->run(Cycle::EXIT);
 		System::exit();
 		GLManager::Quit();
-		End();
 	}
+
+	string Cycle::INIT = "init";
+	string Cycle::UPDATE = "update";
+	string Cycle::FIXED = "fixed";
+	string Cycle::RENDER = "render";
+	string Cycle::EXIT = "exit";
 }

@@ -1,19 +1,20 @@
-#include "gameobject.h"
+#include "entity.h"
 #include "transform.h"
 #include "spriterenderer.h"
 
 #include <iostream>
-#include <algorithm>
+#include <iostream>
+#include "debug.h"
 
 using namespace std;
 
 namespace ShushaoEngine {
 
-	GameObject::GameObject() {
+	Entity::Entity() {
 
-		cout << "[" << InstanceID << "] GameObject Constructor" << endl;
+		cout << "[" << InstanceID << "] Entity Constructor" << endl;
 
-		name = "GameObject";
+		name = "Entity";
 		activeSelf = true;
 		isStatic = false;
 
@@ -22,7 +23,9 @@ namespace ShushaoEngine {
 		transform = AddComponent<Transform>();
 	}
 
-	GameObject::~GameObject() {
+	Entity::~Entity() {
+
+		LOG("Entity Destructor: " + name);
 
 		// distruggo tutti i components
 		for(Component* pCO : Components) {
@@ -31,24 +34,24 @@ namespace ShushaoEngine {
 		Components.clear();
 	}
 
-	GameObject::GameObject(string _name) {
+	Entity::Entity(string _name) {
 		name = _name;
 		activeSelf = true;
 		isStatic = false;
 
-		cout << "[" << InstanceID << "] GameObject Constructor" << endl;
+		cout << "[" << InstanceID << "] Entity Constructor" << endl;
 
 		transform = AddComponent<Transform>();
 	}
 
-	vector<Component*> GameObject::GetChildrenActiveComponents() {
-		return transform->GetChildrenActiveComponents();
+	vector<Component*> Entity::GetActiveComponentsInChildren() {
+		return transform->GetActiveComponentsInChildren();
 	}
 
-	void GameObject::run(BaseCycle cycle) {
-		//cout << "GameObject " << name << ": run " << to_string(cycle) << endl;
+	void Entity::run(string cycle) {
+		//cout << "Entity " << name << ": run " << to_string(cycle) << endl;
 		if (!GetActiveState()) {
-			//cout << "GameObject " << name << ": non attivo " << endl;
+			//cout << "Entity " << name << ": non attivo " << endl;
 			return;
 		}
 
@@ -60,18 +63,18 @@ namespace ShushaoEngine {
         }
 
         for (Transform* t : transform->children) {
-			//cout << "In trasnform di " <<  t->gameObject->name << endl;
-            t->gameObject->run(cycle);
+			//cout << "In trasnform di " <<  t->entity->name << endl;
+            t->entity->run(cycle);
         }
 
 	}
 
-	bool GameObject::GetActiveState() {
+	bool Entity::GetActiveState() {
 		if (!activeSelf) return false;
 
 		/*Transform* p = transform->GetParent();
 		while (p != nullptr) {
-			if (!p->gameObject->activeSelf) {
+			if (!p->entity->activeSelf) {
 				activeInHierarchy = false;
 				return false;
 			} else {

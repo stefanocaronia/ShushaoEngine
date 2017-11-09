@@ -2,6 +2,8 @@
 
 namespace Config {
 
+	bool debug 				= true;
+
 	// textures
 	int pixelPerUnit 		= 16;
 

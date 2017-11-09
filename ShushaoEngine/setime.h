@@ -1,9 +1,11 @@
 #pragma once
 
+#include <string>
 #include <chrono>
 
 namespace ShushaoEngine {
 
+	using namespace std;
 	using namespace std::chrono;
 
 	class Time {
@@ -37,8 +39,9 @@ namespace ShushaoEngine {
 			static void setFrameRateLimit(float);
 			static void setFixedRateLimit(float);
 
-			static float getTime();
+			static float GetTime();
 			static void Update();
+			static string Clock();
 
 		private:
 

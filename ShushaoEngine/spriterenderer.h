@@ -25,16 +25,17 @@ namespace ShushaoEngine {
 		public:
 
 			SpriteRenderer();
+			SpriteRenderer(string);
 
 			//float adaptiveModeThreshold; //	The current threshold for Sprite Renderer tiling.
-			Color color; //	Rendering color for the Sprite graphic.
+			Color color = {1.0f, 1.0f, 1.0f, 1.0f}; //	Rendering color for the Sprite graphic.
 			SpriteDrawMode drawMode; //	The current draw mode of the Sprite Renderer.
 			bool flipX;//	Flips the sprite on the X axis.
 			bool flipY; //	Flips the sprite on the Y axis.
 			// maskInteraction //	Specifies how the sprite interacts with the masks.
 			vec2 size; //	Property to set/get the size to render when the SpriteRenderer.drawMode is set to SpriteDrawMode.NineSlice.
 
-			SpriteTileMode tileMode; //	The current tile mode of the Sprite Renderer.
+			//SpriteTileMode tileMode; //	The current tile mode of the Sprite Renderer.
 
 			Sprite* sprite;
 			Shader* shader;

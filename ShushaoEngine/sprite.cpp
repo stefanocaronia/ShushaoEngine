@@ -12,6 +12,15 @@ namespace ShushaoEngine {
         name = "Sprite";
 	}
 
+	Sprite::~Sprite() {
+		delete(texture);
+	}
+
+	Sprite::Sprite(string n) {
+        cout << "[" << InstanceID << "] Sprite Constructor" << endl;
+        name = n;
+	}
+
 	Sprite::Sprite(Texture* _texture) {
 		texture = _texture;
         rect.Set(0.0f, 0.0f, (float)texture->width, (float)texture->height);
@@ -33,20 +42,16 @@ namespace ShushaoEngine {
 		GLfloat wY = (rect.height / pixelPerUnit) / 2;
 
 		GLfloat v[] = {
-			-wX,  wY, 0.0f, // Top-left
-			 wX, -wY, 0.0f, // Top-right
+			-wX, -wY, 0.0f, // Bottom-left
 			 wX, -wY, 0.0f, // Bottom-righ
-			-wX, -wY, 0.0f // Bottom-left
+			 wX, -wY, 0.0f, // Top-right
+			-wX,  wY, 0.0f // Top-left
 		};
 
 		for (unsigned int i = 0; i < 12;  i++) {
             vertices[i] = v[i];
 		}
 
-	}
-
-	Sprite::~Sprite() {
-		//dtor
 	}
 
 	vector<vec3> Sprite::getVertices() {

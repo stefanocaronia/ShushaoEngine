@@ -6,51 +6,51 @@
 namespace ShushaoEngine {
 
 	Scene::Scene() {
-		root = new GameObject("ROOT");
-		activeCamera = (Camera*)AddGameObject<MainCamera>();
+		root = new Entity("ROOT");
+		MainCamera* mainCameraObj = AddEntity<MainCamera>();
+		activeCamera = mainCameraObj->camera;
 	}
 
 	Scene::~Scene() {
-		for (GameObject* pGO : GameObjects) {
+		LOG("Scene Destructor");
+		for (Entity* pGO : Entities) {
 			delete(pGO);
 		}
-		GameObjects.clear();
+		Entities.clear();
 	}
 
-	GameObject* Scene::AddGameObject(string _name = "GameObject") {
-		if (root->transform == nullptr) return root;
+	Entity* Scene::AddEntity(string _name = "Entity") {
+		LOG("Aggiungo una entity vuota: " + _name);
+		Entity* entity = new Entity();
+		entity->transform->SetParent(root->transform);
+		entity->name = _name;
 
-		GameObject* obj = new GameObject();
-		obj->transform->SetParent(root->transform);
-		obj->name = _name;
-
-		return obj;
+		Entities.push_back(entity);
+		return entity;
 	}
 
 	void Scene::ScanActiveComponentsInScene() {
-		if (root == nullptr) return;
 
 		ActiveComponents.clear();
-        ActiveComponents = root->GetChildrenActiveComponents();
+        ActiveComponents = root->GetActiveComponentsInChildren();
 	}
 
-	void Scene::run(BaseCycle cycle) {
+	void Scene::run(string cycle) {
 		for (Component* c : ActiveComponents) {
 			c->run(cycle);
         }
 	}
 
-	vector<GameObject*> Scene::GetRootGameObjects() {
+	vector<Entity*> Scene::GetRootEntitys() {
 
 		// TODO: I GAMEOBJECT CON PARENT ROOT
 
-		return GameObjects;
+		return Entities;
 
 	}
 
-	void Scene::AddGameObject(GameObject* pGameObject) {
-		if (root->transform == nullptr) return;
-		pGameObject->transform->SetParent(root->transform);
-		GameObjects.push_back(pGameObject);
+	void Scene::AddEntity(Entity* pEntity) {
+		pEntity->transform->SetParent(root->transform);
+		Entities.push_back(pEntity);
 	}
 }

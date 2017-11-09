@@ -2,18 +2,18 @@
 
 #include <string>
 
-#include "glgame.h"
+#include "cycle.h"
 
 using namespace ShushaoEngine;
 
-class Game : public GLGame {
+class Game : public Cycle {
 
 	public:
 
 		Game(string);
 		~Game();
 
-		string TITLE;
+		string name;
 
 	protected:
 

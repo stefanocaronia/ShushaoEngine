@@ -1,8 +1,8 @@
 #pragma once
 
 #include <string>
+#include "object.h"
 
-#include "asset.h"
 #include "libs.h"
 
 namespace ShushaoEngine {
@@ -12,7 +12,7 @@ namespace ShushaoEngine {
 		TEXCOORD = 1
 	};
 
-	class Shader : public Asset {
+	class Shader : public Object {
 
 		public:
 

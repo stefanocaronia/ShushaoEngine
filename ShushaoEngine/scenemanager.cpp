@@ -4,27 +4,17 @@
 
 namespace ShushaoEngine {
 
-	/*void SceneManager::AddScene(Scene* pScene) {
-		pScene->BuildIndex = ++buildCounter;
-		Scenes.push_back(pScene);
-	}*/
-
-	/*Scene* SceneManager::GetSceneByName(string name) {
-
-        if (Scenes.size() == 0) return nullptr;
-
-        for (Scene* pScene: Scenes) {
-            if (pScene->name == name) return pScene;
-        }
-
-        // return &Type();
-        return nullptr;
-	}*/
-
-	SceneManager::~SceneManager() {
+	void SceneManager::Clear() {
 		for(Scene* s : Scenes) {
 			delete(s);
 		}
 		Scenes.clear();
 	}
+
+
+	// init
+
+	vector<Scene*> SceneManager::Scenes;
+	Scene* SceneManager::activeScene;
+
 }

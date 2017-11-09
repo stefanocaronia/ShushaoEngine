@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 
+#include "utility.h"
 #include "shader.h"
 #include "libs.h"
 
@@ -34,15 +35,19 @@ namespace ShushaoEngine {
 	Shader::Shader(string filename) {
 		cout << "[" << InstanceID << "] Shader Constructor" << endl;
 		Load(filename);
-		name = basename(filename);
+		name = Utility::basename(filename);
 	}
 
 	Shader::~Shader(){
-		glDeleteShader(VertexShaderID);
-		glDeleteShader(FragmentShaderID);
+
+		glUseProgram(0);
+		if (VertexShaderID > 0) glDeleteShader(VertexShaderID);
+		if (FragmentShaderID > 0) glDeleteShader(FragmentShaderID);
+		if (programID > 0) glDeleteProgram(programID);
 	}
 
 	GLuint Shader::getProgram() {
+
 		if (programID > 0)
 			return programID;
 		if (!Shader::compile()) {
@@ -57,6 +62,9 @@ namespace ShushaoEngine {
 	}
 
 	bool Shader::compile() {
+
+		VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
+		FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 
 		// Compile Vertex Shader
 		if (debug) printf("Compiling Vertex Shader\n");
@@ -77,6 +85,9 @@ namespace ShushaoEngine {
 		// Check Vertex Shader
 		if (!shaderCompilationLog(FragmentShaderID))
 			return false;
+
+		glDeleteShader(VertexShaderID);
+		glDeleteShader(FragmentShaderID);
 
 		return true;
 	}
@@ -125,9 +136,6 @@ namespace ShushaoEngine {
 		} else {
 			if (debug) cout << "Impossibile aprire il file " << frag.c_str() << endl;
 		}
-
-		VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
-		FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 
 		return true;
 	}

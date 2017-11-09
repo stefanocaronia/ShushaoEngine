@@ -10,9 +10,14 @@ namespace ShushaoEngine {
 
 		public:
 
+			Cycle(string);
+			~Cycle();
+
+			string name;
+
 			virtual void run();
 			virtual void exit();
-			virtual bool init();
+			virtual void init();
 
 		protected:
 
@@ -25,9 +30,9 @@ namespace ShushaoEngine {
 			virtual void FixedUpdate() = 0;
 			virtual void End() = 0;
 
-			virtual void updateCycle();
-			virtual void renderCycle();
-			virtual void fixedUpdateCycle();
+			virtual void update();
+			virtual void render();
+			virtual void fixed();
 
 			bool RUNNING = true;
 			bool READY = false;

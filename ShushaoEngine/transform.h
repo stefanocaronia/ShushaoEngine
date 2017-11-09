@@ -13,12 +13,13 @@ namespace ShushaoEngine {
 
 	class Transform;
 
-	class Transform : public Component, public vector<Transform*> {
+	class Transform : public Component {
 
 		public:
 
 			Transform();
 
+			vector<Transform*> children;
 
 			Transform* root; // Returns the topmost transform in the hierarchy. (This never returns null, if this Transform doesn't have a parent it returns itself.)
 
@@ -40,10 +41,8 @@ namespace ShushaoEngine {
 			vec3 right = {1.0f, 0.0f, 0.0f}; // The red axis of the transform in world space.
 			vec3 up = {0.0f, 1.0f, 0.0f};	// The green axis of the transform in world space.
 
-			GLManager& GL = GLManager::GetInstance();
-
-			glm::mat4 M; // model view matrix
-			glm::mat4 MVP; // model view projection matrix
+			mat4 M; // model view matrix
+			mat4 MVP; // model view projection matrix
 
 			int childCount;	// TODO:  The number of children the Transform has.
 
@@ -53,9 +52,9 @@ namespace ShushaoEngine {
 
 			// cycle
 
-			void updateCycle();
-			void renderCycle();
-			void fixedUpdateCycle();
+			void update();
+			void render();
+			void fixed();
 
 			// methods
 
@@ -86,9 +85,7 @@ namespace ShushaoEngine {
 			//void TransformVector();	// TODO:  Transforms vector from local space to world space.
 			//void Translate();	// TODO:  Moves the transform in the direction and distance of translation.
 
-		protected:
-
-			Transform* parent;
+		Transform* parent = nullptr;
 	};
 
 }

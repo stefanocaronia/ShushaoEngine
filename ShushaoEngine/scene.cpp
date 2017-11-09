@@ -6,9 +6,8 @@
 namespace ShushaoEngine {
 
 	Scene::Scene() {
-		AddGameObject("ROOT"); // add root gameObject
-		GameObject* cameraGameObject = AddGameObject<MainCamera>();
-		activeCamera = cameraGameObject->GetComponent<Camera>();
+		root = new GameObject("ROOT");
+		activeCamera = (Camera*)AddGameObject<MainCamera>();
 	}
 
 	Scene::~Scene() {
@@ -19,14 +18,12 @@ namespace ShushaoEngine {
 	}
 
 	GameObject* Scene::AddGameObject(string _name = "GameObject") {
+		if (root->transform == nullptr) return root;
+
 		GameObject* obj = new GameObject();
-		if (root == nullptr) {
-			root = obj;
-			obj->name = "ROOT";
-		} else {
-			obj->transform->SetParent(root->transform);
-			obj->name = _name;
-		}
+		obj->transform->SetParent(root->transform);
+		obj->name = _name;
+
 		return obj;
 	}
 
@@ -52,7 +49,7 @@ namespace ShushaoEngine {
 	}
 
 	void Scene::AddGameObject(GameObject* pGameObject) {
-		if (root == nullptr) return;
+		if (root->transform == nullptr) return;
 		pGameObject->transform->SetParent(root->transform);
 		GameObjects.push_back(pGameObject);
 	}

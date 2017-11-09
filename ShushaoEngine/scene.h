@@ -41,8 +41,6 @@ namespace ShushaoEngine {
 				return obj;
 			}
 
-
-
 			GameObject* AddGameObject(string);
 
 			void AddGameObject(GameObject*);

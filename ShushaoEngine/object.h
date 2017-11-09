@@ -21,7 +21,8 @@ namespace ShushaoEngine {
 			Object();
 			virtual ~Object();
 
-			int InstanceID;
+			int InstanceID = 0;
+
 			string name;
 
 			string ToString();

@@ -1,5 +1,4 @@
 #include "maincamera.h"
-#include "glgame.h"
 
 using namespace ShushaoEngine;
 

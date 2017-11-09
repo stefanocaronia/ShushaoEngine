@@ -42,7 +42,7 @@ namespace ShushaoEngine {
 			void init();
 			void exit();
 
-			void renderCycle();
+			void render();
 
 	};
 

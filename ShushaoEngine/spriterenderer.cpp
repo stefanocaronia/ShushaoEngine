@@ -15,10 +15,8 @@ namespace ShushaoEngine {
 	}
 
 	void SpriteRenderer::init() {
-
+		cout << "Shader " << shader->name << endl;
 		if (shader == nullptr) return;
-
-		cout << "[" << InstanceID << "] Sprite Renderer Init" << endl;
 
 		sprite->initVAO();
 
@@ -42,9 +40,10 @@ namespace ShushaoEngine {
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		glBindVertexArray(0);
+		glUseProgram(0);
 	}
 
-	void SpriteRenderer::renderCycle() {
+	void SpriteRenderer::render() {
 
 		if (shader == nullptr) return;
 
@@ -56,11 +55,10 @@ namespace ShushaoEngine {
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		glBindVertexArray(0);
+		glUseProgram(0);
 	}
 
 	void SpriteRenderer::exit() {
-
-		cout << "[" << InstanceID << "] Sprite Renderer Exit" << endl;
 
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);

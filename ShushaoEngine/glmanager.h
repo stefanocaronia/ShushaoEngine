@@ -18,47 +18,33 @@ namespace ShushaoEngine {
 
 	class GLManager {
 
-		private:
-
-			GLManager() {}
-			GLManager(const GLManager&);
-			GLManager& operator=(const GLManager&);
-
 		public:
 
-			static GLManager& GetInstance() {
-				static GLManager instance;
-				return instance;
-			}
+			static SDL_GLContext gContext;
+			static SDL_Window* gWindow;
+			static SDL_Renderer* gRenderer;
+			static SDL_Joystick* Joystick;
 
-			SDL_GLContext gContext;
-			SDL_Window* gWindow;
-			SDL_Renderer* gRenderer;
-			SDL_Joystick* Joystick;
+			static mat4 Projection;
+			static mat4 View;
 
-			glm::mat4 Projection;
-			glm::mat4 View;
+			static bool Fullscreen;
 
-			unsigned int DESKTOP_WIDTH = 1920;
-			unsigned int DESKTOP_HEIGHT = 1080;
-			unsigned int WIDTH = 800;
-			unsigned int HEIGHT = 600;
+			static unsigned int DESKTOP_WIDTH;
+			static unsigned int DESKTOP_HEIGHT;
+			static unsigned int WIDTH;
+			static unsigned int HEIGHT;
 
-			bool Fullscreen = false;
+			static bool Init(string, bool);
+			static void Quit();
 
-			static GLuint vertexbuffer;
+			static void Clear();
+			static void Clear(float, float, float, float, float);
 
-			bool Init(string, bool);
-			void Quit();
-
-			void Clear();
-			void Clear(float, float, float, float, float);
-
-			void SetFullscreen(bool);
-			void ToggleFullscreen();
-			void Swap();
-			void Reset();
-
+			static void SetFullscreen(bool);
+			static void ToggleFullscreen();
+			static void Swap();
+			static void Reset();
 	};
 
 }

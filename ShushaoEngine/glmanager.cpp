@@ -4,8 +4,11 @@
 #include "transform.h"
 #include "shader.h"
 
+#include <glm.hpp>
 #include <iostream>
+
 using namespace std;
+using namespace glm;
 
 namespace ShushaoEngine {
 
@@ -109,6 +112,21 @@ namespace ShushaoEngine {
 		glLoadIdentity();
 	}
 
+
+	// inizialize static properties
+
+	SDL_GLContext GLManager::gContext;
+	SDL_Window* GLManager::gWindow;
+	SDL_Renderer* GLManager::gRenderer;
+	SDL_Joystick* GLManager::Joystick;
+	mat4 GLManager::Projection;
+	mat4 GLManager::View;
+	bool GLManager::Fullscreen = false;
+
+	unsigned int GLManager::DESKTOP_WIDTH;
+	unsigned int GLManager::DESKTOP_HEIGHT;
+	unsigned int GLManager::WIDTH;
+	unsigned int GLManager::HEIGHT;
 }
 
 

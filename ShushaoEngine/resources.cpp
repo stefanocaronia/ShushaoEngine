@@ -14,5 +14,5 @@ namespace ShushaoEngine {
 		Assets.clear();
 	}
 
-	map<string, Asset*> Resources::Assets;
+	map<string, Object*> Resources::Assets;
 }

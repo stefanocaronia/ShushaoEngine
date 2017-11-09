@@ -1,6 +1,10 @@
 #include <iostream>
 
 #include "game.h"
+#include "scenemanager.h"
+#include "resources.h"
+#include "shader.h"
+#include "texture.h"
 
 #include "setime.h"
 #include "level.h"
@@ -9,8 +13,16 @@
 using namespace std;
 using namespace glm;
 
-Game::Game(string title) : GLGame(title) {
-   // do
+Game::Game(string title) : Cycle(title) {
+
+  	Time::setFrameRateLimit(120.0f);
+	Time::setFixedRateLimit(20.0f);
+
+	// Config::displayWidth = 600;
+	// Config::displayHeight = (int)(Config::displayWidth / Config::displayAspect);
+
+	Config::Layers[1] = "Player";
+	Config::Layers[2] = "Background";
 }
 
 Game::~Game() {
@@ -19,35 +31,39 @@ Game::~Game() {
 
 void Game::Awake() {
 
-	Scenes.LoadScene<Level>();
+	Resources::Load<Texture>("assets/pancrazio.png");
+	Resources::Load<Shader>("shaders/standard");
 
-	Scenes.activeScene->activeCamera->backgroundColor = {0.2f, 0.2f, 0.8f, 1.0f};
-	Scenes.activeScene->activeCamera->orthographic = true;
-	Scenes.activeScene->activeCamera->orthographicSize = 5.0f;
-	Scenes.activeScene->activeCamera->rect = {0.0f, 0.0f, 1.0f, 1.0f};
+	Shader* sha = Resources::Get<Shader>("standard");
+	cout << "Shader caricato: " << sha->name << endl;
 
-	Scenes.activeScene->activeCamera->transform->position = vec3(0.0f, 0.0f, -4.0f);
-	Scenes.activeScene->activeCamera->transform->rotation = quat(0.0f, 0.0f, 0.0f, 0.0f);
-	Scenes.activeScene->activeCamera->transform->up = vec3(0.0f, 1.0f, 0.0f);
+	//GameData::PrintAllObjects();
+
+	SceneManager::LoadScene<Level>();
+
+	SceneManager::activeScene->activeCamera->backgroundColor = {0.2f, 0.2f, 0.8f, 1.0f};
+	SceneManager::activeScene->activeCamera->orthographic = true;
+	SceneManager::activeScene->activeCamera->orthographicSize = 5.0f;
+	SceneManager::activeScene->activeCamera->rect = {0.0f, 0.0f, 1.0f, 1.0f};
+
+	SceneManager::activeScene->activeCamera->transform->position = vec3(0.0f, 0.0f, -4.0f);
+	SceneManager::activeScene->activeCamera->transform->rotation = quat(0.0f, 0.0f, 0.0f, 0.0f);
+	SceneManager::activeScene->activeCamera->transform->up = vec3(0.0f, 1.0f, 0.0f);
 
 	// GameData::PrintAllObjects();
 }
 
 void Game::Start() {
 
-	//PlayerSR->init();
+
 }
 
 void Game::Update() {
-	//Player.transform->updateCycle();
 
-	//cout << Time::frameCount << endl;
 }
 
 void Game::Render() {
-	//PlayerSR->renderCycle();
 
-	//RUNNING = false;
 }
 
 void Game::FixedUpdate() {
@@ -94,7 +110,7 @@ void Game::Input() {
 	if (keys[SDL_SCANCODE_F11]) {
 		keys[SDL_SCANCODE_F11] = false;
 
-		GL.ToggleFullscreen();
+		GLManager::ToggleFullscreen();
 		SDL_Delay(100);
 	}
 }

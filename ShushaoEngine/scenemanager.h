@@ -7,31 +7,18 @@
 
 namespace ShushaoEngine {
 
-	class GLGame;
+	//class Cycle;
 
 	class SceneManager {
 
-		private:
-
-			SceneManager() {}
-			~SceneManager();
-			SceneManager(const SceneManager&);
-			SceneManager& operator=(const SceneManager&);
-
 		public:
 
-			static SceneManager& GetInstance(GLGame* pGame) {
-				static SceneManager instance;
-				instance.game = pGame;
-				return instance;
-			}
+			//static Cycle* game;
 
-			GLGame* game;
-
-			Scene* activeScene;
+			static Scene* activeScene;
 
 			template<class T>
-			T* LoadScene() { // Adds a scene of class T
+			static T& LoadScene() { // Adds a scene of class T
 
 				// todo pause e restore dopo
 				T* scene = new T();
@@ -39,17 +26,19 @@ namespace ShushaoEngine {
 					delete(activeScene);
 					GameData::DestroyAll();
 				}
-				SetActiveScene(scene);
-				return scene;
+				SetActiveScene(*scene);
+				return *scene;
 			}
 
-			void SetActiveScene(Scene* scene) {
-				activeScene = scene;
-				GameData::activeScene = scene;
+			static void SetActiveScene(Scene& scene) {
+				activeScene = &scene;
+				GameData::activeScene = &scene;
 			}
+
+			static void Clear();
 
 			/*template<class T>
-			T* GetSceneByClass() {	// Returns the component of Type type if the game object has one attached, null if it doesn't.
+			static T* GetSceneByClass() {	// Returns the component of Type type if the game object has one attached, null if it doesn't.
 				for(Scene* scene: Scenes) {
 					if (dynamic_cast<T*>(scene))
 						return dynamic_cast<T*>(scene);
@@ -59,9 +48,8 @@ namespace ShushaoEngine {
 
 		protected:
 
-			vector<Scene*> Scenes;
+			static vector<Scene*> Scenes;
 
-		private:
 	};
 
 }

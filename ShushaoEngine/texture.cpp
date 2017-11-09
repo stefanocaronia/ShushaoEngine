@@ -3,6 +3,7 @@
 #include <string.h>
 #include <map>
 
+#include "utility.h"
 #include "texture.h"
 
 using namespace std;
@@ -23,7 +24,7 @@ namespace ShushaoEngine {
 	Texture::Texture(string filename) {
 		cout << "[" << InstanceID << "] Texture Constructor" << endl;
 		Load(filename);
-		name = basename(filename);
+		name = Utility::basename(filename);
 	}
 
 	Texture::~Texture()	{
@@ -60,7 +61,7 @@ namespace ShushaoEngine {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		//glGenerateMipmap(GL_TEXTURE_2D);
 
-		//SDLTexture = SDL_CreateTextureFromSurface(GL.gRenderer, Surface);
+		//SDLTexture = SDL_CreateTextureFromSurface(GLManager::gRenderer, Surface);
 
 		SDL_FreeSurface(Surface);
 

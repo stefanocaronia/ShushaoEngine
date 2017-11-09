@@ -4,32 +4,32 @@
 #include "sprite.h"
 #include "gameobject.h"
 #include "resources.h"
+#include "gamedata.h"
 
 using namespace ShushaoEngine;
 
 Level::Level() {
 
-	Texture* pancrazioTexture = new Texture();
+	/*Texture* pancrazioTexture = new Texture();
 	pancrazioTexture->name = "Pancrazio Texture";
 	pancrazioTexture->Load("assets/pancrazio.png");
 
 	Sprite* pancrazioSprite = new Sprite();
-    pancrazioSprite->texture = pancrazioTexture;
+    pancrazioSprite->texture = pancrazioTexture;*/
 
-	/*Sprite* pancrazioSprite = new Sprite();
-    pancrazioSprite->texture = Resources::Get<Texture>("pancrazio");*/
+	Sprite* pancrazioSprite = new Sprite();
+    pancrazioSprite->texture = Resources::Get<Texture>("pancrazio");
 
-    GameObject* Player = new GameObject();
+    cout << pancrazioSprite->texture->name;
 
-    Player->name = "Pancrazio";
+    GameObject* Player = AddGameObject("Pancrazio");
 
-	SpriteRenderer* PlayerSR = Player->AddComponent<SpriteRenderer>();
+    //Player->name = "Pancrazio";
+
+	/*SpriteRenderer* PlayerSR = Player->AddComponent<SpriteRenderer>();
     PlayerSR->sprite = pancrazioSprite;
 
-
-	//PlayerSR->shader = Resources::Get<Shader>("standard");
-    //PlayerSR->shader = new Shader("shaders/standard");
-
-    AddGameObject(Player);
+	PlayerSR->shader = Resources::Get<Shader>("standard");
+	cout << "playerSR shader: " << PlayerSR->shader->name;*/
 
 }

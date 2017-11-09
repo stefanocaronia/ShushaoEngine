@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+#include <algorithm>
+
 using namespace std;
 
 namespace ShushaoEngine {
@@ -23,6 +25,48 @@ namespace ShushaoEngine {
 		exit();
 	}
 
+	vector<Component*> Component::GetChildrenActiveComponents() {
+
+		cout << endl << " - cerco nei componenti di " << gameObject->name << endl;
+
+		if (!gameObject->activeSelf) return vector<Component*>();
+
+		vector<Component*> activeComponents;
+
+		cout << " - trovati " << gameObject->Components.size() << endl;
+
+		for (Component* c : gameObject->Components) {
+			cout << " - controllo " << c->name << " di " << c->gameObject->name << endl;
+			if (c->enabled) {
+				cout << " - attivo " << c->name << " di " << c->gameObject->name << endl;
+				activeComponents.push_back(c);
+			}
+		}
+		cout << " - ciclo i children di " << gameObject->name << endl;
+		for (Transform* t : gameObject->transform->children) {
+			cout << " - vado ad aprire i componenti di " << t->gameObject->name << endl;
+            vector<Component*> newComponents = t->GetChildrenActiveComponents();
+            activeComponents.insert(activeComponents.end(), newComponents.begin(), newComponents.end());
+        }
+
+        sort(activeComponents.begin(), activeComponents.end(), []( Component* ca, Component* cb ) {
+
+			int sortingLayerA, sortingLayerB, orderInLayerA, orderInLayerB;
+
+			sortingLayerA = ca->sortingLayerID;
+			orderInLayerA = ca->sortingOrder;
+			sortingLayerB = cb->sortingLayerID;
+			orderInLayerB = cb->sortingOrder;
+
+			if (sortingLayerA == sortingLayerB) return orderInLayerA < orderInLayerB;
+			else return sortingLayerA < sortingLayerB;
+
+			return false;
+		});
+
+		return activeComponents;
+	}
+
 	void Component::run(BaseCycle cycle) {
 
 		switch (cycle) {
@@ -33,13 +77,13 @@ namespace ShushaoEngine {
 				exit();
 				break;
 			case UPDATE:
-				updateCycle();
+				update();
 				break;
 			case FIXED_UPDATE:
-				fixedUpdateCycle();
+				fixed();
 				break;
 			case RENDER:
-				renderCycle();
+				render();
 				break;
 		}
 	}
@@ -59,7 +103,7 @@ namespace ShushaoEngine {
 		// to implement in derived classes
 	}
 
-	void Component::updateCycle() {
+	void Component::update() {
 
 		if (!started) {
 			Start();
@@ -67,13 +111,13 @@ namespace ShushaoEngine {
 		}
 	}
 
-	void Component::renderCycle() {
+	void Component::render() {
 
 		Update();
 		LateUpdate();
 	}
 
-	void Component::fixedUpdateCycle() {
+	void Component::fixed() {
 
 		FixedUpdate();
 	}

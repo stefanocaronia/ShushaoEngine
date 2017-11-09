@@ -1,11 +1,11 @@
 #pragma once
 
-#include "asset.h"
+#include "object.h"
 #include "glmanager.h"
 
 namespace ShushaoEngine {
 
-	class Texture : public Asset {
+	class Texture : public Object {
 
 		public:
 

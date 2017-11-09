@@ -63,17 +63,18 @@ namespace ShushaoEngine {
 			template<class T>
 			T* GetComponentsInParent(); // Returns all components of Type type in the GameObject or any of its parents.
 
+			vector<Component*> GetChildrenActiveComponents();
+
 			void SendMessage(string methodName);	// Calls the method named methodName on every MonoBehaviour in this game object.
 			void SendMessageUpwards(string methodName);	// Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour.
 
 			virtual void init();
 			virtual void exit();
-			virtual void updateCycle();
-			virtual void renderCycle();
-			virtual void fixedUpdateCycle();
+			virtual void update();
+			virtual void render();
+			virtual void fixed();
 
 			void run(BaseCycle);
-
 
 			//void CancelInvoke(); //	Cancels all Invoke calls on this MonoBehaviour.
 			//void Invoke(); //	Invokes the method methodName in time seconds.

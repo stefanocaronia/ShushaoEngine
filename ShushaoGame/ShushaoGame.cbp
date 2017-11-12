@@ -65,6 +65,8 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="shaders/standard.frag" />
 		<Unit filename="shaders/standard.vert" />
+		<Unit filename="shaders/wire.frag" />
+		<Unit filename="shaders/wire.vert" />
 		<Extensions>
 			<code_completion />
 			<envvars />

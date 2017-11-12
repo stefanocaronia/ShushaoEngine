@@ -11,32 +11,27 @@ using namespace std;
 namespace ShushaoEngine {
 
 	Shader::Shader() {
-
-        // default shaders for sprite rendering
-       /* VertexShaderCode =
-        #include "standard.vert"
-        ;
-
-        FragmentShaderCode =
-		#include "standard.frag"
-        ;*/
-
-		cout << "[" << InstanceID << "] Shader Constructor" << endl;
-		name = "Shader Standard";
-
-		Load("shaders/standard");
+		LOG(INFO, "[" + Utility::toString(InstanceID) + "] Shader Constructor");
+		loadWithName("shaders/standard", "Shader Standard");
 	}
 
 	Shader::Shader(string filename, string n) {
-		cout << "[" << InstanceID << "] Shader Constructor" << endl;
-		Load(filename);
-		name = n;
+		LOG(INFO, "[" + Utility::toString(InstanceID) + "] Shader Constructor");
+		loadWithName(filename, n);
 	}
 
 	Shader::Shader(string filename) {
-		cout << "[" << InstanceID << "] Shader Constructor" << endl;
-		Load(filename);
-		name = Utility::basename(filename);
+		LOG(INFO, "[" + Utility::toString(InstanceID) + "] Shader Constructor");
+		loadWithName(filename, Utility::basename(filename));
+	}
+
+	bool Shader::loadWithName(string filename, string n) {
+		if (Load(filename)) {
+			name = n;
+			Init();
+			return true;
+		}
+		return false;
 	}
 
 	Shader::~Shader(){
@@ -47,19 +42,33 @@ namespace ShushaoEngine {
 		if (programID > 0) glDeleteProgram(programID);
 	}
 
+	bool Shader::Init() {
+		if (programID > 0) {
+			glUseProgram(0);
+			glDeleteProgram(programID);
+		}
+
+		if (!Shader::compile()) {
+			LOG(ERROR, "Error Compiling Shader");
+			return false;
+		}
+		if (!Shader::link()) {
+			LOG(ERROR, "Error Linking Shader");
+			return false;
+		}
+
+		return true;
+	}
+
 	GLuint Shader::getProgram() {
 
 		if (programID > 0)
 			return programID;
-		if (!Shader::compile()) {
-			if (debug) fprintf(stdout, "Error Compiling Shader \n");
-			return 0;
-		}
-		if (!Shader::link()) {
-			if (debug) fprintf(stdout, "Error Linking Shader \n");
-			return 0;
-		}
-		return programID;
+
+		if (Init())
+			return programID;
+
+		return 0;
 	}
 
 	bool Shader::compile() {
@@ -68,7 +77,7 @@ namespace ShushaoEngine {
 		FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 
 		// Compile Vertex Shader
-		if (debug) printf("Compiling Vertex Shader\n");
+		LOG(INFO, "Compiling Vertex Shader");
 		char const * VertexSourcePointer = VertexShaderCode.c_str();
 		glShaderSource(VertexShaderID, 1, &VertexSourcePointer , NULL);
 		glCompileShader(VertexShaderID);
@@ -78,7 +87,7 @@ namespace ShushaoEngine {
 			return false;
 
 		// Compile Fragment Shader
-		if (debug) printf("Compiling Fragment shader\n");
+		LOG(INFO, "Compiling Fragment shader");
 		char const * FragmentSourcePointer = FragmentShaderCode.c_str();
 		glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer , NULL);
 		glCompileShader(FragmentShaderID);
@@ -92,7 +101,7 @@ namespace ShushaoEngine {
 
 	bool Shader::link() {
 
-		if (debug) fprintf(stdout, "Linking program\n");
+		LOG(INFO, "Linking program"); //fprintf(stdout, "Linking program\n");
 
 		// Link the program
 		programID = glCreateProgram();
@@ -124,7 +133,7 @@ namespace ShushaoEngine {
 			VertexShaderStream.close();
 
 		} else {
-			if (debug) cout << "Impossibile aprire il file " << vert.c_str() << endl;
+			LOG(ERROR, "Impossibile aprire il file " + Utility::toString(vert));
 		}
 
 		// Read the Fragment Shader code from the file
@@ -135,7 +144,7 @@ namespace ShushaoEngine {
 				FragmentShaderCode += "\n" + Line;
 			FragmentShaderStream.close();
 		} else {
-			if (debug) cout << "Impossibile aprire il file " << frag.c_str() << endl;
+			LOG(ERROR, "Impossibile aprire il file " + Utility::toString(frag));
 		}
 
 		return true;
@@ -147,7 +156,7 @@ namespace ShushaoEngine {
 		if (status == GL_FALSE) {
 			char infoLog[512];
 			glGetShaderInfoLog(shader, 512, NULL, infoLog);
-			if (debug) printf("- Shader Compilation log:\n%s", infoLog);
+			if (Debug::Enabled) LOG(INFO, infoLog);//printf("- Shader Compilation log:\n%s", infoLog);
 
 			/*GLint infoLogLength;
 			glGetShaderiv (shader, GL_INFO_LOG_LENGTH, &infoLogLength);
@@ -168,7 +177,7 @@ namespace ShushaoEngine {
 			glGetProgramiv (program, GL_INFO_LOG_LENGTH, &infoLogLength);
 			GLchar *infoLog= new GLchar[infoLogLength];
 			glGetProgramInfoLog (program, infoLogLength, NULL, infoLog);
-			if (debug) printf("- Program Compilation log:\n%s", infoLog);
+			if (Debug::Enabled) LOG(INFO, infoLog);; //printf("- Program Compilation log:\n%s", infoLog);
 			delete [] infoLog;
 			return false;
 		}

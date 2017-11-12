@@ -20,7 +20,7 @@ namespace ShushaoEngine {
 	}
 
 	Cycle::~Cycle() {
-		LOG("Cycle Destructor");
+		LOG(INFO, "Cycle Destructor");
 
 		SceneManager::Clear();
 		Resources::Clear();
@@ -61,7 +61,6 @@ namespace ShushaoEngine {
 			SceneManager::activeScene->ScanActiveComponentsInScene();
 
 			System::update();
-
 			Input();
 
 			if (Time::fixedDeltaTime >= Time::fixedLimitDuration) {
@@ -107,7 +106,7 @@ namespace ShushaoEngine {
 	}
 
 	void Cycle::exit() {
-		LOG("IN CYCLE EXIT");
+		LOG(INFO, "IN CYCLE EXIT");
 		End();
 		SceneManager::activeScene->run(Cycle::EXIT);
 		System::exit();

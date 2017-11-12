@@ -12,7 +12,7 @@ using namespace std;
 namespace ShushaoEngine {
 
 	Component::Component() {
-		cout << "[" << InstanceID << "] Component Constructor" << endl;
+		//cout << "[" << InstanceID << "] Component Constructor" << endl;
 		name = "Component";
 		enabled = true;
 
@@ -23,7 +23,7 @@ namespace ShushaoEngine {
 	}
 
 	Component::~Component() {
-		LOG("Component Destructor: " + name + " di " + entity->name);
+		//LOG(INFO, "Component Destructor: " + name + " di " + entity->name);
 		OnDestroy();
 		exit();
 	}

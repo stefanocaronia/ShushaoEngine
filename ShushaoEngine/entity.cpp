@@ -25,7 +25,7 @@ namespace ShushaoEngine {
 
 	Entity::~Entity() {
 
-		LOG("Entity Destructor: " + name);
+		LOG(INFO, "Entity Destructor: " + name);
 
 		// distruggo tutti i components
 		for(Component* pCO : Components) {
@@ -65,6 +65,26 @@ namespace ShushaoEngine {
         for (Transform* t : transform->children) {
 			//cout << "In trasnform di " <<  t->entity->name << endl;
             t->entity->run(cycle);
+        }
+
+	}
+
+	void Entity::PrintHierarchy(int level) {
+
+		if (level > 0) cout << " " << (char)192;
+		else cout << "*** Scene '" << name << "' Hiererchy: " << endl << endl;
+
+		for (int i = 0; i < level; i++) cout << (char)196;
+
+		cout << " " << name << (activeSelf ? "+": "");
+
+        for (Component* c : Components) cout << " [" <<c->name << (c->enabled ? "+": "") << "]";
+
+        cout << endl;
+
+        ++level;
+        for (Transform* t : transform->children) {
+            t->entity->PrintHierarchy(level);
         }
 
 	}

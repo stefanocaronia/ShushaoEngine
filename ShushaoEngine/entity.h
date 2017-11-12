@@ -6,6 +6,7 @@
 #include "transform.h"
 #include "component.h"
 #include "spriterenderer.h"
+#include "linerenderer.h"
 
 using namespace std;
 
@@ -39,6 +40,7 @@ namespace ShushaoEngine {
 			void run(string);
 
 			vector<Component*> GetActiveComponentsInChildren();
+			void PrintHierarchy(int);
 
 			bool GetActiveState();
 

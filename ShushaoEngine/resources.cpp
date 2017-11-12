@@ -12,14 +12,14 @@ using namespace std;
 namespace ShushaoEngine {
 
 	void Resources::Clear() {
-		LOG("Cancello le resources " + Utility::toString(Assets.size()));
+		LOG(INFO, "Cancello le resources " + Utility::toString(Assets.size()));
 		vector<Object*> toDelete;
 		for (auto const& asset : Assets) {
 			toDelete.push_back(Assets[asset.first]);
 		}
 
 		for (Object* obj : toDelete) {
-			LOG("Cancello " + obj->name + "(" + Utility::toString(obj) +")");
+			LOG(INFO, "Cancello " + obj->name + "(" + Utility::toString(obj) +")");
 			delete(obj);
 		}
 		Assets.clear();

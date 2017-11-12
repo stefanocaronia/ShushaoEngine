@@ -6,7 +6,7 @@
 namespace ShushaoEngine {
 
 	void SceneManager::Clear() {
-		LOG("SVUOTO LO SCENEMANAGER");
+		LOG(INFO, "SVUOTO LO SCENEMANAGER");
 		for(Scene* s : Scenes) {
 			delete(s);
 		}

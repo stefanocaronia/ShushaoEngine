@@ -62,6 +62,7 @@ namespace ShushaoEngine {
 	// inizializations of members
 
 	Scene* GameData::activeScene;
+	Camera* GameData::activeCamera;
 
 	// FORSE DA ELIMINARE, SONO GESTITI NELLE SCENE
 	vector<Object*> GameData::Objects;

@@ -41,11 +41,12 @@ namespace ShushaoEngine {
 		int mills = (int) (mil % 1000) ;
 		int seconds = (int) (mil / 1000) % 60 ;
 		int minutes = (int) ((mil / (1000*60)) % 60);
-		int hours   = (int) ((mil / (1000*60*60)) % 24);
+		//int hours   = (int) ((mil / (1000*60*60)) % 24);
 
 		ostringstream clock;
 
-		clock << Utility::zerofill(hours, 2) << ":" << Utility::zerofill(minutes, 2) << ":" << Utility::zerofill(seconds, 2)<< "." << Utility::zerofill(mills, 3);
+		// clock << Utility::zerofill(hours, 2) << ":" << Utility::zerofill(minutes, 2) << ":" << Utility::zerofill(seconds, 2)<< "." << Utility::zerofill(mills, 3);
+		clock <<Utility::zerofill(minutes, 2) << ":" << Utility::zerofill(seconds, 2)<< "." << Utility::zerofill(mills, 3);
 
 		return clock.str();
 	}
@@ -56,8 +57,8 @@ namespace ShushaoEngine {
 	float Time::renderDeltaTime = 0.0f;
 	float Time::fixedTime = 0.0f;
 	float Time::frameCount = 0.0f;
-	float Time::fixedRateLimit = 20.0f;
-	float Time::fixedLimitDuration = 1.0f / 20.0f;
+	float Time::fixedRateLimit = 60.0f;
+	float Time::fixedLimitDuration = 1.0f / 60.0f;
 	float Time::frameLimitDuration = 0.0f;
 	float Time::frameRateLimit = 0.0f;
 	float Time::renderTime = 0.0f;

@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "libs.h"
+#include "debug.h"
 #include "game.h"
 #include "scenemanager.h"
 #include "resources.h"
@@ -35,8 +36,8 @@ void Game::Awake() {
 	Resources::Load<Texture>("assets/pancrazio.png");
 	Resources::Load<Texture>("assets/pancsmile.png");
 	Resources::Load<Shader>("shaders/standard");
-	Resources::Load<Shader>("shaders/standard", "shader2");
 
+	Debug::DebugGridMode = GridMode::ORTHOGRAFIC;
 
 	//GameData::PrintAllObjects();
 
@@ -47,9 +48,11 @@ void Game::Awake() {
 	SceneManager::activeScene->activeCamera->orthographicSize = 5.0f;
 	SceneManager::activeScene->activeCamera->rect = {0.0f, 0.0f, 1.0f, 1.0f};
 
-	SceneManager::activeScene->activeCamera->transform->position = vec3(0.0f, 0.0f, -4.0f);
+	SceneManager::activeScene->activeCamera->transform->position = vec3(0.0f, 0.0f, 10.0f);
 	SceneManager::activeScene->activeCamera->transform->rotation = quat(0.0f, 0.0f, 0.0f, 0.0f);
 	SceneManager::activeScene->activeCamera->transform->up = vec3(0.0f, 1.0f, 0.0f);
+
+	SceneManager::activeScene->PrintHierarchy();
 
 	//GameData::PrintAllObjects();
 }

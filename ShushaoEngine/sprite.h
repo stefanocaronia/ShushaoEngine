@@ -40,10 +40,11 @@ namespace ShushaoEngine {
 			};
 
 			GLfloat uv[8] = { // The base texture coordinates of the sprite mesh.
-				1.0f, 1.0f, // Bottom-right of texture
 				0.0f, 1.0f, // Top-right of texture
-				0.0f, 0.0f, // Top-left of texture
-				1.0f, 0.0f // Bottom-left of texture
+				1.0f, 1.0f, // Bottom-right of texture
+				1.0f, 0.0f, // Bottom-left of texture
+				0.0f, 0.0f // Top-left of texture
+
 			};
 
 			GLuint indexes[6] = {
@@ -56,16 +57,11 @@ namespace ShushaoEngine {
 			GLuint indexBuffer;
 			GLuint VAO;
 
-			vector<vec3> getVertices();
-			vector<vec2> getUV();
-
 			//static Sprite* Create(Texture*, Rect, vec2);
 
 			// metodi
 
 			void updateVertices();
-
-			void initVAO();
 
 		protected:
 

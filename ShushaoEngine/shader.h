@@ -9,7 +9,8 @@ namespace ShushaoEngine {
 
 	enum ShaderLocation {
 		POSITION = 0,
-		TEXCOORD = 1
+		TEXCOORD = 1,
+		COLOR = 2
 	};
 
 	class Shader : public Object {
@@ -20,12 +21,15 @@ namespace ShushaoEngine {
 			Shader(string);
 			Shader(string, string);
 
+			bool Init();
+
+			bool loadWithName(string, string);
+
 			~Shader();
 
 			bool Load(string);
 
 			GLuint getProgram();
-			GLuint getLastProgram();
 			GLuint programID = 0;
 
 			string VertexShaderCode;

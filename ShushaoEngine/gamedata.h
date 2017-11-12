@@ -38,7 +38,7 @@ namespace ShushaoEngine {
 				return results;
 			}			*/
 
-			//static Camera* activeCamera;
+			static Camera* activeCamera;
 			static Scene* activeScene;
 
 			static vector<Object*> Objects;

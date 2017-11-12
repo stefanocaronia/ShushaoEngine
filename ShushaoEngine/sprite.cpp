@@ -14,6 +14,9 @@ namespace ShushaoEngine {
 
 	Sprite::~Sprite() {
 		delete(texture);
+		glDeleteBuffers(1, &vertexBuffer);
+		glDeleteBuffers(1, &indexBuffer);
+		glDeleteBuffers(1, &uvBuffer);
 	}
 
 	Sprite::Sprite(string n) {
@@ -54,7 +57,7 @@ namespace ShushaoEngine {
 
 	}
 
-	vector<vec3> Sprite::getVertices() {
+	/*vector<vec3> Sprite::getVertices() {
 		vector<vec3> vectorVertices;
 		for (unsigned int i=0; i<=(sizeof(vertices)/sizeof(GLfloat)); i+=3) {
 			if (i>0) vectorVertices.push_back(vec3(vertices[i-3], vertices[i-2], vertices[i-1]));
@@ -68,28 +71,6 @@ namespace ShushaoEngine {
 			if (i>0) vectorUV.push_back(vec2(uv[i-2],uv[i-1]));
 		}
 		return vectorUV;
-	}
-
-	void Sprite::initVAO() {
-
-		if (VAO > 0) return;
-
-		glGenVertexArrays(1, &VAO);
-		glBindVertexArray(VAO);
-
-		glGenBuffers(1, &vertexBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STATIC_DRAW);
-
-		glGenBuffers(1, &indexBuffer);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indexes), &indexes, GL_STATIC_DRAW);
-
-		glGenBuffers(1, &uvBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, uvBuffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(uv), &uv, GL_STATIC_DRAW);
-
-		glBindVertexArray(0);
-	}
+	}*/
 
 }

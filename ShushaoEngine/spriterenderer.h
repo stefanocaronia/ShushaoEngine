@@ -37,10 +37,16 @@ namespace ShushaoEngine {
 
 			//SpriteTileMode tileMode; //	The current tile mode of the Sprite Renderer.
 
+			GLuint vertexBuffer;
+			GLuint uvBuffer;
+			GLuint indexBuffer;
+			GLuint VAO;
+
 			Sprite* sprite;
 			Shader* shader;
 
 			void init();
+			void update();
 			void exit();
 
 			void render();

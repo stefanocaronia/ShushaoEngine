@@ -42,7 +42,7 @@ namespace ShushaoEngine {
 
 		if (!Surface) {
 			//printf("IMG_Load: %s\n", IMG_GetError());
-			LOG("IMG_Load " + Utility::toString(IMG_GetError()));
+			LOG(INFO, "IMG_Load " + Utility::toString(IMG_GetError()));
 			return false;
 		}
 

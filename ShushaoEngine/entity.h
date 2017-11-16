@@ -44,7 +44,7 @@ namespace ShushaoEngine {
 			vector<Component*> GetActiveComponentsInChildren();
 			void PrintHierarchy(int);
 
-			bool GetActiveState();
+			bool isActiveInHierarchy();
 
 			template<class T>
 			T* AddComponent() { // Adds a component class named className to the game object.

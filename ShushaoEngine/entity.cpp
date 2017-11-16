@@ -45,7 +45,7 @@ namespace ShushaoEngine {
 
 	void Entity::run(string cycle) {
 		//cout << "Entity " << name << ": run " << to_string(cycle) << endl;
-		if (!GetActiveState()) {
+		if (!isActiveInHierarchy()) {
 			//cout << "Entity " << name << ": non attivo " << endl;
 			return;
 		}
@@ -87,17 +87,14 @@ namespace ShushaoEngine {
 
 	}
 
-	bool Entity::GetActiveState() {
+	bool Entity::isActiveInHierarchy() {
 		if (!activeSelf) return false;
 
 		/*Transform* p = transform->GetParent();
 		while (p != nullptr) {
-			if (!p->entity->activeSelf) {
-				activeInHierarchy = false;
-				return false;
-			} else {
-				p = p->GetParent();
-			}
+			if (!p->entity->activeSelf)
+				return activeInHierarchy = false;
+			p = p->GetParent();
 		}*/
 
 		return true;

@@ -22,8 +22,8 @@ namespace ShushaoEngine {
 
 	// init
 
-	bool SceneManager::activeSceneSet;
+	bool SceneManager::activeSceneSet = false;
 	vector<Scene*> SceneManager::Scenes;
-	Scene* SceneManager::activeScene;
+	Scene* SceneManager::activeScene = nullptr;
 
 }

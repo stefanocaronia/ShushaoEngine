@@ -7,9 +7,3 @@
 #include <gtc/matrix_transform.hpp>
 #include <gtx/transform.hpp>
 #include <gtc/quaternion.hpp>
-
-namespace ShushaoEngine {}
-
-using namespace std;
-using namespace ShushaoEngine;
-

@@ -1,5 +1,5 @@
 #pragma once
-#include "libs.h"
+#include "gllibs.h"
 #include "texture.h"
 
 using namespace std;

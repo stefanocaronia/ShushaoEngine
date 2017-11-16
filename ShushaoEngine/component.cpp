@@ -27,9 +27,19 @@ namespace ShushaoEngine {
 	}
 
 	Component::~Component() {
-		//LOG(INFO, "Component Destructor: " + name + " di " + entity->name);
-		OnDestroy();
+		LOG(INFO, "Component Destructor: " + name + " di " + entity->name);
+
 		exit();
+	}
+
+	void Component::Enable() {
+		enabled = true;
+		OnEnable();
+	}
+
+	void Component::Disable() {
+		enabled = false;
+		OnDisable();
 	}
 
 	vector<Component*> Component::GetActiveComponentsInChildren() {
@@ -86,10 +96,10 @@ namespace ShushaoEngine {
 	// usato solo con i metodi di cycle della base class
 	void Component::run(string cycle) {
 		if (cycle == Cycle::INIT) init();
-		if (cycle == Cycle::UPDATE) update();
-		if (cycle == Cycle::RENDER) render();
-		if (cycle == Cycle::FIXED) fixed();
-		if (cycle == Cycle::EXIT) exit();
+		else if (cycle == Cycle::UPDATE) update();
+		else if (cycle == Cycle::RENDER) render();
+		else if (cycle == Cycle::FIXED) fixed();
+		else if (cycle == Cycle::EXIT) exit();
 	}
 
 	// usato per i metodi custom delle classi derivate (riceve i messages)
@@ -98,38 +108,48 @@ namespace ShushaoEngine {
 	}
 
 	bool Component::isActiveAndEnabled() {
-		return enabled && entity->activeSelf && entity->activeInHierarchy;
+		return enabled && entity->activeSelf && entity->isActiveInHierarchy();
 	}
 
 	void Component::init() {
+
 		Awake();
 	}
 
-	void Component::exit() {
-		// to implement in derived classes
+	void Component::fixed() {
+		currentEnable = isActiveAndEnabled();
+		if (!currentEnable) return;
+
+		FixedUpdate();
 	}
 
 	void Component::update() {
+		if (!currentEnable) return;
 
 		if (!started) {
 			Start();
 			started = true;
 		}
-	}
 
-	void Component::render() {
 		Update();
 		LateUpdate();
 	}
 
-	void Component::fixed() {
+	void Component::render() {
+		if (!currentEnable) return;
 
-		FixedUpdate();
+		Render();
+		OnPostRender();
+	}
+
+	void Component::exit() {
+		OnDestroy();
 	}
 
 	void Component::Awake() {}
 	void Component::Start() {}
 	void Component::Update() {}
+	void Component::Render() {}
 	void Component::FixedUpdate() {}
 	void Component::LateUpdate() {}
 	void Component::OnPostRender() {}

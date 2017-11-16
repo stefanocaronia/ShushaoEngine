@@ -1,7 +1,6 @@
 #pragma once
 
-#include "entity.h"
-#include "spriterenderer.h"
+#include "globals.h"
 
 class Pancrazio : public Entity {
 	public:

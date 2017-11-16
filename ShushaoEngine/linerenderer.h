@@ -3,7 +3,7 @@
 #include <vector>
 #include <glm.hpp>
 
-#include "libs.h"
+#include "gllibs.h"
 #include "renderer.h"
 #include "color.h"
 #include "shader.h"
@@ -35,10 +35,10 @@ namespace ShushaoEngine {
 			void AddLine(vec3, vec3, Color);
 			void AddPolyline(vector<vec3>, Color);
 
-			void init();
-			void exit();
+			void Awake();
+			void Render();
+			void OnDestroy();
 
-			void render();
 	};
 
 }

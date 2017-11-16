@@ -27,29 +27,32 @@ namespace ShushaoEngine {
 		System::Clear();
 	}
 
-	void Cycle::init() {
+	bool Cycle::init() {
 
 		for (bool& k : keys) k = false;
 
 		GLManager::WIDTH = Config::displayWidth;
 		GLManager::HEIGHT = Config::displayHeight;
-		GLManager::Fullscreen = Config::Fullscreen;
+		GLManager::fullscreen = Config::fullscreen;
 		GLManager::Init(name, false);
 
 		System::init();
 
+		// here must be loaded the active scene
 		Awake();
+
+		return true;
 	}
 
 	void Cycle::run() {
 
+		if (!SceneManager::activeSceneSet)
+			return;
+
 		SceneManager::activeScene->ScanActiveComponentsInScene();
-
-        //
-
 		SceneManager::activeScene->run(Cycle::INIT);
 
-		GLManager::SetFullscreen(Config::Fullscreen);
+		GLManager::SetFullscreen(Config::fullscreen);
 		GLManager::Clear(SceneManager::activeScene->activeCamera->backgroundColor.r, SceneManager::activeScene->activeCamera->backgroundColor.g, SceneManager::activeScene->activeCamera->backgroundColor.b, 1.0f, 1.0f);
 
 		Start();
@@ -64,16 +67,13 @@ namespace ShushaoEngine {
 			System::update();
 			Input();
 
-			if (Time::fixedDeltaTime >= Time::fixedLimitDuration) {
+			if (Time::fixedDeltaTime >= Time::fixedLimitDuration)
 				fixed();
-			}
 
-			SceneManager::activeScene->run(Cycle::UPDATE);
 			update();
 
-			if (Time::renderDeltaTime >= Time::frameLimitDuration) {
+			if (Time::renderDeltaTime >= Time::frameLimitDuration)
 				render();
-			}
 		}
 
 		exit();
@@ -81,27 +81,23 @@ namespace ShushaoEngine {
 
 	void Cycle::render() {
 		Time::renderTime = Time::GetTime();
-
 		GLManager::Reset();
-		GLManager::View = SceneManager::activeScene->activeCamera->getViewMatrix();
-
 		SceneManager::activeScene->run(Cycle::RENDER);
-
 		Render();
-
 		Time::frameCount++;
-
 		GLManager::Swap();
 	}
 
 	void Cycle::update() {
 		Time::realtimeSinceStartup = Time::GetTime();
+		SceneManager::activeScene->run(Cycle::UPDATE);
 		Update();
 	}
 
 	void Cycle::fixed() {
 		Time::fixedTime = Time::GetTime();
 		Time::inFixedTimeStep = true;
+		SceneManager::activeScene->run(Cycle::FIXED);
 		FixedUpdate();
 		Time::inFixedTimeStep = false;
 	}

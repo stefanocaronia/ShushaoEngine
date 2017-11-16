@@ -1,20 +1,14 @@
 #pragma once
 
-#include <glm.hpp>
 #include <vector>
+#include <string>
 
-#include "libs.h"
-#include "camera.h"
+#include "gllibs.h"
 
 using namespace std;
 using namespace glm;
 
 namespace ShushaoEngine {
-
-	class Sprite;
-	class Texture;
-	class SpriteRenderer;
-	class Transform;
 
 	class GLManager {
 
@@ -25,10 +19,7 @@ namespace ShushaoEngine {
 			static SDL_Renderer* gRenderer;
 			static SDL_Joystick* Joystick;
 
-			static mat4 Projection;
-			static mat4 View;
-
-			static bool Fullscreen;
+			static bool fullscreen;
 
 			static unsigned int DESKTOP_WIDTH;
 			static unsigned int DESKTOP_HEIGHT;

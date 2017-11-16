@@ -1,17 +1,6 @@
-#include "level.h"
-#include "linerenderer.h"
-#include "spriterenderer.h"
-#include "scenemanager.h"
-#include "texture.h"
-#include "sprite.h"
-#include "entity.h"
-#include "resources.h"
-#include "gamedata.h"
-#include "debug.h"
-#include "pancrazio.h"
 #include "globals.h"
-
-using namespace ShushaoEngine;
+#include "level.h"
+#include "pancrazio.h"
 
 Level::Level() {
 

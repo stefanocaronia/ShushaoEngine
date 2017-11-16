@@ -1,10 +1,6 @@
 #pragma once
 
-#include <string>
-
-#include "cycle.h"
-
-using namespace ShushaoEngine;
+#include "globals.h"
 
 class Game : public Cycle {
 

@@ -1,9 +1,5 @@
 #include "pancrazio.h"
-#include "resources.h"
-#include "shader.h"
-#include "spriterenderer.h"
 #include "mover.h"
-#include "globals.h"
 
 Pancrazio::Pancrazio() {
 

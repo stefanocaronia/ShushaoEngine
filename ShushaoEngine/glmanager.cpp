@@ -1,14 +1,5 @@
-#include "libs.h"
+#include "gllibs.h"
 #include "glmanager.h"
-#include "spriterenderer.h"
-#include "sprite.h"
-#include "transform.h"
-#include "shader.h"
-
-#include <SDL.h>
-
-#include <glm.hpp>
-#include <iostream>
 
 using namespace std;
 using namespace glm;
@@ -17,7 +8,7 @@ namespace ShushaoEngine {
 
 	bool GLManager::Init(string title, bool fs) {
 
-		Fullscreen = fs;
+		fullscreen = fs;
 
 		SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK);
 		IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
@@ -38,7 +29,7 @@ namespace ShushaoEngine {
 		DESKTOP_WIDTH = dm.w;
 		DESKTOP_HEIGHT = dm.h;
 
-		if (Fullscreen) {
+		if (fullscreen) {
 			gWindow = SDL_CreateWindow(title.c_str(), 0, 0, DESKTOP_WIDTH, DESKTOP_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN_DESKTOP);
 		} else {
 			gWindow = SDL_CreateWindow(title.c_str(), DESKTOP_WIDTH / 2 - WIDTH / 2, DESKTOP_HEIGHT / 2 - HEIGHT / 2, WIDTH, HEIGHT, SDL_WINDOW_OPENGL);
@@ -92,8 +83,8 @@ namespace ShushaoEngine {
 	}
 
 	void GLManager::SetFullscreen(bool fs) {
-		Fullscreen = fs;
-		if (Fullscreen) {
+		fullscreen = fs;
+		if (fullscreen) {
 			SDL_SetWindowFullscreen(gWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
 			glViewport(0, 0, DESKTOP_WIDTH, DESKTOP_HEIGHT);
 		} else {
@@ -103,7 +94,7 @@ namespace ShushaoEngine {
 	}
 
 	void GLManager::ToggleFullscreen() {
-		SetFullscreen(!Fullscreen);
+		SetFullscreen(!fullscreen);
 	}
 
 	void GLManager::Swap() {
@@ -122,9 +113,8 @@ namespace ShushaoEngine {
 	SDL_Window* GLManager::gWindow;
 	SDL_Renderer* GLManager::gRenderer;
 	SDL_Joystick* GLManager::Joystick;
-	mat4 GLManager::Projection;
-	mat4 GLManager::View;
-	bool GLManager::Fullscreen = false;
+
+	bool GLManager::fullscreen = false;
 
 	unsigned int GLManager::DESKTOP_WIDTH;
 	unsigned int GLManager::DESKTOP_HEIGHT;

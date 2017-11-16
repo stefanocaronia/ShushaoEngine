@@ -1,8 +1,6 @@
 #pragma once
 
-#include "scene.h"
-
-using namespace ShushaoEngine;
+#include "globals.h"
 
 class Level : public Scene {
 	public:

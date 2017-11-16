@@ -1,5 +1,5 @@
 #include "linerenderer.h"
-#include "libs.h"
+#include "gllibs.h"
 #include "transform.h"
 #include "color.h"
 #include "debug.h"
@@ -47,7 +47,7 @@ namespace ShushaoEngine {
 		}
 	}
 
-	void LineRenderer::init() {
+	void LineRenderer::Awake() {
 
 		glGenVertexArrays(1, &VAO);
 		glBindVertexArray(VAO);
@@ -75,7 +75,7 @@ namespace ShushaoEngine {
 		glBindVertexArray(0);
 	}
 
-	void LineRenderer::render() {
+	void LineRenderer::Render() {
 
 		glBindVertexArray(VAO);
 		glUseProgram(shader->getProgram());
@@ -94,7 +94,7 @@ namespace ShushaoEngine {
 		glBindVertexArray(0);
 	}
 
-	void LineRenderer::exit() {
+	void LineRenderer::OnDestroy() {
 
 		glUseProgram(0);
 		glDisableVertexAttribArray(0);

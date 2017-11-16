@@ -1,6 +1,6 @@
 # pragma once
 
-#include "libs.h"
+#include "gllibs.h"
 #include "entity.h"
 #include "camera.h"
 

@@ -4,7 +4,7 @@
 #include "config.h"
 #include "debug.h"
 #include "camera.h"
-#include "libs.h"
+#include "gllibs.h"
 #include "transform.h"
 
 using namespace std;
@@ -40,7 +40,6 @@ namespace ShushaoEngine {
 	mat4 Camera::getViewMatrix() {
 		return glm::lookAt(transform->position, transform->forward, transform->up);
 	}
-
 
 	float Camera::getDepth() {
 		return depth;

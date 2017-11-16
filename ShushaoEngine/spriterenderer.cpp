@@ -21,7 +21,7 @@ namespace ShushaoEngine {
 		return (sprite != nullptr && shader != nullptr);
 	}
 
-	void SpriteRenderer::init() {
+	void SpriteRenderer::Awake() {
 
 		if (!isReady()) return;
 
@@ -52,7 +52,7 @@ namespace ShushaoEngine {
 
 	}
 
-	void SpriteRenderer::update() {
+	void SpriteRenderer::Update() {
 
 		if (!isReady()) return;
 
@@ -62,7 +62,7 @@ namespace ShushaoEngine {
 
 	}
 
-	void SpriteRenderer::render() {
+	void SpriteRenderer::Render() {
 
 		if (!isReady()) return;
 
@@ -83,7 +83,7 @@ namespace ShushaoEngine {
 		glBindVertexArray(0);
 	}
 
-	void SpriteRenderer::exit() {
+	void SpriteRenderer::OnDestroy() {
 
 		if (!isReady()) return;
 

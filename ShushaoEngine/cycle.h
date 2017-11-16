@@ -15,9 +15,8 @@ namespace ShushaoEngine {
 
 			string name;
 
-			virtual void run();
-			virtual void exit();
-			virtual void init();
+			bool init();
+			void run();
 
 			static string INIT;
 			static string UPDATE;
@@ -36,14 +35,19 @@ namespace ShushaoEngine {
 			virtual void FixedUpdate() = 0;
 			virtual void End() = 0;
 
-			virtual void update();
-			virtual void render();
-			virtual void fixed();
 
 			bool RUNNING = true;
 			bool READY = false;
 
 			bool keys[350];
+
+		private:
+
+			void update();
+			void render();
+			void fixed();
+			void exit();
+
 
 	};
 

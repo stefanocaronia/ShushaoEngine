@@ -26,7 +26,7 @@ namespace ShushaoEngine {
 	}
 
 	Texture::~Texture()	{
-		SDL_FreeSurface(Surface);
+		//SDL_FreeSurface(Surface);
 		//SDL_DestroyTexture(SDLTexture);
 		//SDLTexture = NULL;
 

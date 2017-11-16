@@ -1,8 +1,10 @@
 #pragma once
 
-enum SortingLayers {
+#include "shushaoengine.h"
 
+using namespace ShushaoEngine;
+
+enum SortingLayers {
     BACKGROUND,
     CHARACTERS
-
 };

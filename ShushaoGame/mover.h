@@ -1,12 +1,12 @@
 #pragma once
 
-#include "component.h"
+#include "globals.h"
 
-using namespace ShushaoEngine;
-
-class Mover : public Component {
+class Mover : public Program {
 
 	public:
+
+
 
 	protected:
 

@@ -5,7 +5,7 @@
 		<Option title="ShushaoEngine" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="components\;gameobjects\;objects\;shaders\;globals\;" />
+		<Option virtualFolders="components\;objects\;shaders\;globals\;singletons\;entities\;" />
 		<Build>
 			<Target title="Release">
 				<Option output="lib/ShushaoEngine" prefix_auto="1" extension_auto="1" />
@@ -61,16 +61,24 @@
 		<Unit filename="color.h">
 			<Option virtualFolder="objects/" />
 		</Unit>
-		<Unit filename="component.cpp" />
-		<Unit filename="component.h" />
+		<Unit filename="component.cpp">
+			<Option virtualFolder="objects/" />
+		</Unit>
+		<Unit filename="component.h">
+			<Option virtualFolder="objects/" />
+		</Unit>
 		<Unit filename="config.cpp">
 			<Option virtualFolder="globals/" />
 		</Unit>
 		<Unit filename="config.h">
 			<Option virtualFolder="globals/" />
 		</Unit>
-		<Unit filename="cycle.cpp" />
-		<Unit filename="cycle.h" />
+		<Unit filename="cycle.cpp">
+			<Option virtualFolder="objects/" />
+		</Unit>
+		<Unit filename="cycle.h">
+			<Option virtualFolder="objects/" />
+		</Unit>
 		<Unit filename="debug.cpp">
 			<Option virtualFolder="globals/" />
 		</Unit>
@@ -78,10 +86,10 @@
 			<Option virtualFolder="globals/" />
 		</Unit>
 		<Unit filename="debuggrid.cpp">
-			<Option virtualFolder="gameobjects/" />
+			<Option virtualFolder="entities/" />
 		</Unit>
 		<Unit filename="debuggrid.h">
-			<Option virtualFolder="gameobjects/" />
+			<Option virtualFolder="entities/" />
 		</Unit>
 		<Unit filename="entity.cpp">
 			<Option virtualFolder="objects/" />
@@ -89,14 +97,26 @@
 		<Unit filename="entity.h">
 			<Option virtualFolder="objects/" />
 		</Unit>
-		<Unit filename="gamedata.cpp" />
-		<Unit filename="gamedata.h" />
-		<Unit filename="glmanager.cpp" />
-		<Unit filename="glmanager.h" />
-		<Unit filename="inputmanager.cpp" />
-		<Unit filename="inputmanager.h" />
-		<Unit filename="libs.h">
+		<Unit filename="gamedata.cpp">
+			<Option virtualFolder="singletons/" />
+		</Unit>
+		<Unit filename="gamedata.h">
+			<Option virtualFolder="singletons/" />
+		</Unit>
+		<Unit filename="gllibs.h">
 			<Option virtualFolder="globals/" />
+		</Unit>
+		<Unit filename="glmanager.cpp">
+			<Option virtualFolder="singletons/" />
+		</Unit>
+		<Unit filename="glmanager.h">
+			<Option virtualFolder="singletons/" />
+		</Unit>
+		<Unit filename="inputmanager.cpp">
+			<Option virtualFolder="singletons/" />
+		</Unit>
+		<Unit filename="inputmanager.h">
+			<Option virtualFolder="singletons/" />
 		</Unit>
 		<Unit filename="linerenderer.cpp">
 			<Option virtualFolder="components/" />
@@ -108,10 +128,10 @@
 			<Option virtualFolder="globals/" />
 		</Unit>
 		<Unit filename="maincamera.cpp">
-			<Option virtualFolder="gameobjects/" />
+			<Option virtualFolder="entities/" />
 		</Unit>
 		<Unit filename="maincamera.h">
-			<Option virtualFolder="gameobjects/" />
+			<Option virtualFolder="entities/" />
 		</Unit>
 		<Unit filename="material.cpp">
 			<Option virtualFolder="objects/" />
@@ -119,8 +139,18 @@
 		<Unit filename="material.h">
 			<Option virtualFolder="objects/" />
 		</Unit>
-		<Unit filename="object.cpp" />
-		<Unit filename="object.h" />
+		<Unit filename="object.cpp">
+			<Option virtualFolder="objects/" />
+		</Unit>
+		<Unit filename="object.h">
+			<Option virtualFolder="objects/" />
+		</Unit>
+		<Unit filename="program.cpp">
+			<Option virtualFolder="objects/" />
+		</Unit>
+		<Unit filename="program.h">
+			<Option virtualFolder="objects/" />
+		</Unit>
 		<Unit filename="rect.cpp">
 			<Option virtualFolder="objects/" />
 		</Unit>
@@ -133,21 +163,44 @@
 		<Unit filename="renderer.h">
 			<Option virtualFolder="components/" />
 		</Unit>
-		<Unit filename="resources.cpp" />
-		<Unit filename="resources.h" />
-		<Unit filename="scene.cpp" />
-		<Unit filename="scene.h" />
-		<Unit filename="scenemanager.cpp" />
-		<Unit filename="scenemanager.h" />
-		<Unit filename="service.cpp" />
-		<Unit filename="service.h" />
-		<Unit filename="setime.cpp" />
-		<Unit filename="setime.h" />
+		<Unit filename="resources.cpp">
+			<Option virtualFolder="singletons/" />
+		</Unit>
+		<Unit filename="resources.h">
+			<Option virtualFolder="singletons/" />
+		</Unit>
+		<Unit filename="scene.cpp">
+			<Option virtualFolder="objects/" />
+		</Unit>
+		<Unit filename="scene.h">
+			<Option virtualFolder="objects/" />
+		</Unit>
+		<Unit filename="scenemanager.cpp">
+			<Option virtualFolder="singletons/" />
+		</Unit>
+		<Unit filename="scenemanager.h">
+			<Option virtualFolder="singletons/" />
+		</Unit>
+		<Unit filename="service.cpp">
+			<Option virtualFolder="objects/" />
+		</Unit>
+		<Unit filename="service.h">
+			<Option virtualFolder="objects/" />
+		</Unit>
+		<Unit filename="setime.cpp">
+			<Option virtualFolder="singletons/" />
+		</Unit>
+		<Unit filename="setime.h">
+			<Option virtualFolder="singletons/" />
+		</Unit>
 		<Unit filename="shader.cpp">
 			<Option virtualFolder="objects/" />
 		</Unit>
 		<Unit filename="shader.h">
 			<Option virtualFolder="objects/" />
+		</Unit>
+		<Unit filename="shushaoengine.h">
+			<Option virtualFolder="globals/" />
 		</Unit>
 		<Unit filename="sprite.cpp">
 			<Option virtualFolder="objects/" />
@@ -167,8 +220,12 @@
 		<Unit filename="standard.vert">
 			<Option virtualFolder="shaders/" />
 		</Unit>
-		<Unit filename="system.cpp" />
-		<Unit filename="system.h" />
+		<Unit filename="system.cpp">
+			<Option virtualFolder="singletons/" />
+		</Unit>
+		<Unit filename="system.h">
+			<Option virtualFolder="singletons/" />
+		</Unit>
 		<Unit filename="texture.cpp">
 			<Option virtualFolder="objects/" />
 		</Unit>

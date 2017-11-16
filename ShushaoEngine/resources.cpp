@@ -19,7 +19,7 @@ namespace ShushaoEngine {
 		}
 
 		for (Object* obj : toDelete) {
-			LOG(INFO, "Cancello " + obj->name + "(" + Utility::toString(obj) +")");
+			LOG(INFO, "Cancello " + obj->name + " (" + Utility::toString(obj) +")");
 			delete(obj);
 		}
 		Assets.clear();

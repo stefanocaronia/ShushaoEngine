@@ -3,7 +3,7 @@
 
 #include "utility.h"
 #include "shader.h"
-#include "libs.h"
+#include "gllibs.h"
 #include "debug.h"
 
 using namespace std;

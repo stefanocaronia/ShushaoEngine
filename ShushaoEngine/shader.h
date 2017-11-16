@@ -3,7 +3,7 @@
 #include <string>
 #include "object.h"
 
-#include "libs.h"
+#include "gllibs.h"
 
 namespace ShushaoEngine {
 

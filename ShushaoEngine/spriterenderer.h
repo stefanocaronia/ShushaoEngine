@@ -47,12 +47,10 @@ namespace ShushaoEngine {
 			Sprite* sprite = nullptr;
 			Shader* shader = nullptr;;
 
-			void init();
-			void update();
-			void exit();
-
-			void render();
-
+			void Awake();
+			void Update();
+			void Render();
+			void OnDestroy();
 	};
 
 }

@@ -64,11 +64,11 @@ namespace ShushaoEngine {
 	}
 
 
-	void Transform::init() {
+	void Transform::Awake() {
 		// ...
 	}
 
-	void Transform::update() {
+	void Transform::Update() {
 
 		Camera* camera = SceneManager::activeScene->activeCamera;
 		SpriteRenderer* sr = entity->GetComponent<SpriteRenderer>();
@@ -83,14 +83,6 @@ namespace ShushaoEngine {
 		M = translate(-pivot) * Translate * translate(pivot) * Rotate * Scale * translate(-pivot);
 		MVP = camera->Projection * camera->getViewMatrix() * M;
 
-	}
-
-	void Transform::render() {
-		// to implement in derived classes
-	}
-
-	void Transform::fixed() {
-		// to implement in derived classes
 	}
 
 }

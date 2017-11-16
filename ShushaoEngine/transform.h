@@ -23,7 +23,8 @@ namespace ShushaoEngine {
 
 			vector<Transform*> children;
 
-			Transform* root; // Returns the topmost transform in the hierarchy. (This never returns null, if this Transform doesn't have a parent it returns itself.)
+			Transform* parent = nullptr;
+			Transform* root = nullptr;; // Returns the topmost transform in the hierarchy. (This never returns null, if this Transform doesn't have a parent it returns itself.)
 
 			vec3 position = {0.0f, 0.0f, 0.0f}; // The position of the transform in world space.
 			quat rotation;	// The rotation of the transform in world space stored as a Quaternion.
@@ -47,17 +48,7 @@ namespace ShushaoEngine {
 			mat4 MVP; // model view projection matrix
 
 			int childCount;	// TODO:  The number of children the Transform has.
-
-			// hasChanged	// TODO? Has the transform changed since the last time the flag was set to 'false'?
-			// hierarchyCapacity // TODO? The transform capacity of the transform's hierarchy data structure.
 			int hierarchyCount;	// TODO:  The number of transforms in the transform's hierarchy data structure.
-
-			// cycle
-
-			void init();
-			void update();
-			void render();
-			void fixed();
 
 			// methods
 
@@ -67,6 +58,10 @@ namespace ShushaoEngine {
 
 			void RemoveChild(Transform* t);
 			void AddChild(Transform* t);
+
+			// lifecycle
+			void Awake();
+			void Update();
 
 			//void DetachChildren();	// TODO: Unparents all children.
 			//void Find();	// TODO:  Finds a child by name and returns it.
@@ -88,7 +83,7 @@ namespace ShushaoEngine {
 			//void TransformVector();	// TODO:  Transforms vector from local space to world space.
 			//void Translate();	// TODO:  Moves the transform in the direction and distance of translation.
 
-		Transform* parent = nullptr;
+
 	};
 
 }

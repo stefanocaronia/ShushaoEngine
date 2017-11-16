@@ -5,6 +5,7 @@
 #include <typeinfo>
 
 #include "debug.h"
+#include "camera.h"
 #include "entity.h"
 #include "utility.h"
 

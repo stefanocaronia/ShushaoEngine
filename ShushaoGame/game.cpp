@@ -1,22 +1,11 @@
 #include <iostream>
 
-#include "libs.h"
-#include "debug.h"
+#include "globals.h"
 #include "game.h"
-#include "scenemanager.h"
-#include "spriterenderer.h"
-#include "resources.h"
-#include "shader.h"
-#include "texture.h"
-
-#include "setime.h"
 #include "level.h"
-#include "system.h"
-
 
 using namespace std;
 using namespace glm;
-using namespace ShushaoEngine;
 
 Game::Game(string title) : Cycle(title) {
 
@@ -26,12 +15,6 @@ Game::Game(string title) : Cycle(title) {
 	Config::displayWidth = 1024;
 	Config::displayHeight = Config::displayWidth / (16.0f/9.0f);
 	Config::pixelPerUnit = 16;
-
-	Config::Layers[1] = "Player";
-	Config::Layers[2] = "Objects";
-
-	Config::SortingLayers[1] = "Background";
-	Config::SortingLayers[2] = "Characters";
 
 	Debug::Enabled = true;
 	Debug::DebugGridMode = GridMode::ORTHOGRAFIC;
@@ -74,6 +57,9 @@ void Game::Awake() {
 
 void Game::Start() {
 
+}
+
+void Game::FixedUpdate() {
 
 }
 
@@ -82,10 +68,6 @@ void Game::Update() {
 }
 
 void Game::Render() {
-
-}
-
-void Game::FixedUpdate() {
 
 }
 

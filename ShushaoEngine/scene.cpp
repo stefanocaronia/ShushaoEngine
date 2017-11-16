@@ -1,4 +1,5 @@
 #include <vector>
+#include <stdlib.h>
 
 #include "debug.h"
 #include "scene.h"
@@ -6,12 +7,17 @@
 #include "gamedata.h"
 #include "debuggrid.h"
 
+#include <iostream>
+
+#include <windows.h>
+
+using namespace std;
+
 namespace ShushaoEngine {
 
 	Scene::Scene() {
 
-		LOG(INFO, "Constructor di SCENE BASE CLASS");
-
+		name = "Scene";
 		root = new Entity("ROOT");
 		MainCamera* mainCameraObj = AddEntity<MainCamera>();
 		activeCamera = mainCameraObj->camera;
@@ -22,7 +28,6 @@ namespace ShushaoEngine {
 	}
 
 	Scene::~Scene() {
-		LOG(INFO, "Scene Destructor");
 		for (Entity* pGO : Entities) {
 			delete(pGO);
 		}
@@ -30,7 +35,7 @@ namespace ShushaoEngine {
 	}
 
 	Entity* Scene::AddEntity(string _name = "Entity") {
-		LOG(INFO, "Aggiungo una entity vuota: " + _name);
+
 		Entity* entity = new Entity();
 		entity->transform->SetParent(root->transform);
 		entity->name = _name;
@@ -45,6 +50,27 @@ namespace ShushaoEngine {
         ActiveComponents = root->GetActiveComponentsInChildren();
 	}
 
+	void Scene::PrintActiveComponentsInScene() {
+		ScanActiveComponentsInScene();
+		Debug::SetColor(BLUE);
+		cout << " Scene " << name << " Active Components:" << endl;
+		for (Component* component : ActiveComponents) {
+			cout << "  - " << component->name << " (" << component->entity->name << ")" << endl;
+		}
+		Debug::SetColor(LIGHTGREY);
+	}
+
+	void Scene::PrintActiveRenderersInScene() {
+		ScanActiveComponentsInScene();
+		Debug::SetColor(PINK);
+		cout << " Scene " << name << " Active Renderers:" << endl;
+		for (Component* component : ActiveComponents) {
+			if (!dynamic_cast<Renderer*>(component)) continue;
+			cout << "  - " << "[" << ((Renderer*)component)->sortingLayerID << ", " << ((Renderer*)component)->sortingOrder << "] " << component->name << " (" << component->entity->name << ")" << endl;
+		}
+		Debug::SetColor(LIGHTGREY);
+	}
+
 	void Scene::run(string cycle) {
 		for (Component* c : ActiveComponents) {
 			c->run(cycle);
@@ -52,7 +78,10 @@ namespace ShushaoEngine {
 	}
 
 	void Scene::PrintHierarchy() {
+		Debug::SetColor(GREEN);
+		cout << " Scene " << name << "" << endl;
 		root->PrintHierarchy(0);
+		Debug::SetColor(LIGHTGREY);
 	}
 
 	vector<Entity*> Scene::GetRootEntitys() {

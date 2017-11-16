@@ -4,6 +4,7 @@
 
 #include "scene.h"
 #include "gamedata.h"
+#include "utility.h"
 
 namespace ShushaoEngine {
 
@@ -20,10 +21,12 @@ namespace ShushaoEngine {
 			static bool activeSceneSet;
 
 			template<class T>
-			static T* LoadScene() { // Adds a scene of class T
+			static T* LoadScene(string _name = "") { // Adds a scene of class T
 
 				// todo pause e restore dopo
 				T* scene = new T();
+				scene->name = (_name == "" ? Utility::GetTitle<T>() : _name);
+
 				if (activeSceneSet) {
 					delete(activeScene);
 					GameData::DestroyAll();

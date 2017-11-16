@@ -3,6 +3,10 @@
 #include "gamedata.h"
 #include "cycle.h"
 
+
+#include "transform.h"
+#include "setime.h"
+
 #include <iostream>
 
 #include <algorithm>
@@ -12,7 +16,7 @@ using namespace std;
 namespace ShushaoEngine {
 
 	Component::Component() {
-		//cout << "[" << InstanceID << "] Component Constructor" << endl;
+
 		name = "Component";
 		enabled = true;
 
@@ -55,12 +59,20 @@ namespace ShushaoEngine {
 
         sort(activeComponents.begin(), activeComponents.end(), []( Component* ca, Component* cb ) {
 
-			int sortingLayerA, sortingLayerB, orderInLayerA, orderInLayerB;
+			int sortingLayerA = 0;
+			int sortingLayerB = 0;
+			int orderInLayerA = 0;
+			int orderInLayerB = 0;
 
-			sortingLayerA = ca->sortingLayerID;
-			orderInLayerA = ca->sortingOrder;
-			sortingLayerB = cb->sortingLayerID;
-			orderInLayerB = cb->sortingOrder;
+			if (dynamic_cast<Renderer*>(ca)) {
+				sortingLayerA = ((Renderer*)ca)->sortingLayerID;
+				orderInLayerA = ((Renderer*)ca)->sortingOrder;
+			}
+
+			if (dynamic_cast<Renderer*>(cb)) {
+				sortingLayerB = ((Renderer*)cb)->sortingLayerID;
+				orderInLayerB = ((Renderer*)cb)->sortingOrder;
+			}
 
 			if (sortingLayerA == sortingLayerB) return orderInLayerA < orderInLayerB;
 			else return sortingLayerA < sortingLayerB;
@@ -106,7 +118,6 @@ namespace ShushaoEngine {
 	}
 
 	void Component::render() {
-
 		Update();
 		LateUpdate();
 	}

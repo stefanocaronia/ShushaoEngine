@@ -4,7 +4,7 @@
 #include <gtc/quaternion.hpp>
 
 #include "component.h"
-#include "glmanager.h"
+#include "entity.h"
 
 using namespace glm;
 using namespace std;
@@ -18,6 +18,8 @@ namespace ShushaoEngine {
 		public:
 
 			Transform();
+
+			bool flag;
 
 			vector<Transform*> children;
 
@@ -52,6 +54,7 @@ namespace ShushaoEngine {
 
 			// cycle
 
+			void init();
 			void update();
 			void render();
 			void fixed();

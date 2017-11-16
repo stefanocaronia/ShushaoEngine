@@ -13,14 +13,18 @@ namespace ShushaoEngine {
 	using namespace std;
 
 	map <DebugLevel, string> DebugLevelName = {
-		{INFO, "Info"},
-		{WARNING, "Warning"},
-		{ERROR, "Error"}
+		{INFO, "INFO"},
+		{WARNING, "WARNING"},
+		{ERROR, "ERROR"}
 	};
 
 	void Debug::Log(DebugLevel level, string message, string sender) {
 		if (!Enabled || level < Level) return;
 		if (sender != "") sender = "<" + sender + "> ";
+
+		if (level == INFO ) SetColor(LIGHTGREY);
+		else if (level == WARNING ) SetColor(YELLOW);
+		else if (level == ERROR ) SetColor(RED);
 
 		ostringstream buildmex;
 		buildmex << Time::Clock() << " [" << DebugLevelName[level] << "]"<< " " << sender << message << endl;
@@ -36,10 +40,18 @@ namespace ShushaoEngine {
 		debugfile.close();
 
 		logStarted = true;
+
+		SetColor(LIGHTGREY);
 	}
 
 	void Debug::Log(DebugLevel level, const ostringstream& message, string sender) {
 		Log(level, message.str(), sender);
+	}
+
+	void Debug::SetColor(ConsoleColor color) {
+		#ifdef CONSOLE_COLORS
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
+		#endif
 	}
 
 	bool Debug::logStarted = false;

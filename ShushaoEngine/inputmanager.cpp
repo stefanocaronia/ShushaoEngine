@@ -10,11 +10,10 @@ using namespace std;
 namespace ShushaoEngine {
 
 	InputManager::InputManager() {
-		cout << " - Contstructor di InputManager" << this << endl;
+		name = "Input Manager";
 	}
 
 	InputManager::~InputManager() {
-		cout << " - Destructor di InputManager" << endl;
 		//dtor
 	}
 
@@ -27,6 +26,5 @@ namespace ShushaoEngine {
 	}
 
 	void InputManager::exit() {
-		cout << " - InputManager exit" << endl;
 	}
 }

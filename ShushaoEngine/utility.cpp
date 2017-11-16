@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <typeinfo>
 
 using namespace std;
 
@@ -26,6 +27,7 @@ namespace ShushaoEngine {
 
 		return out.str();
 	}
+
 
 
 }

@@ -9,13 +9,12 @@ namespace ShushaoEngine {
 		LineRenderer* LR = AddComponent<LineRenderer>();
 		//LR->shader = Resources::Get<Shader>("wire");
 		LR->shader = new Shader("shaders/wire", "Wireframe Shader");
+		LR->sortingLayerID = 999;
 
 		Color xcol = {0.0f, 1.0f, 0.0f, 1.0f};
 		Color ycol = {1.0f, 0.0f, 0.0f, 1.0f};
 		Color zcol = {0.0f, 0.0f, 1.0f, 1.0f};
 		Color gcol = {0.5f, 0.5f, 0.5f, 1.0f};
-
-
 
 		Color gco = gcol;
 		float alpha = 0.2f;
@@ -57,8 +56,10 @@ namespace ShushaoEngine {
 		LR->AddLine({gizmoMagnitude, 0.0f, 0.0f}, {gizmoMagnitude - arrowWidth, arrowWidth, 0.0f}, ycol);
 		LR->AddLine({gizmoMagnitude, 0.0f, 0.0f}, {gizmoMagnitude - arrowWidth, -arrowWidth, 0.0f}, ycol);
 
-		LR->AddLine({0.0f, 0.0f, gizmoMagnitude}, {arrowWidth, 0.0f, gizmoMagnitude - arrowWidth}, zcol);
-		LR->AddLine({0.0f, 0.0f, gizmoMagnitude}, {-arrowWidth, 0.0f, gizmoMagnitude - arrowWidth}, zcol);
+		if (Debug::DebugGridMode == GridMode::PERSPECTIVE) {
+			LR->AddLine({0.0f, 0.0f, gizmoMagnitude}, {arrowWidth, 0.0f, gizmoMagnitude - arrowWidth}, zcol);
+			LR->AddLine({0.0f, 0.0f, gizmoMagnitude}, {-arrowWidth, 0.0f, gizmoMagnitude - arrowWidth}, zcol);
+		}
 
 	}
 

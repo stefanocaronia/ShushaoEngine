@@ -27,9 +27,11 @@ namespace ShushaoEngine {
 			SpriteRenderer();
 			SpriteRenderer(string);
 
+			bool isReady();
+
 			//float adaptiveModeThreshold; //	The current threshold for Sprite Renderer tiling.
 			Color color = {1.0f, 1.0f, 1.0f, 1.0f}; //	Rendering color for the Sprite graphic.
-			SpriteDrawMode drawMode; //	The current draw mode of the Sprite Renderer.
+			//SpriteDrawMode drawMode; //	The current draw mode of the Sprite Renderer.
 			bool flipX;//	Flips the sprite on the X axis.
 			bool flipY; //	Flips the sprite on the Y axis.
 			// maskInteraction //	Specifies how the sprite interacts with the masks.
@@ -42,8 +44,8 @@ namespace ShushaoEngine {
 			GLuint indexBuffer;
 			GLuint VAO;
 
-			Sprite* sprite;
-			Shader* shader;
+			Sprite* sprite = nullptr;
+			Shader* shader = nullptr;;
 
 			void init();
 			void update();

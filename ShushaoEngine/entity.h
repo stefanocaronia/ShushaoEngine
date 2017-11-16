@@ -1,12 +1,14 @@
 #pragma once
 
 #include <string>
+#include <iostream>
 
 #include "object.h"
 #include "transform.h"
-#include "component.h"
 #include "spriterenderer.h"
 #include "linerenderer.h"
+#include "utility.h"
+#include "component.h"
 
 using namespace std;
 
@@ -49,6 +51,7 @@ namespace ShushaoEngine {
 				T* component = new T();
 				component->transform = transform;
 				component->entity = this;
+				component->name = Utility::GetTitle<T>();
 				Components.push_back(component);
 				return component;
 			}
@@ -60,8 +63,9 @@ namespace ShushaoEngine {
 			template<class T>
 			T* GetComponent() {	// Returns the component of Type type if the game object has one attached, null if it doesn't.
 				for(Component* component: Components) {
-					if (dynamic_cast<T*>(component))
+					if (dynamic_cast<T*>(component)) {
 						return dynamic_cast<T*>(component);
+					}
 				}
 				return nullptr;
 			}

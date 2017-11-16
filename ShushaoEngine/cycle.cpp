@@ -44,12 +44,13 @@ namespace ShushaoEngine {
 	void Cycle::run() {
 
 		SceneManager::activeScene->ScanActiveComponentsInScene();
+
+        //
+
 		SceneManager::activeScene->run(Cycle::INIT);
 
 		GLManager::SetFullscreen(Config::Fullscreen);
 		GLManager::Clear(SceneManager::activeScene->activeCamera->backgroundColor.r, SceneManager::activeScene->activeCamera->backgroundColor.g, SceneManager::activeScene->activeCamera->backgroundColor.b, 1.0f, 1.0f);
-		GLManager::Projection = SceneManager::activeScene->activeCamera->getProjectionMatrix();
-		GLManager::View = SceneManager::activeScene->activeCamera->getViewMatrix();
 
 		Start();
 

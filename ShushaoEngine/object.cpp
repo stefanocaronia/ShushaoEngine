@@ -18,8 +18,6 @@ namespace ShushaoEngine {
 		name = "Object";
 
 		GameData::RegisterObject(this);
-
-		//LOG(INFO, "[" + Utility::toString(InstanceID) + "] Object Constructor");
 	}
 
 	Object::~Object() {

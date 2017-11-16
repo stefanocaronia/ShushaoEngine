@@ -4,9 +4,9 @@
 #include <string>
 #include <typeinfo>
 
-#include "utility.h"
 #include "debug.h"
 #include "entity.h"
+#include "utility.h"
 
 using namespace std;
 
@@ -29,17 +29,18 @@ namespace ShushaoEngine {
 			vector<Entity*> GetRootEntitys();
 
 			void ScanActiveComponentsInScene();
+			void PrintActiveComponentsInScene();
+			void PrintActiveRenderersInScene();
 			void PrintHierarchy();
 
 			void run(string);
 
 			template<class T>
-			T* AddEntity(string _name = typeid(T).name()) { // Adds a Entity of class T (Prefab)
+			T* AddEntity(string _name = "") { // Adds a Entity of class T (Prefab)
 
-				LOG(INFO, "Aggiungo un entity di classe " + Utility::toString(typeid(T).name()));
 				T* entity = new T();
+				entity->name = (_name == "" ? Utility::GetTitle<T>() : _name);
 				entity->scene = this;
-				entity->name = _name;
 				entity->transform->SetParent(root->transform);
 
 				Entities.push_back(entity);

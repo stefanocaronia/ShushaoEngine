@@ -12,18 +12,15 @@ using namespace std;
 namespace ShushaoEngine {
 
 	Texture::Texture() {
-		cout << "[" << InstanceID << "] Texture Constructor" << endl;
 		name = "Texture";
 	}
 
 	Texture::Texture(string filename, string n) {
-		cout << "[" << InstanceID << "] Texture Constructor" << endl;
 		Load(filename);
 		name = n;
 	}
 
 	Texture::Texture(string filename) {
-		cout << "[" << InstanceID << "] Texture Constructor" << endl;
 		Load(filename);
 		name = Utility::basename(filename);
 	}
@@ -41,8 +38,7 @@ namespace ShushaoEngine {
 		Surface = IMG_Load(filename.c_str());
 
 		if (!Surface) {
-			//printf("IMG_Load: %s\n", IMG_GetError());
-			LOG(INFO, "IMG_Load " + Utility::toString(IMG_GetError()));
+			LOG(ERROR, "IMG_Load " + ts(IMG_GetError()));
 			return false;
 		}
 
@@ -50,18 +46,17 @@ namespace ShushaoEngine {
 		height = Surface->h;
 
 		int Mode = Surface->format->BytesPerPixel == 4 ? GL_RGBA : GL_RGB;
-		//Mode = GL_RGB;
 
 		glGenTextures(1, &TextureID);
 		glBindTexture(GL_TEXTURE_2D, TextureID);
 
 		glTexImage2D(GL_TEXTURE_2D, 0, Mode, Surface->w, Surface->h, 0, Mode, GL_UNSIGNED_BYTE, Surface->pixels);
 
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 0);
+		//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 0);
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glGenerateMipmap(GL_TEXTURE_2D);
+		//glGenerateMipmap(GL_TEXTURE_2D);
 
 		//SDLTexture = SDL_CreateTextureFromSurface(GLManager::gRenderer, Surface);
 

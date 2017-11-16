@@ -11,17 +11,14 @@ using namespace std;
 namespace ShushaoEngine {
 
 	Shader::Shader() {
-		LOG(INFO, "[" + Utility::toString(InstanceID) + "] Shader Constructor");
 		loadWithName("shaders/standard", "Shader Standard");
 	}
 
 	Shader::Shader(string filename, string n) {
-		LOG(INFO, "[" + Utility::toString(InstanceID) + "] Shader Constructor");
 		loadWithName(filename, n);
 	}
 
 	Shader::Shader(string filename) {
-		LOG(INFO, "[" + Utility::toString(InstanceID) + "] Shader Constructor");
 		loadWithName(filename, Utility::basename(filename));
 	}
 

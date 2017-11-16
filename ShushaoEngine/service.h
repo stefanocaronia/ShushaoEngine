@@ -15,6 +15,8 @@ namespace ShushaoEngine {
 			Service();
 			virtual ~Service();
 
+			bool active;
+
 			string name;
 
 			virtual void init();

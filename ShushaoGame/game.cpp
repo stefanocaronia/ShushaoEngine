@@ -4,27 +4,37 @@
 #include "debug.h"
 #include "game.h"
 #include "scenemanager.h"
+#include "spriterenderer.h"
 #include "resources.h"
 #include "shader.h"
 #include "texture.h"
 
 #include "setime.h"
 #include "level.h"
+#include "system.h"
 
 
 using namespace std;
 using namespace glm;
+using namespace ShushaoEngine;
 
 Game::Game(string title) : Cycle(title) {
 
   	Time::setFrameRateLimit(120.0f);
-	Time::setFixedRateLimit(20.0f);
+	Time::setFixedRateLimit(60.0f);
 
-	// Config::displayWidth = 600;
-	// Config::displayHeight = (int)(Config::displayWidth / Config::displayAspect);
+	Config::displayWidth = 1024;
+	Config::displayHeight = Config::displayWidth / (16.0f/9.0f);
+	Config::pixelPerUnit = 16;
 
 	Config::Layers[1] = "Player";
-	Config::Layers[2] = "Background";
+	Config::Layers[2] = "Objects";
+
+	Config::SortingLayers[1] = "Background";
+	Config::SortingLayers[2] = "Characters";
+
+	Debug::Enabled = true;
+	Debug::DebugGridMode = GridMode::ORTHOGRAFIC;
 }
 
 Game::~Game() {
@@ -34,27 +44,32 @@ Game::~Game() {
 void Game::Awake() {
 
 	Resources::Load<Texture>("assets/pancrazio.png");
+	Resources::Load<Texture>("assets/night.jpg");
 	Resources::Load<Texture>("assets/pancsmile.png");
 	Resources::Load<Shader>("shaders/standard");
 
-	Debug::DebugGridMode = GridMode::ORTHOGRAFIC;
-
 	//GameData::PrintAllObjects();
 
-	SceneManager::LoadScene<Level>();
+	SceneManager::LoadScene<Level>("Level 1");
 
-	SceneManager::activeScene->activeCamera->backgroundColor = {0.2f, 0.2f, 0.8f, 1.0f};
-	SceneManager::activeScene->activeCamera->orthographic = true;
-	SceneManager::activeScene->activeCamera->orthographicSize = 5.0f;
-	SceneManager::activeScene->activeCamera->rect = {0.0f, 0.0f, 1.0f, 1.0f};
+	Camera* camera = SceneManager::activeScene->activeCamera;
+	camera->backgroundColor = {0.2f, 0.2f, 0.8f, 1.0f};
+	camera->setOrthographic(true);
+	camera->setNearClipPlane(12.0f);
+	camera->setFarClipPlane(1.0f);
+	camera->setOrthographicSize(5.0f);
 
-	SceneManager::activeScene->activeCamera->transform->position = vec3(0.0f, 0.0f, 10.0f);
-	SceneManager::activeScene->activeCamera->transform->rotation = quat(0.0f, 0.0f, 0.0f, 0.0f);
-	SceneManager::activeScene->activeCamera->transform->up = vec3(0.0f, 1.0f, 0.0f);
+	camera->transform->position = vec3(0.0f, 0.0f, 10.0f);
+	camera->transform->rotation = quat(0.0f, 0.0f, 0.0f, 0.0f);
+	camera->transform->up = vec3(0.0f, 1.0f, 0.0f);
 
 	SceneManager::activeScene->PrintHierarchy();
+	SceneManager::activeScene->PrintActiveComponentsInScene();
+	SceneManager::activeScene->PrintActiveRenderersInScene();
+	System::ListServices();
+	camera->print();
 
-	//GameData::PrintAllObjects();
+
 }
 
 void Game::Start() {

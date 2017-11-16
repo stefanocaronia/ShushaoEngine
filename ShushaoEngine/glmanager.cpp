@@ -27,10 +27,10 @@ namespace ShushaoEngine {
 
 		SDL_GL_SetSwapInterval(1);
 		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
-		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 4);
-		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
-		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 4);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+		//SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
+		//SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 4);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
 		SDL_DisplayMode dm;
@@ -44,7 +44,7 @@ namespace ShushaoEngine {
 			gWindow = SDL_CreateWindow(title.c_str(), DESKTOP_WIDTH / 2 - WIDTH / 2, DESKTOP_HEIGHT / 2 - HEIGHT / 2, WIDTH, HEIGHT, SDL_WINDOW_OPENGL);
 		}
 
-		gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
+		//gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
 
 		gContext = SDL_GL_CreateContext(gWindow);
 		SDL_GL_MakeCurrent(gWindow, gContext);
@@ -55,15 +55,15 @@ namespace ShushaoEngine {
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glShadeModel(GL_SMOOTH);
+		//glShadeModel(GL_SMOOTH);
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LEQUAL);
-		glEnable(GL_MULTISAMPLE);
-		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-		glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
-		glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
-		glEnable(GL_LINE_SMOOTH);
-		glEnable(GL_POLYGON_SMOOTH);
+		//glEnable(GL_MULTISAMPLE);
+		//glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+		//glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+		//glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
+		//glEnable(GL_LINE_SMOOTH);
+		//glEnable(GL_POLYGON_SMOOTH);
 
 		glEnable (GL_BLEND);
 		glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -74,7 +74,7 @@ namespace ShushaoEngine {
 
 	void GLManager::Quit() {
 		SDL_JoystickClose(Joystick);
-		SDL_DestroyRenderer(gRenderer);
+		//SDL_DestroyRenderer(gRenderer);
 		SDL_DestroyWindow(gWindow);
 		gWindow = NULL;
 		SDL_GL_DeleteContext(gContext);

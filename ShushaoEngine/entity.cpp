@@ -3,7 +3,6 @@
 #include "spriterenderer.h"
 
 #include <iostream>
-#include <iostream>
 #include "debug.h"
 
 using namespace std;
@@ -11,8 +10,6 @@ using namespace std;
 namespace ShushaoEngine {
 
 	Entity::Entity() {
-
-		cout << "[" << InstanceID << "] Entity Constructor" << endl;
 
 		name = "Entity";
 		activeSelf = true;
@@ -38,8 +35,6 @@ namespace ShushaoEngine {
 		name = _name;
 		activeSelf = true;
 		isStatic = false;
-
-		cout << "[" << InstanceID << "] Entity Constructor" << endl;
 
 		transform = AddComponent<Transform>();
 	}
@@ -71,10 +66,11 @@ namespace ShushaoEngine {
 
 	void Entity::PrintHierarchy(int level) {
 
-		if (level > 0) cout << " " << (char)192;
-		else cout << "*** Scene '" << name << "' Hiererchy: " << endl << endl;
+		Debug::SetColor(DARKGREEN);
 
-		for (int i = 0; i < level; i++) cout << (char)196;
+		for (int i = 0; i < level; i++) cout << "   ";
+
+		cout << " " << (char)192 << (char)196;
 
 		cout << " " << name << (activeSelf ? "+": "");
 
@@ -86,6 +82,8 @@ namespace ShushaoEngine {
         for (Transform* t : transform->children) {
             t->entity->PrintHierarchy(level);
         }
+
+        Debug::SetColor(WHITE);
 
 	}
 

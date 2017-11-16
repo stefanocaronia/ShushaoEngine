@@ -2,6 +2,7 @@
 
 #include "spriterenderer.h"
 #include "transform.h"
+#include "utility.h"
 #include "debug.h"
 
 using namespace std;
@@ -10,15 +11,19 @@ namespace ShushaoEngine {
 
 	SpriteRenderer::SpriteRenderer() {
 		name = "Sprite Renderer";
-		//color = {1.0f, 1.0f, 1.0f, 1.0f};
 	}
 
 	SpriteRenderer::SpriteRenderer(string n) {
 		name = n;
-		//color = {1.0f, 1.0f, 1.0f, 1.0f};
+	}
+
+	bool SpriteRenderer::isReady() {
+		return (sprite != nullptr && shader != nullptr);
 	}
 
 	void SpriteRenderer::init() {
+
+		if (!isReady()) return;
 
 		glGenVertexArrays(1, &VAO);
 		glBindVertexArray(VAO);
@@ -44,17 +49,22 @@ namespace ShushaoEngine {
 		glEnableVertexAttribArray(ShaderLocation::TEXCOORD);
 
 		glBindVertexArray(0);
+
 	}
 
 	void SpriteRenderer::update() {
 
+		if (!isReady()) return;
 
+		//transform->position += vec3(sprite->pivot, 0.0f);
 
 		// TODO translation pivot point
 
 	}
 
 	void SpriteRenderer::render() {
+
+		if (!isReady()) return;
 
 		glBindVertexArray(VAO);
 		glUseProgram(shader->getProgram());
@@ -74,6 +84,8 @@ namespace ShushaoEngine {
 	}
 
 	void SpriteRenderer::exit() {
+
+		if (!isReady()) return;
 
 		glUseProgram(0);
 		glBindTexture(GL_TEXTURE_2D, 0);

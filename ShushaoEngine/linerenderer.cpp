@@ -48,7 +48,7 @@ namespace ShushaoEngine {
 	}
 
 	void LineRenderer::init() {
-		Debug::Log(INFO, "In Init di Line Renderer");
+
 		glGenVertexArrays(1, &VAO);
 		glBindVertexArray(VAO);
 

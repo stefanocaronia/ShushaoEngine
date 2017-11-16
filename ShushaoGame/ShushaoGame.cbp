@@ -60,9 +60,14 @@
 		<Unit filename="assets/tattolino.jpg" />
 		<Unit filename="game.cpp" />
 		<Unit filename="game.h" />
+		<Unit filename="globals.h" />
 		<Unit filename="level.cpp" />
 		<Unit filename="level.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="mover.cpp" />
+		<Unit filename="mover.h" />
+		<Unit filename="pancrazio.cpp" />
+		<Unit filename="pancrazio.h" />
 		<Unit filename="shaders/standard.frag" />
 		<Unit filename="shaders/standard.vert" />
 		<Unit filename="shaders/wire.frag" />

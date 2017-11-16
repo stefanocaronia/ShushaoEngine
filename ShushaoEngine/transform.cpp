@@ -1,12 +1,16 @@
 #include "transform.h"
+#include "spriterenderer.h"
+#include "scenemanager.h"
 
 #include <algorithm>
 #include <iostream>
 #include <vector>
 
 using namespace std;
+using namespace glm;
 
 namespace ShushaoEngine {
+
 
 	Transform::Transform() {
 
@@ -16,7 +20,6 @@ namespace ShushaoEngine {
 		localPosition = {0.0f, 0.0f, 0.0f};
 		localScale = {1.0f, 1.0f, 1.0f};
 
-		cout << "[" << InstanceID << "] Transform Constructor" << endl;
 		name = "Transform";
 	}
 
@@ -60,13 +63,26 @@ namespace ShushaoEngine {
 		if (position == children.end()) children.push_back(t);
 	}
 
-	void Transform::update() {
-		glm::mat4 Translate = glm::translate(position);
-		glm::mat4 Scale = glm::scale(localScale);
-		glm::mat4 Rotate = glm::rotate(rotation[0],glm::vec3(rotation[1],rotation[2],rotation[3]));
 
-		M = Translate * Rotate * Scale;
-		MVP = GLManager::Projection * GLManager::View * M;
+	void Transform::init() {
+		// ...
+	}
+
+	void Transform::update() {
+
+		Camera* camera = SceneManager::activeScene->activeCamera;
+		SpriteRenderer* sr = entity->GetComponent<SpriteRenderer>();
+		vec3 pivot = (sr != nullptr && sr->isReady() ? vec3(sr->sprite->pivot, 0.0f) : vec3(0.0f, 0.0f, 0.0f));
+
+		mat4 ParentTranslate = (parent != nullptr ? translate(parent->position) : mat4());
+		mat4 Translate = ParentTranslate * translate(localPosition);
+		mat4 Scale = scale(localScale);
+		mat4 Rotate = rotate(localRotation[0], vec3(localRotation[1], localRotation[2], localRotation[3]));
+
+		//M = Translate * Rotate * Scale;
+		M = translate(-pivot) * Translate * translate(pivot) * Rotate * Scale * translate(-pivot);
+		MVP = camera->Projection * camera->getViewMatrix() * M;
+
 	}
 
 	void Transform::render() {

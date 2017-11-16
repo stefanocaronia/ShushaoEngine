@@ -1,5 +1,12 @@
 #pragma once
 
+#define CONSOLE_COLORS
+
+#ifdef CONSOLE_COLORS
+#include <windows.h>
+#undef ERROR
+#endif
+
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -26,6 +33,25 @@ namespace ShushaoEngine {
 		PERSPECTIVE
 	};
 
+	enum ConsoleColor {
+		ZERO,
+		DARKBLUE,
+		DARKGREEN,
+		DARKCYAN,
+		DARKRED,
+		DARKPURPLE,
+		DARKYELLOW,
+		LIGHTGREY,
+		GREY,
+		BLUE,
+		GREEN,
+		CYAN,
+		RED,
+		PINK,
+		YELLOW,
+		WHITE
+	};
+
 	class Debug {
 
 		public:
@@ -34,6 +60,7 @@ namespace ShushaoEngine {
 			static DebugLevel Level;
 			static GridMode DebugGridMode;
 
+			static void SetColor(ConsoleColor);
 
 			static bool logStarted;
 			static ofstream debugfile;
@@ -46,9 +73,4 @@ namespace ShushaoEngine {
 		private:
 	};
 
-
 }
-	/*ostream& operator<<(ostream& left, const ostream& right) {
-		left << "ciao " << right;
-		return left;
-	}*/

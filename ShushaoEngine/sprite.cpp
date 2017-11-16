@@ -8,7 +8,6 @@ using namespace std;
 namespace ShushaoEngine {
 
 	Sprite::Sprite() {
-        cout << "[" << InstanceID << "] Sprite Constructor" << endl;
         name = "Sprite";
 	}
 
@@ -20,23 +19,48 @@ namespace ShushaoEngine {
 	}
 
 	Sprite::Sprite(string n) {
-        cout << "[" << InstanceID << "] Sprite Constructor" << endl;
         name = n;
 	}
 
-	Sprite::Sprite(Texture* _texture) {
+	Sprite::Sprite(string n, Texture* _texture) {
+		name = n;
 		texture = _texture;
         rect.Set(0.0f, 0.0f, (float)texture->width, (float)texture->height);
-        pivot = rect.center;
+        pixel_pivot = rect.center;
         updateVertices();
 	}
 
-	Sprite::Sprite(Texture* _texture, Rect _rect, vec2 _offset) {
+	Sprite::Sprite(string n, Texture* _texture, Rect _rect, vec2 _offset) {
+		name = n;
 		texture = _texture;
         rect = _rect;
 		textureRectOffset = _offset;
-		pivot = rect.center;
+		pixel_pivot = rect.center;
 		updateVertices();
+	}
+
+	void Sprite::setRect(Rect _rect) {
+        rect = _rect;
+        pixel_pivot = rect.center;
+		updateVertices();
+	}
+
+	void Sprite::setPixelPerUnit(float ppu) {
+        pixelPerUnit = ppu;
+		updateVertices();
+	}
+
+	void Sprite::setPivot(vec2 _pivot) {
+        pixel_pivot = _pivot;
+		updateVertices();
+	}
+
+	Rect Sprite::getRect() {
+       return rect;
+	}
+
+	vec2 Sprite::getPivot() {
+        return pivot;
 	}
 
 	void Sprite::updateVertices() {
@@ -44,10 +68,13 @@ namespace ShushaoEngine {
 		GLfloat wX = (rect.width / pixelPerUnit) / 2;
 		GLfloat wY = (rect.height / pixelPerUnit) / 2;
 
+		pivot.x = (pixel_pivot.x - (rect.width / 2)) / (float)pixelPerUnit;
+		pivot.y = -(pixel_pivot.y - (rect.height / 2)) / (float)pixelPerUnit;
+
 		GLfloat v[] = {
 			-wX, -wY, 0.0f, // Bottom-left
-			 wX, -wY, 0.0f, // Bottom-righ
-			 wX, -wY, 0.0f, // Top-right
+			 wX, -wY, 0.0f, // Bottom-right
+			 wX,  wY, 0.0f, // Top-right
 			-wX,  wY, 0.0f // Top-left
 		};
 
@@ -56,6 +83,7 @@ namespace ShushaoEngine {
 		}
 
 	}
+
 
 	/*vector<vec3> Sprite::getVertices() {
 		vector<vec3> vectorVertices;

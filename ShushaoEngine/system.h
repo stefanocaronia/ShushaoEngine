@@ -37,6 +37,8 @@ namespace ShushaoEngine {
 
 			static void Clear();
 
+			static void ListServices();
+
 		protected:
 
             static vector<Service*> Services;

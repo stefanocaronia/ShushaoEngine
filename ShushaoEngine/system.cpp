@@ -1,8 +1,13 @@
 #include "system.h"
 #include "inputmanager.h"
 #include "service.h"
+#include "debug.h"
+
+#include <iostream>
 
 namespace ShushaoEngine {
+
+	using namespace std;
 
 	void System::init() {
 		for (Service* s : Services) {
@@ -31,6 +36,19 @@ namespace ShushaoEngine {
 		Services.clear();
 	}
 
+	void System::ListServices() {
+		Debug::SetColor(YELLOW);
+		cout << " System" << endl;
+		Debug::SetColor(DARKYELLOW);
+		for (Service* s : Services) {
+			cout << " " << (char)192 << (char)196;
+			cout << " " << s->name << (s->active ? "+": "");
+		}
+
+        cout << endl;
+
+        Debug::SetColor(WHITE);
+	}
 
 	vector<Service*> System::Services;
 

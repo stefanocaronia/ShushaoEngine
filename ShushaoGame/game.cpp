@@ -12,6 +12,17 @@ Game::Game(string title) : Cycle(title) {
   	Time::setFrameRateLimit(120.0f);
 	Time::setFixedRateLimit(60.0f);
 
+	Config::Layers = {
+		"Background",
+		"Items"
+	};
+
+	Config::SortingLayers = {
+		"Background",
+		"Characters",
+		"Sky"
+	};
+
 	Config::displayWidth = 1024;
 	Config::displayHeight = Config::displayWidth / (16.0f/9.0f);
 	Config::pixelPerUnit = 16;
@@ -29,9 +40,11 @@ void Game::Awake() {
 	Resources::Load<Texture>("assets/pancrazio.png");
 	Resources::Load<Texture>("assets/night.jpg");
 	Resources::Load<Texture>("assets/pancsmile.png");
+	Resources::Load<TextureAtlas>("assets/walking.png")->AddGrid(vec2(16,16), PivotPosition::BOTTOM);
 	Resources::Load<Shader>("shaders/standard");
+	Resources::Add<Sprite>("pancrazio_sprite")->setTexture(Resources::Get<Texture>("pancrazio"));
 
-	//GameData::PrintAllObjects();
+	Resources::Add<SpriteSheet>("walking")->Load(Resources::Get<TextureAtlas>("walking"));
 
 	SceneManager::LoadScene<Level>("Level 1");
 
@@ -51,8 +64,9 @@ void Game::Awake() {
 	SceneManager::activeScene->PrintActiveRenderersInScene();
 	System::ListServices();
 	camera->print();
-
-
+	Resources::toString();
+	Config::Layers.toString("Layers");
+	Config::SortingLayers.toString("SortingLayers");
 }
 
 void Game::Start() {

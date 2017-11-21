@@ -25,7 +25,7 @@ namespace ShushaoEngine {
 
 				// todo pause e restore dopo
 				T* scene = new T();
-				scene->name = (_name == "" ? Utility::GetTitle<T>() : _name);
+				scene->name = (_name == "" ? util::classtitle<T>() : _name);
 
 				if (activeSceneSet) {
 					delete(activeScene);

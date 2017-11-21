@@ -214,6 +214,12 @@
 		<Unit filename="spriterenderer.h">
 			<Option virtualFolder="components/" />
 		</Unit>
+		<Unit filename="spritesheet.cpp">
+			<Option virtualFolder="objects/" />
+		</Unit>
+		<Unit filename="spritesheet.h">
+			<Option virtualFolder="objects/" />
+		</Unit>
 		<Unit filename="standard.frag">
 			<Option virtualFolder="shaders/" />
 		</Unit>
@@ -230,6 +236,12 @@
 			<Option virtualFolder="objects/" />
 		</Unit>
 		<Unit filename="texture.h">
+			<Option virtualFolder="objects/" />
+		</Unit>
+		<Unit filename="textureatlas.cpp">
+			<Option virtualFolder="objects/" />
+		</Unit>
+		<Unit filename="textureatlas.h">
 			<Option virtualFolder="objects/" />
 		</Unit>
 		<Unit filename="transform.cpp">

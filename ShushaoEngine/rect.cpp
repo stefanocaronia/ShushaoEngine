@@ -61,6 +61,15 @@ namespace ShushaoEngine {
 
 		max = {xMax, yMax};
 		min = {xMin, yMin};
+
+		topleft = min;
+		topright = {xMax, yMin};
+		bottomleft = {xMin, yMax};
+		bottomright = max;
+		left = {xMin, y + (height /2)};
+		right = {xMax, y + (height /2)};
+		top = {x + (width / 2), yMin};
+		bottom = {x + (width / 2), yMax};
 	}
 
 	void Rect::SetX(float _x) {

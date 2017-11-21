@@ -15,7 +15,7 @@
 #include "setime.h"
 #include "utility.h"
 
-#define SOURCE Utility::basename(__FILE__) + "::" + __FUNCTION__ + ":" + Utility::toString(__LINE__) + ""
+#define SOURCE util::basename(__FILE__) + "::" + __FUNCTION__ + ":" + util::toString(__LINE__) + ""
 #define LOG(LEVEL, MESSAGE) Debug::Log(LEVEL, MESSAGE, SOURCE);
 
 using namespace std;

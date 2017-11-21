@@ -9,7 +9,7 @@ Level::Level() {
 	SpriteRenderer* backgroundRenderer = root->AddComponent<SpriteRenderer>();
 	backgroundRenderer->shader = Resources::Get<Shader>("standard");
 	backgroundRenderer->name = "Background Renderer";
-	backgroundRenderer->sortingLayerID = SortingLayers::BACKGROUND;
+	backgroundRenderer->sortingLayerID = Config::SortingLayers["Background"];
 	backgroundRenderer->sprite = new Sprite("Background", Resources::Get<Texture>("night"));
 	backgroundRenderer->sprite->setPixelPerUnit(64);
 

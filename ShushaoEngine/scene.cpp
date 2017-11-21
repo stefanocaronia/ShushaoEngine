@@ -66,7 +66,8 @@ namespace ShushaoEngine {
 		cout << " Scene " << name << " Active Renderers:" << endl;
 		for (Component* component : ActiveComponents) {
 			if (!dynamic_cast<Renderer*>(component)) continue;
-			cout << "  - " << "[" << ((Renderer*)component)->sortingLayerID << ", " << ((Renderer*)component)->sortingOrder << "] " << component->name << " (" << component->entity->name << ")" << endl;
+			int layerID = ((Renderer*)component)->sortingLayerID;
+			cout << "  - " << "[" << Config::SortingLayers[layerID] << " (" << layerID << ")" << ", " << ((Renderer*)component)->sortingOrder << "] " << component->name << " (" << component->entity->name << ")" << endl;
 		}
 		Debug::SetColor(LIGHTGREY);
 	}

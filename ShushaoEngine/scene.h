@@ -40,7 +40,7 @@ namespace ShushaoEngine {
 			T* AddEntity(string _name = "") { // Adds a Entity of class T (Prefab)
 
 				T* entity = new T();
-				entity->name = (_name == "" ? Utility::GetTitle<T>() : _name);
+				entity->name = (_name == "" ? util::classtitle<T>() : _name);
 				entity->scene = this;
 				entity->transform->SetParent(root->transform);
 

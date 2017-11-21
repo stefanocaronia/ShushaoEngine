@@ -27,46 +27,41 @@ namespace ShushaoEngine {
 
 			~Entity();
 
-			Transform* transform;
+			Transform* transform = nullptr;
+			Scene* scene = nullptr;	// Scene that the Entity is part of.
+
+			vector<Component*> Components;
+
+			int layer;	// The layer the game object is in. A layer is in the range [0...31].
+			string tag;		// The tag of this game object.
+			vector<string> tags;		// The tag of this game object.
 
 			bool activeInHierarchy;	// 	Is the Entity active in the scene?
 			bool activeSelf;	// 	The local active state of this Entity. (Read Only)
 			bool isStatic;	// 	Editor only API that specifies if a game object is static.
 
-			int layer;	// The layer the game object is in. A layer is in the range [0...31].
-			Scene* scene;	// Scene that the Entity is part of.
-
-			string tag;		// The tag of this game object.
-			vector<string> tags;		// The tag of this game object.
-
 			void run(string);
-
 			vector<Component*> GetActiveComponentsInChildren();
 			void PrintHierarchy(int);
-
 			bool isActiveInHierarchy();
+
+			void BroadcastMessage(string methodName);	// Calls the method named methodName on every MonoBehaviour in this game object or any of its children.
+			bool CompareTag(string t);	// Is this game object tagged with tag?
 
 			template<class T>
 			T* AddComponent() { // Adds a component class named className to the game object.
 				T* component = new T();
 				component->transform = transform;
 				component->entity = this;
-				component->name = Utility::GetTitle<T>();
+				component->name = util::classtitle<T>();
 				Components.push_back(component);
 				return component;
 			}
 
-
-			void BroadcastMessage(string methodName);	// Calls the method named methodName on every MonoBehaviour in this game object or any of its children.
-			bool CompareTag(string t);	// Is this game object tagged with tag?
-
 			template<class T>
 			T* GetComponent() {	// Returns the component of Type type if the game object has one attached, null if it doesn't.
-				for(Component* component: Components) {
-					if (dynamic_cast<T*>(component)) {
-						return dynamic_cast<T*>(component);
-					}
-				}
+				for(Component* component: Components)
+					if (dynamic_cast<T*>(component)) return dynamic_cast<T*>(component);
 				return nullptr;
 			}
 
@@ -93,7 +88,7 @@ namespace ShushaoEngine {
 			static Entity* FindEntitysWithTag(string); // Returns a list of active Entitys tagged tag. Returns empty array if no Entity was found.
 			static Entity* FindWithTag(string);	//	Returns one active Entity tagged tag. Returns null if no Entity was found.
 
-			vector<Component*> Components;
+
 	};
 
 }

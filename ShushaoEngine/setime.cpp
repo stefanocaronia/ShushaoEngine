@@ -46,7 +46,7 @@ namespace ShushaoEngine {
 		ostringstream clock;
 
 		// clock << Utility::zerofill(hours, 2) << ":" << Utility::zerofill(minutes, 2) << ":" << Utility::zerofill(seconds, 2)<< "." << Utility::zerofill(mills, 3);
-		clock <<Utility::zerofill(minutes, 2) << ":" << Utility::zerofill(seconds, 2)<< "." << Utility::zerofill(mills, 3);
+		clock <<util::zerofill(minutes, 2) << ":" << util::zerofill(seconds, 2)<< "." << util::zerofill(mills, 3);
 
 		return clock.str();
 	}

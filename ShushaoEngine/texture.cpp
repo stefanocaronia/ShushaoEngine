@@ -22,7 +22,7 @@ namespace ShushaoEngine {
 
 	Texture::Texture(string filename) {
 		Load(filename);
-		name = Utility::basename(filename);
+		name = util::basename(filename);
 	}
 
 	Texture::~Texture()	{

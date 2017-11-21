@@ -11,7 +11,10 @@ class Mover : public Program {
 	protected:
 
 		void Update();
+		void Awake();
 
 
 	private:
+		float animTime;
+		SpriteRenderer* sr = nullptr;
 };

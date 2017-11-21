@@ -23,7 +23,7 @@ namespace ShushaoEngine {
 			GLuint GetTextureID();
 			SDL_Surface* GetSurface();
 
-			GLuint TextureID;
+			GLuint TextureID = 0;
 
 			SDL_Surface* Surface;
 			//SDL_Texture* SDLTexture;

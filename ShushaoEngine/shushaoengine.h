@@ -33,5 +33,7 @@
 #include "spriterenderer.h"
 #include "system.h"
 #include "texture.h"
+#include "textureatlas.h"
 #include "transform.h"
 #include "utility.h"
+#include "spritesheet.h"

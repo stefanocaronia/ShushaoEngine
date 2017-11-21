@@ -4,18 +4,13 @@
 Pancrazio::Pancrazio() {
 
 	sr = AddComponent<SpriteRenderer>();
-	Mover* mv = AddComponent<Mover>();
-	mv->enabled = true;
+	AddComponent<Mover>();
 
 	sr->shader = Resources::Get<Shader>("standard");
-
-	sr->sprite = new Sprite("Sprite di Pancrazio", Resources::Get<Texture>("pancrazio"));
-	sr->sprite->setPivot({0.0f, 16.0f});
-
-	sr->sortingLayerID = SortingLayers::CHARACTERS;
+	sr->sprite = Resources::Get<Sprite>("walking_2");//->setPivot({0.0f, 16.0f});
+	sr->sortingLayerID = Config::SortingLayers["Characters"];
 
 	transform->localScale = {1.0f, 1.0f, 0.0f};
-
 }
 
 Pancrazio::~Pancrazio() {

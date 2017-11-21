@@ -26,7 +26,6 @@ namespace ShushaoEngine {
 			string tag;
 
 			bool enabled = true;
-			bool started;
 
 			void BroadcastMessage();	// Calls the method named methodName on every MonoBehaviour in this game object or any of its children.
 
@@ -60,6 +59,7 @@ namespace ShushaoEngine {
 		private:
 
 			bool currentEnable;
+			bool started;
 
 			virtual void init();
 			virtual void update();

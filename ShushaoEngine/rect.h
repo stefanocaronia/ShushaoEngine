@@ -35,6 +35,15 @@ namespace ShushaoEngine {
 			float yMax;	// The maximum Y coordinate of the rectangle.
 			float yMin;	// The minimum Y coordinate of the rectangle.
 
+			vec2 topleft;
+			vec2 topright;
+			vec2 bottomleft;
+			vec2 bottomright;
+			vec2 left;
+			vec2 right;
+			vec2 top;
+			vec2 bottom;
+
 			bool Contains(vec2);	// Returns true if the x and y components of point is a point inside this rectangle. If allowInverse is present and true, the width and height of the Rect are allowed to take negative values (ie, the min value is greater than the max), and the test will still work.
 			bool Contains(vec3);
 
@@ -42,7 +51,6 @@ namespace ShushaoEngine {
 			void Set(float, float, float, float); 	 // Set components of an existing Rect.
 
 			string ToString();	// TODO: Returns a nicely formatted string for this Rect.
-
 
 			// operator == // TODO
 

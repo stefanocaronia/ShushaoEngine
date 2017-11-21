@@ -9,7 +9,7 @@ namespace ShushaoEngine {
 		LineRenderer* LR = AddComponent<LineRenderer>();
 		//LR->shader = Resources::Get<Shader>("wire");
 		LR->shader = new Shader("shaders/wire", "Wireframe Shader");
-		LR->sortingLayerID = 999;
+		LR->sortingLayerID = Config::SortingLayers.over();
 
 		Color xcol = {0.0f, 1.0f, 0.0f, 1.0f};
 		Color ycol = {1.0f, 0.0f, 0.0f, 1.0f};

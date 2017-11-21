@@ -1,4 +1,5 @@
 #include "config.h"
+#include "utility.h"
 
 namespace Config {
 
@@ -12,4 +13,8 @@ namespace Config {
 	int displayWidth 		= 1024;
 	int displayHeight 		= (int)(displayWidth / displayAspect);
 	bool fullscreen 		= false;
+
+	ShushaoEngine::vector_map Layers;
+	ShushaoEngine::vector_map SortingLayers;
+
 }

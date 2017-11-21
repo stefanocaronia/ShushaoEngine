@@ -41,7 +41,7 @@ namespace ShushaoEngine {
 			GLuint VertexShaderID;
 			GLuint FragmentShaderID;
 
-			bool debug = true;
+			bool debug = false;
 
 			bool compile();
 			bool link();

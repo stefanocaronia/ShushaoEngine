@@ -25,6 +25,7 @@ namespace ShushaoEngine {
 
 		if (!isReady()) return;
 
+		transform->setPivot(sprite->pivot);
 	}
 
 	void SpriteRenderer::Update() {

@@ -58,6 +58,24 @@ namespace ShushaoEngine {
 		return this;
 	}
 
+	Timeline* Timeline::backup() {
+		switch (propertyType) {
+			case PropertyType::INT:
+				vInt.backup();
+				break;
+			case PropertyType::FLOAT:
+				vFloat.backup();
+				break;
+			case PropertyType::VEC3:
+				vVec3.backup();
+				break;
+			case PropertyType::SPRITE:
+				pSprite.backup();
+				break;
+		}
+		return this;
+	}
+
 	unsigned int Timeline::getFrameCount() {
 		switch (propertyType) {
 			case PropertyType::INT:
@@ -106,6 +124,7 @@ namespace ShushaoEngine {
 
 	Timeline* Timeline::setTarget(vec3& var) {
 		vVec3.setTarget(var);
+		cout << vVec3.backupValue.x << " " << vVec3.backupValue.y << endl;
 		propertyType = PropertyType::VEC3;
 		return this;
 	}

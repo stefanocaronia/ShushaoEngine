@@ -19,14 +19,11 @@ namespace ShushaoEngine {
 
 			Transform();
 
-			bool flag;
-
 			vector<Transform*> children;
 
 			Transform* parent = nullptr;
 			Transform* root = nullptr;; // Returns the topmost transform in the hierarchy. (This never returns null, if this Transform doesn't have a parent it returns itself.)
 
-			vec3 position = {0.0f, 0.0f, 0.0f}; // The position of the transform in world space.
 			quat rotation;	// The rotation of the transform in world space stored as a Quaternion.
 			vec3 lossyScale = {1.0f, 1.0f, 1.0f}; // The global scale of the object (Read Only).
 
@@ -52,9 +49,9 @@ namespace ShushaoEngine {
 
 			// methods
 
-			Transform* GetParent();	// TODO:  Set the parent of the transform.
-			void SetParent(Transform*);	// TODO:  Set the parent of the transform.
-			void SetParent(Transform*, bool);	// TODO:  Set the parent of the transform.
+			Transform* getParent();	// TODO:  Set the parent of the transform.
+			void setParent(Transform*);	// TODO:  Set the parent of the transform.
+			void setParent(Transform*, bool);	// TODO:  Set the parent of the transform.
 
 			void RemoveChild(Transform* t);
 			void AddChild(Transform* t);
@@ -83,7 +80,19 @@ namespace ShushaoEngine {
 			//void TransformVector();	// TODO:  Transforms vector from local space to world space.
 			//void Translate();	// TODO:  Moves the transform in the direction and distance of translation.
 
+			void setPivot(vec2 _pivot) {
+				pivot = {_pivot.x, _pivot.y, 0.0f};
+			}
 
+			vec3 getPosition();
+
+		private:
+
+			bool flag;
+			bool lock = false;
+
+			vec3 position = {0.0f, 0.0f, 0.0f}; // The position of the transform in world space.
+			vec3 pivot = {0.0f, 0.0f, 0.0f};
 	};
 
 }

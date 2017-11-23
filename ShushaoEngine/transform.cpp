@@ -23,11 +23,16 @@ namespace ShushaoEngine {
 		name = "Transform";
 	}
 
-	Transform* Transform::GetParent() {
+	Transform* Transform::getParent() {
 		return parent;
 	}
 
-	void Transform::SetParent(Transform* newpa, bool worldPositionStays) {
+	vec3 Transform::getPosition() {
+		return position;
+	}
+
+	void Transform::setParent(Transform* newpa, bool worldPositionStays) {
+		lock = true;
 		if (parent != nullptr) {
 			parent->RemoveChild(this);
 		}
@@ -42,16 +47,19 @@ namespace ShushaoEngine {
 		}
 
 		parent->AddChild(this);
+		lock = false;
 	}
 
-	void Transform::SetParent(Transform* newpa) {
-		Transform::SetParent(newpa, false);
+	void Transform::setParent(Transform* newpa) {
+		lock = true;
+		Transform::setParent(newpa, false);
+		lock = false;
 	}
 
 	void Transform::RemoveChild(Transform* t) {
 		if (children.empty()) return;
-		vector<Transform*>::iterator position = find(children.begin(), children.end(), t);
-		if (position != children.end()) children.erase(position);
+		auto it = find(children.begin(), children.end(), t);
+		if (it != children.end()) children.erase(it);
 	}
 
 	void Transform::AddChild(Transform* t) {
@@ -59,8 +67,8 @@ namespace ShushaoEngine {
 			children.push_back(t);
 			return;
 		}
-		vector<Transform*>::iterator position = find(children.begin(), children.end(), t);
-		if (position == children.end()) children.push_back(t);
+		auto it = find(children.begin(), children.end(), t);
+		if (it == children.end()) children.push_back(t);
 	}
 
 
@@ -70,18 +78,17 @@ namespace ShushaoEngine {
 
 	void Transform::Update() {
 
-		Camera* camera = SceneManager::activeScene->activeCamera;
-		SpriteRenderer* sr = entity->GetComponent<SpriteRenderer>();
-		vec3 pivot = (sr != nullptr && sr->isReady() ? vec3(sr->sprite->pivot, 0.0f) : vec3(0.0f, 0.0f, 0.0f));
+		position = (parent != nullptr ? parent->position : vec3(0) ) + localPosition;
+		lossyScale = (parent != nullptr ? parent->lossyScale : vec3(1) ) * localScale;
 
-		mat4 ParentTranslate = (parent != nullptr ? translate(parent->position) : mat4());
-		mat4 Translate = ParentTranslate * translate(localPosition);
-		mat4 Scale = scale(localScale);
+		mat4 Translate = translate(position);
+		mat4 Scale = scale(lossyScale);
 		mat4 Rotate = rotate(localRotation[0], vec3(localRotation[1], localRotation[2], localRotation[3]));
 
 		//M = Translate * Rotate * Scale;
 		M = translate(-pivot) * Translate * translate(pivot) * Rotate * Scale * translate(-pivot);
-		MVP = camera->Projection * camera->getViewMatrix() * M;
+		MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * M;
+
 
 	}
 

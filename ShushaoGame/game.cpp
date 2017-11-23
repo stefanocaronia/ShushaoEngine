@@ -55,8 +55,8 @@ void Game::Awake() {
 	camera->setFarClipPlane(1.0f);
 	camera->setOrthographicSize(5.0f);
 
-	camera->transform->position = vec3(0.0f, 0.0f, 10.0f);
-	camera->transform->rotation = quat(0.0f, 0.0f, 0.0f, 0.0f);
+	camera->transform->localPosition = vec3(0.0f, 0.0f, 10.0f);
+	camera->transform->localRotation = quat(0.0f, 0.0f, 0.0f, 0.0f);
 	camera->transform->up = vec3(0.0f, 1.0f, 0.0f);
 
 	SceneManager::activeScene->PrintHierarchy();

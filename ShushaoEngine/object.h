@@ -33,12 +33,14 @@ namespace ShushaoEngine {
 
 			int GetInstanceID();
 
+			bool operator==(const char*);
+			bool operator==(const Object&);
+
 			static Object* Instantiate(Object*);
 			static Object* Instantiate(Object*, Transform*);
 			static Object* Instantiate(Object*, Transform*, bool);
 			static Object* Instantiate(Object*, vec3, quat);
 			static Object* Instantiate(Object*, vec3, quat, Transform*);
-
 
 
 	};

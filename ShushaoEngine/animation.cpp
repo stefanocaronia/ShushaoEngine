@@ -40,6 +40,10 @@ namespace ShushaoEngine {
 		state = _state;
 	}
 
+	void Animation::setStartState(AnimationState _state) {
+		startState = _state;
+	}
+
 	void Animation::setLoop(bool _loop) {
 		loop = _loop;
 	}
@@ -88,6 +92,9 @@ namespace ShushaoEngine {
 
 	void Animation::play() {
 		if (!ready || layers.empty()) return;
+		for (Timeline* layer : layers) {
+			layer->backup();
+		}
 		state = AnimationState::PLAY;
 		animationTime = 0.0f;
 	}
@@ -109,6 +116,9 @@ namespace ShushaoEngine {
 		if (layers.empty()) return;
 		setup();
 		ready = true;
+
+		state = AnimationState::STOP;
+		if (startState == AnimationState::PLAY) play();
 	}
 
 	void Animation::setup() {
@@ -126,6 +136,7 @@ namespace ShushaoEngine {
 		if (!ready || layers.empty()) return;
 
 		if (state != AnimationState::PLAY) return;
+
 
 		if (Time::GetTime() - lastFrameTime >= frameDuration) {
 

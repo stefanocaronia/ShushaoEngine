@@ -14,13 +14,13 @@ Pancrazio::Pancrazio() {
 
 	animation = AddComponent<Animation>("walk");
 	animation->addLayer("sprite")->setTarget(sr->sprite)->load(Resources::Get<SpriteSheet>("walking"));
-	animation->addLayer("size")->setTarget(transform->localScale)->load({
+	animation->addLayer("color")->setTarget(transform->localScale)->load({
 																			{1.0f, 1.0f, 0.0f},
 																			{1.1f, 1.1f, 0.0f},
 																			{1.2f, 1.2f, 0.0f},
 																			{1.1f, 1.1f, 0.0f}
 																		});
-	animation->setState(AnimationState::PLAY);
+	animation->setStartState(AnimationState::PLAY);
 
 	transform->localScale = {1.0f, 1.0f, 0.0f};
 }

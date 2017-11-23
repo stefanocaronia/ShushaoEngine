@@ -54,7 +54,7 @@ namespace ShushaoEngine {
 				T* component = new T();
 				component->transform = transform;
 				component->entity = this;
-				component->name =  (_name == "" ? util::classtitle<T>() : _name);
+				component->name = (_name == "" ? util::classtitle<T>() : _name);
 				Components.push_back(component);
 				return component;
 			}
@@ -65,7 +65,7 @@ namespace ShushaoEngine {
 					if (dynamic_cast<T*>(component)) {
 						if (_name == "" || component->name == _name) return dynamic_cast<T*>(component);
 					}
-				//Debug::Log(ERROR, "Componente " + _name + " (" + util::classtitle<T>() + ") non trovato", SOURCE);
+				//Debug::Log(ERROR, "Component " + _name + " (" + util::classtitle<T>() + ") non trovato", SOURCE);
 				return nullptr;
 			}
 
@@ -93,6 +93,7 @@ namespace ShushaoEngine {
 			static Entity* FindWithTag(string);	//	Returns one active Entity tagged tag. Returns null if no Entity was found.
 
 
+			void setParent(Entity*);
 	};
 
 }

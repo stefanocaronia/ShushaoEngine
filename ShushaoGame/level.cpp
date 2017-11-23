@@ -1,10 +1,20 @@
 #include "globals.h"
 #include "level.h"
 #include "pancrazio.h"
+#include "mover.h"
 
 Level::Level() {
 
-	AddEntity<Pancrazio>();
+	Pancrazio* pancrazio = AddEntity<Pancrazio>();
+	Pancrazio* sonOfPancrazio = AddEntity<Pancrazio>("Son of Pancrazio");
+	sonOfPancrazio->setParent(pancrazio);
+
+	pancrazio->transform->localScale *= 2;
+
+	sonOfPancrazio->GetComponent<Animation>()->Disable();
+	sonOfPancrazio->GetComponent<Mover>()->Disable();
+	sonOfPancrazio->transform->localPosition = {-1.0f, 0.0f, 0.0f};
+	sonOfPancrazio->transform->localScale = {0.5f, 0.5f, 0.0f};
 
 	SpriteRenderer* backgroundRenderer = root->AddComponent<SpriteRenderer>();
 	backgroundRenderer->shader = Resources::Get<Shader>("standard");

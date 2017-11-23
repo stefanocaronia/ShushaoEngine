@@ -31,6 +31,14 @@ namespace ShushaoEngine {
 		Destroy(this);
 	}
 
+	bool Object::operator==(const char* _name) {
+		return name == _name;
+	}
+
+	bool Object::operator==(const Object& obj) {
+		return obj.InstanceID == InstanceID;
+	}
+
 	string Object::ToString() {
 		return name;
 	}

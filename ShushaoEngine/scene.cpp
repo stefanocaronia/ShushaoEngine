@@ -38,7 +38,7 @@ namespace ShushaoEngine {
 	Entity* Scene::AddEntity(string _name = "Entity") {
 
 		Entity* entity = new Entity();
-		entity->transform->SetParent(root->transform);
+		entity->transform->setParent(root->transform);
 		entity->name = _name;
 
 		Entities.push_back(entity);
@@ -95,7 +95,7 @@ namespace ShushaoEngine {
 	}
 
 	void Scene::AddEntity(Entity* pEntity) {
-		pEntity->transform->SetParent(root->transform);
+		pEntity->transform->setParent(root->transform);
 		Entities.push_back(pEntity);
 	}
 }

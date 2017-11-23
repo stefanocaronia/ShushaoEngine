@@ -58,12 +58,16 @@ namespace ShushaoEngine {
 			void loadPointer(unsigned int pos) {
 				if (target == nullptr) return;
 				if (pos >= pointers.size()) return;
-				*target = *pointers[pos];
+				target = pointers[pos];
 			}
 
 			void reset() {
 				if (target == nullptr) return;
 				*target = backupValue;
+			}
+
+			void backup() {
+				backupValue = *target;
 			}
 
 			void clear() {
@@ -82,6 +86,7 @@ namespace ShushaoEngine {
 
 			Timeline* loadFrame(unsigned int);
 			Timeline* reset();
+			Timeline* backup();
 			unsigned int getFrameCount();
 
 			// INT

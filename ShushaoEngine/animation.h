@@ -25,6 +25,7 @@ namespace ShushaoEngine {
 			void setFPS(int);
 			void setDuration(float);
 			void setState(AnimationState);
+			void setStartState(AnimationState);
 			void setLoop(bool);
 
 			int getFPS();
@@ -50,6 +51,8 @@ namespace ShushaoEngine {
 		private:
 
 			AnimationState state = AnimationState::STOP;
+			AnimationState startState = AnimationState::STOP;
+
 			bool loop = true;
 			bool ready = false;
 

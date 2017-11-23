@@ -100,5 +100,9 @@ namespace ShushaoEngine {
 		return true;
 	}
 
+	void Entity::setParent(Entity* other) {
+		transform->setParent(other->transform);
+	}
+
 
 }

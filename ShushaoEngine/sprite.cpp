@@ -14,7 +14,6 @@ namespace ShushaoEngine {
 	}
 
 	Sprite::~Sprite() {
-		if (texture != nullptr) delete(texture);
 		glDeleteBuffers(1, &vertexBuffer);
 		glDeleteBuffers(1, &indexBuffer);
 		glDeleteBuffers(1, &uvBuffer);
@@ -28,7 +27,8 @@ namespace ShushaoEngine {
 		name = n;
 		rect.Set(0.0f, 0.0f, (float)_texture->width, (float)_texture->height);
 		pixel_pivot = calculatePivot(PivotPosition::CENTER, rect);
-		setTexture(_texture);
+		texture = _texture;
+		init();
 	}
 
 	Sprite::Sprite(string n, Texture* _texture, Rect _rect, PivotPosition _pivotPosition, vec2 _offset) {
@@ -36,7 +36,8 @@ namespace ShushaoEngine {
         rect = _rect;
 		pixel_pivot = calculatePivot(_pivotPosition, _rect);
 		textureRectOffset = _offset;
-		setTexture(_texture);
+		texture = _texture;
+		init();
 	}
 
 	Sprite* Sprite::setRect(Rect _rect) {
@@ -58,8 +59,16 @@ namespace ShushaoEngine {
 		return this;
 	}
 
-	Sprite* Sprite::setTexture(Texture* tex) {
-        texture = tex;
+	Sprite* Sprite::setPivot(PivotPosition _pivotPosition) {
+        pixel_pivot = calculatePivot(_pivotPosition, rect);
+		init();
+		return this;
+	}
+
+	Sprite* Sprite::setTexture(Texture* _texture) {
+        texture = _texture;
+        rect.Set(0.0f, 0.0f, (float)_texture->width, (float)_texture->height);
+		pixel_pivot = calculatePivot(PivotPosition::CENTER, rect);
 		init();
 		return this;
 	}
@@ -165,21 +174,4 @@ namespace ShushaoEngine {
 
 		return piv - re.position;
 	}
-
-	/*vector<vec3> Sprite::getVertices() {
-		vector<vec3> vectorVertices;
-		for (unsigned int i=0; i<=(sizeof(vertices)/sizeof(GLfloat)); i+=3) {
-			if (i>0) vectorVertices.push_back(vec3(vertices[i-3], vertices[i-2], vertices[i-1]));
-		}
-		return vectorVertices;
-	}
-
-	vector<vec2> Sprite::getUV() {
-		vector<vec2> vectorUV;
-		for (unsigned int i=0; i<=(sizeof(uv)/sizeof(GLfloat)); i+=2) {
-			if (i>0) vectorUV.push_back(vec2(uv[i-2],uv[i-1]));
-		}
-		return vectorUV;
-	}*/
-
 }

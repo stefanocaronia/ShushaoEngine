@@ -19,6 +19,7 @@ namespace ShushaoEngine {
 		public:
 
 			Object();
+			Object(string);
 			virtual ~Object();
 
 			int InstanceID = 0;

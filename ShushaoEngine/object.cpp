@@ -20,6 +20,13 @@ namespace ShushaoEngine {
 		GameData::RegisterObject(this);
 	}
 
+	Object::Object(string _name) {
+
+		name = _name;
+
+		GameData::RegisterObject(this);
+	}
+
 	Object::~Object() {
 		Destroy(this);
 	}

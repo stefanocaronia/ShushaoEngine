@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "debug.h"
+#include "utility.h"
 #include "scene.h"
 #include "maincamera.h"
 #include "gamedata.h"
@@ -52,10 +53,10 @@ namespace ShushaoEngine {
 
 	void Scene::PrintActiveComponentsInScene() {
 		ScanActiveComponentsInScene();
-		Debug::SetColor(BLUE);
+		Debug::SetColor(ConsoleColor::DARKCYAN);
 		cout << " Scene " << name << " Active Components:" << endl;
 		for (Component* component : ActiveComponents) {
-			cout << "  - " << component->name << " (" << component->entity->name << ")" << endl;
+			cout << "  - " << component->getTitle() << " (" << component->entity->name << ")" << endl;
 		}
 		Debug::SetColor(LIGHTGREY);
 	}
@@ -67,7 +68,7 @@ namespace ShushaoEngine {
 		for (Component* component : ActiveComponents) {
 			if (!dynamic_cast<Renderer*>(component)) continue;
 			int layerID = ((Renderer*)component)->sortingLayerID;
-			cout << "  - " << "[" << Config::SortingLayers[layerID] << " (" << layerID << ")" << ", " << ((Renderer*)component)->sortingOrder << "] " << component->name << " (" << component->entity->name << ")" << endl;
+			cout << "  - " << "[" << Config::SortingLayers[layerID] << " (" << layerID << ")" << ", " << ((Renderer*)component)->sortingOrder << "] " << component->getTitle()<< " (" << component->entity->name << ")" << endl;
 		}
 		Debug::SetColor(LIGHTGREY);
 	}

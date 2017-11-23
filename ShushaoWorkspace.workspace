@@ -5,5 +5,6 @@
 			<Depends filename="ShushaoEngine/ShushaoEngine.cbp" />
 		</Project>
 		<Project filename="ShushaoEngine/ShushaoEngine.cbp" />
+		<Project filename="../test/test.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>

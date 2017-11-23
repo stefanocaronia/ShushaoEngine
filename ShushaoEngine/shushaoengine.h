@@ -37,3 +37,5 @@
 #include "transform.h"
 #include "utility.h"
 #include "spritesheet.h"
+#include "timeline.h"
+#include "animation.h"

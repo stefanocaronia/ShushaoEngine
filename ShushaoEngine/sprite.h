@@ -85,6 +85,7 @@ namespace ShushaoEngine {
 			Sprite* setRect(Rect);
 			Sprite* setTexture(Texture*);
 			Sprite* setPivot(vec2);
+			Sprite* setPivot(PivotPosition _pivotPosition);
 			Sprite* setPixelPerUnit(float);
 
 			static vec2 calculatePivot(PivotPosition, Rect, vec2 custom = vec2(0,0));

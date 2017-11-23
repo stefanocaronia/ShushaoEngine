@@ -49,6 +49,12 @@
 			<Add directory="D:/lib/mingw-dev-libs/SDL2_image/lib" />
 			<Add directory="D:/lib/mingw-dev-libs/glew/lib" />
 		</Linker>
+		<Unit filename="animation.cpp">
+			<Option virtualFolder="components/" />
+		</Unit>
+		<Unit filename="animation.h">
+			<Option virtualFolder="components/" />
+		</Unit>
 		<Unit filename="camera.cpp">
 			<Option virtualFolder="components/" />
 		</Unit>
@@ -242,6 +248,12 @@
 			<Option virtualFolder="objects/" />
 		</Unit>
 		<Unit filename="textureatlas.h">
+			<Option virtualFolder="objects/" />
+		</Unit>
+		<Unit filename="timeline.cpp">
+			<Option virtualFolder="objects/" />
+		</Unit>
+		<Unit filename="timeline.h">
 			<Option virtualFolder="objects/" />
 		</Unit>
 		<Unit filename="transform.cpp">

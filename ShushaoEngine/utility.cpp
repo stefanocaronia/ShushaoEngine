@@ -32,7 +32,7 @@ namespace ShushaoEngine {
 		}
 
 		string classtitle(string type) {
-			regex pat("N13ShushaoEngine|P6");
+			regex pat("N13ShushaoEngine|P6|P");
 			type = regex_replace(type, pat, "");
 
 			pat = "E$";

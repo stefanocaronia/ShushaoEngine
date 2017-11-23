@@ -53,10 +53,14 @@ namespace ShushaoEngine {
 
 			template <class T>
 			static T* Get(string name) {
+				auto it = Assets.find(name);
+				if (it == Assets.end()) return nullptr;
 				return (T*)Assets[name];
 			}
 
 			static void Delete(string name) {
+				auto it = Assets.find(name);
+				if (it == Assets.end()) return;
 				Assets.erase(name);
 				delete(Assets[name]);
 			}

@@ -12,7 +12,7 @@ using namespace std;
 namespace ShushaoEngine {
 
 	void Resources::Clear() {
-		LOG(INFO, "Cancello le resources " + util::toString(Assets.size()));
+		LOG(INFO, "Cancello le resources (" + ts(Assets.size()) + ")");
 		vector<Object*> toDelete;
 		for (auto const& asset : Assets) {
 			if (Assets[asset.first] == nullptr) continue;
@@ -23,6 +23,7 @@ namespace ShushaoEngine {
 			if (obj == nullptr) continue;
 			LOG(INFO, "Cancello " + obj->name + " (" + util::toString(obj) +")");
 			delete(obj);
+
 		}
 		Assets.clear();
 	}

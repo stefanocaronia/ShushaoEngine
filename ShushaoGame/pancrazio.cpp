@@ -3,12 +3,24 @@
 
 Pancrazio::Pancrazio() {
 
+	using namespace glm;
+
 	sr = AddComponent<SpriteRenderer>();
 	AddComponent<Mover>();
 
 	sr->shader = Resources::Get<Shader>("standard");
-	sr->sprite = Resources::Get<Sprite>("walking_2");//->setPivot({0.0f, 16.0f});
+	sr->sprite = Resources::Get<Sprite>("pancrazio_sprite")->setPivot(PivotPosition::BOTTOM);
 	sr->sortingLayerID = Config::SortingLayers["Characters"];
+
+	animation = AddComponent<Animation>("walk");
+	animation->addLayer("sprite")->setTarget(sr->sprite)->load(Resources::Get<SpriteSheet>("walking"));
+	animation->addLayer("size")->setTarget(transform->localScale)->load({
+																			{1.0f, 1.0f, 0.0f},
+																			{1.1f, 1.1f, 0.0f},
+																			{1.2f, 1.2f, 0.0f},
+																			{1.1f, 1.1f, 0.0f}
+																		});
+	animation->setState(AnimationState::PLAY);
 
 	transform->localScale = {1.0f, 1.0f, 0.0f};
 }

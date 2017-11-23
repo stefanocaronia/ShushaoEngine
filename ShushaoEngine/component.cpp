@@ -1,4 +1,5 @@
 #include "debug.h"
+#include "utility.h"
 #include "component.h"
 #include "gamedata.h"
 #include "cycle.h"
@@ -40,6 +41,11 @@ namespace ShushaoEngine {
 	void Component::Disable() {
 		enabled = false;
 		OnDisable();
+	}
+
+	string Component::getTitle() {
+		string classname = util::classtitle(typeid(*this).name());
+		return classname + (enabled ? "+": "") + (name != "" && name != classname ? " " + name : "");
 	}
 
 	vector<Component*> Component::GetActiveComponentsInChildren() {

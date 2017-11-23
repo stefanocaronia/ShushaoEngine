@@ -5,9 +5,13 @@
 
 namespace ShushaoEngine {
 
-	class SpriteSheet : public Object, private vector<Sprite*> {
+	class SpriteSheet : public Object, public vector<Sprite*> {
 
 		public:
+
+			/*using vector::operator=;
+			using vector::assign;
+			using vector<Sprite*>;*/
 
 			SpriteSheet();
 			SpriteSheet(string);

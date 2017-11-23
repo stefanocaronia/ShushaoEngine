@@ -43,6 +43,8 @@ namespace ShushaoEngine {
 			void Enable();
 			void Disable();
 
+			string getTitle();
+
 		protected:
 
 			virtual void Awake(); // Awake is called when the script instance is being loaded.

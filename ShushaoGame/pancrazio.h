@@ -8,6 +8,7 @@ class Pancrazio : public Entity {
 		~Pancrazio();
 
 		SpriteRenderer* sr;
+		Animation* animation;
 
 	protected:
 

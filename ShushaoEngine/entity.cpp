@@ -74,7 +74,7 @@ namespace ShushaoEngine {
 
 		cout << " " << name << (activeSelf ? "+": "");
 
-        for (Component* c : Components) cout << " [" <<c->name << (c->enabled ? "+": "") << "]";
+        for (Component* c : Components) cout << " [" << c->getTitle() << "]";
 
         cout << endl;
 

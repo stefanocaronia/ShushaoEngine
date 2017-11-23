@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 
+#include "debug.h"
 #include "object.h"
 #include "transform.h"
 #include "spriterenderer.h"
@@ -49,19 +50,22 @@ namespace ShushaoEngine {
 			bool CompareTag(string t);	// Is this game object tagged with tag?
 
 			template<class T>
-			T* AddComponent() { // Adds a component class named className to the game object.
+			T* AddComponent(string _name = "") { // Adds a component class named className to the game object.
 				T* component = new T();
 				component->transform = transform;
 				component->entity = this;
-				component->name = util::classtitle<T>();
+				component->name =  (_name == "" ? util::classtitle<T>() : _name);
 				Components.push_back(component);
 				return component;
 			}
 
 			template<class T>
-			T* GetComponent() {	// Returns the component of Type type if the game object has one attached, null if it doesn't.
+			T* GetComponent(string _name = "") {	// Returns the component of Type type if the game object has one attached, null if it doesn't.
 				for(Component* component: Components)
-					if (dynamic_cast<T*>(component)) return dynamic_cast<T*>(component);
+					if (dynamic_cast<T*>(component)) {
+						if (_name == "" || component->name == _name) return dynamic_cast<T*>(component);
+					}
+				//Debug::Log(ERROR, "Componente " + _name + " (" + util::classtitle<T>() + ") non trovato", SOURCE);
 				return nullptr;
 			}
 

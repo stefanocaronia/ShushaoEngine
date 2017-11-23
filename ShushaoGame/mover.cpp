@@ -7,14 +7,13 @@ void Mover::Awake() {
 
 void Mover::Update() {
 
-
 	//LOG(INFO, ts(transform->localPosition.x));
 
 	transform->localPosition.x += 1.5f * Time::deltaTime;
 
-	if (Time::GetTime() - animTime >= 0.1f) {
-		animTime = Time::GetTime();
-		sr->sprite = Resources::Get<SpriteSheet>("walking")->next();
-		LOG(INFO, sr->sprite->name);
+	if (transform->localPosition.x > 8.0f) {
+		if (entity->GetComponent<Animation>("walk") != nullptr)
+			entity->GetComponent<Animation>("walk")->stop();
+		Disable();
 	}
 }

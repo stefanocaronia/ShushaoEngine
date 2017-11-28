@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "debug.h"
 #include "animation.h"
 #include "setime.h"
 
@@ -92,18 +93,22 @@ namespace ShushaoEngine {
 
 	void Animation::play() {
 		if (!ready || layers.empty()) return;
+		//Debug::Log(INFO, "PLAY");
 		for (Timeline* layer : layers) {
 			layer->backup();
 		}
 		state = AnimationState::PLAY;
 		animationTime = 0.0f;
+		startTime = Time::GetTime();
 	}
 
 	void Animation::stop() {
 		if (!ready || layers.empty()) return;
+		//Debug::Log(INFO, "STOP");
 		reset();
 		state = AnimationState::STOP;
 		animationTime = 0.0f;
+		startTime = 0.0f;
 		cursor = 0;
 	}
 
@@ -116,40 +121,35 @@ namespace ShushaoEngine {
 		if (layers.empty()) return;
 		setup();
 		ready = true;
-
 		state = AnimationState::STOP;
 		if (startState == AnimationState::PLAY) play();
 	}
 
 	void Animation::setup() {
 		frames = getFrameCount();
-        frameDuration = 1.0f / fps;
+        frameDuration = 1.0f / (float)fps;
         duration = frames * frameDuration;
 
-        //cout << "frames: " << frames << endl;
-        //cout << "frameDuration: " << frameDuration << endl;
-        //cout << "duration: " << duration << endl;
-        //cout << "state: " << (int)state << endl;
+		//cout << "frames: " << frames << endl;
+		//cout << "frameDuration: " << frameDuration << endl;
+		//cout << "duration: " << duration << endl;
+		//cout << "state: " << (int)state << endl;
 	}
 
 	void Animation::Update() {
-		if (!ready || layers.empty()) return;
 
+		if (!ready || layers.empty()) return;
 		if (state != AnimationState::PLAY) return;
 
+		animationTime = Time::GetTime() - startTime;
 
 		if (Time::GetTime() - lastFrameTime >= frameDuration) {
 
-			animationTime += Time::deltaTime;
-
 			loadFrame(cursor);
 
-			if (++cursor >= frames && animationTime >= duration) {
-
+			if (++cursor >= frames || animationTime >= duration) {
 				cursor = 0;
-
-				if (!loop)
-					stop();
+				if (!loop) stop();
 			}
 
 			lastFrameTime = Time::GetTime();

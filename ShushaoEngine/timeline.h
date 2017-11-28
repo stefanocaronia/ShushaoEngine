@@ -38,10 +38,15 @@ namespace ShushaoEngine {
 			vector<T> values;
 
 			void setTarget(T& var) {
-				if (&var == nullptr) return;
+				//if (&var == nullptr) return;
 				target = &var;
 				backupValue = var;
 			}
+
+			/*void setTarget(const T& var) {
+				target = (T*)&var;
+				backupValue = var;
+			}*/
 
 			void setTarget(T*& var) {
 				//if (&var == nullptr) return;
@@ -50,19 +55,19 @@ namespace ShushaoEngine {
 			}
 
 			void loadValue(unsigned int pos) {
-				if (target == nullptr) return;
+				//if (target == nullptr) return;
 				if (pos >= values.size()) return;
 				*target = values[pos];
 			}
 
 			void loadPointer(unsigned int pos) {
-				if (target == nullptr) return;
+				//if (target == nullptr) return;
 				if (pos >= pointers.size()) return;
-				target = pointers[pos];
+				*target = *pointers[pos];
 			}
 
 			void reset() {
-				if (target == nullptr) return;
+				//if (target == nullptr) return;
 				*target = backupValue;
 			}
 
@@ -96,6 +101,7 @@ namespace ShushaoEngine {
 
 			// VEC3
 			Timeline* setTarget(vec3&);
+			Timeline* setTarget(const vec3&);
 			Timeline* load(initializer_list<vec3>);
 			Timeline* add(vec3 var, int nFrames = 1);
 

@@ -9,19 +9,21 @@ Pancrazio::Pancrazio() {
 	AddComponent<Mover>();
 
 	sr->shader = Resources::Get<Shader>("standard");
-	sr->sprite = Resources::Get<Sprite>("pancrazio_sprite")->setPivot(PivotPosition::BOTTOM);
+	sr->sprite = Resources::Get<Sprite>("pancrazio_sprite")->setPivot(PivotPosition::BOTTOMLEFT);
 	sr->sortingLayerID = Config::SortingLayers["Characters"];
 
 	animation = AddComponent<Animation>("walk");
+	animation->setFPS(1);
+	animation->setLoop(false);
 	animation->addLayer("sprite")->setTarget(sr->sprite)->load(Resources::Get<SpriteSheet>("walking"));
-	animation->addLayer("color")->setTarget(transform->localScale)->load({
-																			{1.0f, 1.0f, 0.0f},
-																			{1.1f, 1.1f, 0.0f},
-																			{1.2f, 1.2f, 0.0f},
-																			{1.1f, 1.1f, 0.0f}
-																		});
-	animation->setStartState(AnimationState::PLAY);
+	/*animation->addLayer("size")->setTarget(transform->localScale)->load({
+		{1.0f, 1.0f, 0.0f},
+		{1.1f, 1.1f, 0.0f},
+		{1.2f, 1.2f, 0.0f},
+		{1.3f, 1.3f, 0.0f}
+	});*/
 
+	animation->setStartState(AnimationState::PLAY);
 	transform->localScale = {1.0f, 1.0f, 0.0f};
 }
 

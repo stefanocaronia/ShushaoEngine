@@ -63,6 +63,7 @@ namespace ShushaoEngine {
 			unsigned int cursor = 0;
 			float lastFrameTime = 0.0f;
 			float animationTime = 0.0f;
+			float startTime = 0.0f;
 
 			void loadFrame(unsigned int);
 			void reset();

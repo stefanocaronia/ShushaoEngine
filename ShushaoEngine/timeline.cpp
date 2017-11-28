@@ -124,10 +124,16 @@ namespace ShushaoEngine {
 
 	Timeline* Timeline::setTarget(vec3& var) {
 		vVec3.setTarget(var);
-		cout << vVec3.backupValue.x << " " << vVec3.backupValue.y << endl;
 		propertyType = PropertyType::VEC3;
 		return this;
 	}
+
+	/*Timeline* Timeline::setTarget(const vec3& var) {
+		vVec3.setTarget(var);
+		cout << vVec3.backupValue.x << " " << vVec3.backupValue.y << endl;
+		propertyType = PropertyType::VEC3;
+		return this;
+	}*/
 
 	Timeline* Timeline::load(initializer_list<vec3> ilist) {
 		if (propertyType != PropertyType::VEC3) return this;
@@ -167,6 +173,7 @@ namespace ShushaoEngine {
 
 	Timeline* Timeline::setTarget(Sprite*& var) {
 		pSprite.setTarget(var);
+		cout << "settato target su sprite " << var->name << endl;
 		propertyType = PropertyType::SPRITE;
 		return this;
 	}

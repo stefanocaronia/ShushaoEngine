@@ -15,7 +15,7 @@ namespace ShushaoEngine {
 		activeSelf = true;
 		isStatic = false;
 
-		vector<Component*> Components;
+		//vector<Component*> Components;
 
 		transform = AddComponent<Transform>();
 	}

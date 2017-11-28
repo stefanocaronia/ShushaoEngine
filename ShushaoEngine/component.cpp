@@ -45,7 +45,7 @@ namespace ShushaoEngine {
 
 	string Component::getTitle() {
 		string classname = util::classtitle(typeid(*this).name());
-		return classname + (enabled ? "+": "") + (name != "" && name != classname ? " " + name : "");
+		return classname + (enabled ? "+": "") + (name != "" && name != classname ? " '" + name +"'": "");
 	}
 
 	vector<Component*> Component::GetActiveComponentsInChildren() {

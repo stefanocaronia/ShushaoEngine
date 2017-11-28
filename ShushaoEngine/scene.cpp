@@ -20,6 +20,8 @@ namespace ShushaoEngine {
 
 		name = "Scene";
 		root = new Entity("ROOT");
+		root->transform->isRoot = true;
+
 		MainCamera* mainCameraObj = AddEntity<MainCamera>();
 		activeCamera = mainCameraObj->camera;
 		GameData::activeCamera = activeCamera;

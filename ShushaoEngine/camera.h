@@ -20,19 +20,15 @@ namespace ShushaoEngine {
 
 			Color backgroundColor;
 
-
-
-			mat4 worldToCameraMatrix; // TODO? Matrix that transforms from world to camera space.
-			mat4 cameraToWorldMatrix; // TODO?
+			// mat4 worldToCameraMatrix; // TODO? Matrix that transforms from world to camera space.
+			// mat4 cameraToWorldMatrix; // TODO?
 
 			mat4 View;
 			mat4 Projection;
 
 			// methods
-
 			mat4 getViewMatrix();
 			mat4 getProjectionMatrix();
-
 			void setDepth(float);
 			void setOrthographic(bool);
 			void setOrthographicSize(float);
@@ -40,7 +36,6 @@ namespace ShushaoEngine {
 			void setFarClipPlane(float);
 			void setNearClipPlane(float);
 			void setRect(Rect);
-
 			float getDepth();
 			bool getOrthographic();
 			float getOrthographicSize();

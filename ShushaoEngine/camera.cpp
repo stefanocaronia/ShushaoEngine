@@ -38,7 +38,7 @@ namespace ShushaoEngine {
 	}
 
 	mat4 Camera::getViewMatrix() {
-		return lookAt(transform->getPosition(), transform->forward, transform->up);
+		return lookAt(transform->localPosition, Transform::FORWARD, Transform::UP);
 	}
 
 	float Camera::getDepth() {

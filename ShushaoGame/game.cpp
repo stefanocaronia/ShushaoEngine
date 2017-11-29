@@ -27,8 +27,9 @@ Game::Game(string title) : Cycle(title) {
 	Config::displayHeight = Config::displayWidth / (16.0f/9.0f);
 	Config::pixelPerUnit = 16;
 
-	Debug::Enabled = true;
-	Debug::DebugGridMode = GridMode::ORTHOGRAFIC;
+	Debug::level = DebugLevel::INFO;
+	Debug::enabled = true;
+	Debug::debugGridMode = GridMode::ORTHOGRAFIC;
 }
 
 Game::~Game() {
@@ -58,14 +59,16 @@ void Game::Awake() {
 	camera->transform->localPosition = {0.0f, 0.0f, 10.0f};
 	camera->transform->localRotation = Transform::QUATERNION_IDENTITY;
 
-	SceneManager::activeScene->PrintHierarchy();
-	SceneManager::activeScene->PrintActiveComponentsInScene();
-	SceneManager::activeScene->PrintActiveRenderersInScene();
-	System::ListServices();
-	camera->print();
-	Resources::toString();
-	Config::Layers.toString("Layers");
-	Config::SortingLayers.toString("SortingLayers");
+	if (Debug::enabled) {
+		SceneManager::activeScene->PrintHierarchy();
+		SceneManager::activeScene->PrintActiveComponentsInScene();
+		SceneManager::activeScene->PrintActiveRenderersInScene();
+		System::ListServices();
+		camera->print();
+		Resources::toString();
+		Config::Layers.toString("Layers");
+		Config::SortingLayers.toString("SortingLayers");
+	}
 }
 
 void Game::Start() {

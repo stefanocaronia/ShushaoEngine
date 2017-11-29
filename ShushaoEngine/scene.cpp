@@ -26,8 +26,9 @@ namespace ShushaoEngine {
 		activeCamera = mainCameraObj->camera;
 		GameData::activeCamera = activeCamera;
 
-		AddEntity<DebugGrid>("Debug Grid");
-		GetEntity<DebugGrid>()->activeSelf = Debug::Enabled;
+		if (Debug::enabled) {
+			AddEntity<DebugGrid>("Debug Grid");
+		}
 	}
 
 	Scene::~Scene() {
@@ -55,24 +56,24 @@ namespace ShushaoEngine {
 
 	void Scene::PrintActiveComponentsInScene() {
 		ScanActiveComponentsInScene();
-		Debug::SetColor(ConsoleColor::DARKCYAN);
+		Logger::setColor(ConsoleColor::DARKCYAN);
 		cout << " Scene " << name << " Active Components:" << endl;
 		for (Component* component : ActiveComponents) {
 			cout << "  - " << component->getTitle() << " (" << component->entity->name << ")" << endl;
 		}
-		Debug::SetColor(LIGHTGREY);
+		Logger::setColor(ConsoleColor::LIGHTGREY);
 	}
 
 	void Scene::PrintActiveRenderersInScene() {
 		ScanActiveComponentsInScene();
-		Debug::SetColor(PINK);
+		Logger::setColor(ConsoleColor::PINK);
 		cout << " Scene " << name << " Active Renderers:" << endl;
 		for (Component* component : ActiveComponents) {
 			if (!dynamic_cast<Renderer*>(component)) continue;
 			int layerID = ((Renderer*)component)->sortingLayerID;
 			cout << "  - " << "[" << Config::SortingLayers[layerID] << " (" << layerID << ")" << ", " << ((Renderer*)component)->sortingOrder << "] " << component->getTitle()<< " (" << component->entity->name << ")" << endl;
 		}
-		Debug::SetColor(LIGHTGREY);
+		Logger::setColor(ConsoleColor::LIGHTGREY);
 	}
 
 	void Scene::run(string cycle) {
@@ -82,10 +83,10 @@ namespace ShushaoEngine {
 	}
 
 	void Scene::PrintHierarchy() {
-		Debug::SetColor(GREEN);
+		Logger::setColor(ConsoleColor::GREEN);
 		cout << " Scene " << name << "" << endl;
 		root->PrintHierarchy(0);
-		Debug::SetColor(LIGHTGREY);
+		Logger::setColor(ConsoleColor::LIGHTGREY);
 	}
 
 	vector<Entity*> Scene::GetRootEntitys() {

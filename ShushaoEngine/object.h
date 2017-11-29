@@ -1,16 +1,14 @@
 #pragma once
 
+#include <glm/glm.hpp>
 #include <string>
-#include <gtx/transform.hpp>
-#include <gtc/quaternion.hpp>
-#include <glm.hpp>
 
 #include "object.h"
 
-using namespace std;
-using namespace glm;
-
 namespace ShushaoEngine {
+
+	using namespace std;
+	using namespace glm;
 
 	class Transform;
 

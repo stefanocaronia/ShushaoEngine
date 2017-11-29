@@ -122,14 +122,14 @@ namespace ShushaoEngine {
 	}
 
 	void vector_map::toString(string title) {
-		Debug::SetColor(ConsoleColor::GREY);
+		Logger::setColor(ConsoleColor::GREY);
 		cout << " " << util::classtitle(typeid(*this).name()) << " " << title << " [" << maxElements << "] :" << endl;
 		for (auto it = begin(); it != end(); ++it) {
 			int key = std::distance(begin(), it);
             cout << "  (" << key << ") " << *it << endl;
 		}
 		// cout << "  (" << maxElements << ") " << "^overall" << endl;
-		Debug::SetColor(ConsoleColor::LIGHTGREY);
+		Logger::setColor(ConsoleColor::LIGHTGREY);
 	}
 
 }

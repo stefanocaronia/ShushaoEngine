@@ -1,4 +1,4 @@
-#include <glm.hpp>
+#include <glm/glm.hpp>
 
 #include "textureatlas.h"
 #include "debug.h"
@@ -10,7 +10,7 @@ namespace ShushaoEngine {
 
 	void TextureAtlas::AddSlice(Rect _rect, PivotPosition _pivotPosition) {
 		if (TextureID == 0) {
-			Debug::Log(WARNING, "No texture loaded", SOURCE);
+			Debug::Log(WARNING, SOURCE) << "No texture loaded" << endl;
 			return;
 		}
 		slices.push_back({_rect, _pivotPosition});
@@ -19,7 +19,7 @@ namespace ShushaoEngine {
 	void TextureAtlas::AddGrid(vec2 _size, PivotPosition _pivotPos, vec2 _offset, vec2 _padding) {
 
 		if (TextureID == 0) {
-			Debug::Log(WARNING, "No texture loaded", SOURCE);
+			Debug::Log(WARNING, SOURCE) << "No texture loaded" << endl;
 			return;
 		}
 

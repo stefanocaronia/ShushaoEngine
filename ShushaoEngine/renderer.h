@@ -2,7 +2,7 @@
 
 #include "component.h"
 
-#include <glm.hpp>
+#include <glm/glm.hpp>
 
 using namespace glm;
 using namespace std;

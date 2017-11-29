@@ -1,7 +1,11 @@
+#include <iostream>
+
 #include "shushaoengine.h"
 #include "game.h"
 
 int main(int argc, char *argv[]) {
+
+
 
 	Game Shushao("Shushao Game!");
 

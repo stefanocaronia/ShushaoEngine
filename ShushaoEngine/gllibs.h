@@ -3,7 +3,7 @@
 #include <GL/glew.h>
 #include <SDL.h>
 #include <SDL_image.h>
-#include <glm.hpp>
-#include <gtc/matrix_transform.hpp>
-#include <gtx/transform.hpp>
-#include <gtc/quaternion.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/transform.hpp>
+#include <glm/gtc/quaternion.hpp>

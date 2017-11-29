@@ -24,7 +24,7 @@ namespace ShushaoEngine {
 
 			if (fmod(i, 10.0f) == 0) gco.a = alpha * 3; else gco.a = alpha;
 
-			if (Debug::DebugGridMode == GridMode::ORTHOGRAFIC) {
+			if (Debug::debugGridMode == GridMode::ORTHOGRAFIC) {
 				// parallele asse Y lungo X
 				LR->AddLine({i, -gridSize, 0.0f}, {i, gridSize, 0.0f}, gco);
 				LR->AddLine({-i, -gridSize, 0.0f}, {-i, gridSize, 0.0f}, gco);
@@ -56,7 +56,7 @@ namespace ShushaoEngine {
 		LR->AddLine({gizmoMagnitude, 0.0f, 0.0f}, {gizmoMagnitude - arrowWidth, arrowWidth, 0.0f}, ycol);
 		LR->AddLine({gizmoMagnitude, 0.0f, 0.0f}, {gizmoMagnitude - arrowWidth, -arrowWidth, 0.0f}, ycol);
 
-		if (Debug::DebugGridMode == GridMode::PERSPECTIVE) {
+		if (Debug::debugGridMode == GridMode::PERSPECTIVE) {
 			LR->AddLine({0.0f, 0.0f, gizmoMagnitude}, {arrowWidth, 0.0f, gizmoMagnitude - arrowWidth}, zcol);
 			LR->AddLine({0.0f, 0.0f, gizmoMagnitude}, {-arrowWidth, 0.0f, gizmoMagnitude - arrowWidth}, zcol);
 		}

@@ -22,7 +22,7 @@ namespace ShushaoEngine {
 
 	Entity::~Entity() {
 
-		LOG(INFO, "Entity Destructor: " + name);
+		LOG("Entity Destructor: " + name);
 
 		// distruggo tutti i components
 		for(Component* pCO : Components) {
@@ -66,7 +66,7 @@ namespace ShushaoEngine {
 
 	void Entity::PrintHierarchy(int level) {
 
-		Debug::SetColor(DARKGREEN);
+		Logger::setColor(ConsoleColor::DARKGREEN);
 
 		for (int i = 0; i < level; i++) cout << "   ";
 
@@ -83,7 +83,7 @@ namespace ShushaoEngine {
             t->entity->PrintHierarchy(level);
         }
 
-        Debug::SetColor(WHITE);
+        Logger::setColor(ConsoleColor::WHITE);
 
 	}
 

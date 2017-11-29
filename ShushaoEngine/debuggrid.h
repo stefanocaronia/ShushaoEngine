@@ -1,7 +1,5 @@
 #pragma once
 
-#include <glm.hpp>
-
 #include "entity.h"
 #include "color.h"
 #include "debug.h"

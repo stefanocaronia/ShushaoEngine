@@ -10,6 +10,7 @@
 #include "config.h"
 #include "cycle.h"
 #include "debug.h"
+#include "logger.h"
 #include "debuggrid.h"
 #include "entity.h"
 #include "gamedata.h"

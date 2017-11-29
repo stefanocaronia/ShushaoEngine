@@ -9,7 +9,7 @@ Level::Level() {
 	pancrazio->transform->setLocalScale({1.0f, 1.0f, 0.0f});
 	pancrazio->transform->localPosition = {0.0f, 0.0f, 0.0f};
 	//pancrazio->GetComponent<Animation>()->Disable();
-	//pancrazio->transform->setLocalRotation({0,0,20});
+	//pancrazio->transform->setLocalRotation({0,0,45});
 
 	Pancrazio* sonOfPancrazio = AddEntity<Pancrazio>("Son of Pancrazio");
 	sonOfPancrazio->setParent(pancrazio);

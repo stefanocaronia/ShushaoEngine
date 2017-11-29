@@ -12,7 +12,7 @@ using namespace std;
 namespace ShushaoEngine {
 
 	void Resources::Clear() {
-		LOG(INFO, "Cancello le resources (" + ts(Assets.size()) + ")");
+		LOG("Cancello le resources (" + ts(Assets.size()) + ")");
 		vector<Object*> toDelete;
 		for (auto const& asset : Assets) {
 			if (Assets[asset.first] == nullptr) continue;
@@ -21,7 +21,7 @@ namespace ShushaoEngine {
 
 		for (Object* obj : toDelete) {
 			if (obj == nullptr) continue;
-			LOG(INFO, "Cancello " + obj->name + " (" + util::toString(obj) +")");
+			LOG("Cancello " + obj->name + " (" + util::toString(obj) +")");
 			delete(obj);
 
 		}
@@ -29,12 +29,12 @@ namespace ShushaoEngine {
 	}
 
 	void Resources::toString() {
-		Debug::SetColor(ConsoleColor::DARKYELLOW);
+		Logger::setColor(ConsoleColor::DARKYELLOW);
 		cout << " Resources [" << Assets.size() << "] :" << endl;
 		for (auto const& asset : Assets) {
             cout << "  - (" << util::classtitle(typeid(*asset.second).name()) << ") " << asset.first << endl;
 		}
-		Debug::SetColor(ConsoleColor::LIGHTGREY);
+		Logger::setColor(ConsoleColor::LIGHTGREY);
 	}
 
 	map<string, Object*> Resources::Assets;

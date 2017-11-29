@@ -20,7 +20,7 @@ namespace ShushaoEngine {
 	}
 
 	Cycle::~Cycle() {
-		LOG(INFO, "Cycle Destructor");
+		Debug::Log << "Cycle Destructor: " << endl;
 
 		SceneManager::Clear();
 		Resources::Clear();
@@ -52,8 +52,10 @@ namespace ShushaoEngine {
 		SceneManager::activeScene->ScanActiveComponentsInScene();
 		SceneManager::activeScene->run(Cycle::INIT);
 
+		Camera* activeCamera = SceneManager::activeScene->activeCamera;
+
 		GLManager::SetFullscreen(Config::fullscreen);
-		GLManager::Clear(SceneManager::activeScene->activeCamera->backgroundColor.r, SceneManager::activeScene->activeCamera->backgroundColor.g, SceneManager::activeScene->activeCamera->backgroundColor.b, 1.0f, 1.0f);
+		GLManager::Clear(activeCamera->backgroundColor.r, activeCamera->backgroundColor.g, activeCamera->backgroundColor.b, 1.0f, 1.0f);
 
 		Start();
 
@@ -103,7 +105,6 @@ namespace ShushaoEngine {
 	}
 
 	void Cycle::exit() {
-		LOG(INFO, "IN CYCLE EXIT");
 		End();
 		SceneManager::activeScene->run(Cycle::EXIT);
 		System::exit();

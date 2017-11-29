@@ -28,7 +28,7 @@ namespace ShushaoEngine {
 	}
 
 	Component::~Component() {
-		LOG(INFO, "Component Destructor: " + name + " di " + entity->name);
+		Debug::Log << "Component Destructor: " << name << " di " << entity->name << endl;
 
 		exit();
 	}

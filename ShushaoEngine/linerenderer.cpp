@@ -5,7 +5,7 @@
 #include "debug.h"
 
 #include <vector>
-#include <glm.hpp>
+#include <glm/glm.hpp>
 
 namespace ShushaoEngine {
 

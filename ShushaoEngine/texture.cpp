@@ -38,7 +38,7 @@ namespace ShushaoEngine {
 		Surface = IMG_Load(filename.c_str());
 
 		if (!Surface) {
-			LOG(ERROR, "IMG_Load " + ts(IMG_GetError()));
+			Debug::Log(ERROR) << "IMG_Load " << IMG_GetError() << endl;
 			return false;
 		}
 

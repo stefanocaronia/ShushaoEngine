@@ -173,7 +173,6 @@ namespace ShushaoEngine {
 
 	Timeline* Timeline::setTarget(Sprite*& var) {
 		pSprite.setTarget(var);
-		cout << "settato target su sprite " << var->name << endl;
 		propertyType = PropertyType::SPRITE;
 		return this;
 	}

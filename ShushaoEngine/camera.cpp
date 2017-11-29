@@ -1,4 +1,4 @@
-#include <glm.hpp>
+#include <glm/glm.hpp>
 #include <iostream>
 
 #include "config.h"
@@ -105,7 +105,7 @@ namespace ShushaoEngine {
 	}
 
 	void Camera::print() {
-		Debug::SetColor(CYAN);
+		Logger::setColor(ConsoleColor::CYAN);
 
 		cout << " Camera " << name << endl;
 
@@ -119,7 +119,6 @@ namespace ShushaoEngine {
 		cout << "  - " << "nearClipPlane: " << nearClipPlane << endl;
 		cout << "  - " << "rect: " << rect.x << " " << rect.y << " " << rect.width << " " << rect.height << endl;
 
-		Debug::SetColor(LIGHTGREY);
-
+		Logger::setColor(ConsoleColor::LIGHTGREY);
 	}
 }

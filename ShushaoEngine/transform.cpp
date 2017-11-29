@@ -6,10 +6,10 @@
 #include <iostream>
 #include <vector>
 
-#include <glm.hpp>
-#include <gtx/quaternion.hpp>
-#include <gtx/euler_angles.hpp>
-#include "gtx/string_cast.hpp"
+#include <glm/glm.hpp>
+#include <glm/gtx/quaternion.hpp>
+#include <glm/gtx/euler_angles.hpp>
+#include <glm/gtx/string_cast.hpp>
 
 using namespace std;
 using namespace glm;
@@ -27,19 +27,7 @@ namespace ShushaoEngine {
 		return parent;
 	}
 
-	bool Transform::hasParent() {
-		return (parent != nullptr);
-	}
-
-	bool Transform::hasRootParent() {
-		return (parent != nullptr && parent->isRoot);
-	}
-
-	bool Transform::isChild() {
-		return (parent != nullptr && !parent->isRoot);
-	}
-
-	bool Transform::onRoot() {
+	bool Transform::isAtRoot() {
 		return (isRoot || (parent != nullptr && parent->isRoot));
 	}
 
@@ -84,7 +72,7 @@ namespace ShushaoEngine {
 	//}
 
 	void Transform::setPosition(vec3 position_) {
-		localPosition = position_ - (isChild() ? parent->position : vec3(0));
+		localPosition = position_ - (!isAtRoot() ? parent->position : vec3(0));
 	}
 
 	void Transform::setLocalPosition(vec3 position_) {
@@ -127,12 +115,15 @@ namespace ShushaoEngine {
 
 	void Transform::Update() {
 
-		_M = getLocalToWorldMatrix() * translate(-pivot);
-		_position = (onRoot() ? localPosition : toWorld(localPosition));
-
-		_MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * M;
-
+		_position = getWorldPosition();
+		_rotation = getWorldOrientation();
 		setupDirections();
+
+		mat4 M = getLocalToWorldMatrix() * translate(-pivot);
+		mat4 P = SceneManager::activeScene->activeCamera->Projection;
+		mat4 V = SceneManager::activeScene->activeCamera->getViewMatrix();
+
+		_MVP = P * V * M;
 	}
 
 	mat4 Transform::getLocalToParentMatrix() {
@@ -140,22 +131,30 @@ namespace ShushaoEngine {
 	}
 
 	mat4 Transform::getLocalToWorldMatrix() {
-		if (onRoot()) {
+		if (isAtRoot()) {
 			return getLocalToParentMatrix();
 		} else {
 			return parent->getLocalToWorldMatrix() * getLocalToParentMatrix();
 		}
 	}
 
+	vec3 Transform::getWorldPosition() {
+		vec4 p = getLocalToWorldMatrix() * vec4(0.0f, 0.0f, 0.0f, 1.0f);
+		return vec3(p.x, p.y, p.z);
+	}
+
+	quat Transform::getWorldOrientation() {
+		if (isAtRoot()) {
+			return localRotation;
+		} else {
+			return localRotation * parent->rotation;
+		}
+		return quat();
+	}
+
 	mat4 Transform::getWorldToLocalMatrix() {
 		return glm::inverse(getLocalToWorldMatrix());
 	}
-
-	vec3 Transform::toWorld(vec3 point) {
-		vec4 result = getLocalToWorldMatrix() * vec4(point, 1.0f);
-		return vec3(result.x, result.y, result.z);
-	}
-
 
 	const vec3 Transform::VEC3_ZERO = {0.0f, 0.0f, 0.0f};
 	const vec3 Transform::VEC3_IDENTITY = {1.0f, 1.0f, 1.0f};

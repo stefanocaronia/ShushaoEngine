@@ -37,9 +37,9 @@ namespace ShushaoEngine {
 	}
 
 	void System::ListServices() {
-		Debug::SetColor(YELLOW);
+		Logger::setColor(ConsoleColor::YELLOW);
 		cout << " System" << endl;
-		Debug::SetColor(DARKYELLOW);
+		Logger::setColor(ConsoleColor::DARKYELLOW);
 		for (Service* s : Services) {
 			cout << " " << (char)192 << (char)196;
 			cout << " " << s->name << (s->active ? "+": "");
@@ -47,7 +47,7 @@ namespace ShushaoEngine {
 
         cout << endl;
 
-        Debug::SetColor(WHITE);
+        Logger::setColor(ConsoleColor::WHITE);
 	}
 
 	vector<Service*> System::Services;

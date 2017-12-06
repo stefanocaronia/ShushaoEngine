@@ -14,7 +14,7 @@ void Mover::Update() {
 
 	transform->localPosition.x += 1.5f * Time::deltaTime;
 
-	Transform* son = transform->getChild(0);
+	//Transform* son = transform->getChild(0);
 
 	transform->setLocalRotation({0,0, transform->getLocalEulerAngles().z + Time::deltaTime * rotationSpeed});
 

@@ -17,7 +17,6 @@ namespace ShushaoEngine {
 			static SDL_GLContext gContext;
 			static SDL_Window* gWindow;
 			static SDL_Renderer* gRenderer;
-			static SDL_Joystick* Joystick;
 
 			static bool fullscreen;
 

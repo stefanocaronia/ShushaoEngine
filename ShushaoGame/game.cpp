@@ -30,6 +30,23 @@ Game::Game(string title) : Cycle(title) {
 	Debug::level = DebugLevel::INFO;
 	Debug::enabled = true;
 	Debug::debugGridMode = GridMode::ORTHOGRAFIC;
+
+	System::Input.printActiveControllers();
+
+	InputMapping* fire = System::Input.addMapping("fire");
+
+	fire->positiveButton = SDL_SCANCODE_LCTRL;
+	fire->positiveControllerButton = SDL_CONTROLLER_BUTTON_A;
+	fire->mouseButton = SDL_BUTTON_LEFT;
+
+	InputMapping* horizontal = System::Input.addMapping("horizontal");
+
+	horizontal->positiveButton = SDL_SCANCODE_D;
+	horizontal->negativeButton = SDL_SCANCODE_A;
+	horizontal->altPositiveButton = SDL_SCANCODE_RIGHT;
+	horizontal->altNegativeButton = SDL_SCANCODE_LEFT;
+	horizontal->controllerAxis = SDL_CONTROLLER_AXIS_LEFTX;
+	horizontal->deadZone = 0.2f;
 }
 
 Game::~Game() {
@@ -92,42 +109,12 @@ void Game::End() {
 }
 
 void Game::Input() {
-
-	SDL_Event ev;
-	SDL_Keycode scancode;
-
-	while (SDL_PollEvent(&ev) != 0) {
-		switch (ev.type) {
-		case SDL_QUIT:
-			RUNNING = false;
-			break;
-		case SDL_KEYDOWN:
-			scancode = ev.key.keysym.scancode;
-			if (!keys[scancode])
-				keys[scancode] = true;
-			break;
-		case SDL_KEYUP:
-			scancode = ev.key.keysym.scancode;
-			keys[scancode] = false;
-			break;
-		case SDL_JOYAXISMOTION:
-			cout << ev.jaxis.which << " " << ev.jaxis.axis << " " << ev.jaxis.value << endl;
-			break;
-		case SDL_JOYBUTTONDOWN:
-			if (ev.jbutton.button == 0)
-				RUNNING = false;
-			break;
-		}
+	if (System::Input.getButton("fire")) {
+		Debug::Log << "FIRE!" << endl;
 	}
 
-	if ((keys[SDL_SCANCODE_LCTRL] && keys[SDL_SCANCODE_Q]) || keys[SDL_SCANCODE_ESCAPE])
-		RUNNING = false;
-
-	// WINDOW
-	if (keys[SDL_SCANCODE_F11]) {
-		keys[SDL_SCANCODE_F11] = false;
-
-		GLManager::ToggleFullscreen();
-		SDL_Delay(100);
+	double horizontal = System::Input.getAxis("horizontal");
+	if (horizontal != 0) {
+		Debug::Log << horizontal << endl;
 	}
 }

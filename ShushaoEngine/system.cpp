@@ -53,6 +53,7 @@ namespace ShushaoEngine {
 	vector<Service*> System::Services;
 
 	//Service* System::Input = System::AddService<InputManager>();
-	Service& System::Input = System::AddService<InputManager>();
+	InputManager& System::Input = System::AddService<InputManager>();
+	//Cycle* System::Game;
 
 }

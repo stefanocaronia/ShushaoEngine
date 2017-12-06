@@ -124,11 +124,23 @@
 		<Unit filename="inputmanager.h">
 			<Option virtualFolder="singletons/" />
 		</Unit>
+		<Unit filename="inputmapping.cpp">
+			<Option virtualFolder="objects/" />
+		</Unit>
+		<Unit filename="inputmapping.h">
+			<Option virtualFolder="objects/" />
+		</Unit>
 		<Unit filename="linerenderer.cpp">
 			<Option virtualFolder="components/" />
 		</Unit>
 		<Unit filename="linerenderer.h">
 			<Option virtualFolder="components/" />
+		</Unit>
+		<Unit filename="logger.cpp">
+			<Option virtualFolder="globals/" />
+		</Unit>
+		<Unit filename="logger.h">
+			<Option virtualFolder="globals/" />
 		</Unit>
 		<Unit filename="macros.h">
 			<Option virtualFolder="globals/" />

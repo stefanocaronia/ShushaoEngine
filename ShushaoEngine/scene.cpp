@@ -51,7 +51,7 @@ namespace ShushaoEngine {
 	void Scene::ScanActiveComponentsInScene() {
 
 		ActiveComponents.clear();
-        ActiveComponents = root->GetActiveComponentsInChildren();
+        ActiveComponents = root->transform->GetActiveComponentsInChildren();
 	}
 
 	void Scene::PrintActiveComponentsInScene() {

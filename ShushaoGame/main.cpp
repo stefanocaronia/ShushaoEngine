@@ -5,8 +5,6 @@
 
 int main(int argc, char *argv[]) {
 
-
-
 	Game Shushao("Shushao Game!");
 
 	if (Shushao.init())

@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "service.h"
+#include "inputmanager.h"
 
 using namespace std;
 
@@ -17,7 +18,7 @@ namespace ShushaoEngine {
 			static void update();
 			static void exit();
 
-			static Service& Input;
+			static InputManager& Input;
 
 			template<class T>
 			static T& AddService() {

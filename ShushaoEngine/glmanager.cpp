@@ -10,13 +10,10 @@ namespace ShushaoEngine {
 
 		fullscreen = fs;
 
-		SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK);
+		SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER); //  | SDL_INIT_JOYSTICK
 		IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
 
-		SDL_JoystickEventState(SDL_ENABLE);
-		Joystick = SDL_JoystickOpen(0);
-
-		SDL_GL_SetSwapInterval(1);
+        SDL_GL_SetSwapInterval(1);
 		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
@@ -64,7 +61,7 @@ namespace ShushaoEngine {
 	}
 
 	void GLManager::Quit() {
-		SDL_JoystickClose(Joystick);
+
 		//SDL_DestroyRenderer(gRenderer);
 		SDL_DestroyWindow(gWindow);
 		gWindow = NULL;
@@ -112,7 +109,6 @@ namespace ShushaoEngine {
 	SDL_GLContext GLManager::gContext;
 	SDL_Window* GLManager::gWindow;
 	SDL_Renderer* GLManager::gRenderer;
-	SDL_Joystick* GLManager::Joystick;
 
 	bool GLManager::fullscreen = false;
 

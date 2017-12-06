@@ -11,12 +11,15 @@
 #include <string>
 #include <chrono>
 
-using namespace std;
+ShushaoEngine::Cycle* GAME;
 
 namespace ShushaoEngine {
 
+	using namespace std;
+
 	Cycle::Cycle(string n) {
 		name = n;
+		GAME = this;
 	}
 
 	Cycle::~Cycle() {
@@ -79,6 +82,10 @@ namespace ShushaoEngine {
 		}
 
 		exit();
+	}
+
+	void Cycle::stop() {
+		RUNNING = false;
 	}
 
 	void Cycle::render() {

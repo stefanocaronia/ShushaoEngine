@@ -50,25 +50,17 @@ namespace ShushaoEngine {
 
 	vector<Component*> Component::GetActiveComponentsInChildren() {
 
-		//cout << endl << " - cerco nei componenti di " << entity->name << endl;
-
 		if (!entity->activeSelf) return vector<Component*>();
 
 		vector<Component*> activeComponents;
 
-		//cout << " - trovati " << entity->Components.size() << endl;
-
 		for (Component* c : entity->Components) {
-			//cout << " - controllo " << c->name << " di " << c->entity->name << endl;
 			if (c->enabled) {
-				//cout << " - attivo " << c->name << " di " << c->entity->name << endl;
 				activeComponents.push_back(c);
 			}
 		}
 
-		//cout << " - ciclo i children di " << entity->name << endl;
 		for (Transform* t : entity->transform->children) {
-			//cout << " - vado ad aprire i componenti di " << t->entity->name << endl;
             vector<Component*> newComponents = t->GetActiveComponentsInChildren();
             activeComponents.insert(activeComponents.end(), newComponents.begin(), newComponents.end());
         }
@@ -90,8 +82,10 @@ namespace ShushaoEngine {
 				orderInLayerB = ((Renderer*)cb)->sortingOrder;
 			}
 
-			if (sortingLayerA == sortingLayerB) return orderInLayerA < orderInLayerB;
-			else return sortingLayerA < sortingLayerB;
+			if (sortingLayerA == sortingLayerB)
+				return orderInLayerA < orderInLayerB;
+			else
+				return sortingLayerA < sortingLayerB;
 
 			return false;
 		});

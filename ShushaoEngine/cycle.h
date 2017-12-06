@@ -17,6 +17,7 @@ namespace ShushaoEngine {
 
 			bool init();
 			void run();
+			void stop();
 
 			static string INIT;
 			static string UPDATE;
@@ -35,7 +36,6 @@ namespace ShushaoEngine {
 			virtual void FixedUpdate() = 0;
 			virtual void End() = 0;
 
-
 			bool RUNNING = true;
 			bool READY = false;
 
@@ -47,10 +47,8 @@ namespace ShushaoEngine {
 			void render();
 			void fixed();
 			void exit();
-
-
 	};
-
-
 }
+
+extern ShushaoEngine::Cycle* GAME;
 

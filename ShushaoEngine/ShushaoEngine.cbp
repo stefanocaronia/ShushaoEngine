@@ -43,10 +43,12 @@
 			<Add directory="D:/lib/mingw-dev-libs/SDL2_image/include/SDL2" />
 			<Add directory="D:/lib/mingw-dev-libs/glm" />
 			<Add directory="D:/lib/mingw-dev-libs/glew/include" />
+			<Add directory="D:/lib/mingw-dev-libs/SDL2_mixer/include/SDL2" />
 		</Compiler>
 		<Linker>
 			<Add directory="D:/lib/mingw-dev-libs/SDL2/lib" />
 			<Add directory="D:/lib/mingw-dev-libs/SDL2_image/lib" />
+			<Add directory="D:/lib/mingw-dev-libs/SDL2_mixer/lib" />
 			<Add directory="D:/lib/mingw-dev-libs/glew/lib" />
 		</Linker>
 		<Unit filename="animation.cpp">
@@ -118,17 +120,11 @@
 		<Unit filename="glmanager.h">
 			<Option virtualFolder="singletons/" />
 		</Unit>
-		<Unit filename="inputmanager.cpp">
+		<Unit filename="input.cpp">
 			<Option virtualFolder="singletons/" />
 		</Unit>
-		<Unit filename="inputmanager.h">
+		<Unit filename="input.h">
 			<Option virtualFolder="singletons/" />
-		</Unit>
-		<Unit filename="inputmapping.cpp">
-			<Option virtualFolder="objects/" />
-		</Unit>
-		<Unit filename="inputmapping.h">
-			<Option virtualFolder="objects/" />
 		</Unit>
 		<Unit filename="linerenderer.cpp">
 			<Option virtualFolder="components/" />

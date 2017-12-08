@@ -67,7 +67,6 @@ namespace ShushaoEngine {
 
 			static void toString();
 			static void Clear();
-
 	};
 
 }

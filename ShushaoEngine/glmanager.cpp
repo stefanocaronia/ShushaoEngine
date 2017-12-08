@@ -10,8 +10,12 @@ namespace ShushaoEngine {
 
 		fullscreen = fs;
 
-		SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER); //  | SDL_INIT_JOYSTICK
+		SDL_Init(SDL_INIT_EVERYTHING); //  | SDL_INIT_JOYSTICK
 		IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
+
+		Mix_Init(MIX_INIT_MP3 | MIX_INIT_OGG);
+		Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096);
+		Mix_AllocateChannels(16);
 
         SDL_GL_SetSwapInterval(1);
 		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
@@ -66,6 +70,8 @@ namespace ShushaoEngine {
 		SDL_DestroyWindow(gWindow);
 		gWindow = NULL;
 		SDL_GL_DeleteContext(gContext);
+		Mix_CloseAudio();
+		Mix_Quit();
 		SDL_Quit();
 	}
 

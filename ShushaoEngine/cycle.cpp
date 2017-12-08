@@ -1,3 +1,4 @@
+#include "input.h"
 #include "cycle.h"
 #include "setime.h"
 #include "system.h"
@@ -24,10 +25,9 @@ namespace ShushaoEngine {
 
 	Cycle::~Cycle() {
 		Debug::Log << "Cycle Destructor: " << endl;
-
-		SceneManager::Clear();
-		Resources::Clear();
-		System::Clear();
+		// SceneManager::Clear();
+		// Resources::Clear();
+		// System::Clear();
 	}
 
 	bool Cycle::init() {
@@ -38,6 +38,8 @@ namespace ShushaoEngine {
 		GLManager::HEIGHT = Config::displayHeight;
 		GLManager::fullscreen = Config::fullscreen;
 		GLManager::Init(name, false);
+
+		Input::init();
 
 		System::init();
 
@@ -67,18 +69,22 @@ namespace ShushaoEngine {
 
 			Time::Update();
 
-			SceneManager::activeScene->ScanActiveComponentsInScene();
-
-			System::update();
+			Input::update();
 			Input();
 
-			if (Time::fixedDeltaTime >= Time::fixedLimitDuration)
+			System::update();
+
+			SceneManager::activeScene->ScanActiveComponentsInScene();
+
+			if (Time::fixedDeltaTime >= Time::fixedLimitDuration) {
 				fixed();
+			}
 
 			update();
 
-			if (Time::renderDeltaTime >= Time::frameLimitDuration)
+			if (Time::renderDeltaTime >= Time::frameLimitDuration) {
 				render();
+			}
 		}
 
 		exit();
@@ -114,7 +120,11 @@ namespace ShushaoEngine {
 	void Cycle::exit() {
 		End();
 		SceneManager::activeScene->run(Cycle::EXIT);
+		Input::exit();
 		System::exit();
+		SceneManager::Clear();
+		Resources::Clear();
+		System::Clear();
 		GLManager::Quit();
 	}
 

@@ -15,7 +15,7 @@
 #include "entity.h"
 #include "gamedata.h"
 #include "glmanager.h"
-#include "inputmanager.h"
+#include "input.h"
 #include "linerenderer.h"
 #include "macros.h"
 #include "maincamera.h"
@@ -40,3 +40,4 @@
 #include "spritesheet.h"
 #include "timeline.h"
 #include "animation.h"
+#include "audio.h"

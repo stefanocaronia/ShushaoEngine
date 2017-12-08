@@ -51,4 +51,3 @@ namespace ShushaoEngine {
 }
 
 extern ShushaoEngine::Cycle* GAME;
-

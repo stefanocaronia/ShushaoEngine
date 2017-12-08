@@ -11,26 +11,14 @@ using namespace std;
 
 namespace ShushaoEngine {
 
-	Texture::Texture() {
-		name = "Texture";
-	}
-
 	Texture::Texture(string filename, string n) {
-		Load(filename);
-		name = n;
-	}
-
-	Texture::Texture(string filename) {
-		Load(filename);
-		name = util::basename(filename);
+		if (filename != "") Load(filename);
+		name = (n == "" ? util::basename(filename) : n);
 	}
 
 	Texture::~Texture()	{
-		//SDL_FreeSurface(Surface);
-		//SDL_DestroyTexture(SDLTexture);
-		//SDLTexture = NULL;
-
-		// TODO: liberare memoria
+		const GLuint textures[] = {TextureID};
+		glDeleteTextures(1, textures);
 	}
 
 	bool Texture::Load(string filename) {
@@ -52,13 +40,11 @@ namespace ShushaoEngine {
 
 		glTexImage2D(GL_TEXTURE_2D, 0, Mode, Surface->w, Surface->h, 0, Mode, GL_UNSIGNED_BYTE, Surface->pixels);
 
-		//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 0);
-
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 0);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		//glGenerateMipmap(GL_TEXTURE_2D);
 
-		//SDLTexture = SDL_CreateTextureFromSurface(GLManager::gRenderer, Surface);
+		glGenerateMipmap(GL_TEXTURE_2D);
 
 		SDL_FreeSurface(Surface);
 

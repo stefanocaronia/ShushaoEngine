@@ -9,9 +9,7 @@ namespace ShushaoEngine {
 
 		public:
 
-			Texture();
-			Texture(string);
-			Texture(string, string);
+			Texture(string filename = "", string n = "");
 
 			~Texture();
 

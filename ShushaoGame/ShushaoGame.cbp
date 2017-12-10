@@ -16,6 +16,18 @@
 					<Add option="-std=c++11" />
 					<Add option="-g" />
 				</Compiler>
+				<Linker>
+					<Add library="ShushaoEngine" />
+					<Add library="glew32" />
+					<Add library="mingw32" />
+					<Add library="opengl32" />
+					<Add library="glu32" />
+					<Add library="gdi32" />
+					<Add library="SDL2main" />
+					<Add library="SDL2" />
+					<Add library="SDL2_image" />
+					<Add library="SDL2_mixer" />
+				</Linker>
 			</Target>
 			<Target title="Release">
 				<Option output="bin/Release/ShushaoGame" prefix_auto="1" extension_auto="1" />
@@ -40,6 +52,8 @@
 			<Add directory="D:/lib/mingw-dev-libs/glew/include" />
 			<Add directory="D:/lib/mingw-dev-libs/glm" />
 			<Add directory="../ShushaoEngine" />
+			<Add directory="D:/lib/mingw-dev-libs/SDL2_mixer/include/SDL2" />
+			<Add directory="D:/lib/mingw-dev-libs/Box2D" />
 		</Compiler>
 		<Linker>
 			<Add library="libShushaoEngine" />
@@ -51,9 +65,13 @@
 			<Add library="SDL2main" />
 			<Add library="SDL2" />
 			<Add library="SDL2_image" />
+			<Add library="SDL2_mixer" />
+			<Add library="Box2D" />
 			<Add directory="D:/lib/mingw-dev-libs/SDL2/lib" />
 			<Add directory="D:/lib/mingw-dev-libs/SDL2_image/lib" />
+			<Add directory="D:/lib/mingw-dev-libs/SDL2_mixer/lib" />
 			<Add directory="D:/lib/mingw-dev-libs/glew/lib" />
+			<Add directory="D:/lib/mingw-dev-libs/Box2D/Build/Box2D" />
 			<Add directory="../ShushaoEngine/lib" />
 		</Linker>
 		<Unit filename="assets/pancrazio.png" />

@@ -1,11 +1,4 @@
 #include "entity.h"
-#include "transform.h"
-#include "spriterenderer.h"
-
-#include <iostream>
-#include "debug.h"
-
-using namespace std;
 
 namespace ShushaoEngine {
 
@@ -15,14 +8,12 @@ namespace ShushaoEngine {
 		activeSelf = true;
 		isStatic = false;
 
-		//vector<Component*> Components;
-
 		transform = AddComponent<Transform>();
 	}
 
 	Entity::~Entity() {
 
-		LOG("Entity Destructor: " + name);
+		Debug::Log << "Entity Destructor: " << name << endl;
 
 		// distruggo tutti i components
 		for(Component* pCO : Components) {
@@ -69,9 +60,7 @@ namespace ShushaoEngine {
 		Logger::setColor(ConsoleColor::DARKGREEN);
 
 		for (int i = 0; i < level; i++) cout << "   ";
-
 		cout << " " << (char)192 << (char)196;
-
 		cout << " " << name << (activeSelf ? "+": "");
 
         for (Component* c : Components) cout << " [" << c->getTitle() << "]";
@@ -84,7 +73,6 @@ namespace ShushaoEngine {
         }
 
         Logger::setColor(ConsoleColor::WHITE);
-
 	}
 
 	bool Entity::isActiveInHierarchy() {

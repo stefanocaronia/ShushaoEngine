@@ -46,8 +46,8 @@ void Game::Awake() {
 	Resources::Add<Sprite>("pancrazio_sprite")->setTexture(Resources::Get<Texture>("pancrazio"));
 
 	Resources::Load<Music>("assets/fizz.mp3");
-
-	Music* fizz = Resources::Get<Music>("fizz");
+	Resources::Load<Effect>("assets/hit.wav");
+	Resources::Load<Effect>("assets/shoot.wav")->setVolume(40);
 
 	Resources::Add<SpriteSheet>("walking")->Load(Resources::Get<TextureAtlas>("walking"));
 
@@ -132,10 +132,12 @@ void Game::Input() {
 
 	if (Input::getButtonDown("fire")) {
 		Debug::Log << "FIRE!" << endl;
+		Resources::Get<Effect>("shoot")->play();
 	}
 
 	if (Input::getButtonDown("fire2")) {
 		Debug::Log << "FIRE 2!" << endl;
+		Resources::Get<Effect>("hit")->play();
 	}
 
 	double horizontal = Input::getAxis("horizontal");

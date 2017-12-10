@@ -14,7 +14,7 @@ namespace ShushaoEngine {
 
 			Mix_Music* track;
 
-			bool Load(string);
+			Music* Load(string);
 
 			void play(int loops = 1);
 			void fadeIn(int loops = 1, int ms = 1000);
@@ -44,6 +44,35 @@ namespace ShushaoEngine {
 
 			static bool muted;
 			static int volume;
+
+	};
+
+	class Effect : public Object {
+
+
+		// TODO: PANNING
+
+		public:
+
+			Effect(string filename = "");
+			~Effect();
+
+			Mix_Chunk *sample;
+
+			Effect* Load(string);
+
+			void setVolume(int);
+
+			void play(int loops = 0);
+			void play(int loops, int ticks);
+			void fadeIn(int loops, int ms = 1000);
+			void fadeIn(int loops, int ms, int ticks);
+			void stop();
+
+		private:
+
+			int volume = 128;
+			int channel;
 
 	};
 

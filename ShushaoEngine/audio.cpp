@@ -5,6 +5,8 @@
 
 namespace ShushaoEngine {
 
+	//{ #region music
+
 	Music::Music(std::string filename) {
 		if (filename != "") Load(filename);
 		name = util::basename(filename);
@@ -18,16 +20,16 @@ namespace ShushaoEngine {
 		}
 	}
 
-	bool Music::Load(std::string filename) {
+	Music* Music::Load(std::string filename) {
 
 		track = Mix_LoadMUS(filename.c_str());
 
 		if (track == nullptr) {
 			Debug::Log(ERROR) << "Impossibile caricare " << filename << ": " << Mix_GetError() << endl;
-			return false;
+			return nullptr;
 		}
 
-		return true;
+		return this;
 	}
 
 	void Music::play(int loops) {
@@ -115,4 +117,63 @@ namespace ShushaoEngine {
 	bool Music::muted;
 	int Music::volume;
 
+	//}
+
+	//{ #region effect
+
+	Effect::Effect(std::string filename) {
+		if (filename != "") Load(filename);
+		name = util::basename(filename);
+	}
+
+	Effect::~Effect()	{
+		if (sample != nullptr) {
+			Mix_FreeChunk(sample);
+			sample = nullptr;
+		}
+	}
+
+	Effect* Effect::Load(std::string filename) {
+
+		sample = Mix_LoadWAV(filename.c_str());
+
+		if (sample == nullptr) {
+			Debug::Log(ERROR) << "Impossibile caricare " << filename << ": " << Mix_GetError() << endl;
+			return nullptr;
+		}
+
+		return this;
+	}
+
+	void Effect::setVolume(int volume_) {
+		volume = glm::clamp(volume_, 0, 128);
+	}
+
+	void Effect::play(int loops) {
+		if (sample == nullptr) return;
+		Mix_Volume(channel = Mix_PlayChannel(-1, sample, loops), volume);
+	}
+
+	void Effect::play(int loops, int ticks) {
+		if (sample == nullptr) return;
+		Mix_Volume(channel = Mix_PlayChannelTimed(-1, sample, loops, ticks), volume);
+	}
+
+	void Effect::fadeIn(int loops, int ms) {
+		if (sample == nullptr) return;
+		Mix_Volume(channel = Mix_FadeInChannel(-1, sample, loops, ms), volume);
+	}
+
+	void Effect::fadeIn(int loops, int ms, int ticks) {
+		if (sample == nullptr) return;
+		Mix_Volume(channel = Mix_FadeInChannel(-1, sample, loops, ms), volume);
+	}
+
+	void Effect::stop() {
+		if (Mix_GetChunk(channel) == sample && Mix_Playing(channel)) {
+			Mix_HaltChannel(channel);
+		}
+	}
+
+	//}
 }

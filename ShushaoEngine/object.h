@@ -3,12 +3,7 @@
 #include <glm/glm.hpp>
 #include <string>
 
-#include "object.h"
-
 namespace ShushaoEngine {
-
-	using namespace std;
-	using namespace glm;
 
 	class Transform;
 
@@ -17,14 +12,14 @@ namespace ShushaoEngine {
 		public:
 
 			Object();
-			Object(string);
+			Object(std::string);
 			virtual ~Object();
 
 			int InstanceID = 0;
 
-			string name;
+			std::string name;
 
-			string ToString();
+			std::string ToString();
 
 			static void Destroy(Object*, float);
 			static void Destroy(Object*);
@@ -37,8 +32,8 @@ namespace ShushaoEngine {
 			static Object* Instantiate(Object*);
 			static Object* Instantiate(Object*, Transform*);
 			static Object* Instantiate(Object*, Transform*, bool);
-			static Object* Instantiate(Object*, vec3, quat);
-			static Object* Instantiate(Object*, vec3, quat, Transform*);
+			static Object* Instantiate(Object*, glm::vec3, glm::quat);
+			static Object* Instantiate(Object*, glm::vec3, glm::quat, Transform*);
 
 
 	};

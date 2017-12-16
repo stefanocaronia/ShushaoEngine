@@ -1,11 +1,7 @@
 #include "color.h"
-
 #include "utility.h"
-#include <string>
 
 namespace ShushaoEngine {
-
-	using namespace std;
 
 	Color::Color() {
 		r = 0.0f;

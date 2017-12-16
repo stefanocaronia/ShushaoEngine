@@ -1,11 +1,10 @@
 #pragma once
 
+#include <SDL.h>
 #include <map>
 #include <string>
 #include <vector>
 
-#include "service.h"
-#include "gllibs.h"
 #include "debug.h"
 
 namespace ShushaoEngine {

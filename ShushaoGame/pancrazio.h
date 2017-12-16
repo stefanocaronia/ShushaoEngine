@@ -8,9 +8,14 @@ class Pancrazio : public Entity {
 		~Pancrazio();
 
 		SpriteRenderer* sr;
+		Rigidbody2D* rb;
+		BoxCollider2D* collider;
+		CircleCollider2D* circlec;
 		Animation* animation;
 
 	protected:
+
+
 
 	private:
 };

@@ -2,16 +2,14 @@
 
 #include <vector>
 #include <string>
-#include <typeinfo>
 
-#include "debug.h"
-#include "camera.h"
-#include "entity.h"
 #include "utility.h"
-
-using namespace std;
+#include "entity.h"
 
 namespace ShushaoEngine {
+
+	class Component;
+	class Camera;
 
 	class Scene {
 
@@ -19,7 +17,7 @@ namespace ShushaoEngine {
 			Scene();
 			~Scene();
 
-			string name;
+			std::string name;
 			int BuildIndex;
 			bool isLoaded = false;
 
@@ -27,17 +25,17 @@ namespace ShushaoEngine {
 
 			Camera* activeCamera;
 
-			vector<Entity*> GetRootEntitys();
+			std::vector<Entity*> GetRootEntitys();
 
 			void ScanActiveComponentsInScene();
 			void PrintActiveComponentsInScene();
 			void PrintActiveRenderersInScene();
 			void PrintHierarchy();
 
-			void run(string);
+			void run(std::string);
 
 			template<class T>
-			T* AddEntity(string _name = "") { // Adds a Entity of class T (Prefab)
+			T* AddEntity(std::string _name = "") { // Adds a Entity of class T (Prefab)
 
 				T* entity = new T();
 				entity->name = (_name == "" ? util::classtitle<T>() : _name);
@@ -57,12 +55,12 @@ namespace ShushaoEngine {
 				return nullptr;
 			}
 
-			Entity* AddEntity(string);
+			Entity* AddEntity(std::string);
 
 			void AddEntity(Entity*);
 
-			vector<Entity*> Entities;
-			vector<Component*> ActiveComponents;
+			std::vector<Entity*> Entities;
+			std::vector<Component*> ActiveComponents;
 
 		private:
 	};

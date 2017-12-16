@@ -20,8 +20,8 @@ namespace ShushaoEngine {
 			//enableInstancing; // Gets and sets whether GPU instancing is enabled for this material.
 			//globalIlluminationFlags; // Defines how the material should interact with lightmaps and lightprobes.
 			Texture* mainTexture; // The material's texture.
-			vec2 mainTextureOffset; // The texture offset of the main texture.
-			vec2 mainTextureScale; // The texture scale of the main texture.
+			glm::vec2 mainTextureOffset; // The texture offset of the main texture.
+			glm::vec2 mainTextureScale; // The texture scale of the main texture.
 			//passCount; // How many passes are in this material (Read Only).
 			//renderQueue; // Render queue of this material.
 			Shader* shader; // The shader used by the material.

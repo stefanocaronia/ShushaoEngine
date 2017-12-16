@@ -3,6 +3,7 @@
 /* include in derived projects */
 
 // ShushaoEngine Objects
+#include "constants.h"
 #include "camera.h"
 #include "color.h"
 #include "component.h"
@@ -11,16 +12,12 @@
 #include "cycle.h"
 #include "debug.h"
 #include "logger.h"
-#include "debuggrid.h"
 #include "entity.h"
-#include "gamedata.h"
 #include "glmanager.h"
-#include "input.h"
 #include "linerenderer.h"
-#include "macros.h"
 #include "maincamera.h"
 #include "material.h"
-#include "model.h"
+#include "input.h"
 #include "object.h"
 #include "rect.h"
 #include "renderer.h"
@@ -41,3 +38,7 @@
 #include "timeline.h"
 #include "animation.h"
 #include "audio.h"
+
+#include "rigidbody2d.h"
+#include "collider2d.h"
+#include "collision2d.h"

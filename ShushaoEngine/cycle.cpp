@@ -1,5 +1,9 @@
-#include "input.h"
+#include <iostream>
+#include <string>
+#include <chrono>
+
 #include "cycle.h"
+#include "input.h"
 #include "setime.h"
 #include "system.h"
 #include "glmanager.h"
@@ -7,10 +11,7 @@
 #include "resources.h"
 #include "config.h"
 #include "debug.h"
-
-#include <iostream>
-#include <string>
-#include <chrono>
+#include "physics.h"
 
 ShushaoEngine::Cycle* GAME;
 
@@ -25,9 +26,6 @@ namespace ShushaoEngine {
 
 	Cycle::~Cycle() {
 		Debug::Log << "Cycle Destructor: " << endl;
-		// SceneManager::Clear();
-		// Resources::Clear();
-		// System::Clear();
 	}
 
 	bool Cycle::init() {
@@ -39,11 +37,12 @@ namespace ShushaoEngine {
 		GLManager::fullscreen = Config::fullscreen;
 		GLManager::Init(name, false);
 
-		Input::init();
+		if (Config::Physics::enabled)
+			Physics::init();
 
+		Input::init();
 		System::init();
 
-		// here must be loaded the active scene
 		Awake();
 
 		return true;
@@ -55,7 +54,7 @@ namespace ShushaoEngine {
 			return;
 
 		SceneManager::activeScene->ScanActiveComponentsInScene();
-		SceneManager::activeScene->run(Cycle::INIT);
+		SceneManager::activeScene->run(Cycle::INIT); // vengono chiamati gli Awake di tutti gli oggetti attivi
 
 		Camera* activeCamera = SceneManager::activeScene->activeCamera;
 
@@ -69,18 +68,17 @@ namespace ShushaoEngine {
 
 			Time::Update();
 
+			SceneManager::activeScene->ScanActiveComponentsInScene();
+
 			Input::update();
 			Input();
 
 			System::update();
-
-			SceneManager::activeScene->ScanActiveComponentsInScene();
+			update();
 
 			if (Time::fixedDeltaTime >= Time::fixedLimitDuration) {
 				fixed();
 			}
-
-			update();
 
 			if (Time::renderDeltaTime >= Time::frameLimitDuration) {
 				render();
@@ -99,6 +97,7 @@ namespace ShushaoEngine {
 		GLManager::Reset();
 		SceneManager::activeScene->run(Cycle::RENDER);
 		Render();
+		if (Physics::enabled && Physics::debug) Physics::world->DrawDebugData();
 		Time::frameCount++;
 		GLManager::Swap();
 	}
@@ -112,6 +111,7 @@ namespace ShushaoEngine {
 	void Cycle::fixed() {
 		Time::fixedTime = Time::GetTime();
 		Time::inFixedTimeStep = true;
+		if (Physics::enabled) Physics::update();
 		SceneManager::activeScene->run(Cycle::FIXED);
 		FixedUpdate();
 		Time::inFixedTimeStep = false;
@@ -122,6 +122,7 @@ namespace ShushaoEngine {
 		SceneManager::activeScene->run(Cycle::EXIT);
 		Input::exit();
 		System::exit();
+		Physics::exit();
 		SceneManager::Clear();
 		Resources::Clear();
 		System::Clear();

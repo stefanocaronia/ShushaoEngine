@@ -9,8 +9,6 @@
 #include "camera.h"
 #include "scene.h"
 
-using namespace std;
-
 namespace ShushaoEngine {
 
 	class GameData {
@@ -41,11 +39,8 @@ namespace ShushaoEngine {
 			static Camera* activeCamera;
 			static Scene* activeScene;
 
-			static vector<Object*> Objects;
-			static vector<Component*> Components;
-
-
-
+			static std::vector<Object*> Objects;
+			static std::vector<Component*> Components;
 	};
 
 }

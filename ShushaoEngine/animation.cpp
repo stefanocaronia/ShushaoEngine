@@ -3,6 +3,7 @@
 #include "debug.h"
 #include "animation.h"
 #include "setime.h"
+#include "timeline.h"
 
 namespace ShushaoEngine {
 

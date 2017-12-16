@@ -1,13 +1,15 @@
 #include "debuggrid.h"
-#include "resources.h"
-#include "scenemanager.h"
+
+#include "color.h"
+#include "debug.h"
+#include "shader.h"
+#include "linerenderer.h"
 
 namespace ShushaoEngine {
 
 	DebugGrid::DebugGrid() {
 
 		LineRenderer* LR = AddComponent<LineRenderer>();
-		//LR->shader = Resources::Get<Shader>("wire");
 		LR->shader = new Shader("shaders/wire", "Wireframe Shader");
 		LR->sortingLayerID = Config::SortingLayers.over();
 

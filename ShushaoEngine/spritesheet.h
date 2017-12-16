@@ -9,10 +9,6 @@ namespace ShushaoEngine {
 
 		public:
 
-			/*using vector::operator=;
-			using vector::assign;
-			using vector<Sprite*>;*/
-
 			SpriteSheet();
 			SpriteSheet(string);
 			SpriteSheet(TextureAtlas*);
@@ -27,7 +23,6 @@ namespace ShushaoEngine {
 			void Add(Sprite*);
 
 			void Load(TextureAtlas*);
-
 
 		protected:
 

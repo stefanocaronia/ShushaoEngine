@@ -1,13 +1,10 @@
 #pragma once
 
 #include <string>
-#include <iostream>
+#include <vector>
 
 #include "debug.h"
 #include "object.h"
-#include "transform.h"
-#include "spriterenderer.h"
-#include "linerenderer.h"
 #include "utility.h"
 #include "component.h"
 
@@ -15,7 +12,6 @@ namespace ShushaoEngine {
 
 	class Scene;
 	class Transform;
-	class SpriteRenderer;
 
 	class Entity : public Object {
 
@@ -29,22 +25,24 @@ namespace ShushaoEngine {
 			Transform* transform = nullptr;
 			Scene* scene = nullptr;	// Scene that the Entity is part of.
 
-			vector<Component*> Components;
+			std::vector<Component*> Components;
 
 			int layer;	// The layer the game object is in. A layer is in the range [0...31].
 			std::string tag;		// The tag of this game object.
-			vector<std::string> tags;		// The tag of this game object.
+			std::vector<std::string> tags;		// The tag of this game object.
 
 			bool activeInHierarchy;	// 	Is the Entity active in the scene?
 			bool activeSelf;	// 	The local active state of this Entity. (Read Only)
 			bool isStatic;	// 	Editor only API that specifies if a game object is static.
 
 			void run(std::string);
-			vector<Component*> GetActiveComponentsInChildren();
+			std::vector<Component*> GetActiveComponentsInChildren();
 			void PrintHierarchy(int);
 			bool isActiveInHierarchy();
 
 			void BroadcastMessage(std::string methodName);	// Calls the method named methodName on every MonoBehaviour in this game object or any of its children.
+			void SendMessage(std::string methodName, Object* parameter);	// Calls the method named methodName on every MonoBehaviour in this game object.
+			void SendMessageUpwards(std::string methodName);	// Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour.
 			bool CompareTag(std::string t);	// Is this game object tagged with tag?
 
 			template<class T>
@@ -63,7 +61,6 @@ namespace ShushaoEngine {
 					if (dynamic_cast<T*>(component)) {
 						if (_name == "" || component->name == _name) return dynamic_cast<T*>(component);
 					}
-				//Debug::Log(ERROR, "Component " + _name + " (" + util::classtitle<T>() + ") non trovato", SOURCE);
 				return nullptr;
 			}
 
@@ -82,8 +79,6 @@ namespace ShushaoEngine {
 			template<class T>
 			T* GetComponentsInParent(); // TODO: Returns all components of Type type in the Entity or any of its parents.
 
-			void SendMessage(std::string);	// TODO: Calls the method named methodName on every MonoBehaviour in this game object.
-			void SendMessageUpwards(std::string);	//  TODO: Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour.
 			void SetActive(bool);	// Activates/Deactivates the Entity.
 
 			static Entity* Find(std::string); // Finds a Entity by name and returns it.

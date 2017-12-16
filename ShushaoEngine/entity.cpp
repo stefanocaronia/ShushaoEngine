@@ -1,4 +1,5 @@
 #include "entity.h"
+#include "transform.h"
 
 namespace ShushaoEngine {
 
@@ -34,7 +35,29 @@ namespace ShushaoEngine {
 		return transform->GetActiveComponentsInChildren();
 	}
 
-	void Entity::run(string cycle) {
+	void Entity::BroadcastMessage(std::string methodName) {
+/*		if (!isActiveInHierarchy())	return;
+
+        for (Component* c : Components) {
+            if (c->enabled)
+				c->ReceiveMessage(methodName);
+        }
+
+        for (Transform* t : transform->children)
+            t->entity->SendMessage(methodName);*/
+
+	}
+
+	void Entity::SendMessage(std::string methodName, Object* parameter) {
+		if (!isActiveInHierarchy())	return;
+
+        for (Component* c : Components) {
+            if (c->enabled)	c->ReceiveMessage(methodName, parameter);
+        }
+
+	}
+
+	void Entity::run(std::string cycle) {
 		//cout << "Entity " << name << ": run " << to_string(cycle) << endl;
 		if (!isActiveInHierarchy()) {
 			//cout << "Entity " << name << ": non attivo " << endl;
@@ -52,7 +75,6 @@ namespace ShushaoEngine {
 			//cout << "In trasnform di " <<  t->entity->name << endl;
             t->entity->run(cycle);
         }
-
 	}
 
 	void Entity::PrintHierarchy(int level) {
@@ -78,11 +100,11 @@ namespace ShushaoEngine {
 	bool Entity::isActiveInHierarchy() {
 		if (!activeSelf) return false;
 
-		/*Transform* p = transform->GetParent();
+		/*Transform* p = transform->getParent();
 		while (p != nullptr) {
 			if (!p->entity->activeSelf)
 				return activeInHierarchy = false;
-			p = p->GetParent();
+			p = p->getParent();
 		}*/
 
 		return true;

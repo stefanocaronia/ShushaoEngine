@@ -1,7 +1,5 @@
 #include "mover.h"
 
-#include "glm/gtx/string_cast.hpp"
-
 void Mover::Awake() {
 
 	sr = entity->GetComponent<SpriteRenderer>();
@@ -10,7 +8,7 @@ void Mover::Awake() {
 
 void Mover::Update() {
 
-	float rotationSpeed = 0.2f;
+	/*float rotationSpeed = 0.2f;
 
 	transform->localPosition.x += 1.5f * Time::deltaTime;
 
@@ -22,5 +20,12 @@ void Mover::Update() {
 		if (entity->GetComponent<Animation>("walk") != nullptr)
 			entity->GetComponent<Animation>("walk")->stop();
 		Disable();
-	}
+	}*/
+}
+
+void Mover::OnCollisionEnter2D(Collision2D* collision) {
+
+	std::cout << "COLLISION!!!" << std::endl;
+	Resources::Get<Effect>("hit")->play();
+
 }

@@ -14,7 +14,27 @@ namespace Config {
 	int displayHeight 		= (int)(displayWidth / displayAspect);
 	bool fullscreen 		= false;
 
-	ShushaoEngine::vector_map Layers;
-	ShushaoEngine::vector_map SortingLayers;
+	// Time
+	namespace Time {
+
+		float fixedRateLimit = 60.0f; // 0.0f -> unlimited
+		float frameRateLimit = 0.0f; // 0.0f -> unlimited
+
+	}
+
+	// Physics (Box2d)
+	namespace Physics {
+
+		bool enabled = true;
+		bool debug = true;
+		glm::vec2 gravity = {0, -9.8};
+		bool doSleep = true;
+		int velocityIterations = 8;
+		int positionIterations = 3;
+
+	}
+
+	ShushaoEngine::VectorMap Layers;
+	ShushaoEngine::VectorMap SortingLayers;
 
 }

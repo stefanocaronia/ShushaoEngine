@@ -1,17 +1,15 @@
 #pragma once
 
+#include <GL/glew.h>
 #include <vector>
 #include <glm/glm.hpp>
 
-#include "gllibs.h"
 #include "renderer.h"
 #include "color.h"
-#include "shader.h"
 
 namespace ShushaoEngine {
 
-	using namespace glm;
-	using namespace std;
+	class Shader;
 
 	class LineRenderer : public Renderer {
 
@@ -19,12 +17,12 @@ namespace ShushaoEngine {
 
 			LineRenderer();
 			~LineRenderer();
-			LineRenderer(string);
+			LineRenderer(std::string);
 
 			Color color = {1.0f, 1.0f, 1.0f, 1.0f}; //	Rendering color for the Sprite graphic.
 
-            vector<vec3> vertices;
-            vector<Color> colors;
+            std::vector<glm::vec3> vertices;
+            std::vector<Color> colors;
 
 			GLuint vertexBuffer;
 			GLuint colorBuffer;
@@ -32,8 +30,8 @@ namespace ShushaoEngine {
 
 			Shader* shader;
 
-			void AddLine(vec3, vec3, Color);
-			void AddPolyline(vector<vec3>, Color);
+			void AddLine(glm::vec3, glm::vec3, Color);
+			void AddPolyline(std::vector<glm::vec3>, Color);
 
 			void Awake();
 			void Render();

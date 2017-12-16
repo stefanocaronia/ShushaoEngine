@@ -1,11 +1,9 @@
 #include <iostream>
 
+#include "sprite.h"
 #include "spriterenderer.h"
+#include "shader.h"
 #include "transform.h"
-#include "utility.h"
-#include "debug.h"
-
-using namespace std;
 
 namespace ShushaoEngine {
 

@@ -1,17 +1,14 @@
 # pragma once
 
-#include "gllibs.h"
 #include "entity.h"
 #include "camera.h"
 
-using namespace ShushaoEngine;
-
-class MainCamera : public Entity {
+class MainCamera : public ShushaoEngine::Entity {
 	public:
 		MainCamera();
 		~MainCamera();
 
-		Camera* camera;
+		ShushaoEngine::Camera* camera;
 
 	protected:
 

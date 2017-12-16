@@ -7,9 +7,7 @@
 
 namespace ShushaoEngine {
 
-	using namespace std;
-
-	Timeline::Timeline(string _name) : Object(_name) {};
+	Timeline::Timeline(std::string _name) : Object(_name) {};
 
 	Timeline::~Timeline() {
 		clear();

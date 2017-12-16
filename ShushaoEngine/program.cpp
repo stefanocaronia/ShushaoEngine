@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "program.h"
 
 namespace ShushaoEngine {
@@ -9,5 +11,4 @@ namespace ShushaoEngine {
 	Program::~Program() {
 		//dtor
 	}
-
 }

@@ -1,41 +1,36 @@
-#include "linerenderer.h"
-#include "gllibs.h"
-#include "transform.h"
-#include "color.h"
-#include "debug.h"
-
 #include <vector>
 #include <glm/glm.hpp>
 
-namespace ShushaoEngine {
+#include "linerenderer.h"
+#include "transform.h"
+#include "color.h"
+#include "shader.h"
 
-	using namespace std;
-	using namespace glm;
+namespace ShushaoEngine {
 
 	LineRenderer::LineRenderer() {
 		name = "Line Renderer";
 	}
 
-
 	LineRenderer::~LineRenderer() {
 		name = "Line Renderer";
 	}
 
-	LineRenderer::LineRenderer(string n) {
+	LineRenderer::LineRenderer(std::string n) {
 		name = n;
 	}
 
-	void LineRenderer::AddLine(const vec3 start_point, const vec3 end_point, Color col) {
+	void LineRenderer::AddLine(const glm::vec3 start_point, const glm::vec3 end_point, Color col) {
 		vertices.push_back(start_point);
 		vertices.push_back(end_point);
 		colors.push_back(col);
 		colors.push_back(col);
 	}
 
-	void LineRenderer::AddPolyline(const vector<vec3> points, Color col) {
+	void LineRenderer::AddPolyline(const std::vector<glm::vec3> points, Color col) {
 		bool isFirst = true;
-		vec3 lastpoint;
-		for (vec3 point : points) {
+		glm::vec3 lastpoint;
+		for (glm::vec3 point : points) {
 			if (!isFirst) {
 				vertices.push_back(lastpoint);
 				colors.push_back(col);
@@ -48,6 +43,8 @@ namespace ShushaoEngine {
 	}
 
 	void LineRenderer::Awake() {
+
+		using namespace glm;
 
 		glGenVertexArrays(1, &VAO);
 		glBindVertexArray(VAO);

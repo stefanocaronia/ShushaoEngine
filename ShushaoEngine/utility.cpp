@@ -1,12 +1,11 @@
 #include "debug.h"
 #include "utility.h"
+#include "constants.h"
 
 #include <iostream>
 #include <string>
 #include <sstream>
 #include <typeinfo>
-
-using namespace std;
 
 namespace ShushaoEngine {
 
@@ -40,96 +39,38 @@ namespace ShushaoEngine {
 
 			string title;
 			bool inName = false;
+			char prevc;
 			for (char& c : type) {
 				if (isdigit(c) && !inName) continue;
-				if (isupper(c) && inName) title += " ";
+				if ((isupper(c) || isdigit(c)) && inName && !(c == 'D' && prevc == '2')) title += " ";
 				title += (inName?c:toupper(c));
 				inName = true;
+				prevc = c;
 			}
 			return title;
 		}
 
-	}
+		glm::vec3 toEulerAngles(const glm::quat& q) {
+			float roll, pitch, yaw;
 
+			// roll (x-axis rotation)
+			double sinr = 2.0d * (q.w * q.x + q.y * q.z);
+			double cosr = 1.0f - 2.0f * (q.x * q.x + q.y * q.y);
+			roll = atan2(sinr, cosr);
 
-	// vector_map
+			// pitch (y-axis rotation)
+			double sinp = +2.0f * (q.w * q.y - q.z * q.x);
+			if (fabs(sinp) >= 1)
+				pitch = copysign(M_PI / 2, sinp); // use 90 degrees if out of range
+			else
+				pitch = asin(sinp);
 
-	vector_map::vector_map() {
-		for (string i : defaults) {
-			if (size() >= maxElements) return;
-			push_back(i);
+			// yaw (z-axis rotation)
+			double siny = +2.0f * (q.w * q.z + q.x * q.y);
+			double cosy = +1.0f - 2.0f * (q.y * q.y + q.z * q.z);
+			yaw = atan2(siny, cosy);
+
+			return {roll, pitch, yaw};
 		}
 	}
-
-	vector_map::vector_map(initializer_list<string> ilist) {
-		for (string i : ilist) {
-			if (size() >= maxElements) return;
-			push_back(i);
-		}
-	}
-
-	void vector_map::operator= (initializer_list<string> ilist) {
-		clear();
-		for (string i : defaults) {
-			if (size() >= maxElements) return;
-			push_back(i);
-		}
-		for (string i : ilist) {
-			if (size() >= maxElements) return;
-			push_back(i);
-		}
-	}
-
-	void vector_map::operator+= (string label) {
-		if (size() >= maxElements) return;
-		push_back(label);
-	}
-
-	void vector_map::operator-= (string label) {
-		erase(remove(begin(), end(), label), end());
-	}
-
-	int vector_map::operator[] (string label) {
-		auto it = find(begin(), end(), label);
-		if (it != end()) {
-			auto d = std::distance(begin(), it);
-			return d;
-		}
-		return -1;
-	}
-
-	string vector_map::operator[] (unsigned int index) {
-		if (index == maxElements) return "^overall";
-		if (index > (size() + 1)) return "?undefined";
-		return at(index);
-	}
-
-	void vector_map::setDefaults(initializer_list<string> ilist) {
-		for (string i : ilist) defaults.push_back(i);
-		for (string i : ilist) push_back(i);
-	}
-
-	int vector_map::top() {
-        return size() - 1;
-	}
-
-	int vector_map::over() {
-        return maxElements;
-	}
-
-	void vector_map::setMaxElements(unsigned int m) {
-		maxElements = m;
-	}
-
-	void vector_map::toString(string title) {
-		Logger::setColor(ConsoleColor::GREY);
-		cout << " " << util::classtitle(typeid(*this).name()) << " " << title << " [" << maxElements << "] :" << endl;
-		for (auto it = begin(); it != end(); ++it) {
-			int key = std::distance(begin(), it);
-            cout << "  (" << key << ") " << *it << endl;
-		}
-		// cout << "  (" << maxElements << ") " << "^overall" << endl;
-		Logger::setColor(ConsoleColor::LIGHTGREY);
-	}
-
 }

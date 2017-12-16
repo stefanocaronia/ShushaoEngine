@@ -1,14 +1,11 @@
-#include <glm/glm.hpp>
 #include <iostream>
+
+#include "camera.h"
 
 #include "config.h"
 #include "debug.h"
-#include "camera.h"
 #include "gllibs.h"
 #include "transform.h"
-
-using namespace std;
-using namespace glm;
 
 namespace ShushaoEngine {
 
@@ -20,7 +17,7 @@ namespace ShushaoEngine {
 		Projection = getProjectionMatrix();
 	}
 
-	mat4 Camera::getProjectionMatrix() {
+	glm::mat4 Camera::getProjectionMatrix() {
 
 		aspect = (float)Config::displayWidth / (float)Config::displayHeight;
 		if (orthographic) {
@@ -37,7 +34,7 @@ namespace ShushaoEngine {
 		}
 	}
 
-	mat4 Camera::getViewMatrix() {
+	glm::mat4 Camera::getViewMatrix() {
 		return lookAt(transform->localPosition, Transform::FORWARD, Transform::UP);
 	}
 

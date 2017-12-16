@@ -1,12 +1,10 @@
 #include "maincamera.h"
-
-using namespace ShushaoEngine;
-
-using namespace glm;
+#include "camera.h"
+#include "transform.h"
 
 MainCamera::MainCamera() {
 
-    camera = AddComponent<Camera>();
+    camera = AddComponent<ShushaoEngine::Camera>();
 
     tag = "Main Camera";
     name = "Main Camera";

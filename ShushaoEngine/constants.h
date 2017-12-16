@@ -1,0 +1,10 @@
+#pragma once
+
+#define _USE_MATH_DEFINES
+
+#ifndef M_PI
+    #define M_PI 3.14159265358979323846
+#endif
+
+#define DEGTORAD 0.0174532925199432957f
+#define RADTODEG 57.295779513082320876f

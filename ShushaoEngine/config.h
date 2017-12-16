@@ -1,25 +1,40 @@
 #pragma once
 
-#include <map>
-#include <string>
-#include <vector>
-#include <algorithm>
+#include <glm/glm.hpp>
 
 #include "utility.h"
-
-using namespace std;
 
 namespace Config {
 
 	extern bool debug;
 
+	// textures
 	extern int pixelPerUnit;
 
+	// display
 	extern float displayAspect;
 	extern int displayWidth;
 	extern int displayHeight;
 	extern bool fullscreen;
 
-	extern ShushaoEngine::vector_map Layers;
-	extern ShushaoEngine::vector_map SortingLayers;
+	// time
+	namespace Time {
+
+		extern float fixedRateLimit; // 0.0f -> unlimited
+		extern float frameRateLimit; // 0.0f -> unlimited
+
+	}
+
+	// Physics (box2d)
+	namespace Physics {
+		extern bool enabled;
+		extern bool debug;
+		extern glm::vec2 gravity;
+		extern bool doSleep;
+		extern int velocityIterations;
+		extern int positionIterations;
+	}
+
+	extern ShushaoEngine::VectorMap Layers;
+	extern ShushaoEngine::VectorMap SortingLayers;
 }

@@ -5,6 +5,7 @@
 #ifdef CONSOLE_COLORS
 #include <windows.h>
 #undef ERROR
+#undef SendMessage
 #endif
 
 #include <iostream>

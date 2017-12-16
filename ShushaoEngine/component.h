@@ -2,17 +2,14 @@
 
 #include <string>
 #include <vector>
-#include <map>
 
 #include "object.h"
-
-
-using namespace std;
 
 namespace ShushaoEngine {
 
 	class Entity;
 	class Transform;
+	class Collision2D;
 
 	class Component : public Object	{
 
@@ -23,27 +20,31 @@ namespace ShushaoEngine {
 
 			Entity* entity;
 			Transform* transform;
-			string tag;
+			std::string tag;
 
 			bool enabled = true;
 
 			void BroadcastMessage();	// Calls the method named methodName on every MonoBehaviour in this game object or any of its children.
 
-			vector<Component*> GetActiveComponentsInChildren();
+			std::vector<Component*> GetActiveComponentsInChildren();
 			bool isActiveAndEnabled();
 
-			void BroadcastMessage(string methodName);	// Calls the method named methodName on every MonoBehaviour in this game object or any of its children.
-			void SendMessage(string methodName);	// Calls the method named methodName on every MonoBehaviour in this game object.
-			void SendMessageUpwards(string methodName);	// Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour.
+			void BroadcastMessage(std::string methodName);	// Calls the method named methodName on every MonoBehaviour in this game object or any of its children.
+			void SendMessage(std::string methodName); // Calls the method named methodName on every MonoBehaviour in this game object.
+			void SendMessageUpwards(std::string methodName);	// Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour.
 
 			//void run(BaseCycle);
-			void run(string);
-			virtual void call(string);
+			void run(std::string);
+			virtual void call(std::string);
+
+			virtual void ReceiveMessage(std::string methodName, Object* parameter);
+			virtual void ReceiveMessage(std::string methodName);
 
 			void Enable();
 			void Disable();
 
-			string getTitle();
+			std::string getTitle();
+
 
 		protected:
 
@@ -58,6 +59,9 @@ namespace ShushaoEngine {
 			virtual void OnDestroy(); // This function is called when the MonoBehaviour will be destroyed.
 			virtual void OnDisable(); // This function is called when the behaviour becomes disabled () or inactive.
 
+			// messages
+			virtual void OnCollisionEnter2D(Collision2D*);
+
 		private:
 
 			bool currentEnable;
@@ -68,6 +72,9 @@ namespace ShushaoEngine {
 			virtual void fixed();
 			virtual void render();
 			virtual void exit();
+
+
+
 	};
 
 }

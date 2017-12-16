@@ -6,75 +6,76 @@
 #include <sstream>
 #include <typeinfo>
 #include <regex>
+#include <cmath>
+#include <glm/glm.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 #define ts(str) util::toString(str)
 
 namespace ShushaoEngine {
 
-	using namespace std;
-
 	namespace util {
 
-		//public:
-
-		string basename(string);
-		string zerofill(int, int);
+		std::string basename(std::string);
+		std::string zerofill(int, int);
 
 		template < typename T >
-		string toString( const T& n ) {
-			ostringstream stm ;
+		std::string toString( const T& n ) {
+			std::ostringstream stm ;
 			stm << n ;
 			return stm.str() ;
 		}
 
 		template<class T>
-		string classtitle() {
-			string type = typeid(T).name();
-			regex pat("N13ShushaoEngine");
+		std::string classtitle() {
+			std::string type = typeid(T).name();
+			std::regex pat("N13ShushaoEngine");
 			type = regex_replace(type, pat, "");
 
 			pat = "E$";
 			type = regex_replace(type, pat, "");
 
-			string title;
+			std::string title;
 			bool inName = false;
+			char prevc;
 			for (char& c : type) {
 				if (isdigit(c) && !inName) continue;
-				if (isupper(c) && inName) title += " ";
+				if ((isupper(c) || isdigit(c)) && inName && !(c == 'D' && prevc == '2')) title += " ";
 				title += (inName?c:toupper(c));
 				inName = true;
+				prevc = c;
 			}
 			return title;
 		}
 
-		string classtitle(string);
-
+		std::string classtitle(std::string);
+		glm::vec3 toEulerAngles(const glm::quat&);
 	};
 
-	class vector_map : private vector<string> {
+	class VectorMap : private std::vector<std::string> {
 
 		public:
 			using vector::begin;
 			using vector::end;
 			using vector::at;
 
-			vector_map();
-			vector_map(initializer_list<string>);
-			void operator= (initializer_list<string>);
-			void operator+= (string);
-			void operator-= (string);
-			int operator[] (string);
-			string operator[] (unsigned int);
-			void setDefaults(initializer_list<string>);
+			VectorMap();
+			VectorMap(std::initializer_list<std::string>);
+			void operator= (std::initializer_list<std::string>);
+			void operator+= (std::string);
+			void operator-= (std::string);
+			int operator[] (std::string);
+			std::string operator[] (unsigned int);
+			void setDefaults(std::initializer_list<std::string>);
 			void setMaxElements(unsigned int);
 			int top();
 			int over();
-			void toString(string title = "");
+			void toString(std::string title = "");
 
 		private:
 
 			unsigned int maxElements = 32;
-			vector<string> defaults = {
+			std::vector<std::string> defaults = {
 				"Default"
 			};
 	};

@@ -10,23 +10,21 @@
 #include "texture.h"
 #include "textureatlas.h"
 
-using namespace std;
-
 namespace ShushaoEngine {
 
 	class Resources {
 		public:
 
-			static map<string, Object*> Assets;
+			static std::map<std::string, Object*> Assets;
 
 			template <class T>
-			static void Load(string filename, string name) {
+			static void Load(std::string filename, std::string name) {
 				T* resource = new T(filename, name);
 				Assets[name] = resource;
 			}
 
 			template <class T>
-			static T* Add(string name) {
+			static T* Add(std::string name) {
 				T* resource = new T(name);
 				Assets[name] = resource;
 				return resource;
@@ -39,26 +37,26 @@ namespace ShushaoEngine {
 			}
 
 			/*template <class T>
-			static T* Add(string name, T* asset) {
+			static T* Add(std::string name, T* asset) {
 				Assets[name] = asset;
 				return asset;
 			}*/
 
 			template <class T>
-			static T* Load(string filename) {
+			static T* Load(std::string filename) {
 				T* resource = new T(filename);
 				Assets[resource->name] = resource;
 				return resource;
 			}
 
 			template <class T>
-			static T* Get(string name) {
+			static T* Get(std::string name) {
 				auto it = Assets.find(name);
 				if (it == Assets.end()) return nullptr;
 				return (T*)Assets[name];
 			}
 
-			static void Delete(string name) {
+			static void Delete(std::string name) {
 				auto it = Assets.find(name);
 				if (it == Assets.end()) return;
 				Assets.erase(name);

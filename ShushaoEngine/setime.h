@@ -2,11 +2,14 @@
 
 #include <string>
 #include <chrono>
+#include <math.h>
+#include <sstream>
+#include <iostream>
+
+#include "utility.h"
+#include "config.h"
 
 namespace ShushaoEngine {
-
-	using namespace std;
-	using namespace std::chrono;
 
 	class Time {
 		public:
@@ -41,11 +44,11 @@ namespace ShushaoEngine {
 
 			static float GetTime();
 			static void Update();
-			static string Clock();
+			static std::string Clock();
 
 		private:
 
-			static system_clock::time_point startTime;
+			static std::chrono::system_clock::time_point startTime;
 
 	};
 

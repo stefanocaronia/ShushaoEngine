@@ -3,13 +3,11 @@
 #include <glm/glm.hpp>
 
 #include "renderer.h"
-#include "sprite.h"
 #include "color.h"
-#include "shader.h"
 
 namespace ShushaoEngine {
 
-	enum SpriteDrawMode {
+	/*enum SpriteDrawMode {
 		Simple,
 		Sliced,
 		Tiled
@@ -18,14 +16,17 @@ namespace ShushaoEngine {
 	enum SpriteTileMode {
 		Continuous,
 		Adaptive
-	};
+	};*/
+
+	class Shader;
+	class Sprite;
 
 	class SpriteRenderer : public Renderer {
 
 		public:
 
 			SpriteRenderer();
-			SpriteRenderer(string);
+			SpriteRenderer(std::string);
 
 			bool isReady();
 
@@ -35,14 +36,9 @@ namespace ShushaoEngine {
 			bool flipX;//	Flips the sprite on the X axis.
 			bool flipY; //	Flips the sprite on the Y axis.
 			// maskInteraction //	Specifies how the sprite interacts with the masks.
-			vec2 size; //	Property to set/get the size to render when the SpriteRenderer.drawMode is set to SpriteDrawMode.NineSlice.
+			glm::vec2 size; //	Property to set/get the size to render when the SpriteRenderer.drawMode is set to SpriteDrawMode.NineSlice.
 
 			//SpriteTileMode tileMode; //	The current tile mode of the Sprite Renderer.
-
-			// GLuint vertexBuffer;
-			// GLuint uvBuffer;
-			// GLuint indexBuffer;
-			// GLuint VAO;
 
 			Sprite* sprite = nullptr;
 			Shader* shader = nullptr;;

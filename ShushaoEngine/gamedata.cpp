@@ -1,7 +1,5 @@
-#include <iostream>
 #include <vector>
 #include <algorithm>
-#include <map>
 #include <string>
 
 #include "gamedata.h"
@@ -28,7 +26,7 @@ namespace ShushaoEngine {
 	}
 
 	void GameData::UnRegisterObject(int id) {
-		vector<Object*>::iterator it = std::find_if (Objects.begin(), Objects.end(), [id](const Object* obj){
+		std::vector<Object*>::iterator it = std::find_if (Objects.begin(), Objects.end(), [id](const Object* obj){
 			return obj->InstanceID == id;
 		});
 		Objects.erase(it);
@@ -45,7 +43,7 @@ namespace ShushaoEngine {
 	}
 
 	Object* GameData::GetObjectWithID(int id) {
-        vector<Object*>::iterator it = std::find_if (Objects.begin(), Objects.end(), [id](const Object* obj){
+        std::vector<Object*>::iterator it = std::find_if (Objects.begin(), Objects.end(), [id](const Object* obj){
 			return obj->InstanceID == id;
 		});
 
@@ -65,8 +63,8 @@ namespace ShushaoEngine {
 	Camera* GameData::activeCamera;
 
 	// FORSE DA ELIMINARE, SONO GESTITI NELLE SCENE
-	vector<Object*> GameData::Objects;
-	vector<Component*> GameData::Components;
+	std::vector<Object*> GameData::Objects;
+	std::vector<Component*> GameData::Components;
 
 
 //

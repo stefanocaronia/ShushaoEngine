@@ -1,12 +1,13 @@
-#include "gllibs.h"
-#include "glmanager.h"
+#include <GL/glew.h>
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_mixer.h>
 
-using namespace std;
-using namespace glm;
+#include "glmanager.h"
 
 namespace ShushaoEngine {
 
-	bool GLManager::Init(string title, bool fs) {
+	bool GLManager::Init(std::string title, bool fs) {
 
 		fullscreen = fs;
 

@@ -2,11 +2,7 @@
 
 #include <vector>
 #include <string>
-
-#include "gllibs.h"
-
-using namespace std;
-using namespace glm;
+#include <SDL.h>
 
 namespace ShushaoEngine {
 
@@ -25,7 +21,7 @@ namespace ShushaoEngine {
 			static unsigned int WIDTH;
 			static unsigned int HEIGHT;
 
-			static bool Init(string, bool);
+			static bool Init(std::string, bool);
 			static void Quit();
 
 			static void Clear();

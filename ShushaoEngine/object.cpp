@@ -6,11 +6,6 @@
 #include "utility.h"
 #include "debug.h"
 
-
-#include <iostream>
-
-using namespace std;
-
 namespace ShushaoEngine {
 
 	Object::Object() {
@@ -20,7 +15,7 @@ namespace ShushaoEngine {
 		GameData::RegisterObject(this);
 	}
 
-	Object::Object(string _name) {
+	Object::Object(std::string _name) {
 
 		name = _name;
 
@@ -39,7 +34,7 @@ namespace ShushaoEngine {
 		return obj.InstanceID == InstanceID;
 	}
 
-	string Object::ToString() {
+	std::string Object::ToString() {
 		return name;
 	}
 

@@ -1,21 +1,13 @@
-#include "transform.h"
-#include "spriterenderer.h"
-#include "scenemanager.h"
-
-#include <algorithm>
-#include <iostream>
-#include <vector>
-
 #include <glm/glm.hpp>
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtx/euler_angles.hpp>
-#include <glm/gtx/string_cast.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
-using namespace std;
-using namespace glm;
+#include "transform.h"
+#include "scenemanager.h"
+#include "utility.h"
 
 namespace ShushaoEngine {
-
 
 	Transform::Transform() {
 		name = "Transform";
@@ -71,28 +63,37 @@ namespace ShushaoEngine {
 
 	//}
 
-	void Transform::setPosition(vec3 position_) {
-		localPosition = position_ - (!isAtRoot() ? parent->position : vec3(0));
+	void Transform::setPosition(glm::vec3 position_) {
+		localPosition = position_ - (!isAtRoot() ? parent->position : glm::vec3(0));
+		_position = getWorldPosition();
+		setupDirections();
 	}
 
-	void Transform::setLocalPosition(vec3 position_) {
+	void Transform::setLocalPosition(glm::vec3 position_) {
 		localPosition = position_;
+		_position = getWorldPosition();
+		setupDirections();
 	}
 
-	void Transform::setLocalRotation(vec3 angles_) {
-		localRotation = quat(angles_);
+	void Transform::setLocalRotation(glm::vec3 angles_) {
+		localRotation = glm::quat(angles_);
+		_rotation = getWorldOrientation();
+		setupDirections();
 	}
 
-	void Transform::setLocalRotation(quat rotation_) {
+	void Transform::setLocalRotation(glm::quat rotation_) {
 		localRotation = rotation_;
+		_rotation = getWorldOrientation();
+		setupDirections();
 	}
 
-	vec3 Transform::getEulerAngles() {
-		return glm::eulerAngles(_rotation);
+	glm::vec3 Transform::getEulerAngles() {
+		return glm::eulerAngles(_rotation) * RADTODEG;
+		//return util::toEulerAngles(_rotation);
 	}
 
-	vec3 Transform::getLocalEulerAngles() {
-		return glm::eulerAngles(localRotation);
+	glm::vec3 Transform::getLocalEulerAngles() {
+		return glm::eulerAngles(localRotation) * RADTODEG;
 	}
 
 	void Transform::setupDirections() {
@@ -101,11 +102,12 @@ namespace ShushaoEngine {
 		_forward = _rotation * FORWARD;
 	}
 
-	void Transform::setLocalScale(vec3 scale_) {
+	void Transform::setLocalScale(glm::vec3 scale_) {
 		localScale = scale_;
+		_scale = getWorldScale();
 	}
 
-	void Transform::setPivot(vec2 pivot_) {
+	void Transform::setPivot(glm::vec2 pivot_) {
 		_pivot = {pivot_.x, pivot_.y, 0.0f};
 	}
 
@@ -119,18 +121,18 @@ namespace ShushaoEngine {
 		_rotation = getWorldOrientation();
 		setupDirections();
 
-		mat4 M = getLocalToWorldMatrix() * translate(-pivot);
-		mat4 P = SceneManager::activeScene->activeCamera->Projection;
-		mat4 V = SceneManager::activeScene->activeCamera->getViewMatrix();
+		glm::mat4 M = getLocalToWorldMatrix() * glm::translate(glm::mat4(), -pivot);
+		glm::mat4 P = SceneManager::activeScene->activeCamera->Projection;
+		glm::mat4 V = SceneManager::activeScene->activeCamera->getViewMatrix();
 
 		_MVP = P * V * M;
 	}
 
-	mat4 Transform::getLocalToParentMatrix() {
-		return translate(localPosition) * glm::toMat4(localRotation) * glm::scale(localScale);
+	glm::mat4 Transform::getLocalToParentMatrix() {
+		return glm::translate(glm::mat4(), localPosition) * glm::toMat4(localRotation) * glm::scale(glm::mat4(), localScale);
 	}
 
-	mat4 Transform::getLocalToWorldMatrix() {
+	glm::mat4 Transform::getLocalToWorldMatrix() {
 		if (isAtRoot()) {
 			return getLocalToParentMatrix();
 		} else {
@@ -138,9 +140,17 @@ namespace ShushaoEngine {
 		}
 	}
 
-	vec3 Transform::getWorldPosition() {
-		vec4 p = getLocalToWorldMatrix() * vec4(0.0f, 0.0f, 0.0f, 1.0f);
-		return vec3(p.x, p.y, p.z);
+	glm::vec3 Transform::getWorldPosition() {
+		glm::vec4 p = getLocalToWorldMatrix() * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+		return glm::vec3(p.x, p.y, p.z);
+	}
+
+	vec3 Transform::getWorldScale() {
+		if (isAtRoot()) {
+			return localScale;
+		} else {
+			return localScale * parent->getWorldScale();
+		}
 	}
 
 	quat Transform::getWorldOrientation() {

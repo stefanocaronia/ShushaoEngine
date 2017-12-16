@@ -1,6 +1,7 @@
 #include "spritesheet.h"
 #include "resources.h"
 
+
 namespace ShushaoEngine {
 
 	SpriteSheet::SpriteSheet(TextureAtlas* texture) {

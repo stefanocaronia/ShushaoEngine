@@ -1,14 +1,13 @@
 #pragma once
 
+#include <algorithm>
+#include <iostream>
+#include <vector>
 #include <glm/glm.hpp>
-#include <glm/gtc/quaternion.hpp>
-#include <glm/gtx/euler_angles.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 #include "component.h"
-#include "entity.h"
-
-using namespace glm;
-using namespace std;
+#include "constants.h"
 
 namespace ShushaoEngine {
 
@@ -23,21 +22,21 @@ namespace ShushaoEngine {
 			bool isRoot = false;
 
 			Transform* parent = nullptr;
-			vector<Transform*> children;
+			std::vector<Transform*> children;
 
-			vec3 localPosition = VEC3_ZERO;
-			quat localRotation = QUATERNION_IDENTITY;
-			vec3 localScale = VEC3_IDENTITY;
+			glm::vec3 localPosition = VEC3_ZERO;
+			glm::quat localRotation = QUATERNION_IDENTITY;
+			glm::vec3 localScale = VEC3_IDENTITY;
 
 			// readonly properties
-			const vec3& position = _position;
-			const quat& rotation = _rotation;
-			const vec3& scale = _scale;
-			const vec3& pivot = _pivot;
-			const mat4& MVP = _MVP;
-			const vec3& forward = _forward;
-			const vec3& right = _right;
-			const vec3& up = _up;
+			const glm::vec3& position = _position;
+			const glm::quat& rotation = _rotation;
+			const glm::vec3& scale = _scale;
+			const glm::vec3& pivot = _pivot;
+			const glm::mat4& MVP = _MVP;
+			const glm::vec3& forward = _forward;
+			const glm::vec3& right = _right;
+			const glm::vec3& up = _up;
 
 			// methods
 			Transform* getParent();
@@ -47,11 +46,12 @@ namespace ShushaoEngine {
 			void AddChild(Transform* t);
 			bool isAtRoot();
 
-			mat4 getLocalToParentMatrix();
-			mat4 getLocalToWorldMatrix();
-			mat4 getWorldToLocalMatrix();
-			vec3 getWorldPosition();
-			quat getWorldOrientation();
+			glm::mat4 getLocalToParentMatrix();
+			glm::mat4 getLocalToWorldMatrix();
+			glm::mat4 getWorldToLocalMatrix();
+			glm::vec3 getWorldPosition();
+			glm::vec3 getWorldScale();
+			glm::quat getWorldOrientation();
 
 			// lifecycle
 			void Awake();
@@ -59,44 +59,42 @@ namespace ShushaoEngine {
 
 			//{ #region getter and setters
 
-			vec3 getEulerAngles();
-			vec3 getLocalEulerAngles();
+			glm::vec3 getEulerAngles();
+			glm::vec3 getLocalEulerAngles();
 
-			void setPivot(vec2);
-			void setPosition(vec3);
-			void setLocalPosition(vec3);
-			void setLocalRotation(quat);
-			void setLocalRotation(vec3);
-			void setLocalScale(vec3);
+			void setPivot(glm::vec2);
+			void setPosition(glm::vec3);
+			void setLocalPosition(glm::vec3);
+			void setLocalRotation(glm::quat);
+			void setLocalRotation(glm::vec3);
+			void setLocalScale(glm::vec3);
 
 			//}
 
 
-			static const vec3 VEC3_ZERO;
-			static const vec3 VEC3_IDENTITY;
-			static const vec3 VEC3_IDENTITY2D;
-			static const vec3 UP;
-			static const vec3 DOWN;
-			static const vec3 FORWARD;
-			static const vec3 BACK;
-			static const vec3 RIGHT;
-			static const vec3 LEFT;
-			static const quat QUATERNION_IDENTITY;
+			static const glm::vec3 VEC3_ZERO;
+			static const glm::vec3 VEC3_IDENTITY;
+			static const glm::vec3 VEC3_IDENTITY2D;
+			static const glm::vec3 UP;
+			static const glm::vec3 DOWN;
+			static const glm::vec3 FORWARD;
+			static const glm::vec3 BACK;
+			static const glm::vec3 RIGHT;
+			static const glm::vec3 LEFT;
+			static const glm::quat QUATERNION_IDENTITY;
 
 		private:
 
 			bool lock = false;
 
-			vec3 _position = VEC3_ZERO;
-			quat _rotation = QUATERNION_IDENTITY;
-			vec3 _scale = VEC3_IDENTITY2D;
-
-			vec3 _forward = FORWARD;
-			vec3 _right = RIGHT;
-			vec3 _up = UP;
-
-			vec3 _pivot = VEC3_ZERO;
-			mat4 _MVP = mat4();
+			glm::vec3 _position = VEC3_ZERO;
+			glm::quat _rotation = QUATERNION_IDENTITY;
+			glm::vec3 _scale = VEC3_IDENTITY2D;
+			glm::vec3 _forward = FORWARD;
+			glm::vec3 _right = RIGHT;
+			glm::vec3 _up = UP;
+			glm::vec3 _pivot = VEC3_ZERO;
+			glm::mat4 _MVP = glm::mat4();
 
 			void setupDirections();
 	};

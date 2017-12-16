@@ -1,9 +1,9 @@
 #pragma once
 
 #include <string>
-#include "object.h"
+#include <GL/glew.h>
 
-#include "gllibs.h"
+#include "object.h"
 
 namespace ShushaoEngine {
 
@@ -18,22 +18,22 @@ namespace ShushaoEngine {
 		public:
 
 			Shader();
-			Shader(string);
-			Shader(string, string);
+			Shader(std::string);
+			Shader(std::string, std::string);
 
 			bool Init();
 
-			bool loadWithName(string, string);
+			bool loadWithName(std::string, std::string);
 
 			~Shader();
 
-			bool Load(string);
+			bool Load(std::string);
 
 			GLuint getProgram();
 			GLuint programID = 0;
 
-			string VertexShaderCode;
-			string FragmentShaderCode;
+			std::string VertexShaderCode;
+			std::string FragmentShaderCode;
 
 		protected:
 		private:

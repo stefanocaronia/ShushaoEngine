@@ -10,9 +10,6 @@
 
 namespace ShushaoEngine {
 
-	using namespace std;
-	using namespace glm;
-
 	enum class PropertyType {
 		INT,
 		FLOAT,
@@ -34,8 +31,8 @@ namespace ShushaoEngine {
 			T* target = nullptr;
 			T backupValue;
 
-			vector<T*> pointers;
-			vector<T> values;
+			std::vector<T*> pointers;
+			std::vector<T> values;
 
 			void setTarget(T& var) {
 				//if (&var == nullptr) return;
@@ -86,7 +83,7 @@ namespace ShushaoEngine {
 
 		public:
 
-			Timeline(string);
+			Timeline(std::string);
 			~Timeline();
 
 			Timeline* loadFrame(unsigned int);
@@ -100,10 +97,10 @@ namespace ShushaoEngine {
 			Timeline* add(int var, int nFrames = 1);
 
 			// VEC3
-			Timeline* setTarget(vec3&);
-			Timeline* setTarget(const vec3&);
-			Timeline* load(initializer_list<vec3>);
-			Timeline* add(vec3 var, int nFrames = 1);
+			Timeline* setTarget(glm::vec3&);
+			Timeline* setTarget(const glm::vec3&);
+			Timeline* load(initializer_list<glm::vec3>);
+			Timeline* add(glm::vec3 var, int nFrames = 1);
 
 			// FLOAT
 			Timeline* setTarget(float&);
@@ -112,7 +109,7 @@ namespace ShushaoEngine {
 			// SPRITE *
 			Timeline* setTarget(Sprite*& var);
 			Timeline* load(initializer_list<Sprite*>);
-			Timeline* load(vector<Sprite*>);
+			Timeline* load(std::vector<Sprite*>);
 			Timeline* load(SpriteSheet*);
 
 			void clear();
@@ -123,7 +120,7 @@ namespace ShushaoEngine {
 
 			TimelineProperty<float> vFloat;
 			TimelineProperty<int> vInt;
-			TimelineProperty<vec3> vVec3;
+			TimelineProperty<glm::vec3> vVec3;
 			TimelineProperty<Sprite> pSprite;
 
 	};

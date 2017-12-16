@@ -5,8 +5,6 @@
 
 #include "service.h"
 
-using namespace std;
-
 namespace ShushaoEngine {
 
 	class System {
@@ -41,7 +39,7 @@ namespace ShushaoEngine {
 
 		protected:
 
-            static vector<Service*> Services;
+            static std::vector<Service*> Services;
 
 		private:
 	};

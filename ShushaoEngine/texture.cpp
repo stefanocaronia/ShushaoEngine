@@ -1,17 +1,13 @@
-#include <iostream>
-#include <stdio.h>
-#include <string.h>
-#include <map>
+#include <string>
+#include <SDL_image.h>
 
+#include "texture.h"
 #include "debug.h"
 #include "utility.h"
-#include "texture.h"
-
-using namespace std;
 
 namespace ShushaoEngine {
 
-	Texture::Texture(string filename, string n) {
+	Texture::Texture(std::string filename, std::string n) {
 		if (filename != "") Load(filename);
 		name = (n == "" ? util::basename(filename) : n);
 	}
@@ -21,7 +17,7 @@ namespace ShushaoEngine {
 		glDeleteTextures(1, textures);
 	}
 
-	bool Texture::Load(string filename) {
+	bool Texture::Load(std::string filename) {
 
 		Surface = IMG_Load(filename.c_str());
 

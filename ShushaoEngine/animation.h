@@ -3,9 +3,10 @@
 #include <vector>
 
 #include "component.h"
-#include "timeline.h"
 
 namespace ShushaoEngine {
+
+	class Timeline;
 
 	enum class AnimationState {
 		STOP,

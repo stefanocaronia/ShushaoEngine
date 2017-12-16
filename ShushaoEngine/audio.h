@@ -1,6 +1,8 @@
 #pragma once
 
-#include "gllibs.h"
+#include <SDL_mixer.h>
+#include <string>
+
 #include "object.h"
 
 namespace ShushaoEngine {
@@ -9,12 +11,12 @@ namespace ShushaoEngine {
 
 		public:
 
-			Music(string filename = "");
+			Music(std::string filename = "");
 			~Music();
 
 			Mix_Music* track;
 
-			Music* Load(string);
+			Music* Load(std::string);
 
 			void play(int loops = 1);
 			void fadeIn(int loops = 1, int ms = 1000);
@@ -54,12 +56,12 @@ namespace ShushaoEngine {
 
 		public:
 
-			Effect(string filename = "");
+			Effect(std::string filename = "");
 			~Effect();
 
 			Mix_Chunk *sample;
 
-			Effect* Load(string);
+			Effect* Load(std::string);
 
 			void setVolume(int);
 

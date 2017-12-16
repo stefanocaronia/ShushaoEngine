@@ -1,3 +1,5 @@
+#pragma once
+
 #include "component.h"
 
 namespace ShushaoEngine {
@@ -15,8 +17,8 @@ namespace ShushaoEngine {
 			// StopAllCoroutines(); //	Stops all coroutines running on this behaviour.
 			// StopCoroutine(); //	Stops the first coroutine named methodName, or the coroutine stored in routine running on this behaviour.
 
-
 		protected:
+
 
 		private:
 	};

@@ -1,19 +1,18 @@
+#include <exception>
+#include <iostream>
+#include <vector>
+
 #include "utility.h"
 #include "debug.h"
 #include "resources.h"
 #include "object.h"
 #include "shader.h"
 #include "texture.h"
-#include <exception>
-#include <iostream>
-
-using namespace std;
 
 namespace ShushaoEngine {
 
 	void Resources::Clear() {
-		LOG("Cancello le resources (" + ts(Assets.size()) + ")");
-		vector<Object*> toDelete;
+		std::vector<Object*> toDelete;
 		for (auto const& asset : Assets) {
 			if (Assets[asset.first] == nullptr) continue;
 			toDelete.push_back(Assets[asset.first]);
@@ -30,12 +29,12 @@ namespace ShushaoEngine {
 
 	void Resources::toString() {
 		Logger::setColor(ConsoleColor::DARKYELLOW);
-		cout << " Resources [" << Assets.size() << "] :" << endl;
+		std::cout << " Resources [" << Assets.size() << "] :" << std::endl;
 		for (auto const& asset : Assets) {
-            cout << "  - (" << util::classtitle(typeid(*asset.second).name()) << ") " << asset.first << endl;
+            std::cout << "  - (" << util::classtitle(typeid(*asset.second).name()) << ") " << asset.first << std::endl;
 		}
 		Logger::setColor(ConsoleColor::LIGHTGREY);
 	}
 
-	map<string, Object*> Resources::Assets;
+	std::map<std::string, Object*> Resources::Assets;
 }

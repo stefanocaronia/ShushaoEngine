@@ -2,28 +2,26 @@
 
 #include <string>
 
-using namespace std;
-
 namespace ShushaoEngine {
 
 	class Cycle {
 
 		public:
 
-			Cycle(string);
+			Cycle(std::string);
 			~Cycle();
 
-			string name;
+			std::string name;
 
 			bool init();
 			void run();
 			void stop();
 
-			static string INIT;
-			static string UPDATE;
-			static string FIXED;
-			static string RENDER;
-			static string EXIT;
+			static std::string INIT;
+			static std::string UPDATE;
+			static std::string FIXED;
+			static std::string RENDER;
+			static std::string EXIT;
 
 		protected:
 

@@ -1,12 +1,9 @@
 #include <iostream>
 #include <fstream>
 
-#include "utility.h"
 #include "shader.h"
-#include "gllibs.h"
 #include "debug.h"
-
-using namespace std;
+#include "utility.h"
 
 namespace ShushaoEngine {
 
@@ -14,15 +11,15 @@ namespace ShushaoEngine {
 		loadWithName("shaders/standard", "Shader Standard");
 	}
 
-	Shader::Shader(string filename, string n) {
+	Shader::Shader(std::string filename, std::string n) {
 		loadWithName(filename, n);
 	}
 
-	Shader::Shader(string filename) {
+	Shader::Shader(std::string filename) {
 		loadWithName(filename, util::basename(filename));
 	}
 
-	bool Shader::loadWithName(string filename, string n) {
+	bool Shader::loadWithName(std::string filename, std::string n) {
 		if (Load(filename)) {
 			name = n;
 			Init();
@@ -112,15 +109,15 @@ namespace ShushaoEngine {
 		return true;
 	}
 
-	bool Shader::Load(string shaderfile) {
+	bool Shader::Load(std::string shaderfile) {
 
-		string vert = shaderfile + ".vert";
-		string frag = shaderfile + ".frag";
+		std::string vert = shaderfile + ".vert";
+		std::string frag = shaderfile + ".frag";
 
 		// Read the Vertex Shader code from the file
 		ifstream VertexShaderStream(vert.c_str(), ifstream::in);
 		if(VertexShaderStream.is_open()) {
-			string Line = "";
+			std::string Line = "";
 			while(getline(VertexShaderStream, Line))
 				VertexShaderCode += "\n" + Line;
 			VertexShaderStream.close();
@@ -132,7 +129,7 @@ namespace ShushaoEngine {
 		// Read the Fragment Shader code from the file
 		ifstream FragmentShaderStream(frag.c_str(), ifstream::in);
 		if(FragmentShaderStream.is_open()) {
-			string Line = "";
+			std::string Line = "";
 			while(getline(FragmentShaderStream, Line))
 				FragmentShaderCode += "\n" + Line;
 			FragmentShaderStream.close();

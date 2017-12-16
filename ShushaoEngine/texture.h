@@ -1,7 +1,9 @@
 #pragma once
 
+#include <GL/glew.h>
+#include <SDL.h>
+
 #include "object.h"
-#include "glmanager.h"
 
 namespace ShushaoEngine {
 
@@ -9,14 +11,14 @@ namespace ShushaoEngine {
 
 		public:
 
-			Texture(string filename = "", string n = "");
+			Texture(std::string filename = "", std::string n = "");
 
 			~Texture();
 
 			int height;
 			int width;
 
-			bool Load(string);
+			bool Load(std::string);
 
 			GLuint GetTextureID();
 			SDL_Surface* GetSurface();

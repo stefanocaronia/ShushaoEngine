@@ -2,11 +2,6 @@
 
 #include "component.h"
 
-#include <glm/glm.hpp>
-
-using namespace glm;
-using namespace std;
-
 namespace ShushaoEngine {
 
 	class Renderer : public Component {

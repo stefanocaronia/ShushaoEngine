@@ -2,13 +2,11 @@
 
 #include <string>
 
-using namespace std;
+#include "object.h"
 
 namespace ShushaoEngine {
 
-	class System;
-
-	class Service {
+	class Service : public Object{
 
 		public:
 
@@ -16,8 +14,6 @@ namespace ShushaoEngine {
 			virtual ~Service();
 
 			bool active;
-
-			string name;
 
 			virtual void init();
 			virtual void update();

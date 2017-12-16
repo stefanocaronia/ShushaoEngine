@@ -1,7 +1,7 @@
+#include <vector>
+
 #include "debug.h"
 #include "scenemanager.h"
-
-#include <vector>
 
 namespace ShushaoEngine {
 

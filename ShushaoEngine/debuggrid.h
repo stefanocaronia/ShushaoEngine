@@ -1,11 +1,6 @@
 #pragma once
 
 #include "entity.h"
-#include "color.h"
-#include "debug.h"
-
-using namespace std;
-using namespace glm;
 
 namespace ShushaoEngine {
 

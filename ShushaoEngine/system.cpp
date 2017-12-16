@@ -1,8 +1,8 @@
+#include <iostream>
+
 #include "system.h"
 #include "service.h"
 #include "debug.h"
-
-#include <iostream>
 
 namespace ShushaoEngine {
 

@@ -23,7 +23,7 @@ namespace ShushaoEngine {
 			// Color linear; //	A linear value of an sRGB color.
 
 			float maxColorComponent(); //	Returns the maximum color component value: Max(r,g,b).
-			string ToString();
+			std::string ToString();
 
 			static Color black; // Solid black. RGBA is (0, 0, 0, 1).
 			static Color blue; // Solid blue. RGBA is (0, 0, 1, 1).

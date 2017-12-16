@@ -1,18 +1,14 @@
-#include "debug.h"
-#include "utility.h"
-#include "component.h"
-#include "gamedata.h"
-#include "cycle.h"
-
-
-#include "transform.h"
-#include "setime.h"
-
-#include <iostream>
-
 #include <algorithm>
 
-using namespace std;
+#include "component.h"
+#include "debug.h"
+#include "utility.h"
+#include "cycle.h"
+#include "setime.h"
+#include "transform.h"
+#include "renderer.h"
+#include "gamedata.h"
+#include "collision2d.h"
 
 namespace ShushaoEngine {
 
@@ -43,16 +39,16 @@ namespace ShushaoEngine {
 		OnDisable();
 	}
 
-	string Component::getTitle() {
-		string classname = util::classtitle(typeid(*this).name());
+	std::string Component::getTitle() {
+		std::string classname = util::classtitle(typeid(*this).name());
 		return classname + (enabled ? "+": "") + (name != "" && name != classname ? " '" + name +"'": "");
 	}
 
-	vector<Component*> Component::GetActiveComponentsInChildren() {
+	std::vector<Component*> Component::GetActiveComponentsInChildren() {
 
 		if (!entity->activeSelf) return vector<Component*>();
 
-		vector<Component*> activeComponents;
+		std::vector<Component*> activeComponents;
 
 		for (Component* c : entity->Components) {
 			if (c->enabled) {
@@ -61,7 +57,7 @@ namespace ShushaoEngine {
 		}
 
 		for (Transform* t : entity->transform->children) {
-            vector<Component*> newComponents = t->GetActiveComponentsInChildren();
+            std::vector<Component*> newComponents = t->GetActiveComponentsInChildren();
             activeComponents.insert(activeComponents.end(), newComponents.begin(), newComponents.end());
         }
 
@@ -107,6 +103,16 @@ namespace ShushaoEngine {
 		// riscritto nelle derived
 	}
 
+	void Component::ReceiveMessage(std::string methodName) {
+
+	}
+
+	void Component::ReceiveMessage(std::string methodName, Object* parameter) {
+        if (methodName == "OnCollisionEnter2D") {
+			OnCollisionEnter2D(dynamic_cast<Collision2D*>(parameter));
+        }
+	}
+
 	bool Component::isActiveAndEnabled() {
 		return enabled && entity->activeSelf && entity->isActiveInHierarchy();
 	}
@@ -145,6 +151,9 @@ namespace ShushaoEngine {
 	void Component::exit() {
 		OnDestroy();
 	}
+
+	// messages
+	void Component::OnCollisionEnter2D(Collision2D* collision) {}
 
 	void Component::Awake() {}
 	void Component::Start() {}

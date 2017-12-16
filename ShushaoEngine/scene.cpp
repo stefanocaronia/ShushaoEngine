@@ -1,18 +1,18 @@
 #include <vector>
+#include <typeinfo>
 #include <stdlib.h>
+#include <iostream>
+#include <windows.h>
 
-#include "debug.h"
-#include "utility.h"
 #include "scene.h"
+#include "debug.h"
+#include "transform.h"
+#include "entity.h"
+#include "utility.h"
 #include "maincamera.h"
 #include "gamedata.h"
 #include "debuggrid.h"
-
-#include <iostream>
-
-#include <windows.h>
-
-using namespace std;
+#include "renderer.h"
 
 namespace ShushaoEngine {
 
@@ -57,9 +57,9 @@ namespace ShushaoEngine {
 	void Scene::PrintActiveComponentsInScene() {
 		ScanActiveComponentsInScene();
 		Logger::setColor(ConsoleColor::DARKCYAN);
-		cout << " Scene " << name << " Active Components:" << endl;
+		std::cout << " Scene " << name << " Active Components:" << std::endl;
 		for (Component* component : ActiveComponents) {
-			cout << "  - " << component->getTitle() << " (" << component->entity->name << ")" << endl;
+			std::cout << "  - " << component->getTitle() << " (" << component->entity->name << ")" << std::endl;
 		}
 		Logger::setColor(ConsoleColor::LIGHTGREY);
 	}
@@ -67,11 +67,11 @@ namespace ShushaoEngine {
 	void Scene::PrintActiveRenderersInScene() {
 		ScanActiveComponentsInScene();
 		Logger::setColor(ConsoleColor::PINK);
-		cout << " Scene " << name << " Active Renderers:" << endl;
+		std::cout << " Scene " << name << " Active Renderers:" << std::endl;
 		for (Component* component : ActiveComponents) {
 			if (!dynamic_cast<Renderer*>(component)) continue;
 			int layerID = ((Renderer*)component)->sortingLayerID;
-			cout << "  - " << "[" << Config::SortingLayers[layerID] << " (" << layerID << ")" << ", " << ((Renderer*)component)->sortingOrder << "] " << component->getTitle()<< " (" << component->entity->name << ")" << endl;
+			std::cout << "  - " << "[" << Config::SortingLayers[layerID] << " (" << layerID << ")" << ", " << ((Renderer*)component)->sortingOrder << "] " << component->getTitle()<< " (" << component->entity->name << ")" << std::endl;
 		}
 		Logger::setColor(ConsoleColor::LIGHTGREY);
 	}
@@ -84,7 +84,7 @@ namespace ShushaoEngine {
 
 	void Scene::PrintHierarchy() {
 		Logger::setColor(ConsoleColor::GREEN);
-		cout << " Scene " << name << "" << endl;
+		std::cout << " Scene " << name << "" << std::endl;
 		root->PrintHierarchy(0);
 		Logger::setColor(ConsoleColor::LIGHTGREY);
 	}

@@ -11,11 +11,15 @@ Pancrazio::Pancrazio() {
 	rb = AddComponent<Rigidbody2D>();
 	//rb->setType(RigidbodyType::KINEMATIC);
 	//rb->setFixedRotation(true);
-	//collider = AddComponent<BoxCollider2D>();
-	//collider->setShape({0.5f, 0.5f});
+	collider = AddComponent<BoxCollider2D>();
+	collider->SetShape({0.5f, 0.5f});
 
-	circlec = AddComponent<CircleCollider2D>();
-	circlec->setShape({0.0f, 0.0f}, 1.0f);
+	BoxCollider2D* trigger = AddComponent<BoxCollider2D>();
+	trigger->SetSensor(true);
+	trigger->SetShape({1.5f, 0.1f});
+
+	//circlec = AddComponent<CircleCollider2D>();
+	//circlec->setShape({0.0f, 0.0f}, 1.0f);
 
 	sr->shader = Resources::Get<Shader>("standard");
 	sr->sprite = Resources::Get<Sprite>("pancrazio_sprite")->setPivot(PivotPosition::CENTER);

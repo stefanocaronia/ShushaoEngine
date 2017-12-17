@@ -13,7 +13,15 @@ Level::Level() {
 	Rigidbody2D* groundrb = ground->AddComponent<Rigidbody2D>();
 	groundrb->setType(RigidbodyType::STATIC);
 	BoxCollider2D* ec = ground->AddComponent<BoxCollider2D>();
-	ec->setShape({6,0.5f});
+	ec->SetShape({6,0.5f});
+
+	Entity* door = AddEntity("Door");
+	door->transform->setLocalPosition({4.0f, -4.0f, 0.0f});
+	Rigidbody2D* doorrb = door->AddComponent<Rigidbody2D>();
+	doorrb->setType(RigidbodyType::STATIC);
+	BoxCollider2D* dc = door->AddComponent<BoxCollider2D>();
+	dc->SetSensor(true);
+	dc->SetShape({0.1,4.0f});
 
 	//ground->transform->setLocalRotation({0,0,45});
 

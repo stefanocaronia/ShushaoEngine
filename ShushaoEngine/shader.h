@@ -21,27 +21,30 @@ namespace ShushaoEngine {
 			Shader(std::string);
 			Shader(std::string, std::string);
 
-			bool Init();
-
-			bool loadWithName(std::string, std::string);
-
 			~Shader();
+
+			bool Init();
 
 			bool Load(std::string);
 
-			GLuint getProgram();
-			GLuint programID = 0;
+			GLuint GetProgram();
 
-			std::string VertexShaderCode;
-			std::string FragmentShaderCode;
+			void LoadFromString(std::string vsc, std::string fsc);
 
 		protected:
 		private:
 
+			GLuint programID = 0;
+
+			bool debug = false;
+
 			GLuint VertexShaderID;
 			GLuint FragmentShaderID;
 
-			bool debug = false;
+			std::string VertexShaderCode;
+			std::string FragmentShaderCode;
+
+			bool loadWithName(std::string, std::string);
 
 			bool compile();
 			bool link();

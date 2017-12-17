@@ -1,13 +1,14 @@
 R"(
 #version 330 core
-in vec2 TexCoord;
-uniform sampler2D textureSamplerID;
-uniform vec3 renderColor;
 
-out vec4 Color;
+in vec2 out_texturecoord;
+
+uniform sampler2D base_texture;
+uniform vec4 renderer_color;
+
+out vec4 out_color;
 
 void main() {
-	Color = texture(textureSamplerID, TexCoord).rgba;
-	// * vec4(renderColor, 1.0);
+	out_color = texture(base_texture, out_texturecoord).rgba * vec4(renderer_color);
 }
 )"

@@ -1,18 +1,43 @@
 #include "scenemanager.h"
+#include "glmanager.h"
 #include "physicsdebugdraw.h"
 #include "shader.h"
 
+#include <iostream>
+
 namespace ShushaoEngine {
 
-	//{ #region debugdraw
+	bool PhysicsDebugDraw::init() {
+		if (readyToDraw) return true;
+		if (!GLManager::ready) return false;
 
-	void PhysicsDebugDraw::init() {
-		shader = new Shader("shaders/box2d", "Box2d Debug Shader");
+		shader = new Shader();
+
+		shader->LoadFromString(R"(
+			#version 330 core
+			layout(location=0) in vec3 position;
+			uniform mat4 MVP;
+
+			void main() {
+				gl_Position = MVP * vec4(position, 1.0);
+			}
+		)", R"(
+			#version 330 core
+			uniform vec4 renderer_color;
+
+			out vec4 out_color;
+
+			void main() {
+				out_color = vec4(renderer_color);
+			}
+		)");
+
 		vertices.reserve(256);
+		return readyToDraw = true;
 	}
 
 	void PhysicsDebugDraw::DrawPolygon(const b2Vec2* b2vertices, int32 vertexCount, const b2Color& color) {
-		//cout << "DrawPolygon " << endl;
+		if (!init()) return;
 
 		vertices.clear();
 
@@ -29,8 +54,7 @@ namespace ShushaoEngine {
 	}
 
 	void PhysicsDebugDraw::DrawSolidPolygon(const b2Vec2* b2vertices, int32 vertexCount, const b2Color& color) {
-
-		//cout << "DrawSolidPolygon " << endl;
+		//if (!init()) return;
 
 		vertices.clear();
 
@@ -50,7 +74,7 @@ namespace ShushaoEngine {
 	}
 
 	void PhysicsDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color) {
-		//cout << "DrawCircle " << endl;
+		if (!init()) return;
 
 		vertices.clear();
 		int NUM_DIVISIONS = 31;
@@ -70,7 +94,7 @@ namespace ShushaoEngine {
 	}
 
 	void PhysicsDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color) {
-		//cout << "DrawSolidCircle " << endl;
+		if (!init()) return;
 
 		vertices.clear();
 		int NUM_DIVISIONS = 31;
@@ -78,9 +102,7 @@ namespace ShushaoEngine {
 		for(int i = 0; i < NUM_DIVISIONS +1; i++) {
 			if (i % 3 == 0) vertices.push_back({center.x,  center.y, 0.0f});
 			vertices.push_back({center.x + radius * cos((float) i / NUM_DIVISIONS * M_PI * 2), center.y + radius * sin((float) i / NUM_DIVISIONS * M_PI * 2), 0.0f});
-
 		}
-
 
 		initVAO();
 
@@ -90,10 +112,11 @@ namespace ShushaoEngine {
 		glLineWidth(1);
 
 		closeVAO();
-
 	}
 
 	void PhysicsDebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color) {
+
+		if (!init()) return;
 
 		vertices.clear();
 		vertices = {
@@ -113,7 +136,7 @@ namespace ShushaoEngine {
 	}
 
 	void PhysicsDebugDraw::DrawTransform(const b2Transform& xf) {
-		//cout << "DrawTransform " << endl;
+		if (!init()) return;
 
 		vertices.clear();
 		vertices = {
@@ -144,7 +167,7 @@ namespace ShushaoEngine {
 	//void PhysicsDebugDraw::initVAO(GLuint& VAO, GLuint& vertexBuffer, std::vector<glm::vec3>& vertices) {
 	void PhysicsDebugDraw::initVAO() {
 
-		glUseProgram(shader->getProgram());
+		glUseProgram(shader->GetProgram());
 
 		glGenVertexArrays(1, &VAO);
 		glBindVertexArray(VAO);
@@ -158,7 +181,7 @@ namespace ShushaoEngine {
 
 		glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 
-		glUniformMatrix4fv(glGetUniformLocation(shader->getProgram(), "MVP"), 1, GL_FALSE, &MVP[0][0]);
+		glUniformMatrix4fv(glGetUniformLocation(shader->GetProgram(), "MVP"), 1, GL_FALSE, &MVP[0][0]);
 
 		glEnablei(GL_BLEND, vertexBuffer);
 	}
@@ -170,9 +193,6 @@ namespace ShushaoEngine {
 	}
 
 	void PhysicsDebugDraw::setColor(float r, float g, float b, float a) {
-		glUniform4f(glGetUniformLocation(shader->getProgram(), "renderer_color"), r, g, b, a);
+		glUniform4f(glGetUniformLocation(shader->GetProgram(), "renderer_color"), r, g, b, a);
 	}
-
-	//}
-
 }

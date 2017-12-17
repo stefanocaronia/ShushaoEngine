@@ -7,6 +7,7 @@
 namespace ShushaoEngine {
 
 	class Rigidbody2D;
+	class Collider2D;
 
 	class Collider2D : public Component {
 
@@ -29,6 +30,7 @@ namespace ShushaoEngine {
 			void SetDensity(float);
 			void SetRestitution(float);
 			void SetFriction(float);
+			void SetSensor(bool);
 
 			void Awake();
 			void Start();
@@ -38,22 +40,26 @@ namespace ShushaoEngine {
 
 			virtual void resetShape() = 0;
 
-			//void FixedUpdate();
+			void FixedUpdate();
 			void OnDestroy();
 
+			void ColliderEnter(Collider2D*);
+			void ColliderExit(Collider2D*);
+
 		protected:
+
+			std::vector<Collider2D*> colliders;
 
 		private:
 
 	};
-
 
 	class PolygonCollider2D : public Collider2D {
 
 		public:
 
 			b2PolygonShape shape;
-			void setShape(std::vector<glm::vec2>);
+			void SetShape(std::vector<glm::vec2>);
 
 			void resetShape() {}
 
@@ -68,7 +74,7 @@ namespace ShushaoEngine {
 			glm::vec2 boxHalfSize;
 
 			b2PolygonShape shape;
-			void setShape(glm::vec2);
+			void SetShape(glm::vec2);
 
 			void resetShape();
 
@@ -81,7 +87,7 @@ namespace ShushaoEngine {
 		public:
 
 			b2CircleShape shape;
-			void setShape(glm::vec2, float);
+			void SetShape(glm::vec2, float);
 			void resetShape() {}
 
 		protected:
@@ -95,7 +101,7 @@ namespace ShushaoEngine {
 
 			b2EdgeShape shape;
 
-			void setShape(glm::vec2, glm::vec2);
+			void SetShape(glm::vec2, glm::vec2);
 
 			void resetShape() {}
 

@@ -10,6 +10,7 @@ namespace ShushaoEngine {
 	class Entity;
 	class Transform;
 	class Collision2D;
+	class Collider2D;
 
 	class Component : public Object	{
 
@@ -37,13 +38,21 @@ namespace ShushaoEngine {
 			void run(std::string);
 			virtual void call(std::string);
 
-			virtual void ReceiveMessage(std::string methodName, Object* parameter);
+			virtual void ReceiveMessage(std::string methodName, Object& parameter);
 			virtual void ReceiveMessage(std::string methodName);
 
 			void Enable();
 			void Disable();
 
 			std::string getTitle();
+
+
+			/* impossibile per riferimenti circolari?
+
+			template<class T>
+			T* GetComponent(std::string _name = "") {	// Returns the component of Type type if the game object has one attached, null if it doesn't.
+				return entity->GetComponent<T>(_name);
+			}*/
 
 
 		protected:
@@ -60,7 +69,12 @@ namespace ShushaoEngine {
 			virtual void OnDisable(); // This function is called when the behaviour becomes disabled () or inactive.
 
 			// messages
-			virtual void OnCollisionEnter2D(Collision2D*);
+			virtual void OnCollisionEnter2D(Collision2D&);
+			virtual void OnCollisionExit2D(Collision2D&);
+			virtual void OnCollisionStay2D(Collision2D&);
+			virtual void OnTriggerEnter2D(Collider2D&);
+			virtual void OnTriggerExit2D(Collider2D&);
+			virtual void OnTriggerStay2D(Collider2D&);
 
 		private:
 

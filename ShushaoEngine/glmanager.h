@@ -15,6 +15,7 @@ namespace ShushaoEngine {
 			static SDL_Renderer* gRenderer;
 
 			static bool fullscreen;
+			static bool ready;
 
 			static unsigned int DESKTOP_WIDTH;
 			static unsigned int DESKTOP_HEIGHT;

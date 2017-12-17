@@ -48,7 +48,7 @@ namespace ShushaoEngine {
 
 	}
 
-	void Entity::SendMessage(std::string methodName, Object* parameter) {
+	void Entity::SendMessage(std::string methodName, Object& parameter) {
 		if (!isActiveInHierarchy())	return;
 
         for (Component* c : Components) {

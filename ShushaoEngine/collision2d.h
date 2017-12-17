@@ -27,4 +27,5 @@ namespace ShushaoEngine {
 			Rigidbody2D* rigidbody; // The incoming Rigidbody2D involved in the collision with the otherRigidbody.
 			Transform* transform; // The Transform of the incoming object involved in the collision.
 	};
+
 }

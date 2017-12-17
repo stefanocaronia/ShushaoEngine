@@ -1,7 +1,8 @@
 #pragma once
 
+#include <vector>
+#include <GL/glew.h>
 #include <Box2D/Box2D.h>
-#include <gllibs.h>
 
 namespace ShushaoEngine {
 
@@ -10,10 +11,12 @@ namespace ShushaoEngine {
 	class PhysicsDebugDraw : public b2Draw {
 		public:
 
-			void init();
+			bool init();
 			void initVAO();
 			void setColor(float r, float g, float b, float a);
 			void closeVAO();
+
+			bool readyToDraw = false;
 
 			GLuint VAO;
 			GLuint vertexBuffer;

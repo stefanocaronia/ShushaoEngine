@@ -8,7 +8,7 @@
 namespace ShushaoEngine {
 
 	Shader::Shader() {
-		loadWithName("shaders/standard", "Shader Standard");
+		//loadWithName("shaders/standard", "Shader Standard");
 	}
 
 	Shader::Shader(std::string filename, std::string n) {
@@ -54,7 +54,7 @@ namespace ShushaoEngine {
 		return true;
 	}
 
-	GLuint Shader::getProgram() {
+	GLuint Shader::GetProgram() {
 
 		if (programID > 0)
 			return programID;
@@ -107,6 +107,11 @@ namespace ShushaoEngine {
 		glDeleteShader(FragmentShaderID);
 
 		return true;
+	}
+
+	void Shader::LoadFromString(std::string vsc, std::string fsc) {
+		VertexShaderCode = vsc;
+		FragmentShaderCode = fsc;
 	}
 
 	bool Shader::Load(std::string shaderfile) {

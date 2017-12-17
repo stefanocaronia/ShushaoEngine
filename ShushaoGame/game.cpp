@@ -30,6 +30,7 @@ Game::Game(string title) : Cycle(title) {
 	Debug::level = DebugLevel::INFO;
 	Debug::enabled = true;
 	Debug::debugGridMode = GridMode::ORTHOGRAFIC;
+	Config::Physics::debug = true;
 }
 
 Game::~Game() {

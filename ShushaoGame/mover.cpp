@@ -3,7 +3,7 @@
 void Mover::Awake() {
 
 	sr = entity->GetComponent<SpriteRenderer>();
-
+	rb = entity->GetComponent<Rigidbody2D>();
 }
 
 void Mover::Update() {
@@ -21,11 +21,41 @@ void Mover::Update() {
 			entity->GetComponent<Animation>("walk")->stop();
 		Disable();
 	}*/
+
+
+	double horizontal = Input::getAxis("horizontal");
+	if (Input::getAxis("horizontal") != 0) {
+        rb->body->ApplyForceToCenter({(float)horizontal * 10.0f, 0.0f}, true);
+	}
 }
 
-void Mover::OnCollisionEnter2D(Collision2D* collision) {
+void Mover::OnCollisionEnter2D(Collision2D& collision) {
 
-	std::cout << "COLLISION!!!" << std::endl;
+	Debug::Log << "COLLISION: " << collision.collider->entity->name << " --> " << collision.otherCollider->entity->name <<std::endl;
 	Resources::Get<Effect>("hit")->play();
+}
 
+void Mover::OnCollisionExit2D(Collision2D& collision) {
+
+	Debug::Log << "COLLISION EXIT: " << collision.collider->entity->name << " --> " << collision.otherCollider->entity->name <<std::endl;
+
+}
+
+void Mover::OnCollisionStay2D(Collision2D& collision) {
+	//if (collision.otherCollider->entity->name == "Door") std::cout << "COLLISION STAY!!!" << std::endl;
+}
+
+void Mover::OnTriggerEnter2D(Collider2D& other) {
+
+	if (other.entity->name == "Door") Debug::Log << "TRIGGER ENTER DOOR" << std::endl;
+}
+
+void Mover::OnTriggerExit2D(Collider2D& other) {
+
+	if (other.entity->name == "Door") Debug::Log << "TRIGGER EXIT DOOR" << std::endl;
+}
+
+void Mover::OnTriggerStay2D(Collider2D& other) {
+
+	if (other.entity->name == "Door") Debug::Log << "TRIGGER STAY DOOR" << std::endl;
 }

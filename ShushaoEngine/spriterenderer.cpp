@@ -37,12 +37,12 @@ namespace ShushaoEngine {
 		if (!isReady()) return;
 
 		glBindVertexArray(sprite->VAO);
-		glUseProgram(shader->getProgram());
+		glUseProgram(shader->GetProgram());
 
 		// uniforms
-		glUniform4f(glGetUniformLocation(shader->getProgram(), "renderer_color"), color.r, color.g, color.b, color.a);
-		glUniform1i(glGetUniformLocation(shader->getProgram(), "base_texture"), GL_TEXTURE0);
-		glUniformMatrix4fv(glGetUniformLocation(shader->getProgram(), "MVP"), 1, GL_FALSE, &transform->MVP[0][0]);
+		glUniform4f(glGetUniformLocation(shader->GetProgram(), "renderer_color"), color.r, color.g, color.b, color.a);
+		glUniform1i(glGetUniformLocation(shader->GetProgram(), "base_texture"), GL_TEXTURE0);
+		glUniformMatrix4fv(glGetUniformLocation(shader->GetProgram(), "MVP"), 1, GL_FALSE, &transform->MVP[0][0]);
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, sprite->texture->TextureID);

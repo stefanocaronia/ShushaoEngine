@@ -24,6 +24,7 @@ namespace ShushaoEngine {
 			static DebugLevel level;
 
 			static Logger Log;
+
 	};
 
 }

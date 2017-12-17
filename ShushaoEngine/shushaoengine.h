@@ -3,6 +3,7 @@
 /* include in derived projects */
 
 // ShushaoEngine Objects
+#include "design.h"
 #include "constants.h"
 #include "camera.h"
 #include "color.h"
@@ -39,6 +40,7 @@
 #include "animation.h"
 #include "audio.h"
 
+#include "physics.h"
 #include "rigidbody2d.h"
 #include "collider2d.h"
 #include "collision2d.h"

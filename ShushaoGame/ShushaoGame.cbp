@@ -57,8 +57,8 @@
 			<Add directory="D:/lib/mingw-dev-libs/Box2D" />
 		</Compiler>
 		<Linker>
-			<Add library="libShushaoEngine" />
-			<Add library="libglew32" />
+			<Add library="ShushaoEngine" />
+			<Add library="glew32" />
 			<Add library="mingw32" />
 			<Add library="opengl32" />
 			<Add library="glu32" />
@@ -87,8 +87,6 @@
 		<Unit filename="mover.h" />
 		<Unit filename="pancrazio.cpp" />
 		<Unit filename="pancrazio.h" />
-		<Unit filename="shaders/box2d.frag" />
-		<Unit filename="shaders/box2d.vert" />
 		<Unit filename="shaders/standard.frag" />
 		<Unit filename="shaders/standard.vert" />
 		<Unit filename="shaders/wire.frag" />

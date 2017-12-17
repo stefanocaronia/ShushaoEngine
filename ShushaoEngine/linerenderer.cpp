@@ -75,11 +75,11 @@ namespace ShushaoEngine {
 	void LineRenderer::Render() {
 
 		glBindVertexArray(VAO);
-		glUseProgram(shader->getProgram());
+		glUseProgram(shader->GetProgram());
 
 		// uniforms
-		glUniform4f(glGetUniformLocation(shader->getProgram(), "renderer_color"), color.r, color.g, color.b, color.a);
-		glUniformMatrix4fv(glGetUniformLocation(shader->getProgram(), "MVP"), 1, GL_FALSE, &transform->MVP[0][0]);
+		glUniform4f(glGetUniformLocation(shader->GetProgram(), "renderer_color"), color.r, color.g, color.b, color.a);
+		glUniformMatrix4fv(glGetUniformLocation(shader->GetProgram(), "MVP"), 1, GL_FALSE, &transform->MVP[0][0]);
 
 		glEnablei(GL_BLEND, vertexBuffer);
 

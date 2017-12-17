@@ -7,25 +7,30 @@
 
 namespace ShushaoEngine {
 
-	//{ #region Physics
-
 	void Physics::init() {
 
-		world = new b2World(gravity);
+		enabled = Config::Physics::enabled;
+		debug = Config::Physics::debug;
+		gravity = {Config::Physics::gravity.x, Config::Physics::gravity.y};
+		timeStep = 1.0f / Config::Time::fixedRateLimit;
+		doSleep = Config::Physics::doSleep;
+		velocityIterations = Config::Physics::velocityIterations;
+		positionIterations = Config::Physics::positionIterations;
 
+		world = new b2World(gravity);
 		world->SetAllowSleeping(doSleep);
-		world->SetDebugDraw(&debugDraw);
 		world->SetContactListener(&contactListener);
 
-        debugDraw.init();
-		debugDraw.SetFlags(b2Draw::e_shapeBit | b2Draw::e_centerOfMassBit);
-
-		/*	e_shapeBit ( draw shapes )
-		 *	e_jointBit ( draw joint connections
-		 *	e_aabbBit ( draw axis aligned bounding boxes )
-		 *	e_pairBit ( draw broad-phase pairs )
-		 *	e_centerOfMassBit ( draw a marker at body CoM )
-		 */
+		if (debug) {
+			world->SetDebugDraw(&debugDraw);
+			debugDraw.SetFlags(b2Draw::e_shapeBit | b2Draw::e_centerOfMassBit);
+			/*	e_shapeBit ( draw shapes )
+			 *	e_jointBit ( draw joint connections
+			 *	e_aabbBit ( draw axis aligned bounding boxes )
+			 *	e_pairBit ( draw broad-phase pairs )
+			 *	e_centerOfMassBit ( draw a marker at body CoM )
+			 */
+		}
 	}
 
 	void Physics::setGravity(glm::vec3 gravity_) {
@@ -48,13 +53,13 @@ namespace ShushaoEngine {
 
 	// initialization
 	b2World* Physics::world = nullptr;
-	bool Physics::enabled = Config::Physics::enabled;
-	bool Physics::debug = Config::Physics::debug;
-	b2Vec2 Physics::gravity = {Config::Physics::gravity.x, Config::Physics::gravity.y};
-	float32 Physics::timeStep = 1.0f / Config::Time::fixedRateLimit;
-	bool Physics::doSleep = Config::Physics::doSleep;
-	int32 Physics::velocityIterations = Config::Physics::velocityIterations;
-	int32 Physics::positionIterations = Config::Physics::positionIterations;
+	bool Physics::enabled;
+	bool Physics::debug;
+	b2Vec2 Physics::gravity;
+	float32 Physics::timeStep;
+	bool Physics::doSleep;
+	int32 Physics::velocityIterations;
+	int32 Physics::positionIterations;
 	PhysicsDebugDraw Physics::debugDraw;
 	PhysicsContactListener Physics::contactListener;
 

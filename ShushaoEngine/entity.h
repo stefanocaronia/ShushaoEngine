@@ -41,8 +41,9 @@ namespace ShushaoEngine {
 			bool isActiveInHierarchy();
 
 			void BroadcastMessage(std::string methodName);	// Calls the method named methodName on every MonoBehaviour in this game object or any of its children.
-			void SendMessage(std::string methodName, Object* parameter);	// Calls the method named methodName on every MonoBehaviour in this game object.
+			void SendMessage(std::string methodName, Object& parameter);	// Calls the method named methodName on every MonoBehaviour in this game object.
 			void SendMessageUpwards(std::string methodName);	// Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour.
+
 			bool CompareTag(std::string t);	// Is this game object tagged with tag?
 
 			template<class T>

@@ -16,18 +16,16 @@ namespace Config {
 
 	// Time
 	namespace Time {
-
 		float fixedRateLimit = 60.0f; // 0.0f -> unlimited
 		float frameRateLimit = 0.0f; // 0.0f -> unlimited
-
 	}
 
 	// Physics (Box2d)
 	namespace Physics {
 
 		bool enabled = true;
-		bool debug = true;
-		glm::vec2 gravity = {0, -9.8};
+		bool debug = false;
+		glm::vec2 gravity = {0, -8.8};
 		bool doSleep = true;
 		int velocityIterations = 8;
 		int positionIterations = 3;

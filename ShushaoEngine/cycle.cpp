@@ -12,6 +12,7 @@
 #include "config.h"
 #include "debug.h"
 #include "physics.h"
+#include "design.h"
 
 ShushaoEngine::Cycle* GAME;
 

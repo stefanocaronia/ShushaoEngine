@@ -5,7 +5,7 @@
 		<Option title="ShushaoEngine" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="components\;components\physics\;shaders\;objects\;entities\;singletons\;globals\;" />
+		<Option virtualFolders="physics\;components\;shaders\;objects\;entities\;singletons\;globals\;" />
 		<Build>
 			<Target title="Release">
 				<Option output="lib/ShushaoEngine" prefix_auto="1" extension_auto="1" />
@@ -68,13 +68,13 @@
 			<Option virtualFolder="components/" />
 		</Unit>
 		<Unit filename="collider2d.cpp">
-			<Option virtualFolder="components/physics/" />
+			<Option virtualFolder="physics/" />
 		</Unit>
 		<Unit filename="collider2d.h">
-			<Option virtualFolder="components/physics/" />
+			<Option virtualFolder="physics/" />
 		</Unit>
 		<Unit filename="collision2d.h">
-			<Option virtualFolder="components/physics/" />
+			<Option virtualFolder="physics/" />
 		</Unit>
 		<Unit filename="color.cpp">
 			<Option virtualFolder="objects/" />
@@ -115,6 +115,8 @@
 		<Unit filename="debuggrid.h">
 			<Option virtualFolder="entities/" />
 		</Unit>
+		<Unit filename="design.cpp" />
+		<Unit filename="design.h" />
 		<Unit filename="entity.cpp">
 			<Option virtualFolder="objects/" />
 		</Unit>
@@ -173,22 +175,22 @@
 			<Option virtualFolder="objects/" />
 		</Unit>
 		<Unit filename="physics.cpp">
-			<Option virtualFolder="components/physics/" />
+			<Option virtualFolder="physics/" />
 		</Unit>
 		<Unit filename="physics.h">
-			<Option virtualFolder="components/physics/" />
+			<Option virtualFolder="physics/" />
 		</Unit>
 		<Unit filename="physicscontactlistener.cpp">
-			<Option virtualFolder="components/physics/" />
+			<Option virtualFolder="physics/" />
 		</Unit>
 		<Unit filename="physicscontactlistener.h">
-			<Option virtualFolder="components/physics/" />
+			<Option virtualFolder="physics/" />
 		</Unit>
 		<Unit filename="physicsdebugdraw.cpp">
-			<Option virtualFolder="components/physics/" />
+			<Option virtualFolder="physics/" />
 		</Unit>
 		<Unit filename="physicsdebugdraw.h">
-			<Option virtualFolder="components/physics/" />
+			<Option virtualFolder="physics/" />
 		</Unit>
 		<Unit filename="program.cpp">
 			<Option virtualFolder="objects/" />
@@ -215,10 +217,10 @@
 			<Option virtualFolder="singletons/" />
 		</Unit>
 		<Unit filename="rigidbody2d.cpp">
-			<Option virtualFolder="components/physics/" />
+			<Option virtualFolder="physics/" />
 		</Unit>
 		<Unit filename="rigidbody2d.h">
-			<Option virtualFolder="components/physics/" />
+			<Option virtualFolder="physics/" />
 		</Unit>
 		<Unit filename="scene.cpp">
 			<Option virtualFolder="objects/" />

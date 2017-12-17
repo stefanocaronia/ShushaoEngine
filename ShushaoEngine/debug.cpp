@@ -8,4 +8,6 @@ namespace ShushaoEngine {
 	GridMode Debug::debugGridMode = GridMode::ORTHOGRAFIC;
 	DebugLevel Debug::level = DebugLevel::INFO;
 	Logger Debug::Log(Debug::level);
+
+
 }

@@ -9,6 +9,7 @@
 #include "renderer.h"
 #include "gamedata.h"
 #include "collision2d.h"
+#include "collider2d.h"
 
 namespace ShushaoEngine {
 
@@ -107,9 +108,19 @@ namespace ShushaoEngine {
 
 	}
 
-	void Component::ReceiveMessage(std::string methodName, Object* parameter) {
+	void Component::ReceiveMessage(std::string methodName, Object& parameter) {
         if (methodName == "OnCollisionEnter2D") {
-			OnCollisionEnter2D(dynamic_cast<Collision2D*>(parameter));
+			OnCollisionEnter2D(dynamic_cast<Collision2D&>(parameter));
+        } else if (methodName == "OnCollisionExit2D") {
+			OnCollisionExit2D(dynamic_cast<Collision2D&>(parameter));
+        } else if (methodName == "OnCollisionStay2D") {
+			OnCollisionStay2D(dynamic_cast<Collision2D&>(parameter));
+        }  else if (methodName == "OnTriggerEnter2D") {
+			OnTriggerEnter2D(dynamic_cast<Collider2D&>(parameter));
+        } else if (methodName == "OnTriggerExit2D") {
+			OnTriggerExit2D(dynamic_cast<Collider2D&>(parameter));
+        } else if (methodName == "OnTriggerStay2D") {
+			OnTriggerStay2D(dynamic_cast<Collider2D&>(parameter));
         }
 	}
 
@@ -153,7 +164,13 @@ namespace ShushaoEngine {
 	}
 
 	// messages
-	void Component::OnCollisionEnter2D(Collision2D* collision) {}
+	void Component::OnCollisionEnter2D(Collision2D& collision) {}
+	void Component::OnCollisionExit2D(Collision2D& collision) {}
+	void Component::OnCollisionStay2D(Collision2D& collision) {}
+
+	void Component::OnTriggerEnter2D(Collider2D& collider) {}
+	void Component::OnTriggerExit2D(Collider2D& collider) {}
+	void Component::OnTriggerStay2D(Collider2D& collider) {}
 
 	void Component::Awake() {}
 	void Component::Start() {}

@@ -1,12 +1,14 @@
 R"(
 #version 330 core
-layout(location=0) in vec3 position;
-layout(location=1) in vec2 texCoord;
-uniform mat4 MVP;
-out vec2 TexCoord;
+
+in vec2 out_texturecoord;
+
+uniform sampler2D base_texture;
+uniform vec4 renderer_color;
+
+out vec4 out_color;
 
 void main() {
-	gl_Position = MVP * vec4(position, 1.0);
-	TexCoord = texCoord;
+	out_color = texture(base_texture, out_texturecoord).rgba * vec4(renderer_color);
 }
 )"

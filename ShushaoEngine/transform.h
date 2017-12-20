@@ -41,17 +41,17 @@ namespace ShushaoEngine {
 			// methods
 			Transform* getParent();
 			Transform* getChild(unsigned int);
-			void setParent(Transform*, bool worldPositionStays = false);
+			void SetParent(Transform*, bool worldPositionStays = false);
 			void RemoveChild(Transform* t);
 			void AddChild(Transform* t);
 			bool isAtRoot();
 
-			glm::mat4 getLocalToParentMatrix();
-			glm::mat4 getLocalToWorldMatrix();
-			glm::mat4 getWorldToLocalMatrix();
-			glm::vec3 getWorldPosition();
-			glm::vec3 getWorldScale();
-			glm::quat getWorldOrientation();
+			glm::mat4 GetLocalToParentMatrix();
+			glm::mat4 GetLocalToWorldMatrix();
+			glm::mat4 GetWorldToLocalMatrix();
+			glm::vec3 GetWorldPosition();
+			glm::vec3 GetWorldScale();
+			glm::quat GetWorldOrientation();
 
 			// lifecycle
 			void Awake();
@@ -59,23 +59,27 @@ namespace ShushaoEngine {
 
 			//{ #region getter and setters
 
-			glm::vec3 getEulerAngles();
-			glm::vec3 getLocalEulerAngles();
+			glm::vec3 GetEulerAngles();
+			glm::vec3 GetLocalEulerAngles();
 
-			void setPivot(glm::vec2);
-			void setPosition(glm::vec3);
-			void setLocalPosition(glm::vec3);
-			void setLocalRotation(glm::quat);
-			void setLocalRotation(glm::vec3);
-			void setLocalScale(glm::vec3);
+			void SetPivot(glm::vec2);
+			void SetPosition(glm::vec3);
+			void SetLocalPosition(glm::vec3);
+			void SetLocalRotation(glm::quat);
+			void SetLocalRotation(glm::vec3);
+			void SetLocalScale(glm::vec3);
+			void SetRotation(glm::quat);
+			void SetRotation(glm::vec3);
 
 			//}
-
 
 			static const glm::vec3 VEC3_ZERO;
 			static const glm::vec3 VEC3_IDENTITY;
 			static const glm::vec3 VEC3_IDENTITY2D;
 			static const glm::vec3 UP;
+			static const glm::vec3 X;
+			static const glm::vec3 Y;
+			static const glm::vec3 Z;
 			static const glm::vec3 DOWN;
 			static const glm::vec3 FORWARD;
 			static const glm::vec3 BACK;
@@ -97,6 +101,7 @@ namespace ShushaoEngine {
 			glm::mat4 _MVP = glm::mat4();
 
 			void setupDirections();
+			void buildMVP();
 	};
 
 }

@@ -13,6 +13,8 @@ namespace ShushaoEngine {
 		PERSPECTIVE
 	};
 
+
+
 	class Debug {
 
 		public:
@@ -20,9 +22,7 @@ namespace ShushaoEngine {
 			static bool enabled;
 			static bool gridEnabled;
 			static GridMode debugGridMode;
-
 			static DebugLevel level;
-
 			static Logger Log;
 
 	};

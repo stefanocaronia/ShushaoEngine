@@ -11,25 +11,30 @@ namespace ShushaoEngine {
 		name = "Sprite Renderer";
 	}
 
+	SpriteRenderer::~SpriteRenderer() {
+		if (shader != nullptr) delete(shader);
+	}
+
+
 	SpriteRenderer::SpriteRenderer(string n) {
 		name = n;
 	}
 
 	bool SpriteRenderer::isReady() {
-		return (sprite != nullptr && shader != nullptr);
+		return (sprite != nullptr && sprite->VAO > 0 && shader != nullptr && transform != nullptr);
 	}
 
 	void SpriteRenderer::Awake() {
 
-		if (!isReady()) return;
+		//if (!isReady()) return;
 
-		transform->setPivot(sprite->pivot);
+		shader = new Shader();
+		transform->SetPivot(sprite->pivot);
 	}
 
 	void SpriteRenderer::Update() {
 
-		if (!isReady()) return;
-
+		//if (!isReady()) return;
 	}
 
 	void SpriteRenderer::Render() {

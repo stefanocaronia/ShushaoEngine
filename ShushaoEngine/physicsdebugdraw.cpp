@@ -13,24 +13,11 @@ namespace ShushaoEngine {
 
 		shader = new Shader();
 
-		shader->LoadFromString(R"(
-			#version 330 core
-			layout(location=0) in vec3 position;
-			uniform mat4 MVP;
-
-			void main() {
-				gl_Position = MVP * vec4(position, 1.0);
-			}
-		)", R"(
-			#version 330 core
-			uniform vec4 renderer_color;
-
-			out vec4 out_color;
-
-			void main() {
-				out_color = vec4(renderer_color);
-			}
-		)");
+		shader->LoadFromString(
+			#include "base.vert"
+			,
+			#include "base.frag"
+		);
 
 		vertices.reserve(256);
 		return readyToDraw = true;

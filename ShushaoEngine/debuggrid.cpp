@@ -10,7 +10,14 @@ namespace ShushaoEngine {
 	DebugGrid::DebugGrid() {
 
 		LineRenderer* LR = AddComponent<LineRenderer>();
-		LR->shader = new Shader("shaders/wire", "Wireframe Shader");
+		LR->shader = new Shader();
+
+		LR->shader->LoadFromString(
+			#include "wire.vert"
+			,
+			#include "wire.frag"
+		);
+
 		LR->sortingLayerID = Config::SortingLayers.over();
 
 		Color xcol = {0.0f, 1.0f, 0.0f, 1.0f};

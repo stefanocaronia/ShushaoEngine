@@ -40,7 +40,7 @@ namespace ShushaoEngine {
 				T* entity = new T();
 				entity->name = (_name == "" ? util::classtitle<T>() : _name);
 				entity->scene = this;
-				entity->transform->setParent(root->transform);
+				entity->transform->SetParent(root->transform);
 
 				Entities.push_back(entity);
 				return entity;

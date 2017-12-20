@@ -9,6 +9,14 @@ namespace ShushaoEngine {
 
 	Shader::Shader() {
 		//loadWithName("shaders/standard", "Shader Standard");
+
+		LoadFromString(
+			#include "standard.vert"
+			,
+			#include "standard.frag"
+		);
+
+		name = "standard";
 	}
 
 	Shader::Shader(std::string filename, std::string n) {
@@ -29,7 +37,7 @@ namespace ShushaoEngine {
 	}
 
 	Shader::~Shader(){
-
+		Debug::Log << "Destructor di Shader " << name << std::endl;
 		glUseProgram(0);
 		if (VertexShaderID > 0) glDeleteShader(VertexShaderID);
 		if (FragmentShaderID > 0) glDeleteShader(FragmentShaderID);

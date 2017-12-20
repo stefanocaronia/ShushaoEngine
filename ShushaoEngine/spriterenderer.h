@@ -26,6 +26,7 @@ namespace ShushaoEngine {
 		public:
 
 			SpriteRenderer();
+			~SpriteRenderer();
 			SpriteRenderer(std::string);
 
 			bool isReady();

@@ -13,11 +13,11 @@ namespace ShushaoEngine {
 	void Rigidbody2D::Awake() {
 
 		position = transform->position;
-		angle = transform->getEulerAngles().z * DEGTORAD;
+		angle = transform->GetEulerAngles().z;
 
 		bodyDef.type = (b2BodyType)type;
 		bodyDef.position.Set(position.x, position.y);
-		bodyDef.angle = angle;
+		bodyDef.angle = angle * DEGTORAD; // RADIANS
 		bodyDef.fixedRotation = fixedRotation;
 		bodyDef.userData = entity;
 		bodyDef.active = enabled && transform->isAtRoot() && entity->activeSelf;
@@ -43,8 +43,8 @@ namespace ShushaoEngine {
 
 		if (!transform->isAtRoot() || type == RigidbodyType::STATIC) {
 			position = transform->position;
-			angle = transform->getEulerAngles().z * DEGTORAD;
-			body->SetTransform(b2Vec2(position.x, position.y), angle);
+			angle = transform->GetEulerAngles().z; // DEGREES
+			body->SetTransform(b2Vec2(position.x, position.y), angle * DEGTORAD);
 			return;
 		}
 
@@ -52,10 +52,10 @@ namespace ShushaoEngine {
 		b2Vec2 v = body->GetLinearVelocity();
 		position = {p.x, p.y};
 		velocity = {v.x, v.y};
-		angle = body->GetAngle();
+		angle = body->GetAngle() * RADTODEG; // DEGREES
 		angularVelocity = body->GetAngularVelocity();
 
-		transform->setPosition({position.x, position.y, transform->position.z});
-		transform->setLocalRotation({0.0f,0.0f, angle});
+		transform->SetPosition({position.x, position.y, transform->position.z});
+		transform->SetRotation({0.0f, 0.0f, angle});
 	}
 }

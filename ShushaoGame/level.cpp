@@ -6,30 +6,29 @@
 
 Level::Level() {
 
-
 	Entity* ground = AddEntity("Ground");
 
-	ground->transform->setLocalPosition({0.0f, -4.0f, 0.0f});
+	ground->transform->SetLocalPosition({0.0f, -4.0f, 0.0f});
 	Rigidbody2D* groundrb = ground->AddComponent<Rigidbody2D>();
 	groundrb->setType(RigidbodyType::STATIC);
 	BoxCollider2D* ec = ground->AddComponent<BoxCollider2D>();
 	ec->SetShape({6,0.5f});
 
 	Entity* door = AddEntity("Door");
-	door->transform->setLocalPosition({4.0f, -4.0f, 0.0f});
+	door->transform->SetLocalPosition({4.0f, -4.0f, 0.0f});
 	Rigidbody2D* doorrb = door->AddComponent<Rigidbody2D>();
 	doorrb->setType(RigidbodyType::STATIC);
 	BoxCollider2D* dc = door->AddComponent<BoxCollider2D>();
 	dc->SetSensor(true);
 	dc->SetShape({0.1,4.0f});
 
-	//ground->transform->setLocalRotation({0,0,45});
+	//ground->transform->SetLocalRotation({0,0,20});
 
 	Pancrazio* pancrazio = AddEntity<Pancrazio>();
-	pancrazio->transform->setLocalScale({1.0f, 1.0f, 0.0f});
-	pancrazio->transform->setLocalPosition({0.0f, 0.0f, 0.0f});
+	pancrazio->transform->SetLocalScale({1.0f, 1.0f, 0.0f});
+	pancrazio->transform->SetLocalPosition({0.0f, 0.0f, 0.0f});
 	//pancrazio->GetComponent<Animation>()->Disable();
-	pancrazio->transform->setLocalRotation({0,0,45});
+	pancrazio->transform->SetLocalRotation({0,0,30});
 
 	/*Pancrazio* sonOfPancrazio = AddEntity<Pancrazio>("Son of Pancrazio");
 	sonOfPancrazio->setParent(pancrazio);

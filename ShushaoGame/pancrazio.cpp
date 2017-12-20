@@ -6,6 +6,10 @@ Pancrazio::Pancrazio() {
 	using namespace glm;
 
 	sr = AddComponent<SpriteRenderer>();
+	//sr->shader = Resources::Get<Shader>("standard");
+	sr->sprite = Resources::Get<Sprite>("pancrazio_sprite")->setPivot(PivotPosition::CENTER);
+	sr->sortingLayerID = Config::SortingLayers["Characters"];
+
 	AddComponent<Mover>();
 
 	rb = AddComponent<Rigidbody2D>();
@@ -18,12 +22,9 @@ Pancrazio::Pancrazio() {
 	trigger->SetSensor(true);
 	trigger->SetShape({1.5f, 0.1f});
 
-	//circlec = AddComponent<CircleCollider2D>();
-	//circlec->setShape({0.0f, 0.0f}, 1.0f);
+	circlec = AddComponent<CircleCollider2D>();
+	circlec->SetShape({0.0f, 0.0f}, 1.0f);
 
-	sr->shader = Resources::Get<Shader>("standard");
-	sr->sprite = Resources::Get<Sprite>("pancrazio_sprite")->setPivot(PivotPosition::CENTER);
-	sr->sortingLayerID = Config::SortingLayers["Characters"];
 
 	/*animation = AddComponent<Animation>("walk");
 	animation->setFPS(1);

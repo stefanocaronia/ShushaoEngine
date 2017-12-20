@@ -37,6 +37,13 @@ namespace ShushaoEngine {
 			static Color white; // Solid white. RGBA is (1, 1, 1, 1).
 			static Color yellow; // Yellow. RGBA is (1, 0.92, 0.016, 1), but the color is nice to look at!
 
+			bool operator==(Color& other) {
+				return (r == other.r &&
+						g == other.g &&
+						b == other.b &&
+						a == other.a);
+			}
+
 	};
 
 }

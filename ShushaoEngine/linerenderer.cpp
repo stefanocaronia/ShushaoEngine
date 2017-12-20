@@ -10,10 +10,20 @@ namespace ShushaoEngine {
 
 	LineRenderer::LineRenderer() {
 		name = "Line Renderer";
+
+		shader = new Shader();
+		shader->LoadFromString(
+			#include "wire.vert"
+			,
+			#include "wire.frag"
+		);
+		shader->name = "Wireframe";
 	}
 
 	LineRenderer::~LineRenderer() {
 		name = "Line Renderer";
+
+		if (shader != nullptr) delete(shader);
 	}
 
 	LineRenderer::LineRenderer(std::string n) {

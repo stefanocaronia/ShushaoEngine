@@ -1,9 +1,19 @@
 #include "mover.h"
 
+using namespace ShushaoEngine;
+
+float frand(float max) {
+
+	return (float(rand()) / RAND_MAX) * max;
+
+
+}
+
 void Mover::Awake() {
 
 	sr = entity->GetComponent<SpriteRenderer>();
 	rb = entity->GetComponent<Rigidbody2D>();
+
 }
 
 void Mover::Update() {
@@ -27,6 +37,7 @@ void Mover::Update() {
 	if (Input::getAxis("horizontal") != 0) {
         rb->body->ApplyForceToCenter({(float)horizontal * 10.0f, 0.0f}, true);
 	}
+
 }
 
 void Mover::OnCollisionEnter2D(Collision2D& collision) {

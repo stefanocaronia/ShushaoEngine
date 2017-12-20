@@ -2,9 +2,11 @@
 
 #include "globals.h"
 
+
 class Mover : public Program {
 
 	public:
+
 
 	protected:
 

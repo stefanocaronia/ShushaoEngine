@@ -61,6 +61,12 @@
 		<Unit filename="audio.h">
 			<Option virtualFolder="objects/" />
 		</Unit>
+		<Unit filename="base.frag">
+			<Option virtualFolder="shaders/" />
+		</Unit>
+		<Unit filename="base.vert">
+			<Option virtualFolder="shaders/" />
+		</Unit>
 		<Unit filename="camera.cpp">
 			<Option virtualFolder="components/" />
 		</Unit>
@@ -115,8 +121,12 @@
 		<Unit filename="debuggrid.h">
 			<Option virtualFolder="entities/" />
 		</Unit>
-		<Unit filename="design.cpp" />
-		<Unit filename="design.h" />
+		<Unit filename="design.cpp">
+			<Option virtualFolder="singletons/" />
+		</Unit>
+		<Unit filename="design.h">
+			<Option virtualFolder="singletons/" />
+		</Unit>
 		<Unit filename="entity.cpp">
 			<Option virtualFolder="objects/" />
 		</Unit>
@@ -320,6 +330,12 @@
 		</Unit>
 		<Unit filename="vectormap.h">
 			<Option virtualFolder="globals/" />
+		</Unit>
+		<Unit filename="wire.frag">
+			<Option virtualFolder="shaders/" />
+		</Unit>
+		<Unit filename="wire.vert">
+			<Option virtualFolder="shaders/" />
 		</Unit>
 		<Extensions>
 			<code_completion />

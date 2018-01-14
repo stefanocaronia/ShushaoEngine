@@ -20,6 +20,7 @@ namespace ShushaoEngine {
 		world = new b2World(gravity);
 		world->SetAllowSleeping(doSleep);
 		world->SetContactListener(&contactListener);
+		world->SetContactFilter(&contactFilter);
 
 		if (debug) {
 			world->SetDebugDraw(&debugDraw);
@@ -62,6 +63,7 @@ namespace ShushaoEngine {
 	int32 Physics::positionIterations;
 	PhysicsDebugDraw Physics::debugDraw;
 	PhysicsContactListener Physics::contactListener;
+	PhysicsContactFilter Physics::contactFilter;
 
 	//}
 

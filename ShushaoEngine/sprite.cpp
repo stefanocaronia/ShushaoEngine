@@ -1,7 +1,8 @@
 #include  <iostream>
 #include <string>
 
-#include "resources.h"
+#include "shader.h"
+#include "debug.h"
 #include "sprite.h"
 #include "rect.h"
 
@@ -26,7 +27,7 @@ namespace ShushaoEngine {
 	Sprite::Sprite(string n, Texture* _texture) {
 		name = n;
 		rect.Set(0.0f, 0.0f, (float)_texture->width, (float)_texture->height);
-		pixel_pivot = calculatePivot(PivotPosition::CENTER, rect);
+		pixel_pivot = CalculatePivot(PivotPosition::CENTER, rect);
 		texture = _texture;
 		init();
 	}
@@ -34,71 +35,85 @@ namespace ShushaoEngine {
 	Sprite::Sprite(string n, Texture* _texture, Rect _rect, PivotPosition _pivotPosition, vec2 _offset) {
 		name = n;
         rect = _rect;
-		pixel_pivot = calculatePivot(_pivotPosition, _rect);
+		pixel_pivot = CalculatePivot(_pivotPosition, _rect);
 		textureRectOffset = _offset;
 		texture = _texture;
 		init();
 	}
 
-	Sprite* Sprite::setRect(Rect _rect) {
+	Sprite* Sprite::SetRect(Rect _rect) {
         rect = _rect;
-        pixel_pivot = calculatePivot(PivotPosition::CENTER, _rect);
+        pixel_pivot = CalculatePivot(PivotPosition::CENTER, _rect);
 		init();
 		return this;
 	}
 
-	Sprite* Sprite::setPixelPerUnit(float ppu) {
+	Sprite* Sprite::SetPixelPerUnit(float ppu) {
         pixelPerUnit = ppu;
 		init();
 		return this;
 	}
 
-	Sprite* Sprite::setPivot(vec2 _pivot) {
-        pixel_pivot = calculatePivot(PivotPosition::CUSTOM, rect, _pivot);
+	Sprite* Sprite::SetPivot(vec2 _pivot) {
+        pixel_pivot = CalculatePivot(PivotPosition::CUSTOM, rect, _pivot);
 		init();
 		return this;
 	}
 
-	Sprite* Sprite::setPivot(PivotPosition _pivotPosition) {
-        pixel_pivot = calculatePivot(_pivotPosition, rect);
+	Sprite* Sprite::SetPivot(PivotPosition _pivotPosition) {
+        pixel_pivot = CalculatePivot(_pivotPosition, rect);
 		init();
 		return this;
 	}
 
-	Sprite* Sprite::setTexture(Texture* _texture) {
-        texture = _texture;
-        rect.Set(0.0f, 0.0f, (float)_texture->width, (float)_texture->height);
-		pixel_pivot = calculatePivot(PivotPosition::CENTER, rect);
+	Sprite* Sprite::SetTexture(Texture* texture_) {
+        texture = texture_;
+        rect.Set(0.0f, 0.0f, (float)texture_->width, (float)texture_->height);
+		pixel_pivot = CalculatePivot(PivotPosition::CENTER, rect);
 		init();
 		return this;
 	}
 
-	Rect Sprite::getRect() {
+	Rect Sprite::GetRect() {
        return rect;
 	}
 
-	vec2 Sprite::getPivot() {
+	vec2 Sprite::GetPivot() {
         return pivot;
 	}
 
 	Sprite* Sprite::init() {
 
-		GLfloat wX = (rect.width / pixelPerUnit) / 2;
-		GLfloat wY = (rect.height / pixelPerUnit) / 2;
-
 		pivot.x = (pixel_pivot.x - (rect.width / 2)) / (float)pixelPerUnit;
 		pivot.y = -(pixel_pivot.y - (rect.height / 2)) / (float)pixelPerUnit;
 
-		GLfloat v[] = {
+		Debug::Log << "pivot: " << pivot.x << "\t" << pivot.y << std::endl;
+
+		GLfloat wX = ((rect.width / pixelPerUnit) / 2);
+		GLfloat wY = ((rect.height / pixelPerUnit) / 2);
+
+		/*GLfloat v[12] = {
 			-wX, -wY, 0.0f, // Bottom-left
 			 wX, -wY, 0.0f, // Bottom-right
 			 wX,  wY, 0.0f, // Top-right
 			-wX,  wY, 0.0f // Top-left
+		};*/
+
+		GLfloat v[12] = {
+			-wX - pivot.x, -wY - pivot.y, 0.0f, // Bottom-left
+			 wX - pivot.x, -wY - pivot.y, 0.0f, // Bottom-right
+			 wX - pivot.x,  wY - pivot.y, 0.0f, // Top-right
+			-wX - pivot.x,  wY - pivot.y, 0.0f // Top-left
 		};
 
-		for (unsigned int i = 0; i < 12;  i++) {
-            vertices[i] = v[i];
-		}
+/*int c = 0;
+		for (GLfloat vr : v) {
+
+			Debug::Log << vr << " ";
+			if (++c%3 == 0) Debug::Log << std::endl;
+		}*/
+
+		memcpy(vertices, v, sizeof(GLfloat) * 12);
 
 		if (rect.width < texture->width || rect.height < texture->height) {
 
@@ -117,9 +132,7 @@ namespace ShushaoEngine {
 				tsr.x, tsr.y // Top-left of texture
 			};
 
-			for (unsigned int i = 0; i < 8;  i++) {
-				uv[i] = u[i];
-			}
+			memcpy(uv, u, sizeof(GLclampd) * 8);
 		}
 
 		initVAO();
@@ -157,7 +170,7 @@ namespace ShushaoEngine {
 		return this;
 	}
 
-	vec2 Sprite::calculatePivot(PivotPosition pp, Rect re, vec2 custom) {
+	vec2 Sprite::CalculatePivot(PivotPosition pp, Rect re, vec2 custom) {
 		vec2 piv;
 		switch (pp) {
 			case (PivotPosition::CENTER): piv= re.center; break;

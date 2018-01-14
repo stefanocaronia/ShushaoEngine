@@ -10,9 +10,7 @@
 
 namespace ShushaoEngine {
 
-	using namespace std;
-
-	map <DebugLevel, string> DebugLevelName = {
+	std::map <DebugLevel, string> DebugLevelName = {
 		{INFO, "INFO"},
 		{WARNING, "WARNING"},
 		{ERROR, "ERROR"}
@@ -52,7 +50,7 @@ namespace ShushaoEngine {
 		ostringstream buildmex;
 		buildmex << Time::Clock() << " [" << DebugLevelName[streamLevel] << "] " << sender << stream.str() << os;
 
-		cout << buildmex.str();
+		std::cout << buildmex.str();
 
 		ios_base::openmode mode = ios_base::out;
 		if (logStarted) mode = mode | ios_base::app;

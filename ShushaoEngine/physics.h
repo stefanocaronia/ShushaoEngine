@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "physicscontactlistener.h"
+#include "physicscontactfilter.h"
 #include "physicsdebugdraw.h"
 
 namespace ShushaoEngine {
@@ -26,6 +27,7 @@ namespace ShushaoEngine {
 
 			static PhysicsDebugDraw debugDraw;
 			static PhysicsContactListener contactListener;
+			static PhysicsContactFilter contactFilter;
 
 			void setGravity(glm::vec3);
 

@@ -7,8 +7,6 @@
 #include "scenemanager.h"
 #include "utility.h"
 
-#define FLIP -1;
-
 namespace ShushaoEngine {
 
 	Transform::Transform() {
@@ -17,16 +15,16 @@ namespace ShushaoEngine {
 
 	//{ #region parenting
 
-	Transform* Transform::getParent() {
+	Transform* Transform::GetParent() {
 		return parent;
 	}
 
 	bool Transform::isAtRoot() {
-		return (isRoot || (parent != nullptr && parent->isRoot));
+		return (parent == nullptr || isRoot || (parent != nullptr && parent->isRoot));
 	}
 
 	void Transform::SetParent(Transform* newpa, bool worldPositionStays) {
-		lock = true;
+
 		if (parent != nullptr) {
 			parent->RemoveChild(this);
 		}
@@ -40,13 +38,15 @@ namespace ShushaoEngine {
 		}
 
 		parent->AddChild(this);
-		lock = false;
+		matrixInvalid = true;
 	}
 
 	void Transform::RemoveChild(Transform* t) {
 		if (children.empty()) return;
 		auto it = find(children.begin(), children.end(), t);
-		if (it != children.end()) children.erase(it);
+		if (it != children.end()) {
+			children.erase(it);
+		}
 	}
 
 	void Transform::AddChild(Transform* t) {
@@ -58,45 +58,74 @@ namespace ShushaoEngine {
 		if (it == children.end()) children.push_back(t);
 	}
 
-	Transform* Transform::getChild(unsigned int index) {
+	Transform* Transform::GetChild(unsigned int index) {
 		if (index >= children.size()) return nullptr;
 		return children.at(index);
 	}
 
+	vector<Transform*> Transform::GetParents() {
+		vector<Transform*> parents;
+		if (isAtRoot()) return parents;
+
+		Transform* p = parent;
+		while (p != nullptr && !p->isRoot) {
+			parents.push_back(p);
+			p = p->GetParent();
+		}
+
+		return parents;
+	}
+
 	//}
 
+	void Transform::Invalidate() {
+		if (!matrixInvalid) {
+			matrixInvalid = true;
+			inverseMatrixInvalid = true;
+		}
+
+		for (Transform* child : children) {
+			child->Invalidate();
+		}
+	}
+
 	void Transform::SetPosition(glm::vec3 position_) {
-		localPosition = position_ - (!isAtRoot() ? parent->position : glm::vec3(0));
-		_position = GetWorldPosition();
+		Invalidate();
+		//localPosition = isAtRoot() ? position_ : parent->position - position_;
+		_position = position_;
 		setupDirections();
 	}
 
 	void Transform::SetLocalPosition(glm::vec3 position_) {
 		localPosition = position_;
+		Invalidate();
 		_position = GetWorldPosition();
 		setupDirections();
 	}
 
 	void Transform::SetLocalRotation(glm::vec3 angles_) { // angles_ is in radians
 		localRotation = glm::quat(angles_ * (DEGTORAD));
+		Invalidate();
 		_rotation = GetWorldOrientation();
 		setupDirections();
 	}
 
 	void Transform::SetLocalRotation(glm::quat rotation_) {
 		localRotation = rotation_;
+		Invalidate();
 		_rotation = GetWorldOrientation();
 		setupDirections();
 	}
 
 	void Transform::SetRotation(glm::vec3 angles_) { // angles_ is in radians
 		_rotation = glm::quat(angles_ * (DEGTORAD));
-		localRotation = _rotation * parent->rotation;
+		//localRotation = _rotation;
 		setupDirections();
 	}
 
 	void Transform::SetRotation(glm::quat rotation_) {
 		_rotation = rotation_;
+		Invalidate();
 		localRotation = _rotation * parent->rotation;
 		setupDirections();
 	}
@@ -126,9 +155,11 @@ namespace ShushaoEngine {
 	}
 
 	void Transform::buildMVP() {
-		glm::mat4 M = GetLocalToWorldMatrix() * glm::translate(glm::mat4(), -pivot);
+		glm::mat4 M = GetLocalToWorldMatrix();// * glm::translate(glm::mat4(), -pivot);
 		glm::mat4 P = SceneManager::activeScene->activeCamera->Projection;
 		glm::mat4 V = SceneManager::activeScene->activeCamera->getViewMatrix();
+
+		_localToWorldMatrix = M;
 
 		_MVP = P * V * M;
 	}
@@ -139,23 +170,45 @@ namespace ShushaoEngine {
 
 	void Transform::Update() {
 
-		_position = GetWorldPosition();
-		_rotation = GetWorldOrientation();
-		setupDirections();
+		//_position = GetWorldPosition();
+		//_rotation = GetWorldOrientation();
+		//setupDirections();
 
 		buildMVP();
 	}
 
 	glm::mat4 Transform::GetLocalToParentMatrix() {
-		return glm::translate(glm::mat4(), localPosition) * glm::toMat4(localRotation) * glm::scale(glm::mat4(), localScale);
+		return _localToParentMatrix = glm::translate(glm::mat4(), localPosition) * glm::toMat4(localRotation) * glm::scale(glm::mat4(), localScale);
 	}
 
 	glm::mat4 Transform::GetLocalToWorldMatrix() {
-		if (isAtRoot()) {
-			return GetLocalToParentMatrix();
-		} else {
-			return parent->GetLocalToWorldMatrix() * GetLocalToParentMatrix();
+		if (matrixInvalid) {
+			if (isAtRoot()) {
+				_localToWorldMatrix = GetLocalToParentMatrix();
+			} else {
+				_localToWorldMatrix = parent->GetLocalToWorldMatrix() * GetLocalToParentMatrix();
+			}
+			matrixInvalid = false;
 		}
+		return _localToWorldMatrix;
+	}
+
+	glm::mat4 Transform::GetWorldToLocalMatrix() {
+		//if (inverseMatrixInvalid) {
+		//	_worldToLocalMatrix = glm::inverse(GetLocalToWorldMatrix());
+		//	inverseMatrixInvalid = false;
+		//}
+		//return _worldToLocalMatrix;
+
+		if (inverseMatrixInvalid) {
+			if (isAtRoot()) {
+				_worldToLocalMatrix = glm::mat4();
+			} else {
+				_worldToLocalMatrix =  glm::toMat4(parent->rotation) * glm::translate(glm::mat4(), -parent->position);
+			}
+			inverseMatrixInvalid = false;
+		}
+		return _worldToLocalMatrix;
 	}
 
 	glm::vec3 Transform::GetWorldPosition() {
@@ -163,7 +216,12 @@ namespace ShushaoEngine {
 		return glm::vec3(p.x, p.y, p.z);
 	}
 
-	vec3 Transform::GetWorldScale() {
+	glm::vec3 Transform::GetLocalPosition(glm::vec3 position_) {
+		glm::vec4 p = GetWorldToLocalMatrix() * glm::vec4(position_.x, position_.y, position_.z, 1.0f);
+		return glm::vec3(p.x, p.y, p.z);
+	}
+
+	glm::vec3 Transform::GetWorldScale() {
 		if (isAtRoot()) {
 			return localScale;
 		} else {
@@ -171,30 +229,26 @@ namespace ShushaoEngine {
 		}
 	}
 
-	quat Transform::GetWorldOrientation() {
+	glm::quat Transform::GetWorldOrientation() {
 		if (isAtRoot()) {
 			return localRotation;
 		} else {
 			return localRotation * parent->rotation;
 		}
-		return quat();
+		return glm::quat();
 	}
 
-	mat4 Transform::GetWorldToLocalMatrix() {
-		return glm::inverse(GetLocalToWorldMatrix());
-	}
-
-	const vec3 Transform::VEC3_ZERO = {0.0f, 0.0f, 0.0f};
-	const vec3 Transform::VEC3_IDENTITY = {1.0f, 1.0f, 1.0f};
-	const vec3 Transform::VEC3_IDENTITY2D = {1.0f, 1.0f, 0.0f};
-	const vec3 Transform::UP = {0.0f, 1.0f, 0.0f};
-	const vec3 Transform::X = {1.0f, 0.0f, 0.0f};
-	const vec3 Transform::Y = {0.0f, 1.0f, 0.0f};
-	const vec3 Transform::Z = {0.0f, 0.0f, 1.0f};
-	const vec3 Transform::DOWN = {0.0f, -1.0f, 0.0f};
-	const vec3 Transform::FORWARD = {0.0f, 0.0f, 1.0f};
-	const vec3 Transform::BACK = {0.0f, 0.0f, -1.0f};
-	const vec3 Transform::RIGHT = {1.0f, 0.0f, 0.0f};
-	const vec3 Transform::LEFT = {-1.0f, 0.0f, 0.0f};
-	const quat Transform::QUATERNION_IDENTITY = {1.0f, 0.0f, 0.0f, 0.0f};
+	const glm::vec3 Transform::VEC3_ZERO = {0.0f, 0.0f, 0.0f};
+	const glm::vec3 Transform::VEC3_IDENTITY = {1.0f, 1.0f, 1.0f};
+	const glm::vec3 Transform::VEC3_IDENTITY2D = {1.0f, 1.0f, 0.0f};
+	const glm::vec3 Transform::UP = {0.0f, 1.0f, 0.0f};
+	const glm::vec3 Transform::AXIS_X = {1.0f, 0.0f, 0.0f};
+	const glm::vec3 Transform::AXIS_Y = {0.0f, 1.0f, 0.0f};
+	const glm::vec3 Transform::AXIS_Z = {0.0f, 0.0f, 1.0f};
+	const glm::vec3 Transform::DOWN = {0.0f, -1.0f, 0.0f};
+	const glm::vec3 Transform::FORWARD = {0.0f, 0.0f, 1.0f};
+	const glm::vec3 Transform::BACK = {0.0f, 0.0f, -1.0f};
+	const glm::vec3 Transform::RIGHT = {1.0f, 0.0f, 0.0f};
+	const glm::vec3 Transform::LEFT = {-1.0f, 0.0f, 0.0f};
+	const glm::quat Transform::QUATERNION_IDENTITY = {1.0f, 0.0f, 0.0f, 0.0f};
 }

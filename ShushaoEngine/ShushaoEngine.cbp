@@ -190,6 +190,12 @@
 		<Unit filename="physics.h">
 			<Option virtualFolder="physics/" />
 		</Unit>
+		<Unit filename="physicscontactfilter.cpp">
+			<Option virtualFolder="physics/" />
+		</Unit>
+		<Unit filename="physicscontactfilter.h">
+			<Option virtualFolder="physics/" />
+		</Unit>
 		<Unit filename="physicscontactlistener.cpp">
 			<Option virtualFolder="physics/" />
 		</Unit>

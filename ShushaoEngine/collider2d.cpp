@@ -4,6 +4,8 @@
 #include "rigidbody2d.h"
 #include "transform.h"
 #include "entity.h"
+#include "sprite.h"
+#include "spriterenderer.h"
 
 namespace ShushaoEngine {
 
@@ -91,10 +93,24 @@ namespace ShushaoEngine {
 
 	//{ #region CircleCollider2D
 
-	void CircleCollider2D::SetShape(glm::vec2 position, float radius) {
-		shape.m_p.Set(position.x, position.y);
-		shape.m_radius = radius;
+	void CircleCollider2D::SetShape(glm::vec2 position_, float radius_) {
+
+		position = position_;
+		radius = radius_;
+
+		SpriteRenderer* sr = entity->GetComponent<SpriteRenderer>();
+		if (sr != nullptr) {
+			shape.m_p.Set(position_.x - sr->sprite->pivot.x * scale.x, position_.y - sr->sprite->pivot.y * scale.y);
+		} else {
+			shape.m_p.Set(position_.x, position_.y);
+		}
+		shape.m_radius = radius_ * scale.x;
 		fixtureDef.shape = &shape;
+	}
+
+	void CircleCollider2D::ResetShape() {
+		scale = {transform->scale.x, transform->scale.y};
+		SetShape(position, radius);
 	}
 
 	//}
@@ -102,17 +118,22 @@ namespace ShushaoEngine {
 	//{ #region BoxCollider2D
 
 	void BoxCollider2D::SetShape(glm::vec2 hsize) {
-		cout << "setto la shape di " << entity->name << endl;
+
+		SpriteRenderer* sr = entity->GetComponent<SpriteRenderer>();
+
 		boxHalfSize = hsize;
-        shape.SetAsBox(boxHalfSize.x * scale.x, boxHalfSize.y * scale.y);
+		if (sr != nullptr) {
+			b2Vec2 pivot(sr->sprite->pivot.x * scale.x, sr->sprite->pivot.y * scale.y);
+			shape.SetAsBox(boxHalfSize.x * scale.x, boxHalfSize.y * scale.y, -pivot, 0.0f);
+		} else {
+			 shape.SetAsBox(boxHalfSize.x * scale.x, boxHalfSize.y * scale.y);
+		}
         fixtureDef.shape = &shape;
 	}
 
-	void BoxCollider2D::resetShape() {
-		cout << "resetto la shape di " << entity->name << endl;
+	void BoxCollider2D::ResetShape() {
 		scale = {transform->scale.x, transform->scale.y};
-		cout << "nuova scale: " << scale.x << endl;
-		shape.SetAsBox(boxHalfSize.x * scale.x, boxHalfSize.y * scale.y);
+		SetShape(boxHalfSize);
 	}
 
 	//}

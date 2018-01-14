@@ -1,14 +1,10 @@
 #pragma once
 
 #include <glm/glm.hpp>
-
 #include "object.h"
 #include "rect.h"
 #include "texture.h"
 #include "config.h"
-
-using namespace glm;
-using namespace std;
 
 namespace ShushaoEngine {
 
@@ -30,9 +26,9 @@ namespace ShushaoEngine {
 		public:
 
 			Sprite();
-			Sprite(string);
-			Sprite(string, Texture*);
-			Sprite(string, Texture*, Rect, PivotPosition, vec2 = vec2(0,0));
+			Sprite(std::string);
+			Sprite(std::string, Texture*);
+			Sprite(std::string, Texture*, Rect, PivotPosition, glm::vec2 = glm::vec2(0,0));
 			~Sprite();
 
 			Texture* texture = nullptr;
@@ -42,11 +38,11 @@ namespace ShushaoEngine {
 			GLuint indexBuffer;
 			GLuint VAO;
 
-			vec2 pivot; // Location of the Sprite's center point in the vertices coordinates
+			glm::vec2 pivot; // Location of the Sprite's center point in the vertices coordinates
 
 			int pixelPerUnit = Config::pixelPerUnit; // The number of pixels in the sprite that correspond to one unit in world space. (Read Only)
 
-			vec2 textureRectOffset; // Gets the offset of the rectangle this sprite uses on its texture to the original sprite bounds. If sprite mesh type is FullRect, offset is zero.
+			glm::vec2 textureRectOffset; // Gets the offset of the rectangle this sprite uses on its texture to the original sprite bounds. If sprite mesh type is FullRect, offset is zero.
 
 			GLfloat quad_vertices[12] = {
 				-1.0f, -1.0f, 0.0f,  // Bottom-left
@@ -75,28 +71,26 @@ namespace ShushaoEngine {
 			};
 
 			// metodi
+			Rect GetRect();
+			glm::vec2 GetPivot();
 
-			Sprite* initVAO();
-			Sprite* init();
+			Sprite* SetRect(Rect);
+			Sprite* SetTexture(Texture*);
+			Sprite* SetPivot(vec2);
+			Sprite* SetPivot(PivotPosition);
+			Sprite* SetPixelPerUnit(float);
 
-			Rect getRect();
-			vec2 getPivot();
-
-			Sprite* setRect(Rect);
-			Sprite* setTexture(Texture*);
-			Sprite* setPivot(vec2);
-			Sprite* setPivot(PivotPosition _pivotPosition);
-			Sprite* setPixelPerUnit(float);
-
-			static vec2 calculatePivot(PivotPosition, Rect, vec2 custom = vec2(0,0));
-
+			static glm::vec2 CalculatePivot(PivotPosition, Rect, vec2 custom = vec2(0,0));
 
 		protected:
 
 		private:
 
+			Sprite* initVAO();
+			Sprite* init();
+
 			Rect rect = Rect::zero; // Location of the Sprite on the original Texture, specified in pixels.
-			vec2 pixel_pivot; // Location of the Sprite's center point in the Rect on the original Texture, specified in pixels.
+			glm::vec2 pixel_pivot; // Location of the Sprite's center point in the Rect on the original Texture, specified in pixels.
 
 
 	};

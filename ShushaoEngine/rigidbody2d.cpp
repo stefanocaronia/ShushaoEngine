@@ -15,12 +15,17 @@ namespace ShushaoEngine {
 		position = transform->position;
 		angle = transform->GetEulerAngles().z;
 
+		/// DA CAPIRE, se devo lasciare dynamic (fa le collisioni con gli static) o no
+		/*if (!transform->isAtRoot() && type == RigidbodyType::DYNAMIC) {
+			type = RigidbodyType::KINEMATIC;
+		}*/
+
 		bodyDef.type = (b2BodyType)type;
 		bodyDef.position.Set(position.x, position.y);
 		bodyDef.angle = angle * DEGTORAD; // RADIANS
 		bodyDef.fixedRotation = fixedRotation;
-		bodyDef.userData = entity;
-		bodyDef.active = enabled && transform->isAtRoot() && entity->activeSelf;
+		bodyDef.userData = this;
+		bodyDef.active = enabled && entity->activeSelf;
 
 		body = Physics::world->CreateBody(&bodyDef);
 	}
@@ -41,7 +46,7 @@ namespace ShushaoEngine {
 
 	void Rigidbody2D::FixedUpdate() {
 
-		if (!transform->isAtRoot() || type == RigidbodyType::STATIC) {
+		if (type == RigidbodyType::STATIC) { // !transform->isAtRoot() ||
 			position = transform->position;
 			angle = transform->GetEulerAngles().z; // DEGREES
 			body->SetTransform(b2Vec2(position.x, position.y), angle * DEGTORAD);

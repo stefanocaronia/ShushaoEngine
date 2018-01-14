@@ -38,7 +38,7 @@ namespace ShushaoEngine {
 			void Attach();
 			void Reset();
 
-			virtual void resetShape() = 0;
+			virtual void ResetShape() {}
 
 			void FixedUpdate();
 			void OnDestroy();
@@ -61,7 +61,7 @@ namespace ShushaoEngine {
 			b2PolygonShape shape;
 			void SetShape(std::vector<glm::vec2>);
 
-			void resetShape() {}
+			void ResetShape() {}
 
 		protected:
 
@@ -75,8 +75,7 @@ namespace ShushaoEngine {
 
 			b2PolygonShape shape;
 			void SetShape(glm::vec2);
-
-			void resetShape();
+			void ResetShape();
 
 		protected:
 
@@ -88,10 +87,12 @@ namespace ShushaoEngine {
 
 			b2CircleShape shape;
 			void SetShape(glm::vec2, float);
-			void resetShape() {}
+			void ResetShape();
 
 		protected:
 
+			glm::vec2 position;
+			float radius;
 
 	};
 
@@ -103,7 +104,7 @@ namespace ShushaoEngine {
 
 			void SetShape(glm::vec2, glm::vec2);
 
-			void resetShape() {}
+			void ResetShape() {}
 
 		protected:
 

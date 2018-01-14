@@ -7,7 +7,7 @@ Pancrazio::Pancrazio() {
 
 	sr = AddComponent<SpriteRenderer>();
 	//sr->shader = Resources::Get<Shader>("standard");
-	sr->sprite = Resources::Get<Sprite>("pancrazio_sprite")->setPivot(PivotPosition::CENTER);
+	sr->sprite = Resources::Get<Sprite>("pancrazio_sprite")->SetPivot(PivotPosition::CENTER);
 	sr->sortingLayerID = Config::SortingLayers["Characters"];
 
 	AddComponent<Mover>();
@@ -15,14 +15,14 @@ Pancrazio::Pancrazio() {
 	rb = AddComponent<Rigidbody2D>();
 	//rb->setType(RigidbodyType::KINEMATIC);
 	//rb->setFixedRotation(true);
-	collider = AddComponent<BoxCollider2D>();
+	collider = AddComponent<BoxCollider2D>("box");
 	collider->SetShape({0.5f, 0.5f});
 
-	BoxCollider2D* trigger = AddComponent<BoxCollider2D>();
+	BoxCollider2D* trigger = AddComponent<BoxCollider2D>("trigger");
 	trigger->SetSensor(true);
 	trigger->SetShape({1.5f, 0.1f});
 
-	circlec = AddComponent<CircleCollider2D>();
+	circlec = AddComponent<CircleCollider2D>("circle");
 	circlec->SetShape({0.0f, 0.0f}, 1.0f);
 
 

@@ -38,18 +38,24 @@ namespace ShushaoEngine {
 			const glm::vec3& right = _right;
 			const glm::vec3& up = _up;
 
+			const glm::mat4& localToWorldMatrix = _localToWorldMatrix;
+			const glm::mat4& localToParentMatrix = _localToParentMatrix;
+			const glm::mat4& worldToLocalMatrix = _worldToLocalMatrix;
+
 			// methods
-			Transform* getParent();
-			Transform* getChild(unsigned int);
+			bool isAtRoot();
+			Transform* GetParent();
+			Transform* GetChild(unsigned int);
+			std::vector<Transform*> GetParents();
 			void SetParent(Transform*, bool worldPositionStays = false);
 			void RemoveChild(Transform* t);
 			void AddChild(Transform* t);
-			bool isAtRoot();
 
 			glm::mat4 GetLocalToParentMatrix();
 			glm::mat4 GetLocalToWorldMatrix();
 			glm::mat4 GetWorldToLocalMatrix();
 			glm::vec3 GetWorldPosition();
+			glm::vec3 GetLocalPosition(glm::vec3);
 			glm::vec3 GetWorldScale();
 			glm::quat GetWorldOrientation();
 
@@ -77,19 +83,22 @@ namespace ShushaoEngine {
 			static const glm::vec3 VEC3_IDENTITY;
 			static const glm::vec3 VEC3_IDENTITY2D;
 			static const glm::vec3 UP;
-			static const glm::vec3 X;
-			static const glm::vec3 Y;
-			static const glm::vec3 Z;
 			static const glm::vec3 DOWN;
 			static const glm::vec3 FORWARD;
 			static const glm::vec3 BACK;
 			static const glm::vec3 RIGHT;
 			static const glm::vec3 LEFT;
 			static const glm::quat QUATERNION_IDENTITY;
+			static const glm::vec3 AXIS_X;
+			static const glm::vec3 AXIS_Y;
+			static const glm::vec3 AXIS_Z;
+
+			void Invalidate();
 
 		private:
 
-			bool lock = false;
+			bool matrixInvalid = false;
+			bool inverseMatrixInvalid = false;
 
 			glm::vec3 _position = VEC3_ZERO;
 			glm::quat _rotation = QUATERNION_IDENTITY;
@@ -99,6 +108,10 @@ namespace ShushaoEngine {
 			glm::vec3 _up = UP;
 			glm::vec3 _pivot = VEC3_ZERO;
 			glm::mat4 _MVP = glm::mat4();
+
+			glm::mat4 _localToWorldMatrix = glm::mat4();
+			glm::mat4 _localToParentMatrix = glm::mat4();
+			glm::mat4 _worldToLocalMatrix = glm::mat4();
 
 			void setupDirections();
 			void buildMVP();

@@ -7,6 +7,7 @@
 Level::Level() {
 
 	Entity* ground = AddEntity("Ground");
+	Entity* container = AddEntity("Container");
 
 	ground->transform->SetLocalPosition({0.0f, -4.0f, 0.0f});
 	Rigidbody2D* groundrb = ground->AddComponent<Rigidbody2D>();
@@ -25,26 +26,29 @@ Level::Level() {
 	//ground->transform->SetLocalRotation({0,0,20});
 
 	Pancrazio* pancrazio = AddEntity<Pancrazio>();
+	//pancrazio->transform->SetParent(container->transform);
 	pancrazio->transform->SetLocalScale({1.0f, 1.0f, 0.0f});
 	pancrazio->transform->SetLocalPosition({0.0f, 0.0f, 0.0f});
 	//pancrazio->GetComponent<Animation>()->Disable();
 	pancrazio->transform->SetLocalRotation({0,0,30});
 
-	/*Pancrazio* sonOfPancrazio = AddEntity<Pancrazio>("Son of Pancrazio");
+	Pancrazio* sonOfPancrazio = AddEntity<Pancrazio>("Son of Pancrazio");
 	sonOfPancrazio->setParent(pancrazio);
 	//sonOfPancrazio->GetComponent<Animation>()->Disable();
 	//sonOfPancrazio->GetComponent<Mover>()->Disable();
-	sonOfPancrazio->transform->setLocalPosition({-1.0f, 0.0f, 0.0f});
-	sonOfPancrazio->transform->setLocalScale({0.5f, 0.5f, 0.0f});
-	sonOfPancrazio->GetComponent<BoxCollider2D>()->resetShape(); // <---- collegare al transform addirittura? fare dei callback transformChanged
-	//sonOfPancrazio->transform->setLocalRotation({0,0,20});*/
+	sonOfPancrazio->transform->SetLocalPosition({-1.0f, 0.0f, 0.0f});
+	sonOfPancrazio->transform->SetLocalScale({0.5f, 0.5f, 0.0f});
+	sonOfPancrazio->GetComponent<BoxCollider2D>("box")->ResetShape(); // <---- collegare al transform addirittura? fare dei callback transformChanged
+	sonOfPancrazio->GetComponent<BoxCollider2D>("trigger")->ResetShape(); // <---- collegare al transform addirittura? fare dei callback transformChanged
+	sonOfPancrazio->GetComponent<CircleCollider2D>()->ResetShape(); // <---- collegare al transform addirittura? fare dei callback transformChanged
+	//sonOfPancrazio->transform->setLocalRotation({0,0,20});
 
 	SpriteRenderer* backgroundRenderer = root->AddComponent<SpriteRenderer>();
 	backgroundRenderer->shader = Resources::Get<Shader>("standard");
 	backgroundRenderer->name = "Background Renderer";
 	backgroundRenderer->sortingLayerID = Config::SortingLayers["Background"];
 	backgroundRenderer->sprite = new Sprite("Background", Resources::Get<Texture>("night"));
-	backgroundRenderer->sprite->setPixelPerUnit(64);
+	backgroundRenderer->sprite->SetPixelPerUnit(64);
 }
 
 Level::~Level() {

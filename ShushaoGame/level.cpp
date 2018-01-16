@@ -7,18 +7,18 @@
 Level::Level() {
 
 	Entity* ground = AddEntity("Ground");
-	Entity* container = AddEntity("Container");
+	//Entity* container = AddEntity("Container");
 
 	ground->transform->SetLocalPosition({0.0f, -4.0f, 0.0f});
 	Rigidbody2D* groundrb = ground->AddComponent<Rigidbody2D>();
-	groundrb->setType(RigidbodyType::STATIC);
+	groundrb->SetType(RigidbodyType::STATIC);
 	BoxCollider2D* ec = ground->AddComponent<BoxCollider2D>();
 	ec->SetShape({6,0.5f});
 
 	Entity* door = AddEntity("Door");
 	door->transform->SetLocalPosition({4.0f, -4.0f, 0.0f});
 	Rigidbody2D* doorrb = door->AddComponent<Rigidbody2D>();
-	doorrb->setType(RigidbodyType::STATIC);
+	doorrb->SetType(RigidbodyType::STATIC);
 	BoxCollider2D* dc = door->AddComponent<BoxCollider2D>();
 	dc->SetSensor(true);
 	dc->SetShape({0.1,4.0f});
@@ -32,15 +32,19 @@ Level::Level() {
 	//pancrazio->GetComponent<Animation>()->Disable();
 	pancrazio->transform->SetLocalRotation({0,0,30});
 
+	pancrazio->AddComponent<Mover>();
+
 	Pancrazio* sonOfPancrazio = AddEntity<Pancrazio>("Son of Pancrazio");
 	sonOfPancrazio->setParent(pancrazio);
+	//sonOfPancrazio->transform->isFree = true;
 	//sonOfPancrazio->GetComponent<Animation>()->Disable();
 	//sonOfPancrazio->GetComponent<Mover>()->Disable();
 	sonOfPancrazio->transform->SetLocalPosition({-1.0f, 0.0f, 0.0f});
 	sonOfPancrazio->transform->SetLocalScale({0.5f, 0.5f, 0.0f});
+	sonOfPancrazio->GetComponent<Rigidbody2D>()->SetType(RigidbodyType::STATIC);
 	sonOfPancrazio->GetComponent<BoxCollider2D>("box")->ResetShape(); // <---- collegare al transform addirittura? fare dei callback transformChanged
 	sonOfPancrazio->GetComponent<BoxCollider2D>("trigger")->ResetShape(); // <---- collegare al transform addirittura? fare dei callback transformChanged
-	sonOfPancrazio->GetComponent<CircleCollider2D>()->ResetShape(); // <---- collegare al transform addirittura? fare dei callback transformChanged
+	//sonOfPancrazio->GetComponent<CircleCollider2D>()->ResetShape(); // <---- collegare al transform addirittura? fare dei callback transformChanged
 	//sonOfPancrazio->transform->setLocalRotation({0,0,20});
 
 	SpriteRenderer* backgroundRenderer = root->AddComponent<SpriteRenderer>();

@@ -46,7 +46,7 @@ namespace ShushaoEngine {
 
 	void Rigidbody2D::FixedUpdate() {
 
-		if (type == RigidbodyType::STATIC) { // !transform->isAtRoot() ||
+		if (type == RigidbodyType::STATIC) {
 			position = transform->position;
 			angle = transform->GetEulerAngles().z; // DEGREES
 			body->SetTransform(b2Vec2(position.x, position.y), angle * DEGTORAD);

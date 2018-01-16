@@ -89,7 +89,11 @@ namespace ShushaoEngine {
 		}
 	}
 
+	//{ #region position
+
 	void Transform::SetPosition(glm::vec3 position_) {
+		if (isRoot) return;
+		origin = WORLD;
 		Invalidate();
 		//localPosition = isAtRoot() ? position_ : parent->position - position_;
 		_position = position_;
@@ -97,6 +101,8 @@ namespace ShushaoEngine {
 	}
 
 	void Transform::SetLocalPosition(glm::vec3 position_) {
+		if (isRoot) return;
+		origin = LOCAL;
 		localPosition = position_;
 		Invalidate();
 		_position = GetWorldPosition();
@@ -104,13 +110,17 @@ namespace ShushaoEngine {
 	}
 
 	void Transform::SetLocalRotation(glm::vec3 angles_) { // angles_ is in radians
-		localRotation = glm::quat(angles_ * (DEGTORAD));
+		if (isRoot) return;
+		origin = LOCAL;
+		localRotation = glm::quat(angles_ * DEGTORAD);
 		Invalidate();
 		_rotation = GetWorldOrientation();
 		setupDirections();
 	}
 
 	void Transform::SetLocalRotation(glm::quat rotation_) {
+		if (isRoot) return;
+		origin = LOCAL;
 		localRotation = rotation_;
 		Invalidate();
 		_rotation = GetWorldOrientation();
@@ -118,21 +128,24 @@ namespace ShushaoEngine {
 	}
 
 	void Transform::SetRotation(glm::vec3 angles_) { // angles_ is in radians
-		_rotation = glm::quat(angles_ * (DEGTORAD));
+		if (isRoot) return;
+		origin = WORLD;
+		_rotation = glm::quat(angles_ * DEGTORAD);
 		//localRotation = _rotation;
 		setupDirections();
 	}
 
 	void Transform::SetRotation(glm::quat rotation_) {
+		if (isRoot) return;
+		origin = WORLD;
 		_rotation = rotation_;
 		Invalidate();
-		localRotation = _rotation * parent->rotation;
+		//localRotation = _rotation * parent->rotation;
 		setupDirections();
 	}
 
 	glm::vec3 Transform::GetEulerAngles() {
-		return glm::eulerAngles(_rotation) * RADTODEG;
-		//return util::toEulerAngles(_rotation);
+		return glm::eulerAngles(rotation) * RADTODEG;
 	}
 
 	glm::vec3 Transform::GetLocalEulerAngles() {
@@ -146,22 +159,25 @@ namespace ShushaoEngine {
 	}
 
 	void Transform::SetLocalScale(glm::vec3 scale_) {
+		if (isRoot) return;
 		localScale = scale_;
 		_scale = GetWorldScale();
 	}
 
 	void Transform::SetPivot(glm::vec2 pivot_) {
+		if (isRoot) return;
 		_pivot = {pivot_.x, pivot_.y, 0.0f};
 	}
 
+	//}
+
 	void Transform::buildMVP() {
-		glm::mat4 M = GetLocalToWorldMatrix();// * glm::translate(glm::mat4(), -pivot);
+		glm::mat4 M = GetLocalToWorldMatrix();
 		glm::mat4 P = SceneManager::activeScene->activeCamera->Projection;
 		glm::mat4 V = SceneManager::activeScene->activeCamera->getViewMatrix();
 
-		_localToWorldMatrix = M;
-
 		_MVP = P * V * M;
+
 	}
 
 	void Transform::Awake() {
@@ -170,9 +186,12 @@ namespace ShushaoEngine {
 
 	void Transform::Update() {
 
-		//_position = GetWorldPosition();
-		//_rotation = GetWorldOrientation();
-		//setupDirections();
+		if (origin == LOCAL) {
+			_position = GetWorldPosition();
+			_rotation = GetWorldOrientation();
+		}
+
+		setupDirections();
 
 		buildMVP();
 	}
@@ -181,9 +200,15 @@ namespace ShushaoEngine {
 		return _localToParentMatrix = glm::translate(glm::mat4(), localPosition) * glm::toMat4(localRotation) * glm::scale(glm::mat4(), localScale);
 	}
 
+	glm::mat4 Transform::GetRootMatrix() {
+		return glm::translate(glm::mat4(), _position) * glm::toMat4(_rotation) * glm::scale(glm::mat4(), localScale);
+	}
+
 	glm::mat4 Transform::GetLocalToWorldMatrix() {
 		if (matrixInvalid) {
-			if (isAtRoot()) {
+			if (origin == WORLD) {
+				_localToWorldMatrix = GetRootMatrix();
+			} else if (isAtRoot()) {
 				_localToWorldMatrix = GetLocalToParentMatrix();
 			} else {
 				_localToWorldMatrix = parent->GetLocalToWorldMatrix() * GetLocalToParentMatrix();

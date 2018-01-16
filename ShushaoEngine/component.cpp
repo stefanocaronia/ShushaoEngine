@@ -129,7 +129,6 @@ namespace ShushaoEngine {
 	}
 
 	void Component::init() {
-
 		Awake();
 	}
 

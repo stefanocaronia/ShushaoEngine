@@ -28,13 +28,13 @@ namespace ShushaoEngine {
 
 			bool fixedRotation = false;
 
-			void setType(RigidbodyType type_) {
+			void SetType(RigidbodyType type_) {
 				type = type_;
 				bodyDef.type = (b2BodyType)type;
 				if (body != nullptr) body->SetType(bodyDef.type);
 			}
 
-			void setFixedRotation(bool fr) {
+			void SetFixedRotation(bool fr) {
 				fixedRotation = fr;
 				bodyDef.fixedRotation = fr;
 				if (body != nullptr) body->SetFixedRotation(fr);

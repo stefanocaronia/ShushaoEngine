@@ -87,8 +87,6 @@ namespace ShushaoEngine {
 		pivot.x = (pixel_pivot.x - (rect.width / 2)) / (float)pixelPerUnit;
 		pivot.y = -(pixel_pivot.y - (rect.height / 2)) / (float)pixelPerUnit;
 
-		Debug::Log << "pivot: " << pivot.x << "\t" << pivot.y << std::endl;
-
 		GLfloat wX = ((rect.width / pixelPerUnit) / 2);
 		GLfloat wY = ((rect.height / pixelPerUnit) / 2);
 

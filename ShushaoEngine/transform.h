@@ -13,6 +13,11 @@ namespace ShushaoEngine {
 
 	class Transform;
 
+	enum Origin {
+		LOCAL,
+		WORLD
+	};
+
 	class Transform : public Component {
 
 		public:
@@ -20,6 +25,9 @@ namespace ShushaoEngine {
 			Transform();
 
 			bool isRoot = false;
+			bool isFree = false;
+
+			Origin origin = LOCAL;
 
 			Transform* parent = nullptr;
 			std::vector<Transform*> children;
@@ -41,6 +49,7 @@ namespace ShushaoEngine {
 			const glm::mat4& localToWorldMatrix = _localToWorldMatrix;
 			const glm::mat4& localToParentMatrix = _localToParentMatrix;
 			const glm::mat4& worldToLocalMatrix = _worldToLocalMatrix;
+			const glm::mat4& rootMatrix = _rootMatrix;
 
 			// methods
 			bool isAtRoot();
@@ -54,6 +63,7 @@ namespace ShushaoEngine {
 			glm::mat4 GetLocalToParentMatrix();
 			glm::mat4 GetLocalToWorldMatrix();
 			glm::mat4 GetWorldToLocalMatrix();
+			glm::mat4 GetRootMatrix();
 			glm::vec3 GetWorldPosition();
 			glm::vec3 GetLocalPosition(glm::vec3);
 			glm::vec3 GetWorldScale();
@@ -112,6 +122,7 @@ namespace ShushaoEngine {
 			glm::mat4 _localToWorldMatrix = glm::mat4();
 			glm::mat4 _localToParentMatrix = glm::mat4();
 			glm::mat4 _worldToLocalMatrix = glm::mat4();
+			glm::mat4 _rootMatrix = glm::mat4();
 
 			void setupDirections();
 			void buildMVP();

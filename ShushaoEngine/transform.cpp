@@ -219,11 +219,12 @@ namespace ShushaoEngine {
 	}
 
 	glm::mat4 Transform::GetWorldToLocalMatrix() {
-		//if (inverseMatrixInvalid) {
-		//	_worldToLocalMatrix = glm::inverse(GetLocalToWorldMatrix());
-		//	inverseMatrixInvalid = false;
-		//}
-		//return _worldToLocalMatrix;
+
+		/*if (inverseMatrixInvalid) {
+			_worldToLocalMatrix = glm::inverse(GetLocalToWorldMatrix());
+			inverseMatrixInvalid = false;
+		}
+		return _worldToLocalMatrix;*/
 
 		if (inverseMatrixInvalid) {
 			if (isAtRoot()) {

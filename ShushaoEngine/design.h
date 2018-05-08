@@ -17,6 +17,7 @@ namespace ShushaoEngine {
 		VECTOR,
 		RAY
 	};
+
 	enum class DrawMode {
 		HOLLOW,
 		FULL

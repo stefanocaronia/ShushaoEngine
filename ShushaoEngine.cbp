@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="ShushaoEngine" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Option virtualFolders="engine\;engine\components\;engine\entities\;engine\globals\;engine\objects\;engine\physics\;engine\shaders\;engine\singletons\;assets\;shaders\;game\;" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/ShushaoGame" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-std=c++11" />
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add library="ShushaoEngine" />
+					<Add library="glew32" />
+					<Add library="mingw32" />
+					<Add library="opengl32" />
+					<Add library="glu32" />
+					<Add library="gdi32" />
+					<Add library="SDL2main" />
+					<Add library="SDL2" />
+					<Add library="SDL2_image" />
+					<Add library="SDL2_mixer" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/ShushaoGame" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-std=c++11" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-std=c++11" />
+			<Add option="-g" />
+			<Add option="-fexceptions" />
+			<Add directory="../ShushaoEngine" />
+			<Add directory="D:/lib/mingw-dev-libs/glew/include" />
+			<Add directory="D:/lib/mingw-dev-libs/glm" />
+			<Add directory="D:/lib/mingw-dev-libs/SDL2/include/SDL2" />
+			<Add directory="D:/lib/mingw-dev-libs/SDL2_image/include/SDL2" />
+			<Add directory="D:/lib/mingw-dev-libs/SDL2_mixer/include/SDL2" />
+			<Add directory="D:/lib/mingw-dev-libs/Box2D" />
+		</Compiler>
+		<Linker>
+			<Add library="ShushaoEngine" />
+			<Add library="glew32" />
+			<Add library="mingw32" />
+			<Add library="opengl32" />
+			<Add library="glu32" />
+			<Add library="gdi32" />
+			<Add library="SDL2main" />
+			<Add library="SDL2" />
+			<Add library="SDL2_image" />
+			<Add library="SDL2_mixer" />
+			<Add library="Box2D" />
+			<Add directory="../ShushaoEngine/lib" />
+			<Add directory="D:/lib/mingw-dev-libs/glew/lib" />
+			<Add directory="D:/lib/mingw-dev-libs/SDL2/lib" />
+			<Add directory="D:/lib/mingw-dev-libs/SDL2_image/lib" />
+			<Add directory="D:/lib/mingw-dev-libs/SDL2_mixer/lib" />
+			<Add directory="D:/lib/mingw-dev-libs/Box2D/Build/Box2D" />
+		</Linker>
+		<Unit filename="assets/pancrazio.png">
+			<Option virtualFolder="assets/" />
+		</Unit>
+		<Unit filename="assets/tattolino.jpg">
+			<Option virtualFolder="assets/" />
+		</Unit>
+		<Unit filename="engine/components/animation.cpp">
+			<Option virtualFolder="engine/components/" />
+		</Unit>
+		<Unit filename="engine/components/animation.h">
+			<Option virtualFolder="engine/components/" />
+		</Unit>
+		<Unit filename="engine/components/camera.cpp">
+			<Option virtualFolder="engine/components/" />
+		</Unit>
+		<Unit filename="engine/components/camera.h">
+			<Option virtualFolder="engine/components/" />
+		</Unit>
+		<Unit filename="engine/components/linerenderer.cpp">
+			<Option virtualFolder="engine/components/" />
+		</Unit>
+		<Unit filename="engine/components/linerenderer.h">
+			<Option virtualFolder="engine/components/" />
+		</Unit>
+		<Unit filename="engine/components/renderer.cpp">
+			<Option virtualFolder="engine/components/" />
+		</Unit>
+		<Unit filename="engine/components/renderer.h">
+			<Option virtualFolder="engine/components/" />
+		</Unit>
+		<Unit filename="engine/components/spriterenderer.cpp">
+			<Option virtualFolder="engine/components/" />
+		</Unit>
+		<Unit filename="engine/components/spriterenderer.h">
+			<Option virtualFolder="engine/components/" />
+		</Unit>
+		<Unit filename="engine/components/transform.cpp">
+			<Option virtualFolder="engine/components/" />
+		</Unit>
+		<Unit filename="engine/components/transform.h">
+			<Option virtualFolder="engine/components/" />
+		</Unit>
+		<Unit filename="engine/entities/debuggrid.cpp">
+			<Option virtualFolder="engine/entities/" />
+		</Unit>
+		<Unit filename="engine/entities/debuggrid.h">
+			<Option virtualFolder="engine/entities/" />
+		</Unit>
+		<Unit filename="engine/entities/maincamera.cpp">
+			<Option virtualFolder="engine/entities/" />
+		</Unit>
+		<Unit filename="engine/entities/maincamera.h">
+			<Option virtualFolder="engine/entities/" />
+		</Unit>
+		<Unit filename="engine/globals/config.cpp">
+			<Option virtualFolder="engine/globals/" />
+		</Unit>
+		<Unit filename="engine/globals/config.h">
+			<Option virtualFolder="engine/globals/" />
+		</Unit>
+		<Unit filename="engine/globals/constants.h">
+			<Option virtualFolder="engine/globals/" />
+		</Unit>
+		<Unit filename="engine/globals/debug.cpp">
+			<Option virtualFolder="engine/globals/" />
+		</Unit>
+		<Unit filename="engine/globals/debug.h">
+			<Option virtualFolder="engine/globals/" />
+		</Unit>
+		<Unit filename="engine/globals/gllibs.h">
+			<Option virtualFolder="engine/globals/" />
+		</Unit>
+		<Unit filename="engine/globals/logger.cpp">
+			<Option virtualFolder="engine/globals/" />
+		</Unit>
+		<Unit filename="engine/globals/logger.h">
+			<Option virtualFolder="engine/globals/" />
+		</Unit>
+		<Unit filename="engine/globals/shushaoengine.h">
+			<Option virtualFolder="engine/globals/" />
+		</Unit>
+		<Unit filename="engine/globals/utility.cpp">
+			<Option virtualFolder="engine/globals/" />
+		</Unit>
+		<Unit filename="engine/globals/utility.h">
+			<Option virtualFolder="engine/globals/" />
+		</Unit>
+		<Unit filename="engine/globals/vectormap.cpp">
+			<Option virtualFolder="engine/globals/" />
+		</Unit>
+		<Unit filename="engine/globals/vectormap.h">
+			<Option virtualFolder="engine/globals/" />
+		</Unit>
+		<Unit filename="engine/objects/audio.cpp">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/audio.h">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/color.cpp">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/color.h">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/component.cpp">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/component.h">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/cycle.cpp">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/cycle.h">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/entity.cpp">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/entity.h">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/material.cpp">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/material.h">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/object.cpp">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/object.h">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/program.cpp">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/program.h">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/rect.cpp">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/rect.h">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/scene.cpp">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/scene.h">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/service.cpp">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/service.h">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/shader.cpp">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/shader.h">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/sprite.cpp">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/sprite.h">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/spritesheet.cpp">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/spritesheet.h">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/texture.cpp">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/texture.h">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/textureatlas.cpp">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/textureatlas.h">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/timeline.cpp">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/objects/timeline.h">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/physics/collider2d.cpp">
+			<Option virtualFolder="engine/physics/" />
+		</Unit>
+		<Unit filename="engine/physics/collider2d.h">
+			<Option virtualFolder="engine/physics/" />
+		</Unit>
+		<Unit filename="engine/physics/collision2d.h">
+			<Option virtualFolder="engine/physics/" />
+		</Unit>
+		<Unit filename="engine/physics/physics.cpp">
+			<Option virtualFolder="engine/physics/" />
+		</Unit>
+		<Unit filename="engine/physics/physics.h">
+			<Option virtualFolder="engine/physics/" />
+		</Unit>
+		<Unit filename="engine/physics/physicscontactfilter.cpp">
+			<Option virtualFolder="engine/physics/" />
+		</Unit>
+		<Unit filename="engine/physics/physicscontactfilter.h">
+			<Option virtualFolder="engine/physics/" />
+		</Unit>
+		<Unit filename="engine/physics/physicscontactlistener.cpp">
+			<Option virtualFolder="engine/physics/" />
+		</Unit>
+		<Unit filename="engine/physics/physicscontactlistener.h">
+			<Option virtualFolder="engine/physics/" />
+		</Unit>
+		<Unit filename="engine/physics/physicsdebugdraw.cpp">
+			<Option virtualFolder="engine/physics/" />
+		</Unit>
+		<Unit filename="engine/physics/physicsdebugdraw.h">
+			<Option virtualFolder="engine/physics/" />
+		</Unit>
+		<Unit filename="engine/physics/rigidbody2d.cpp">
+			<Option virtualFolder="engine/physics/" />
+		</Unit>
+		<Unit filename="engine/physics/rigidbody2d.h">
+			<Option virtualFolder="engine/physics/" />
+		</Unit>
+		<Unit filename="engine/shaders/base.frag">
+			<Option virtualFolder="engine/shaders/" />
+		</Unit>
+		<Unit filename="engine/shaders/base.vert">
+			<Option virtualFolder="engine/shaders/" />
+		</Unit>
+		<Unit filename="engine/shaders/standard.frag">
+			<Option virtualFolder="engine/shaders/" />
+		</Unit>
+		<Unit filename="engine/shaders/standard.vert">
+			<Option virtualFolder="engine/shaders/" />
+		</Unit>
+		<Unit filename="engine/shaders/wire.frag">
+			<Option virtualFolder="engine/shaders/" />
+		</Unit>
+		<Unit filename="engine/shaders/wire.vert">
+			<Option virtualFolder="engine/shaders/" />
+		</Unit>
+		<Unit filename="engine/singletons/design.cpp">
+			<Option virtualFolder="engine/singletons/" />
+		</Unit>
+		<Unit filename="engine/singletons/design.h">
+			<Option virtualFolder="engine/singletons/" />
+		</Unit>
+		<Unit filename="engine/singletons/gamedata.cpp">
+			<Option virtualFolder="engine/singletons/" />
+		</Unit>
+		<Unit filename="engine/singletons/gamedata.h">
+			<Option virtualFolder="engine/singletons/" />
+		</Unit>
+		<Unit filename="engine/singletons/glmanager.cpp">
+			<Option virtualFolder="engine/singletons/" />
+		</Unit>
+		<Unit filename="engine/singletons/glmanager.h">
+			<Option virtualFolder="engine/singletons/" />
+		</Unit>
+		<Unit filename="engine/singletons/input.cpp">
+			<Option virtualFolder="engine/singletons/" />
+		</Unit>
+		<Unit filename="engine/singletons/input.h">
+			<Option virtualFolder="engine/singletons/" />
+		</Unit>
+		<Unit filename="engine/singletons/resources.cpp">
+			<Option virtualFolder="engine/singletons/" />
+		</Unit>
+		<Unit filename="engine/singletons/resources.h">
+			<Option virtualFolder="engine/singletons/" />
+		</Unit>
+		<Unit filename="engine/singletons/scenemanager.cpp">
+			<Option virtualFolder="engine/singletons/" />
+		</Unit>
+		<Unit filename="engine/singletons/scenemanager.h">
+			<Option virtualFolder="engine/singletons/" />
+		</Unit>
+		<Unit filename="engine/singletons/setime.cpp">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/singletons/setime.h">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/singletons/system.cpp">
+			<Option virtualFolder="engine/singletons/" />
+		</Unit>
+		<Unit filename="engine/singletons/system.h">
+			<Option virtualFolder="engine/singletons/" />
+		</Unit>
+		<Unit filename="game.cpp">
+			<Option virtualFolder="game/" />
+		</Unit>
+		<Unit filename="game.h">
+			<Option virtualFolder="game/" />
+		</Unit>
+		<Unit filename="game/globals.h">
+			<Option virtualFolder="engine/globals/" />
+		</Unit>
+		<Unit filename="globals.h">
+			<Option virtualFolder="game/" />
+		</Unit>
+		<Unit filename="level.cpp">
+			<Option virtualFolder="game/" />
+		</Unit>
+		<Unit filename="level.h">
+			<Option virtualFolder="game/" />
+		</Unit>
+		<Unit filename="main.cpp">
+			<Option virtualFolder="game/" />
+		</Unit>
+		<Unit filename="mover.cpp">
+			<Option virtualFolder="game/" />
+		</Unit>
+		<Unit filename="mover.h">
+			<Option virtualFolder="game/" />
+		</Unit>
+		<Unit filename="pancrazio.cpp">
+			<Option virtualFolder="game/" />
+		</Unit>
+		<Unit filename="pancrazio.h">
+			<Option virtualFolder="game/" />
+		</Unit>
+		<Unit filename="shaders/box2d.frag">
+			<Option virtualFolder="shaders/" />
+		</Unit>
+		<Unit filename="shaders/box2d.vert">
+			<Option virtualFolder="shaders/" />
+		</Unit>
+		<Unit filename="shaders/standard.frag">
+			<Option virtualFolder="shaders/" />
+		</Unit>
+		<Unit filename="shaders/standard.vert">
+			<Option virtualFolder="shaders/" />
+		</Unit>
+		<Unit filename="shaders/wire.frag">
+			<Option virtualFolder="shaders/" />
+		</Unit>
+		<Unit filename="shaders/wire.vert">
+			<Option virtualFolder="shaders/" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

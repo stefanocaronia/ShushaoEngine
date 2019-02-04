@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "shushaoengine.h"
+#include "engine/shushaoengine.h"
 #include "game.h"
 
 int main(int argc, char *argv[]) {

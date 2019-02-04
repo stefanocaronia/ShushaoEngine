@@ -2,7 +2,7 @@
 
 #include "globals.h"
 
-class Game : public Cycle {
+class Game : public ShushaoEngine::Cycle {
 
 	public:
 
@@ -15,7 +15,7 @@ class Game : public Cycle {
 
 		void Awake();
 		void Start();
-		void Input();
+		void GetInput();
 		void FixedUpdate();
 		void Update();
 		void Render();

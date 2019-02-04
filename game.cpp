@@ -9,8 +9,8 @@ using namespace glm;
 
 Game::Game(string title) : Cycle(title) {
 
-  	Time::setFrameRateLimit(120.0f);
-	Time::setFixedRateLimit(60.0f);
+  	ShushaoEngine::Time::setFrameRateLimit(120.0f);
+	ShushaoEngine::Time::setFixedRateLimit(60.0f);
 
 	Config::Layers = {
 		"Background",
@@ -122,7 +122,7 @@ void Game::End() {
 
 }
 
-void Game::Input() {
+void Game::GetInput() {
 
 	if ((Input::getKey(SDL_SCANCODE_LCTRL) && Input::getKeyDown(SDL_SCANCODE_Q)) || Input::getKeyDown(SDL_SCANCODE_ESCAPE))
 		stop();

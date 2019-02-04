@@ -6,7 +6,7 @@
 
 namespace ShushaoEngine {
 
-	class Service : public Object{
+	class Service : public Object {
 
 		public:
 

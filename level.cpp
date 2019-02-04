@@ -3,7 +3,6 @@
 #include "pancrazio.h"
 #include "mover.h"
 
-
 Level::Level() {
 
 	Entity* ground = AddEntity("Ground");

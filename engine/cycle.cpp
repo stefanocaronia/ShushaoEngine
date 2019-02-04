@@ -72,7 +72,7 @@ namespace ShushaoEngine {
 			SceneManager::activeScene->ScanActiveComponentsInScene();
 
 			Input::update();
-			Input();
+			GetInput();
 
 			System::update();
 			update();

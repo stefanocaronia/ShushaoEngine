@@ -10,19 +10,19 @@ namespace ShushaoEngine {
 
 	void System::init() {
 		for (Service* s : Services) {
-			s->init();
+			s->Init();
 		}
 	}
 
 	void System::update() {
 		for (Service* s : Services) {
-			s->update();
+			s->Update();
 		}
 	}
 
 	void System::exit() {
 		for (Service* s : Services) {
-			s->exit();
+			s->Exit();
 		}
 
 		Clear();

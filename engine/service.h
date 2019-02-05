@@ -15,9 +15,9 @@ namespace ShushaoEngine {
 
 			bool active;
 
-			virtual void init();
-			virtual void update();
-			virtual void exit();
+			virtual void Init();
+			virtual void Update();
+			virtual void Exit();
 
 		protected:
 

@@ -47,7 +47,7 @@ namespace ShushaoEngine {
 		// TODO:
 		// GameData::UnRegisterObject(this.InstanceID);
 
-		// todo: eliminazione ritardata con t
+		// TODO: eliminazione ritardata con t
 
 		// delete obj;
 
@@ -55,7 +55,7 @@ namespace ShushaoEngine {
 
 	void Object::Destroy(Object *obj) {
 
-		// todo: eliminazione ritardata con t
+		// TODO: eliminazione ritardata con t
 
 		// delete obj;
 

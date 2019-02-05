@@ -13,8 +13,6 @@ namespace ShushaoEngine {
 		PERSPECTIVE
 	};
 
-
-
 	class Debug {
 
 		public:

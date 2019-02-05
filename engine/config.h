@@ -4,6 +4,10 @@
 
 #include "utility.h"
 
+namespace ShushaoEngine {
+    class VectorMap;
+}
+
 namespace Config {
 
 	extern bool debug;
@@ -19,10 +23,8 @@ namespace Config {
 
 	// time
 	namespace Time {
-
 		extern float fixedRateLimit; // 0.0f -> unlimited
 		extern float frameRateLimit; // 0.0f -> unlimited
-
 	}
 
 	// Physics (box2d)

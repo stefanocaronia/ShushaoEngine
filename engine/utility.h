@@ -7,10 +7,14 @@
 #include <typeinfo>
 #include <regex>
 #include <cmath>
+#include <iostream>
 #include <glm/glm.hpp>
 #include <glm/gtx/quaternion.hpp>
 
 #define ts(str) util::toString(str)
+
+#include "debug.h"
+#include "constants.h"
 
 namespace ShushaoEngine {
 

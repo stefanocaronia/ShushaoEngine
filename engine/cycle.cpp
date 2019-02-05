@@ -20,8 +20,8 @@ namespace ShushaoEngine {
 
 	using namespace std;
 
-	Cycle::Cycle(string n) {
-		name = n;
+	Cycle::Cycle(string name_) {
+		name = name_;
 		GAME = this;
 	}
 
@@ -31,15 +31,18 @@ namespace ShushaoEngine {
 
 	bool Cycle::init() {
 
-		for (bool& k : keys) k = false;
+		for (bool& k : keys) {
+            k = false;
+		}
 
 		GLManager::WIDTH = Config::displayWidth;
 		GLManager::HEIGHT = Config::displayHeight;
 		GLManager::fullscreen = Config::fullscreen;
 		GLManager::Init(name, false);
 
-		if (Config::Physics::enabled)
+		if (Config::Physics::enabled) {
 			Physics::init();
+		}
 
 		Input::init();
 		System::init();

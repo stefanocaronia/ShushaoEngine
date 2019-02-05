@@ -10,8 +10,8 @@ namespace ShushaoEngine {
 		//ctor
 	}
 
-	void Service::init() {}
-	void Service::update() {}
-	void Service::exit() {}
+	void Service::Init() {}
+	void Service::Update() {}
+	void Service::Exit() {}
 
 }

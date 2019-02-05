@@ -5,14 +5,6 @@
 #include <windows.h>
 
 #include "scene.h"
-#include "debug.h"
-#include "transform.h"
-#include "entity.h"
-#include "utility.h"
-#include "maincamera.h"
-#include "gamedata.h"
-#include "debuggrid.h"
-#include "renderer.h"
 
 namespace ShushaoEngine {
 

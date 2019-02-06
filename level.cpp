@@ -55,10 +55,10 @@ Level::Level() {
 	backgroundRenderer->sprite = new Sprite("Background", Resources::Get<Texture>("night"));
 	backgroundRenderer->sprite->SetPixelPerUnit(64);
 
-	TextRenderer* text1 = pancrazio->AddComponent<TextRenderer>();
-	text1->Load("modenine.ttf", 24);
-	text1->SetQuad({0.0f, 0.0f, 2.0f, 2.0f});
-	text1->SetText("Hello Pancrazio!");
+	TextRenderer* text = root->AddComponent<TextRenderer>();
+	text->Load("assets/modenine.ttf", 24);
+	text->SetQuad({0.0f, 0.0f, 2.0f, 2.0f});
+	text->SetText("Hello Pancrazio!");
 }
 
 Level::~Level() {

@@ -13,8 +13,6 @@
 
 #define ts(str) util::toString(str)
 
-#include "debug.h"
-#include "constants.h"
 
 namespace ShushaoEngine {
 

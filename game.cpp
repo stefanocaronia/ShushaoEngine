@@ -6,6 +6,7 @@
 
 using namespace std;
 using namespace glm;
+using namespace ShushaoEngine;
 
 Game::Game(string title) : Cycle(title) {
 
@@ -28,9 +29,9 @@ Game::Game(string title) : Cycle(title) {
 	Config::pixelPerUnit = 16;
 
 	Debug::level = DebugLevel::INFO;
-	Debug::enabled = true;
+	Debug::enabled = DEBUG;
 	Debug::debugGridMode = GridMode::ORTHOGRAFIC;
-	Config::Physics::debug = true;
+	Config::Physics::debug = DEBUG;
 }
 
 Game::~Game() {

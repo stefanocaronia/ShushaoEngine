@@ -52,6 +52,22 @@ namespace ShushaoEngine {
 		}
 	}
 
+    void LineRenderer::AddCircle(glm::vec3 position, float radius, Color color, DrawMode mode) {
+
+        // TODO: non funziona molto
+
+		int NUM_DIVISIONS = 120;
+
+		for(int i = 0; i < NUM_DIVISIONS +1; i++) {
+			if (mode == DrawMode::FULL) if (i % 3 == 0) {
+                    vertices.push_back({position.x,  position.y, 0.0f});
+                    colors.push_back(color);
+			}
+			vertices.push_back({position.x + radius * cos((float) i / NUM_DIVISIONS * M_PI * 2), position.y + radius * sin((float) i / NUM_DIVISIONS * M_PI * 2), 0.0f});
+			colors.push_back(color);
+		}
+	}
+
 	void LineRenderer::Awake() {
 
 		using namespace glm;

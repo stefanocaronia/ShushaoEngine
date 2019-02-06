@@ -2,16 +2,16 @@
 
 #include "globals.h"
 
-class Pancrazio : public Entity {
+class Pancrazio : public ShushaoEngine::Entity {
 	public:
 		Pancrazio();
 		~Pancrazio();
 
-		SpriteRenderer* sr;
-		Rigidbody2D* rb;
-		BoxCollider2D* collider;
-		CircleCollider2D* circlec;
-		Animation* animation;
+		ShushaoEngine::SpriteRenderer* sr;
+		ShushaoEngine::Rigidbody2D* rb;
+		ShushaoEngine::BoxCollider2D* collider;
+		ShushaoEngine::CircleCollider2D* circlec;
+		ShushaoEngine::Animation* animation;
 
 	protected:
 

@@ -3,6 +3,8 @@
 #include "pancrazio.h"
 #include "mover.h"
 
+using namespace ShushaoEngine;
+
 Level::Level() {
 
 	Entity* ground = AddEntity("Ground");
@@ -52,6 +54,11 @@ Level::Level() {
 	backgroundRenderer->sortingLayerID = Config::SortingLayers["Background"];
 	backgroundRenderer->sprite = new Sprite("Background", Resources::Get<Texture>("night"));
 	backgroundRenderer->sprite->SetPixelPerUnit(64);
+
+	TextRenderer* text1 = pancrazio->AddComponent<TextRenderer>();
+	text1->Load("modenine.ttf", 24);
+	text1->SetQuad({0.0f, 0.0f, 2.0f, 2.0f});
+	text1->SetText("Hello Pancrazio!");
 }
 
 Level::~Level() {

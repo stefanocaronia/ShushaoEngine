@@ -17,6 +17,7 @@
 					<Add option="-Wall" />
 					<Add option="-std=c++11" />
 					<Add option="-g" />
+					<Add option="-DDEBUG=true" />
 				</Compiler>
 				<ExtraCommands>
 					<Add before="cmd /c rescopy Debug" />
@@ -31,6 +32,7 @@
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-std=c++11" />
+					<Add option="-DDEBUG=false" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -45,6 +47,7 @@
 			<Add option="-std=c++11" />
 			<Add option="-g" />
 			<Add option="-fexceptions" />
+			<Add option="-DDEBUG=false" />
 			<Add directory="../../mingw-dev-libs/glew/include" />
 			<Add directory="../../mingw-dev-libs/glm" />
 			<Add directory="../../mingw-dev-libs/SDL2/include/SDL2" />
@@ -130,10 +133,10 @@
 			<Option virtualFolder="engine/class/" />
 		</Unit>
 		<Unit filename="engine/debug.cpp">
-			<Option virtualFolder="engine/class/" />
+			<Option virtualFolder="engine/singletons/" />
 		</Unit>
 		<Unit filename="engine/debug.h">
-			<Option virtualFolder="engine/class/" />
+			<Option virtualFolder="engine/singletons/" />
 		</Unit>
 		<Unit filename="engine/debuggrid.cpp">
 			<Option virtualFolder="engine/entities/" />

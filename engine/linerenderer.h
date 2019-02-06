@@ -6,6 +6,7 @@
 
 #include "renderer.h"
 #include "color.h"
+#include "design.h"
 
 namespace ShushaoEngine {
 
@@ -32,6 +33,7 @@ namespace ShushaoEngine {
 
 			void AddLine(glm::vec3, glm::vec3, Color);
 			void AddPolyline(std::vector<glm::vec3>, Color);
+            void AddCircle(glm::vec3, float, Color, DrawMode);
 
 			void Awake();
 			void Render();

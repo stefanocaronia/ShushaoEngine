@@ -1,4 +1,6 @@
 #include "utility.h"
+#include "debug.h"
+#include "constants.h"
 
 namespace ShushaoEngine {
 

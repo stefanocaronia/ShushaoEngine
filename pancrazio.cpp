@@ -1,6 +1,8 @@
 #include "pancrazio.h"
 #include "mover.h"
 
+using namespace ShushaoEngine;
+
 Pancrazio::Pancrazio() {
 
 	using namespace glm;

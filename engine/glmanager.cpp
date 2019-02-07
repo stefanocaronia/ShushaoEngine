@@ -2,7 +2,8 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_mixer.h>
-
+#include <SDL_ttf.h>
+#include <iostream>
 #include "glmanager.h"
 
 namespace ShushaoEngine {
@@ -13,6 +14,7 @@ namespace ShushaoEngine {
 
 		SDL_Init(SDL_INIT_EVERYTHING); //  | SDL_INIT_JOYSTICK
 		IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
+		TTF_Init();
 
 		Mix_Init(MIX_INIT_MP3 | MIX_INIT_OGG);
 		Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096);

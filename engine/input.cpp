@@ -29,12 +29,12 @@ namespace ShushaoEngine {
 			SDL_GameController* gc = SDL_GameControllerOpen(index);
 			SDL_JoystickID id = SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(gc));
 			controllers.insert({id, {index, id, nullptr, gc }});
-			cout << controllers[id].toString() << endl;
+			// cout << controllers[id].toString() << endl;
 		} else {
 			SDL_Joystick* j = SDL_JoystickOpen(index);
 			SDL_JoystickID id = SDL_JoystickInstanceID(j);
 			controllers.insert({id, { index, id, j, nullptr }});
-			cout << controllers[id].toString() << endl;
+			// cout << controllers[id].toString() << endl;
 		}
 	}
 

@@ -5,7 +5,7 @@
 		<Option title="ShushaoEngine" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="game\;engine\;engine\shaders\;engine\components\;engine\objects\;engine\physics\;engine\globals\;engine\entities\;engine\singletons\;engine\class\;" />
+		<Option virtualFolders="game\;engine\;engine\shaders\;engine\components\;engine\objects\;engine\physics\;engine\globals\;engine\entities\;engine\base\;" />
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/ShushaoGame" prefix_auto="1" extension_auto="1" />
@@ -15,7 +15,6 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-Wall" />
-					<Add option="-std=c++11" />
 					<Add option="-g" />
 					<Add option="-DDEBUG=true" />
 				</Compiler>
@@ -31,12 +30,10 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
-					<Add option="-std=c++11" />
 					<Add option="-DDEBUG=false" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add option="-static-libgcc" />
 				</Linker>
 				<ExtraCommands>
 					<Add before="cmd /c rescopy Release" />
@@ -44,9 +41,7 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-Wall" />
 			<Add option="-std=c++11" />
-			<Add option="-g" />
 			<Add option="-fexceptions" />
 			<Add directory="../../mingw-dev-libs/glew/include" />
 			<Add directory="../../mingw-dev-libs/glm" />
@@ -109,10 +104,10 @@
 			<Option virtualFolder="engine/physics/" />
 		</Unit>
 		<Unit filename="engine/color.cpp">
-			<Option virtualFolder="engine/class/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/color.h">
-			<Option virtualFolder="engine/class/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/component.cpp">
 			<Option virtualFolder="engine/objects/" />
@@ -130,16 +125,16 @@
 			<Option virtualFolder="engine/globals/" />
 		</Unit>
 		<Unit filename="engine/cycle.cpp">
-			<Option virtualFolder="engine/class/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/cycle.h">
-			<Option virtualFolder="engine/class/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/debug.cpp">
-			<Option virtualFolder="engine/singletons/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/debug.h">
-			<Option virtualFolder="engine/singletons/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/debuggrid.cpp">
 			<Option virtualFolder="engine/entities/" />
@@ -148,10 +143,10 @@
 			<Option virtualFolder="engine/entities/" />
 		</Unit>
 		<Unit filename="engine/design.cpp">
-			<Option virtualFolder="engine/class/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/design.h">
-			<Option virtualFolder="engine/class/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/entity.cpp">
 			<Option virtualFolder="engine/objects/" />
@@ -160,25 +155,25 @@
 			<Option virtualFolder="engine/objects/" />
 		</Unit>
 		<Unit filename="engine/gamedata.cpp">
-			<Option virtualFolder="engine/singletons/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/gamedata.h">
-			<Option virtualFolder="engine/singletons/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/gllibs.h">
 			<Option virtualFolder="engine/globals/" />
 		</Unit>
 		<Unit filename="engine/glmanager.cpp">
-			<Option virtualFolder="engine/singletons/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/glmanager.h">
-			<Option virtualFolder="engine/singletons/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/input.cpp">
-			<Option virtualFolder="engine/class/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/input.h">
-			<Option virtualFolder="engine/class/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/linerenderer.cpp">
 			<Option virtualFolder="engine/components/" />
@@ -187,10 +182,10 @@
 			<Option virtualFolder="engine/components/" />
 		</Unit>
 		<Unit filename="engine/logger.cpp">
-			<Option virtualFolder="engine/class/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/logger.h">
-			<Option virtualFolder="engine/class/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/maincamera.cpp">
 			<Option virtualFolder="engine/entities/" />
@@ -205,10 +200,10 @@
 			<Option virtualFolder="engine/objects/" />
 		</Unit>
 		<Unit filename="engine/object.cpp">
-			<Option virtualFolder="engine/class/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/object.h">
-			<Option virtualFolder="engine/class/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/physics.cpp">
 			<Option virtualFolder="engine/physics/" />
@@ -241,10 +236,10 @@
 			<Option virtualFolder="engine/components/" />
 		</Unit>
 		<Unit filename="engine/rect.cpp">
-			<Option virtualFolder="engine/class/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/rect.h">
-			<Option virtualFolder="engine/class/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/renderer.cpp">
 			<Option virtualFolder="engine/components/" />
@@ -253,10 +248,10 @@
 			<Option virtualFolder="engine/components/" />
 		</Unit>
 		<Unit filename="engine/resources.cpp">
-			<Option virtualFolder="engine/singletons/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/resources.h">
-			<Option virtualFolder="engine/singletons/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/rigidbody2d.cpp">
 			<Option virtualFolder="engine/physics/" />
@@ -265,16 +260,16 @@
 			<Option virtualFolder="engine/physics/" />
 		</Unit>
 		<Unit filename="engine/scene.cpp">
-			<Option virtualFolder="engine/class/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/scene.h">
-			<Option virtualFolder="engine/class/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/scenemanager.cpp">
-			<Option virtualFolder="engine/singletons/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/scenemanager.h">
-			<Option virtualFolder="engine/singletons/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/service.cpp">
 			<Option virtualFolder="engine/objects/" />
@@ -283,10 +278,10 @@
 			<Option virtualFolder="engine/objects/" />
 		</Unit>
 		<Unit filename="engine/setime.cpp">
-			<Option virtualFolder="engine/singletons/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/setime.h">
-			<Option virtualFolder="engine/singletons/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/shader.cpp">
 			<Option virtualFolder="engine/objects/" />
@@ -322,10 +317,10 @@
 			<Option virtualFolder="engine/shaders/" />
 		</Unit>
 		<Unit filename="engine/system.cpp">
-			<Option virtualFolder="engine/class/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/system.h">
-			<Option virtualFolder="engine/class/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/textrenderer.cpp">
 			<Option virtualFolder="engine/components/" />

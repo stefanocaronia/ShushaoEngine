@@ -51,6 +51,8 @@ namespace ShushaoEngine {
             SDL_Color sdlcolor = {255, 255, 255};
             std::string filename;
 
+            SDL_Rect sdlquad_translated;
+
             void init();
 
 	};

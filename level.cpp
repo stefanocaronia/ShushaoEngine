@@ -57,7 +57,9 @@ Level::Level() {
 
 	TextRenderer* text = root->AddComponent<TextRenderer>();
 	text->Load("assets/modenine.ttf", 24);
-	text->SetQuad({0.0f, 0.0f, 2.0f, 2.0f});
+	text->name = "Text Test";
+	text->sortingLayerID = Config::SortingLayers["Characters"];
+	text->SetQuad({0.0f, 0.0f, 56.0f, 52.0f});
 	text->SetText("Hello Pancrazio!");
 }
 

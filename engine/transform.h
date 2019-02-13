@@ -9,7 +9,7 @@
 #include "component.h"
 #include "constants.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	class Transform;
 

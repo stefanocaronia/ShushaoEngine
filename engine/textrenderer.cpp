@@ -5,7 +5,7 @@
 #include "transform.h"
 #include "debug.h"
 
-namespace ShushaoEngine {
+namespace se {
 
     using namespace std;
 

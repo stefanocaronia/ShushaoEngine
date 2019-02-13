@@ -5,7 +5,7 @@
 #include "shader.h"
 #include "transform.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	SpriteRenderer::SpriteRenderer() {
 		name = "Sprite Renderer";

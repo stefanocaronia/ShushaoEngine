@@ -6,7 +6,7 @@
 
 #include "object.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	class Entity;
 	class Collider2D;

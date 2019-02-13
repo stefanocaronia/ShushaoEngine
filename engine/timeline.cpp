@@ -5,7 +5,7 @@
 #include "timeline.h"
 #include "sprite.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	Timeline::Timeline(std::string _name) : Object(_name) {};
 

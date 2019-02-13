@@ -6,7 +6,7 @@
 #include "rect.h"
 #include "sprite.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	using namespace std;
 

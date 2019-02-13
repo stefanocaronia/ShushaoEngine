@@ -5,7 +5,7 @@
 #include "debug.h"
 #include "utility.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	Texture::Texture(std::string filename, std::string n) {
 		if (filename != "") Load(filename);

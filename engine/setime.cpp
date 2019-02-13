@@ -1,6 +1,6 @@
 #include "setime.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	float Time::GetTime() {
 		using namespace std::chrono;

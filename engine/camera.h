@@ -6,7 +6,7 @@
 #include "color.h"
 #include "rect.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	class Camera : public Component {
 

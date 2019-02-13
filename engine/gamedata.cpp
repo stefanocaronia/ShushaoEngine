@@ -10,7 +10,7 @@
 
 using namespace std;
 
-namespace ShushaoEngine {
+namespace se {
 
 	int GameData::GenerateObjectID() {
 		if (Objects.size() > 0) {

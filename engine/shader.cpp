@@ -5,7 +5,7 @@
 #include "debug.h"
 #include "utility.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	Shader::Shader() {
 		//loadWithName("shaders/standard", "Shader Standard");

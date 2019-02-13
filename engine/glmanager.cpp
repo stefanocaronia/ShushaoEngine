@@ -6,7 +6,7 @@
 #include <iostream>
 #include "glmanager.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	bool GLManager::Init(std::string title, bool fs) {
 

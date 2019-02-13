@@ -14,9 +14,9 @@
 #include "physics.h"
 #include "design.h"
 
-ShushaoEngine::Cycle* GAME;
+se::Cycle* GAME;
 
-namespace ShushaoEngine {
+namespace se {
 
 	using namespace std;
 

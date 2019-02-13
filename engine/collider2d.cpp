@@ -7,7 +7,7 @@
 #include "sprite.h"
 #include "spriterenderer.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	//{ #region Collider2D (base virtual class)
 

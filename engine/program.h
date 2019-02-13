@@ -2,7 +2,7 @@
 
 #include "component.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	class Program : public Component {
 		public:

@@ -6,7 +6,7 @@
 #include "texture.h"
 #include "config.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	enum class PivotPosition {
 		CENTER,

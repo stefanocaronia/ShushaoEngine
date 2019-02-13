@@ -19,7 +19,7 @@
 #define SOURCE util::basename(__FILE__) + "::" + __FUNCTION__ + ":" + util::toString(__LINE__) + ""
 #define LOG(MESSAGE) Debug::Log(SOURCE) << MESSAGE << std::endl;
 
-namespace ShushaoEngine {
+namespace se {
 
 	using namespace std;
 

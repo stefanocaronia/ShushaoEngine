@@ -6,7 +6,7 @@
 using namespace glm;
 using namespace std;
 
-namespace ShushaoEngine {
+namespace se {
 
 	class Rect {
 

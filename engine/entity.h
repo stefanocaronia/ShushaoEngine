@@ -8,7 +8,7 @@
 #include "utility.h"
 #include "component.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	class Scene;
 	class Transform;

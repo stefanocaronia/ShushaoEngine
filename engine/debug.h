@@ -6,7 +6,7 @@
 
 using namespace std;
 
-namespace ShushaoEngine {
+namespace se {
 
 	enum GridMode {
 		ORTHOGRAFIC,

@@ -5,7 +5,7 @@
 #include "physicscontactlistener.h"
 #include "physicsdebugdraw.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	void Physics::init() {
 

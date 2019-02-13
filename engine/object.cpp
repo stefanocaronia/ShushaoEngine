@@ -6,7 +6,7 @@
 #include "utility.h"
 #include "debug.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	Object::Object() {
 

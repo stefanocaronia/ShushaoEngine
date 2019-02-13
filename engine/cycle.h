@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace ShushaoEngine {
+namespace se {
 
 	class Cycle {
 
@@ -48,4 +48,4 @@ namespace ShushaoEngine {
 	};
 }
 
-extern ShushaoEngine::Cycle* GAME;
+extern se::Cycle* GAME;

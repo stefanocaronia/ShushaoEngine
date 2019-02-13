@@ -5,7 +5,7 @@
 #include "setime.h"
 #include "timeline.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	using namespace std;
 

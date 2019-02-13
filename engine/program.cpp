@@ -2,7 +2,7 @@
 
 #include "program.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	Program::Program() {
 		//ctor

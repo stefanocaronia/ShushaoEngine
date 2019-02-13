@@ -7,7 +7,7 @@
 #include "color.h"
 #include "shader.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	enum class DrawElement {
 		POINT,

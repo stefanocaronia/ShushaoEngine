@@ -5,7 +5,7 @@
 #include "renderer.h"
 #include "color.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	/*enum SpriteDrawMode {
 		Simple,

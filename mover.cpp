@@ -1,6 +1,6 @@
 #include "mover.h"
 
-using namespace ShushaoEngine;
+using namespace se;
 
 float frand(float max) {
 

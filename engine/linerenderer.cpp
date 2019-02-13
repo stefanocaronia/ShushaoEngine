@@ -6,7 +6,7 @@
 #include "color.h"
 #include "shader.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	LineRenderer::LineRenderer() {
 		name = "Line Renderer";

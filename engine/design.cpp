@@ -3,7 +3,7 @@
 #include "glmanager.h"
 #include "scenemanager.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	bool Design::initDraw() {
 		if (readyToDraw) return true;

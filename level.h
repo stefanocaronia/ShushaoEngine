@@ -2,7 +2,7 @@
 
 #include "globals.h"
 
-class Level : public ShushaoEngine::Scene {
+class Level : public se::Scene {
 	public:
 		Level();
 		~Level();

@@ -1,6 +1,6 @@
 #include "renderer.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	Renderer::Renderer()
 	{

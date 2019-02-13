@@ -6,12 +6,12 @@
 
 using namespace std;
 using namespace glm;
-using namespace ShushaoEngine;
+using namespace se;
 
 Game::Game(string title) : Cycle(title) {
 
-  	ShushaoEngine::Time::setFrameRateLimit(120.0f);
-	ShushaoEngine::Time::setFixedRateLimit(60.0f);
+  	se::Time::setFrameRateLimit(120.0f);
+	se::Time::setFixedRateLimit(60.0f);
 
 	Config::Layers = {
 		"Background",

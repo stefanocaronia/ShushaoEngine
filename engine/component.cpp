@@ -11,7 +11,7 @@
 #include "collision2d.h"
 #include "collider2d.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	Component::Component() {
 

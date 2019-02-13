@@ -2,7 +2,7 @@
 
 #include "entity.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	class DebugGrid : public Entity {
 

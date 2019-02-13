@@ -6,7 +6,7 @@
 #include "gamedata.h"
 #include "utility.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	//class Cycle;
 

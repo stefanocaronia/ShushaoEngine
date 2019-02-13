@@ -3,7 +3,7 @@
 #include <iostream>
 #include <sstream>
 
-namespace ShushaoEngine {
+namespace se {
 
 	Rect::Rect() {
 

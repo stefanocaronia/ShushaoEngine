@@ -4,7 +4,7 @@
 #include "entity.h"
 #include "transform.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	bool PhysicsContactFilter::ShouldCollide(b2Fixture* fixtureA, b2Fixture* fixtureB) {
 

@@ -5,7 +5,7 @@
 
 #include "service.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	class System {
 

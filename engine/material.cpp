@@ -1,6 +1,6 @@
 #include "material.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	Material::Material()
 	{

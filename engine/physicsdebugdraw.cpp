@@ -5,7 +5,7 @@
 
 #include <iostream>
 
-namespace ShushaoEngine {
+namespace se {
 
 	bool PhysicsDebugDraw::init() {
 		if (readyToDraw) return true;

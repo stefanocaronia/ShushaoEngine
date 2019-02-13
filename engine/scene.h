@@ -14,7 +14,7 @@
 #include "debuggrid.h"
 #include "renderer.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	class Component;
 	class Camera;

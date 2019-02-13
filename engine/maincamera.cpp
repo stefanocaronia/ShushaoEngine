@@ -4,7 +4,7 @@
 
 MainCamera::MainCamera() {
 
-    camera = AddComponent<ShushaoEngine::Camera>();
+    camera = AddComponent<se::Camera>();
 
     tag = "Main Camera";
     name = "Main Camera";

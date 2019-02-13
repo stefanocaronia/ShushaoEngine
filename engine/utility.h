@@ -14,7 +14,7 @@
 #define ts(str) util::toString(str)
 
 
-namespace ShushaoEngine {
+namespace se {
 
 	namespace util {
 

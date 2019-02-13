@@ -5,7 +5,7 @@
 
 #include "object.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	class Entity;
 	class Transform;

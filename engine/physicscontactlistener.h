@@ -4,7 +4,7 @@
 
 #include "collider2d.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	class PhysicsContactListener : public b2ContactListener {
 		void BeginContact(b2Contact* contact);

@@ -2,7 +2,7 @@
 
 #include "globals.h"
 
-class Game : public ShushaoEngine::Cycle {
+class Game : public se::Cycle {
 
 	public:
 

@@ -2,7 +2,7 @@
 #include "debug.h"
 #include "constants.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	namespace util {
 

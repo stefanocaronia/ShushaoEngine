@@ -11,7 +11,7 @@
 
 using namespace std;
 
-namespace ShushaoEngine {
+namespace se {
 
 	InputMapping* Input::addMapping(string name_) {
 		InputMapping* input = new InputMapping();

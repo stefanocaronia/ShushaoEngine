@@ -8,7 +8,7 @@
 #include "setime.h"
 #include "config.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	std::map <DebugLevel, string> DebugLevelName = {
 		{INFO, "INFO"},

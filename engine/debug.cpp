@@ -1,6 +1,6 @@
 #include "debug.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	// default debug settings
 	bool Debug::enabled = false;

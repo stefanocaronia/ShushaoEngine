@@ -3,7 +3,7 @@
 #include <glm/glm.hpp>
 #include <string>
 
-namespace ShushaoEngine {
+namespace se {
 
 	class Transform;
 

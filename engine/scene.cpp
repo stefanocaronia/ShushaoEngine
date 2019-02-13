@@ -6,7 +6,7 @@
 
 #include "scene.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	Scene::Scene() {
 

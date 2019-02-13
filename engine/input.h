@@ -7,7 +7,7 @@
 
 #include "debug.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	enum class InputType {
 		BUTTON,

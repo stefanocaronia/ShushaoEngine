@@ -8,7 +8,7 @@
 
 using namespace std;
 
-namespace ShushaoEngine {
+namespace se {
 
 	Sprite::Sprite() {
         name = "Sprite";

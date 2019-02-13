@@ -10,7 +10,7 @@
 #include "texture.h"
 #include "textureatlas.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	class Resources {
 		public:

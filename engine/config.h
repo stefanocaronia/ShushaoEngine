@@ -4,7 +4,7 @@
 
 #include "utility.h"
 
-namespace ShushaoEngine {
+namespace se {
     class VectorMap;
 }
 
@@ -37,6 +37,6 @@ namespace Config {
 		extern int positionIterations;
 	}
 
-	extern ShushaoEngine::VectorMap Layers;
-	extern ShushaoEngine::VectorMap SortingLayers;
+	extern se::VectorMap Layers;
+	extern se::VectorMap SortingLayers;
 }

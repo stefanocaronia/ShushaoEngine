@@ -7,7 +7,7 @@
 #include "scenemanager.h"
 #include "utility.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	Transform::Transform() {
 		name = "Transform";

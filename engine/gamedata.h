@@ -9,7 +9,7 @@
 #include "camera.h"
 #include "scene.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	class GameData {
 		public:

@@ -2,7 +2,7 @@
 #include "resources.h"
 
 
-namespace ShushaoEngine {
+namespace se {
 
 	SpriteSheet::SpriteSheet(TextureAtlas* texture) {
 		name = "Spritesheet " + texture->name;

@@ -3,7 +3,7 @@
 #include "transform.h"
 #include "entity.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	void Rigidbody2D::OnDestroy() {
 		if (body == nullptr) return;

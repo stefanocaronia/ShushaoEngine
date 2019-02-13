@@ -9,7 +9,7 @@
 #include "shader.h"
 #include "texture.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	void Resources::Clear() {
 		std::vector<Object*> toDelete;

@@ -3,12 +3,12 @@
 #include "entity.h"
 #include "camera.h"
 
-class MainCamera : public ShushaoEngine::Entity {
+class MainCamera : public se::Entity {
 	public:
 		MainCamera();
 		~MainCamera();
 
-		ShushaoEngine::Camera* camera;
+		se::Camera* camera;
 
 	protected:
 

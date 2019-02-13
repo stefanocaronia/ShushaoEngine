@@ -3,7 +3,7 @@
 #include "debug.h"
 #include "scenemanager.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	void SceneManager::Clear() {
 		for(Scene* s : Scenes) {

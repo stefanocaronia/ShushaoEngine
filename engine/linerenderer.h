@@ -8,7 +8,7 @@
 #include "color.h"
 #include "design.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	class Shader;
 

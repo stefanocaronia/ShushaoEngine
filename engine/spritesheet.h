@@ -3,7 +3,7 @@
 #include "sprite.h"
 #include "textureatlas.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	class SpriteSheet : public Object, public vector<Sprite*> {
 

@@ -4,7 +4,7 @@
 
 #include "component.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	class Timeline;
 

@@ -5,7 +5,7 @@
 
 #include "component.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	class Collider2D;
 

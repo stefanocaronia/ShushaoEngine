@@ -5,7 +5,7 @@
 #include "shader.h"
 #include "linerenderer.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	DebugGrid::DebugGrid() {
 

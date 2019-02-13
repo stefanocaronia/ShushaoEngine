@@ -31,7 +31,7 @@ namespace Config {
 
 	}
 
-	ShushaoEngine::VectorMap Layers;
-	ShushaoEngine::VectorMap SortingLayers;
+	se::VectorMap Layers;
+	se::VectorMap SortingLayers;
 
 }

@@ -9,7 +9,7 @@
 #include "utility.h"
 #include "config.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	class Time {
 		public:

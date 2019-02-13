@@ -6,7 +6,7 @@
 
 using namespace std;
 
-namespace ShushaoEngine {
+namespace se {
 
 	void TextureAtlas::AddSlice(Rect _rect, PivotPosition _pivotPosition) {
 		if (TextureID == 0) {

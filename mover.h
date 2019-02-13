@@ -2,7 +2,7 @@
 
 #include "globals.h"
 
-class Mover : public ShushaoEngine::Program {
+class Mover : public se::Program {
 
 	public:
 
@@ -12,17 +12,17 @@ class Mover : public ShushaoEngine::Program {
 		void Update();
 		void Awake();
 
-		void OnCollisionEnter2D(ShushaoEngine::Collision2D&);
-		void OnCollisionExit2D(ShushaoEngine::Collision2D&);
-		void OnCollisionStay2D(ShushaoEngine::Collision2D&);
+		void OnCollisionEnter2D(se::Collision2D&);
+		void OnCollisionExit2D(se::Collision2D&);
+		void OnCollisionStay2D(se::Collision2D&);
 
-		void OnTriggerEnter2D(ShushaoEngine::Collider2D&);
-		void OnTriggerExit2D(ShushaoEngine::Collider2D&);
-		void OnTriggerStay2D(ShushaoEngine::Collider2D&);
+		void OnTriggerEnter2D(se::Collider2D&);
+		void OnTriggerExit2D(se::Collider2D&);
+		void OnTriggerStay2D(se::Collider2D&);
 
 	private:
 
 		float animTime;
-		ShushaoEngine::SpriteRenderer* sr = nullptr;
-		ShushaoEngine::Rigidbody2D* rb = nullptr;
+		se::SpriteRenderer* sr = nullptr;
+		se::Rigidbody2D* rb = nullptr;
 };

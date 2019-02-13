@@ -8,7 +8,7 @@
 #include "physicscontactfilter.h"
 #include "physicsdebugdraw.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	class Physics {
 

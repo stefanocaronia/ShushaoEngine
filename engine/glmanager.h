@@ -4,7 +4,7 @@
 #include <string>
 #include <SDL.h>
 
-namespace ShushaoEngine {
+namespace se {
 
 	class GLManager {
 

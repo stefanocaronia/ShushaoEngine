@@ -7,7 +7,7 @@
 #include "gllibs.h"
 #include "transform.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	Camera::Camera() {
 		name = "Camera";

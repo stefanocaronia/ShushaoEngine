@@ -8,7 +8,7 @@
 #include "sprite.h"
 #include "spritesheet.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	enum class PropertyType {
 		INT,

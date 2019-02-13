@@ -3,7 +3,7 @@
 #include "debug.h"
 #include "utility.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	//{ #region music
 

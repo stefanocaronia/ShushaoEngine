@@ -1,7 +1,7 @@
 #include "entity.h"
 #include "transform.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	Entity::Entity() {
 

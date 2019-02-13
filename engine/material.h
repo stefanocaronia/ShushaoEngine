@@ -7,7 +7,7 @@
 #include "texture.h"
 #include "shader.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	class Material : public Object	{
 

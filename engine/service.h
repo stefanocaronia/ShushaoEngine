@@ -4,7 +4,7 @@
 
 #include "object.h"
 
-namespace ShushaoEngine {
+namespace se {
 
 	class Service : public Object {
 

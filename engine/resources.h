@@ -18,9 +18,10 @@ namespace se {
 			static std::map<std::string, Object*> Assets;
 
 			template <class T>
-			static void Load(std::string filename, std::string name) {
+			static T* Load(std::string filename, std::string name) {
 				T* resource = new T(filename, name);
 				Assets[name] = resource;
+				return resource;
 			}
 
 			template <class T>

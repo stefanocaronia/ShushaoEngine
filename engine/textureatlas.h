@@ -5,6 +5,7 @@
 #include "texture.h"
 #include "rect.h"
 #include "sprite.h"
+#include "types.h"
 
 namespace se {
 

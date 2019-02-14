@@ -44,7 +44,7 @@
 		<Compiler>
 			<Add option="-std=c++11" />
 			<Add option="-fexceptions -DGLEW_STATIC" />
-			<Add directory="../../mingw-dev-libs/glew/include" />
+			<Add directory="../../mingw-dev-libs/glew/include/GL" />
 			<Add directory="../../mingw-dev-libs/glm" />
 			<Add directory="../../mingw-dev-libs/freetype/include" />
 			<Add directory="../../mingw-dev-libs/SDL2/include/SDL2" />
@@ -54,11 +54,11 @@
 			<Add directory="../../mingw-dev-libs/Box2D/include" />
 		</Compiler>
 		<Linker>
-			<Add option="-lglew32s" />
+			<Add option="-lglew32" />
 			<Add option="-lmingw32" />
 			<Add option="-lopengl32" />
-			<Add option="-lglu32" />
 			<Add option="-lgdi32" />
+			<Add option="-lglu32" />
 			<Add option="-lfreetype" />
 			<Add option="-lSDL2main" />
 			<Add option="-lSDL2" />

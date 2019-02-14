@@ -62,7 +62,6 @@ Level::Level() {
 	text->SetFont(modenine);
 	text->name = "Text Test";
 	text->sortingLayerID = Config::SortingLayers["UI"];
-	//text->SetRect({0.0f, 0.0f, 56.0f, 52.0f});
 	text->SetText("Hello Pancrazio!");
 }
 

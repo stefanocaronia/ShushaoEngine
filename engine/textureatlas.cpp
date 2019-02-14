@@ -3,7 +3,6 @@
 #include "textureatlas.h"
 #include "debug.h"
 
-
 using namespace std;
 
 namespace se {

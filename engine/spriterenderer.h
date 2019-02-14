@@ -2,6 +2,7 @@
 
 #include <glm/glm.hpp>
 
+#include <glew.h>
 #include "renderer.h"
 #include "color.h"
 
@@ -48,6 +49,13 @@ namespace se {
 			void Update();
 			void Render();
 			void OnDestroy();
+
+		private:
+
+			GLint uniform_renderer_color;
+            GLint uniform_base_texture;
+            GLint uniform_mvp;
+
 	};
 
 }

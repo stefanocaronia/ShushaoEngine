@@ -27,6 +27,7 @@ namespace se {
 		for (Entity* pGO : Entities) {
 			delete(pGO);
 		}
+		delete(root);
 		Entities.clear();
 	}
 

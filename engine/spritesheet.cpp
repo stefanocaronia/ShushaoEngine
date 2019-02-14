@@ -1,6 +1,6 @@
 #include "spritesheet.h"
 #include "resources.h"
-
+#include "types.h"
 
 namespace se {
 

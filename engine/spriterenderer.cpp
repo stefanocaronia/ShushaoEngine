@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "debug.h"
 #include "sprite.h"
 #include "spriterenderer.h"
 #include "shader.h"
@@ -26,15 +27,23 @@ namespace se {
 
 	void SpriteRenderer::Awake() {
 
-		//if (!isReady()) return;
+		transform->SetPivot(sprite->pivot);
 
 		shader = new Shader();
-		transform->SetPivot(sprite->pivot);
+
+		glUseProgram(shader->GetProgram());
+
+		uniform_renderer_color = glGetUniformLocation(shader->GetProgram(), "renderer_color");
+		uniform_base_texture = glGetUniformLocation(shader->GetProgram(), "base_texture");
+		uniform_mvp = glGetUniformLocation(shader->GetProgram(), "MVP");
+
+		glUseProgram(0);
 	}
 
 	void SpriteRenderer::Update() {
 
-		//if (!isReady()) return;
+		if (!isReady()) return;
+
 	}
 
 	void SpriteRenderer::Render() {
@@ -45,9 +54,9 @@ namespace se {
 		glUseProgram(shader->GetProgram());
 
 		// uniforms
-		glUniform4f(glGetUniformLocation(shader->GetProgram(), "renderer_color"), color.r, color.g, color.b, color.a);
-		glUniform1i(glGetUniformLocation(shader->GetProgram(), "base_texture"), GL_TEXTURE0);
-		glUniformMatrix4fv(glGetUniformLocation(shader->GetProgram(), "MVP"), 1, GL_FALSE, &transform->MVP[0][0]);
+		glUniform4f(uniform_renderer_color, color.r, color.g, color.b, color.a);
+		glUniform1i(uniform_base_texture, GL_TEXTURE0);
+		glUniformMatrix4fv(uniform_mvp, 1, GL_FALSE, &transform->MVP[0][0]);
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, sprite->texture->TextureID);
@@ -67,6 +76,8 @@ namespace se {
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
 		glBindVertexArray(0);
+		delete(shader);
+		shader = nullptr;
 	}
 
 

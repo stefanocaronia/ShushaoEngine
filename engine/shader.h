@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <GL/glew.h>
+#include <glew.h>
 
 #include "object.h"
 
@@ -36,7 +36,7 @@ namespace se {
 
 			GLuint programID = 0;
 
-			bool debug = false;
+			bool debug = true;
 
 			GLuint VertexShaderID;
 			GLuint FragmentShaderID;

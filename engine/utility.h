@@ -28,10 +28,11 @@ namespace se {
 			return stm.str() ;
 		}
 
+		/// NB: modificare anche la versione nel cpp
 		template<class T>
 		std::string classtitle() {
 			std::string type = typeid(T).name();
-			std::regex pat("N13ShushaoEngine");
+			std::regex pat("N2se|P6|P");
 			type = regex_replace(type, pat, "");
 
 			pat = "E$";

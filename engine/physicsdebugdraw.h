@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include <GL/glew.h>
+#include <glew.h>
 #include <Box2D/Box2D.h>
 
 namespace se {

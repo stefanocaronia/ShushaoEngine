@@ -1,6 +1,6 @@
 #pragma once
 
-#include <GL/glew.h>
+#include <glew.h>
 
 #include <ft2build.h>
 #include FT_FREETYPE_H

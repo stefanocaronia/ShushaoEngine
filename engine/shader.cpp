@@ -159,7 +159,7 @@ namespace se {
 		if (status == GL_FALSE) {
 			char infoLog[512];
 			glGetShaderInfoLog(shader, 512, NULL, infoLog);
-			Debug::Log(infoLog);
+			Debug::Log << "- Shader Compilation log:\n" << infoLog;
 			return false;
 		}
 		return true;
@@ -173,7 +173,7 @@ namespace se {
 			glGetProgramiv (program, GL_INFO_LOG_LENGTH, &infoLogLength);
 			GLchar *infoLog= new GLchar[infoLogLength];
 			glGetProgramInfoLog (program, infoLogLength, NULL, infoLog);
-			Debug::Log(infoLog);; //printf("- Program Compilation log:\n%s", infoLog);
+			Debug::Log << "- Program Compilation log:\n" << infoLog;
 			delete [] infoLog;
 			return false;
 		}

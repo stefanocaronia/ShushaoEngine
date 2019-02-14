@@ -22,7 +22,7 @@ namespace se {
 
 			Shader* shader = nullptr;
 
-			Font* font = _font;
+			Font* font = nullptr;
 
 			// readonly properties
 			const Color& color = _color;
@@ -49,12 +49,18 @@ namespace se {
 
             bool isReady();
 
-            Font* _font = nullptr;
             Rect _rect;
 			glm::fvec2 _scale = { 1.0f, 1.0f };
-            Color _color = {1.0f, 1.0f, 1.0f, 1.0f};
+            Color _color = { 1.0f, 1.0f, 1.0f, 1.0f };
             std::string _text = "";
             std::string filename;
+
+            GLint attribute_position;
+            GLint uniform_tex;
+            GLint uniform_color;
+            GLint uniform_mvp;
+
+            GLuint vbo;
 
             void write(const char*, float, float, float, float);
 

@@ -44,5 +44,6 @@
 #include "rigidbody2d.h"
 #include "collider2d.h"
 #include "collision2d.h"
-#include "textrenderer.h"
 #include "font.h"
+#include "textrenderer.h"
+

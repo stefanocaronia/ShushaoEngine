@@ -17,6 +17,7 @@
 					<Add option="-Wall" />
 					<Add option="-g" />
 					<Add option="-DDEBUG=true" />
+					<Add option="-DGLEW_STATIC" />
 				</Compiler>
 				<ExtraCommands>
 					<Add before="cmd /c rescopy Debug" />
@@ -42,9 +43,10 @@
 		</Build>
 		<Compiler>
 			<Add option="-std=c++11" />
-			<Add option="-fexceptions" />
+			<Add option="-fexceptions -DGLEW_STATIC" />
 			<Add directory="../../mingw-dev-libs/glew/include" />
 			<Add directory="../../mingw-dev-libs/glm" />
+			<Add directory="../../mingw-dev-libs/freetype/include" />
 			<Add directory="../../mingw-dev-libs/SDL2/include/SDL2" />
 			<Add directory="../../mingw-dev-libs/SDL2_image/include/SDL2" />
 			<Add directory="../../mingw-dev-libs/SDL2_ttf/include/SDL2" />
@@ -52,18 +54,19 @@
 			<Add directory="../../mingw-dev-libs/Box2D/include" />
 		</Compiler>
 		<Linker>
-			<Add library="glew32" />
-			<Add library="mingw32" />
-			<Add library="opengl32" />
-			<Add library="glu32" />
-			<Add library="gdi32" />
-			<Add library="SDL2main" />
-			<Add library="SDL2" />
-			<Add library="SDL2_image" />
-			<Add library="SDL2_ttf" />
-			<Add library="SDL2_mixer" />
-			<Add library="Box2D" />
+			<Add option="-lglew32s" />
+			<Add option="-lmingw32" />
+			<Add option="-lopengl32" />
+			<Add option="-lglu32" />
+			<Add option="-lgdi32" />
+			<Add option="-lfreetype" />
+			<Add option="-lSDL2main" />
+			<Add option="-lSDL2" />
+			<Add option="-lSDL2_image" />
+			<Add option="-lSDL2_mixer" />
+			<Add option="-lBox2D" />
 			<Add directory="../../mingw-dev-libs/glew/lib" />
+			<Add directory="../../mingw-dev-libs/freetype/lib" />
 			<Add directory="../../mingw-dev-libs/SDL2/lib" />
 			<Add directory="../../mingw-dev-libs/SDL2_image/lib" />
 			<Add directory="../../mingw-dev-libs/SDL2_ttf/lib" />
@@ -153,6 +156,18 @@
 		</Unit>
 		<Unit filename="engine/entity.h">
 			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/font.cpp">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/font.frag">
+			<Option virtualFolder="engine/shaders/" />
+		</Unit>
+		<Unit filename="engine/font.h">
+			<Option virtualFolder="engine/objects/" />
+		</Unit>
+		<Unit filename="engine/font.vert">
+			<Option virtualFolder="engine/shaders/" />
 		</Unit>
 		<Unit filename="engine/gamedata.cpp">
 			<Option virtualFolder="engine/base/" />
@@ -351,6 +366,9 @@
 		</Unit>
 		<Unit filename="engine/transform.h">
 			<Option virtualFolder="engine/components/" />
+		</Unit>
+		<Unit filename="engine/types.h">
+			<Option virtualFolder="engine/globals/" />
 		</Unit>
 		<Unit filename="engine/utility.cpp">
 			<Option virtualFolder="engine/globals/" />

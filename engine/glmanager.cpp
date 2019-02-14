@@ -14,7 +14,9 @@ namespace se {
 
 		SDL_Init(SDL_INIT_EVERYTHING); //  | SDL_INIT_JOYSTICK
 		IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
-		TTF_Init();
+		// TTF_Init();
+
+		FT_Init_FreeType(&lFreetype);
 
 		Mix_Init(MIX_INIT_MP3 | MIX_INIT_OGG);
 		Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096);
@@ -118,6 +120,7 @@ namespace se {
 	SDL_GLContext GLManager::gContext;
 	SDL_Window* GLManager::gWindow;
 	SDL_Renderer* GLManager::gRenderer;
+	FT_Library GLManager::lFreetype = nullptr;
 
 	bool GLManager::fullscreen = false;
 	bool GLManager::ready = false;

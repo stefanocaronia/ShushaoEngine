@@ -26,12 +26,14 @@ namespace se {
 		}
 
 		string classtitle(string type) {
-			regex pat("N13ShushaoEngine|P6|P");
+			// regex pat("N13ShushaoEngine|P6|P");
+			Debug::Log << type << endl;
+			regex pat("N2se|P6|P");
 			type = regex_replace(type, pat, "");
 
 			pat = "E$";
 			type = regex_replace(type, pat, "");
-
+            Debug::Log << type << endl;
 			string title;
 			bool inName = false;
 			char prevc;

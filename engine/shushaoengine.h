@@ -5,6 +5,7 @@
 // ShushaoEngine Objects
 #include "design.h"
 #include "constants.h"
+#include "types.h"
 #include "camera.h"
 #include "color.h"
 #include "component.h"
@@ -44,3 +45,4 @@
 #include "collider2d.h"
 #include "collision2d.h"
 #include "textrenderer.h"
+#include "font.h"

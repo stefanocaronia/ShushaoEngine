@@ -42,7 +42,7 @@ namespace se {
 			//SpriteTileMode tileMode; //	The current tile mode of the Sprite Renderer.
 
 			Sprite* sprite = nullptr;
-			Shader* shader = nullptr;;
+			Shader* shader = nullptr;
 
 			void Awake();
 			void Update();

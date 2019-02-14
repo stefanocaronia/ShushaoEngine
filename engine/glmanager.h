@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 #include <SDL.h>
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 namespace se {
 
@@ -13,6 +15,8 @@ namespace se {
 			static SDL_GLContext gContext;
 			static SDL_Window* gWindow;
 			static SDL_Renderer* gRenderer;
+
+			static FT_Library lFreetype;
 
 			static bool fullscreen;
 			static bool ready;

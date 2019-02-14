@@ -21,7 +21,8 @@ Game::Game(string title) : Cycle(title) {
 	Config::SortingLayers = {
 		"Background",
 		"Characters",
-		"Sky"
+		"Sky",
+		"UI"
 	};
 
 	Config::displayWidth = 1024;
@@ -52,6 +53,8 @@ void Game::Awake() {
 	Resources::Load<Effect>("assets/shoot.wav")->setVolume(40);
 
 	Resources::Add<SpriteSheet>("walking")->Load(Resources::Get<TextureAtlas>("walking"));
+
+	Resources::Load<Font>("assets/modenine.ttf", "Modenine");
 
 	SceneManager::LoadScene<Level>("Level 1");
 

@@ -5,21 +5,9 @@
 #include "rect.h"
 #include "texture.h"
 #include "config.h"
+#include "types.h"
 
 namespace se {
-
-	enum class PivotPosition {
-		CENTER,
-		LEFT,
-		RIGHT,
-		TOPLEFT,
-		TOPRIGHT,
-		TOP,
-		BOTTOM,
-		BOTTOMLEFT,
-		BOTTOMRIGHT,
-		CUSTOM
-	};
 
 	class Sprite : public Object {
 

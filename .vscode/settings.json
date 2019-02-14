@@ -1,0 +1,33 @@
+{
+    "files.associations": {
+        "*.inc": "php",
+        "*.php.old": "php",
+        "string": "cpp",
+        "atomic": "cpp",
+        "*.tcc": "cpp",
+        "cstdarg": "cpp",
+        "cstddef": "cpp",
+        "cwctype": "cpp",
+        "array": "cpp",
+        "deque": "cpp",
+        "unordered_map": "cpp",
+        "algorithm": "cpp",
+        "chrono": "cpp",
+        "map": "cpp",
+        "memory": "cpp",
+        "memory_resource": "cpp",
+        "regex": "cpp",
+        "type_traits": "cpp",
+        "utility": "cpp",
+        "vector": "cpp",
+        "streambuf": "cpp",
+        "system_error": "cpp",
+        "cctype": "cpp",
+        "cinttypes": "cpp",
+        "cmath": "cpp",
+        "cstdint": "cpp",
+        "cstdio": "cpp",
+        "cstdlib": "cpp",
+        "cwchar": "cpp"
+    }
+}

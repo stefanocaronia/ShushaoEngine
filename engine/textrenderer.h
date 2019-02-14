@@ -7,6 +7,8 @@
 #include "renderer.h"
 #include "color.h"
 #include "rect.h"
+#include "font.h"
+#include "shader.h"
 
 namespace se {
 
@@ -18,20 +20,22 @@ namespace se {
 			TextRenderer(std::string);
 			~TextRenderer();
 
-			TTF_Font* font = nullptr;
+			Shader* shader = nullptr;
+
+			Font* font = _font;
 
 			// readonly properties
 			const Color& color = _color;
 			const std::string& text = _text;
-			const Rect& quad = _quad;
+			const Rect& rect = _rect;
 
-			int fontSize = 24;
-
-			void Load(std::string, int);
+			glm::fvec2& scale = _scale;
 
 			void SetText(std::string);
 			void SetColor(Color);
-			void SetQuad(Rect);
+			void SetFont(Font*);
+			void SetScale(glm::fvec2);
+			void SetRect(Rect);
 
 			void Awake();
 			void Update();
@@ -43,17 +47,16 @@ namespace se {
             SDL_Surface* surface = nullptr;
             SDL_Texture* texture = nullptr;
 
-            Rect _quad;
+            bool isReady();
+
+            Font* _font = nullptr;
+            Rect _rect;
+			glm::fvec2 _scale = { 1.0f, 1.0f };
             Color _color = {1.0f, 1.0f, 1.0f, 1.0f};
             std::string _text = "";
-
-            SDL_Rect sdlquad;
-            SDL_Color sdlcolor = {255, 255, 255};
             std::string filename;
 
-            SDL_Rect sdlquad_translated;
-
-            void init();
+            void write(const char*, float, float, float, float);
 
 	};
 

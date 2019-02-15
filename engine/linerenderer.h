@@ -7,6 +7,7 @@
 #include "renderer.h"
 #include "color.h"
 #include "design.h"
+#include "vao.h"
 
 namespace se {
 
@@ -27,7 +28,8 @@ namespace se {
 
 			GLuint vertexBuffer;
 			GLuint colorBuffer;
-			GLuint VAO;
+
+			Vao VAO { GL_DYNAMIC_DRAW };
 
 			Shader* shader;
 

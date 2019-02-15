@@ -15,9 +15,6 @@ namespace se {
 	}
 
 	Sprite::~Sprite() {
-		glDeleteBuffers(1, &vertexBuffer);
-		glDeleteBuffers(1, &indexBuffer);
-		glDeleteBuffers(1, &uvBuffer);
 	}
 
 	Sprite::Sprite(string n) {
@@ -84,34 +81,37 @@ namespace se {
 
 	Sprite* Sprite::init() {
 
+		uv = { // The base texture coordinates of the sprite mesh.
+			{ 0.0f, 1.0f }, // Bottom-left of texture
+			{ 1.0f, 1.0f }, // Bottom-right of texture
+			{ 1.0f, 0.0f }, // Top-Right of texture
+			{ 0.0f, 0.0f } // Top-left of texture
+		};
+
+		indexes = {
+			0, 1, 2,
+			2, 3, 0
+		};
+
+		VAO.SetUv(uv);
+		VAO.SetIndexes(indexes);
+
 		pivot.x = (pixel_pivot.x - (rect.width / 2)) / (float)pixelPerUnit;
 		pivot.y = -(pixel_pivot.y - (rect.height / 2)) / (float)pixelPerUnit;
 
 		GLfloat wX = ((rect.width / pixelPerUnit) / 2);
 		GLfloat wY = ((rect.height / pixelPerUnit) / 2);
 
-		/*GLfloat v[12] = {
-			-wX, -wY, 0.0f, // Bottom-left
-			 wX, -wY, 0.0f, // Bottom-right
-			 wX,  wY, 0.0f, // Top-right
-			-wX,  wY, 0.0f // Top-left
-		};*/
-
-		GLfloat v[12] = {
-			-wX - pivot.x, -wY - pivot.y, 0.0f, // Bottom-left
-			 wX - pivot.x, -wY - pivot.y, 0.0f, // Bottom-right
-			 wX - pivot.x,  wY - pivot.y, 0.0f, // Top-right
-			-wX - pivot.x,  wY - pivot.y, 0.0f // Top-left
+		vertices = {
+			{-wX - pivot.x, -wY - pivot.y, 0.0f}, // Bottom-left
+			{ wX - pivot.x, -wY - pivot.y, 0.0f}, // Bottom-right
+			{ wX - pivot.x,  wY - pivot.y, 0.0f}, // Top-right
+			{-wX - pivot.x,  wY - pivot.y, 0.0f} // Top-left
 		};
 
-/*int c = 0;
-		for (GLfloat vr : v) {
+		VAO.SetVertices(vertices);
 
-			Debug::Log << vr << " ";
-			if (++c%3 == 0) Debug::Log << std::endl;
-		}*/
-
-		memcpy(vertices, v, sizeof(GLfloat) * 12);
+		// memcpy(vertices, v, sizeof(GLfloat) * 12);
 
 		if (rect.width < texture->width || rect.height < texture->height) {
 
@@ -123,22 +123,22 @@ namespace se {
 				rect.height / texture->height
 			);
 
-			GLclampd u[8] = { // The base texture coordinates of the sprite mesh.
-				tsr.x, tsr.yMax, // Bottom-left of texture
-				tsr.xMax, tsr.yMax, // Bottom-right of texture
-				tsr.xMax, tsr.y, // Top-Right of texture
-				tsr.x, tsr.y // Top-left of texture
+			uv = { // The base texture coordinates of the sprite mesh.
+				{ tsr.x, tsr.yMax}, // Bottom-left of texture
+				{ tsr.xMax, tsr.yMax}, // Bottom-right of texture
+				{ tsr.xMax, tsr.y}, // Top-Right of texture
+				{ tsr.x, tsr.y} // Top-left of texture
 			};
 
-			memcpy(uv, u, sizeof(GLclampd) * 8);
-		}
+			VAO.SetUv(uv);
 
-		initVAO();
+			// memcpy(uv, u, sizeof(GLclampd) * 8);
+		}
 
 		return this;
 	}
 
-	Sprite* Sprite::initVAO() {
+	/*Sprite* Sprite::initVAO() {
 
 		glGenVertexArrays(1, &VAO);
 		glBindVertexArray(VAO);
@@ -165,8 +165,10 @@ namespace se {
 
 		glBindVertexArray(0);
 
+		VAOInitialized = true;
+
 		return this;
-	}
+	}*/
 
 	vec2 Sprite::CalculatePivot(PivotPosition pp, Rect re, vec2 custom) {
 		vec2 piv;

@@ -5,7 +5,6 @@
 class Level : public se::Scene {
 	public:
 		Level();
-		~Level();
 
 	protected:
 

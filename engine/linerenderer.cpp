@@ -72,45 +72,49 @@ namespace se {
 
 		using namespace glm;
 
-		glGenVertexArrays(1, &VAO);
-		glBindVertexArray(VAO);
+		shader->awake();
+
+		VAO.SetVertices(vertices);
+		VAO.SetColors(colors);
+		VAO.Init(shader);
+
+		/*glGenVertexArrays(1, &VAO.Id);
+		glBindVertexArray(VAO.Id);
 
 		glGenBuffers(1, &vertexBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 		glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(vec3), &vertices[0], GL_STATIC_DRAW);
+		glVertexAttribPointer(ShaderLocation::POSITION, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+		glEnableVertexAttribArray(ShaderLocation::POSITION);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		glGenBuffers(1, &colorBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
 		glBufferData(GL_ARRAY_BUFFER, colors.size() * sizeof(vec4), &colors[0], GL_STATIC_DRAW);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-		glVertexAttribPointer(ShaderLocation::POSITION, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-		glEnableVertexAttribArray(ShaderLocation::POSITION);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-		glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
 		glVertexAttribPointer(ShaderLocation::COLOR, 4, GL_FLOAT, GL_FALSE, 0, (void*)0);
 		glEnableVertexAttribArray(ShaderLocation::COLOR);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-		glBindVertexArray(0);
+		glBindVertexArray(0);*/
+
+
 	}
 
 	void LineRenderer::Render() {
 
-		glBindVertexArray(VAO);
+		glBindVertexArray(VAO.Id);
 		glUseProgram(shader->GetProgram());
 
+		shader->color = color;
+		shader->mvp = &transform->MVP[0][0];
+		shader->render();
+
 		// uniforms
-		glUniform4f(glGetUniformLocation(shader->GetProgram(), "renderer_color"), color.r, color.g, color.b, color.a);
-		glUniformMatrix4fv(glGetUniformLocation(shader->GetProgram(), "MVP"), 1, GL_FALSE, &transform->MVP[0][0]);
+		//glUniform4f(glGetUniformLocation(shader->GetProgram(), "renderer_color"), color.r, color.g, color.b, color.a);
+		//glUniformMatrix4fv(glGetUniformLocation(shader->GetProgram(), "MVP"), 1, GL_FALSE, &transform->MVP[0][0]);
 
 		glEnablei(GL_BLEND, vertexBuffer);
-
 		glDrawArrays(GL_LINES, 0, vertices.size());
-
 		glDisablei(GL_BLEND, vertexBuffer);
 
 		glUseProgram(0);

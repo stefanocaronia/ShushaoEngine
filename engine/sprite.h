@@ -6,6 +6,7 @@
 #include "texture.h"
 #include "config.h"
 #include "types.h"
+#include "vao.h"
 
 namespace se {
 
@@ -21,10 +22,10 @@ namespace se {
 
 			Texture* texture = nullptr;
 
-			GLuint vertexBuffer;
+			/*GLuint vertexBuffer;
 			GLuint uvBuffer;
-			GLuint indexBuffer;
-			GLuint VAO;
+			GLuint indexBuffer;*/
+			Vao VAO { GL_STATIC_DRAW };
 
 			glm::vec2 pivot; // Location of the Sprite's center point in the vertices coordinates
 
@@ -32,7 +33,11 @@ namespace se {
 
 			glm::vec2 textureRectOffset; // Gets the offset of the rectangle this sprite uses on its texture to the original sprite bounds. If sprite mesh type is FullRect, offset is zero.
 
-			GLfloat quad_vertices[12] = {
+			std::vector<glm::vec3> vertices;
+			std::vector<GLint> indexes;
+			std::vector<glm::vec2> uv;
+
+			/*GLfloat quad_vertices[12] = {
 				-1.0f, -1.0f, 0.0f,  // Bottom-left
 				 1.0f, -1.0f, 0.0f, // Bottom-right
 				 1.0f,  1.0f, 0.0f, // Top-right
@@ -56,7 +61,7 @@ namespace se {
 			GLushort indexes[6] = {
 				0, 1, 2,
 				2, 3, 0
-			};
+			};*/
 
 			// metodi
 			Rect GetRect();
@@ -74,7 +79,7 @@ namespace se {
 
 		private:
 
-			Sprite* initVAO();
+			// Sprite* initVAO();
 			Sprite* init();
 
 			Rect rect = Rect::zero; // Location of the Sprite on the original Texture, specified in pixels.

@@ -19,8 +19,6 @@ namespace se {
 			#include "font.frag"
 		);
 		shader->name = "Font Shader";
-
-		transform->SetPivot({0.0f, 0.0f});
 	}
 
 	TextRenderer::~TextRenderer() {
@@ -58,7 +56,8 @@ namespace se {
 	void TextRenderer::Awake() {
 
 		glUseProgram(shader->GetProgram());
-        attribute_position = glGetAttribLocation(shader->GetProgram(), "position");
+        attribute_coord = glGetAttribLocation(shader->GetProgram(), "coord");
+        // attribute_coord = 0;
         uniform_tex = glGetUniformLocation(shader->GetProgram(), "tex");
         uniform_color = glGetUniformLocation(shader->GetProgram(), "color");
         uniform_mvp = glGetUniformLocation(shader->GetProgram(), "MVP");
@@ -77,7 +76,7 @@ namespace se {
 		glActiveTexture(GL_TEXTURE0);
 		glGenTextures(1, &tex);
 		glBindTexture(GL_TEXTURE_2D, tex);
-		glUniform1i(uniform_tex, 0);
+		glUniform1i(uniform_tex, GL_TEXTURE0);
 
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
@@ -86,41 +85,36 @@ namespace se {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-		glEnableVertexAttribArray(attribute_position);
+		glEnableVertexAttribArray(attribute_coord);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		glVertexAttribPointer(attribute_position, 4, GL_FLOAT, GL_FALSE, 0, 0);
+		glVertexAttribPointer(attribute_coord, 4, GL_FLOAT, GL_FALSE, 0, 0);
 
 		for (p = text; *p; p++) {
-			/* Try to load and render the character */
-			if (FT_Load_Char(font->face, *p, FT_LOAD_RENDER))
+			if (FT_Load_Char (font->face, *p, FT_LOAD_RENDER) )
 				continue;
 
-			/* Upload the "bitmap", which contains an 8-bit grayscale image, as an alpha texture */
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, g->bitmap.width, g->bitmap.rows, 0, GL_ALPHA, GL_UNSIGNED_BYTE, g->bitmap.buffer);
+			glTexImage2D (GL_TEXTURE_2D, 0, GL_RED, g->bitmap.width, g->bitmap.rows, 0, GL_RED, GL_UNSIGNED_BYTE, g->bitmap.buffer);
 
-			/* Calculate the vertex and texture coordinates */
 			float x2 = x + g->bitmap_left * sx;
 			float y2 = -y - g->bitmap_top * sy;
 			float w = g->bitmap.width * sx;
 			float h = g->bitmap.rows * sy;
 
 			GLfloat box[4][4] = {
-				{x2, -y2, 0, 0},
-				{x2 + w, -y2, 1, 0},
-				{x2, -y2 - h, 0, 1},
-				{x2 + w, -y2 - h, 1, 1},
+				{ x2,     -y2, 		0, 0 },
+				{ x2 + w, -y2, 		1, 0 },
+				{ x2,     -y2 - h, 	0, 1 },
+				{ x2 + w, -y2 - h, 	1, 1 },
 			};
 
-			/* Draw the character on the screen */
-			glBufferData(GL_ARRAY_BUFFER, sizeof box, box, GL_DYNAMIC_DRAW);
-			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+			glBufferData (GL_ARRAY_BUFFER, sizeof box, box, GL_DYNAMIC_DRAW);
+			glDrawArrays (GL_TRIANGLE_STRIP, 0, 4);
 
-			/* Advance the cursor to the start of the next character */
-			x += (g->advance.x >> 6) * sx;
-			y += (g->advance.y >> 6) * sy;
+			x += (g->advance.x / 64) * sx;
+			y += (g->advance.y / 64) * sy;
 		}
 
-		glDisableVertexAttribArray(attribute_position);
+		glDisableVertexAttribArray(attribute_coord);
 		glDeleteTextures(1, &tex);
 	}
 
@@ -128,18 +122,15 @@ namespace se {
 
 		if (!isReady()) return;
 
-		std::cout << "sr.";
-
 		glUseProgram(shader->GetProgram());
 
-        // uniforms
 		glUniform4f(uniform_color, color.r, color.g, color.b, color.a);
 		glUniformMatrix4fv(uniform_mvp, 1, GL_FALSE, &transform->MVP[0][0]);
 
 		font->setSize(40);
 		write(text.c_str(), 0.0f, 0.0f, scale.x, scale.y);
 
-		//glUseProgram(0);
+		glUseProgram(0);
 	}
 
 	void TextRenderer::OnDestroy() {}

@@ -22,7 +22,7 @@ namespace se {
 	}
 
 	bool SpriteRenderer::isReady() {
-		return (sprite != nullptr && sprite->VAO > 0 && shader != nullptr && transform != nullptr);
+		return (sprite != nullptr && sprite->VAO.Ready > 0 && shader != nullptr && transform != nullptr);
 	}
 
 	void SpriteRenderer::Awake() {
@@ -31,13 +31,17 @@ namespace se {
 
 		shader = new Shader();
 
-		glUseProgram(shader->GetProgram());
+		shader->awake();
 
-		uniform_renderer_color = glGetUniformLocation(shader->GetProgram(), "renderer_color");
-		uniform_base_texture = glGetUniformLocation(shader->GetProgram(), "base_texture");
-		uniform_mvp = glGetUniformLocation(shader->GetProgram(), "MVP");
+		if (!sprite->VAO.Ready) {
+			sprite->VAO.Init(shader);
+		}
 
-		glUseProgram(0);
+		// glUseProgram(shader->GetProgram());
+		// uniform_renderer_color = glGetUniformLocation(shader->GetProgram(), "color");
+		// uniform_base_texture = glGetUniformLocation(shader->GetProgram(), "texture");
+		// uniform_mvp = glGetUniformLocation(shader->GetProgram(), "mvp");
+		// glUseProgram(0);
 	}
 
 	void SpriteRenderer::Update() {
@@ -50,17 +54,21 @@ namespace se {
 
 		if (!isReady()) return;
 
-		glBindVertexArray(sprite->VAO);
+		glBindVertexArray(sprite->VAO.Id);
 		glUseProgram(shader->GetProgram());
 
+		shader->color = color;
+		shader->texture = GL_TEXTURE0;
+		shader->mvp = &transform->MVP[0][0];
+		shader->render();
+
 		// uniforms
-		glUniform4f(uniform_renderer_color, color.r, color.g, color.b, color.a);
-		glUniform1i(uniform_base_texture, GL_TEXTURE0);
-		glUniformMatrix4fv(uniform_mvp, 1, GL_FALSE, &transform->MVP[0][0]);
+		// glUniform4f(uniform_renderer_color, color.r, color.g, color.b, color.a);
+		// glUniform1i(uniform_base_texture, GL_TEXTURE0);
+		// glUniformMatrix4fv(uniform_mvp, 1, GL_FALSE, &transform->MVP[0][0]);
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, sprite->texture->TextureID);
-
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 
 		glUseProgram(0);

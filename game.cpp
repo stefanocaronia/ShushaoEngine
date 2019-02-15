@@ -35,16 +35,12 @@ Game::Game(string title) : Cycle(title) {
 	Config::Physics::debug = DEBUG;
 }
 
-Game::~Game() {
-   // do
-}
-
 void Game::Awake() {
 
 	Resources::Load<Texture>("assets/pancrazio.png");
 	Resources::Load<Texture>("assets/night.jpg");
 	Resources::Load<Texture>("assets/pancsmile.png");
-	Resources::Load<TextureAtlas>("assets/walking.png")->AddGrid(vec2(16,16), PivotPosition::BOTTOM);
+	Resources::Load<TextureAtlas>("assets/walking.png")->AddGrid(vec2(16, 16), PivotPosition::BOTTOM);
 	//Resources::Add<Shader>("standard");
 	Resources::Add<Sprite>("pancrazio_sprite")->SetTexture(Resources::Get<Texture>("pancrazio"));
 

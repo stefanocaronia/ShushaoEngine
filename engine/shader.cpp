@@ -8,7 +8,6 @@
 namespace se {
 
 	Shader::Shader() {
-		//loadWithName("shaders/standard", "Shader Standard");
 
 		LoadFromString(
 			#include "standard.vert"
@@ -16,7 +15,7 @@ namespace se {
 			#include "standard.frag"
 		);
 
-		name = "standard";
+		name = "Standard";
 	}
 
 	Shader::Shader(std::string filename, std::string n) {
@@ -59,6 +58,18 @@ namespace se {
 			return false;
 		}
 
+		glUseProgram(programID);
+
+		aPosition = glGetAttribLocation(programID, "position");
+		aTextureCoord = glGetAttribLocation(programID, "texturecoord");
+		aColor = glGetAttribLocation(programID, "color");
+
+		uMvp = glGetUniformLocation(programID, "mvp");
+		uTexture = glGetUniformLocation(programID, "texture");
+		uColor = glGetUniformLocation(programID, "color");
+
+		glUseProgram(0);
+
 		return true;
 	}
 
@@ -71,6 +82,52 @@ namespace se {
 			return programID;
 
 		return 0;
+	}
+
+	void Shader::awake() {
+		using namespace std;
+
+		GLuint programID = GetProgram();
+		if (!programID) {
+			return;
+		}
+
+		glUseProgram(programID);
+
+		aPosition = glGetAttribLocation(programID, "position");
+		aTextureCoord = glGetAttribLocation(programID, "texturecoord");
+		aColor = glGetAttribLocation(programID, "color");
+
+		uMvp = glGetUniformLocation(programID, "mvp");
+		uTexture = glGetUniformLocation(programID, "texture");
+		uColor = glGetUniformLocation(programID, "color");
+
+		glUseProgram(0);
+
+		Awake();
+
+		glUseProgram(0);
+	}
+
+	void Shader::Awake() {}
+
+	void Shader::Render() {}
+
+	void Shader::render() {
+
+		GLuint program = GetProgram();
+		if (!program) {
+			return;
+		}
+		// glUseProgram(program);
+
+		glUniform4f(uColor, color.r, color.g, color.b, color.a);
+		glUniform1i(uTexture, texture);
+		glUniformMatrix4fv(uMvp, 1, GL_FALSE, mvp);
+
+		Render();
+
+		// glUseProgram(0);
 	}
 
 	bool Shader::compile() {
@@ -159,7 +216,7 @@ namespace se {
 		if (status == GL_FALSE) {
 			char infoLog[512];
 			glGetShaderInfoLog(shader, 512, NULL, infoLog);
-			Debug::Log << "- Shader Compilation log:\n" << infoLog;
+			Debug::Log << "- Shader " << name << " Compilation log:\n" << infoLog;
 			return false;
 		}
 		return true;
@@ -173,7 +230,7 @@ namespace se {
 			glGetProgramiv (program, GL_INFO_LOG_LENGTH, &infoLogLength);
 			GLchar *infoLog= new GLchar[infoLogLength];
 			glGetProgramInfoLog (program, infoLogLength, NULL, infoLog);
-			Debug::Log << "- Program Compilation log:\n" << infoLog;
+			Debug::Log << "- Program " << name << " Compilation log:\n" << infoLog;
 			delete [] infoLog;
 			return false;
 		}

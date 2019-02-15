@@ -3,9 +3,9 @@
 #include "pancrazio.h"
 #include "mover.h"
 
-using namespace se;
-
 Level::Level() {
+
+	using namespace se;
 
 	Entity* ground = AddEntity("Ground");
 	//Entity* container = AddEntity("Container");
@@ -49,7 +49,7 @@ Level::Level() {
 	//sonOfPancrazio->transform->setLocalRotation({0,0,20});
 
 	SpriteRenderer* backgroundRenderer = root->AddComponent<SpriteRenderer>();
-	backgroundRenderer->shader = Resources::Get<Shader>("standard");
+	// backgroundRenderer->shader = Resources::Get<Shader>("standard");
 	backgroundRenderer->name = "Background Renderer";
 	backgroundRenderer->sortingLayerID = Config::SortingLayers["Background"];
 	backgroundRenderer->sprite = new Sprite("Background", Resources::Get<Texture>("night"));
@@ -58,13 +58,10 @@ Level::Level() {
 	Font* modenine = Resources::Get<Font>("Modenine");
 	modenine->setSize(24);
 
-	TextRenderer* text = root->AddComponent<TextRenderer>();
-	text->SetFont(modenine);
-	text->name = "Text Test";
-	text->sortingLayerID = Config::SortingLayers["UI"];
-	text->SetText("Hello Pancrazio!");
+	// TextRenderer* text = pancrazio->AddComponent<TextRenderer>();
+	// text->SetFont(modenine);
+	// text->name = "Text Test";
+	// text->sortingLayerID = Config::SortingLayers["UI"];
+	// text->SetText("Hello Pancrazio!");
 }
 
-Level::~Level() {
-	//
-}

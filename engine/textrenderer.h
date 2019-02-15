@@ -55,7 +55,7 @@ namespace se {
             std::string _text = "";
             std::string filename;
 
-            GLint attribute_position;
+            GLint attribute_coord;
             GLint uniform_tex;
             GLint uniform_color;
             GLint uniform_mvp;

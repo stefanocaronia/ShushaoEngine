@@ -1,5 +1,6 @@
 #include "spritesheet.h"
 #include "resources.h"
+#include "textureatlas.h"
 #include "types.h"
 
 namespace se {
@@ -37,17 +38,25 @@ namespace se {
 		push_back(sprite);
 	}
 
-	void SpriteSheet::Load(TextureAtlas* texture) {
+	void SpriteSheet::Load(TextureAtlas* atlas) {
 
-		if (name == "Spritesheet") name = texture->name;
+		if (atlas == nullptr) return;
 
         int counter = 0;
 
-        for (auto it = texture->slices.begin(); it != texture->slices.end(); it++) {
+		if (name == "Spritesheet") {
+			name = atlas->name;
+		}
+
+        if (atlas->slices.size() == 0) {
+			return;
+        }
+
+        for (auto it = atlas->slices.begin(); it != atlas->slices.end(); it++) {
             Rect rect = it->first;
             PivotPosition pivotpos = it->second;
 
-			Sprite* sprite = new Sprite(name + "_" + ts(counter), texture, rect, pivotpos);
+			Sprite* sprite = new Sprite(name + "_" + ts(counter), atlas, rect, pivotpos);
 
 			if (sprite != nullptr) {
 				Resources::Add(sprite);

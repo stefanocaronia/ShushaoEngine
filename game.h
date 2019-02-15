@@ -7,8 +7,6 @@ class Game : public se::Cycle {
 	public:
 
 		Game(string);
-		~Game();
-
 		string name;
 
 	protected:

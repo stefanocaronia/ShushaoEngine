@@ -18,6 +18,7 @@
 					<Add option="-g" />
 					<Add option="-DDEBUG=true" />
 					<Add option="-DGLEW_STATIC" />
+					<Add directory="engine" />
 				</Compiler>
 				<ExtraCommands>
 					<Add before="cmd /c rescopy Debug" />
@@ -32,6 +33,7 @@
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-DDEBUG=false" />
+					<Add directory="engine" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -375,6 +377,12 @@
 		</Unit>
 		<Unit filename="engine/utility.h">
 			<Option virtualFolder="engine/globals/" />
+		</Unit>
+		<Unit filename="engine/vao.cpp">
+			<Option virtualFolder="engine/base/" />
+		</Unit>
+		<Unit filename="engine/vao.h">
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/wire.frag">
 			<Option virtualFolder="engine/shaders/" />

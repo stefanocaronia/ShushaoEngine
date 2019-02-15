@@ -4,13 +4,13 @@ R"(
 
 layout(location=0) in vec3 position;
 layout(location=2) in vec4 color;
-uniform mat4 MVP;
+uniform mat4 mvp;
 
-out vec4 renderer_color;
+out vec4 rendered_color;
 
 void main() {
-	gl_Position = MVP * vec4(position, 1.0);
-	renderer_color = color;
+	gl_Position = mvp * vec4(position, 1.0);
+	rendered_color = color;
 }
 
 )"

@@ -2,6 +2,7 @@
 #include "resources.h"
 #include "textureatlas.h"
 #include "types.h"
+#include "utility.h"
 
 namespace se {
 
@@ -52,9 +53,9 @@ namespace se {
 			return;
         }
 
-        for (auto it = atlas->slices.begin(); it != atlas->slices.end(); it++) {
-            Rect rect = it->first;
-            PivotPosition pivotpos = it->second;
+        for (const auto& slice : atlas->slices) {
+            Rect rect = slice.first;
+            PivotPosition pivotpos = slice.second;
 
 			Sprite* sprite = new Sprite(name + "_" + ts(counter), atlas, rect, pivotpos);
 

@@ -9,19 +9,24 @@
 
 namespace se {
 
-	using namespace std;
-
 	class TextureAtlas : public Texture {
 
 		public:
 
 			TextureAtlas() {};
-			TextureAtlas(string filename) : Texture(filename) {};
-			TextureAtlas(string filename, string n) : Texture(filename, n) {};
+			TextureAtlas(std::string filename) : Texture(filename) {};
+			TextureAtlas(std::string filename, std::string n) : Texture(filename, n) {};
 
-			vector<pair<Rect, PivotPosition>> slices = {};
+			vector<pair<Rect, PivotPosition>> slices;
+
 			void AddSlice(Rect, PivotPosition pp = PivotPosition::CENTER);
-            void AddGrid(vec2, PivotPosition pp = PivotPosition::CENTER, vec2 = vec2(0,0), vec2 = vec2(0,0));
+
+            void AddGrid(
+				glm::vec2,
+				PivotPosition pp = PivotPosition::CENTER,
+				glm::vec2 = glm::vec2(0,0),
+				glm::vec2 = glm::vec2(0,0)
+			);
 
 	};
 

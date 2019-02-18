@@ -15,9 +15,9 @@ namespace se {
 		glDeleteBuffers(1, &uvBuffer);
 	}
 
-	void Vao::Init(Shader* shader) {
+	bool Vao::Init(Shader* shader) {
 
-		if (Ready) return;
+		if (Ready || shader == nullptr) return false;
 
 		using namespace glm;
 
@@ -61,6 +61,7 @@ namespace se {
 		glBindVertexArray(0);
 
 		Ready = true;
+		return true;
 	}
 
 	void Vao::SetVertices(vector<glm::vec3> vertices_) {

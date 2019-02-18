@@ -22,9 +22,6 @@ namespace se {
 
 			Texture* texture = nullptr;
 
-			/*GLuint vertexBuffer;
-			GLuint uvBuffer;
-			GLuint indexBuffer;*/
 			Vao VAO { GL_STATIC_DRAW };
 
 			glm::vec2 pivot; // Location of the Sprite's center point in the vertices coordinates
@@ -37,12 +34,7 @@ namespace se {
 			std::vector<GLint> indexes;
 			std::vector<glm::vec2> uv;
 
-			/*GLfloat quad_vertices[12] = {
-				-1.0f, -1.0f, 0.0f,  // Bottom-left
-				 1.0f, -1.0f, 0.0f, // Bottom-right
-				 1.0f,  1.0f, 0.0f, // Top-right
-				-1.0f,  1.0f, 0.0f // Top-left
-			};
+			/*
 
 			GLfloat vertices[12] = { // array containing sprite mesh vertex positions.
 				-1.0f, -1.0f, 0.0f,  // Bottom-left
@@ -79,12 +71,10 @@ namespace se {
 
 		private:
 
-			// Sprite* initVAO();
 			Sprite* init();
 
 			Rect rect = Rect::zero; // Location of the Sprite on the original Texture, specified in pixels.
 			glm::vec2 pixel_pivot; // Location of the Sprite's center point in the Rect on the original Texture, specified in pixels.
-
 
 	};
 

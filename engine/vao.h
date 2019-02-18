@@ -14,7 +14,7 @@ namespace se {
 
 			GLuint Id;
 
-			void Init(Shader*);
+			bool Init(Shader*);
 
 			bool Ready = false;
 

@@ -5,6 +5,7 @@
 #include "debug.h"
 #include "sprite.h"
 #include "rect.h"
+#include "types.h"
 
 using namespace std;
 

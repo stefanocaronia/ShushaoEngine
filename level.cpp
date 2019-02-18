@@ -55,8 +55,8 @@ Level::Level() {
 	backgroundRenderer->sprite = new Sprite("Background", Resources::Get<Texture>("night"));
 	backgroundRenderer->sprite->SetPixelPerUnit(64);
 
-	Font* modenine = Resources::Get<Font>("Modenine");
-	modenine->setSize(24);
+	// Font* modenine = Resources::Get<Font>("Modenine");
+	// modenine->setSize(24);
 
 	// TextRenderer* text = pancrazio->AddComponent<TextRenderer>();
 	// text->SetFont(modenine);

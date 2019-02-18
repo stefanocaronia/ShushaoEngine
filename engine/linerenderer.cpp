@@ -96,8 +96,6 @@ namespace se {
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		glBindVertexArray(0);*/
-
-
 	}
 
 	void LineRenderer::Render() {
@@ -108,10 +106,6 @@ namespace se {
 		shader->color = color;
 		shader->mvp = &transform->MVP[0][0];
 		shader->render();
-
-		// uniforms
-		//glUniform4f(glGetUniformLocation(shader->GetProgram(), "renderer_color"), color.r, color.g, color.b, color.a);
-		//glUniformMatrix4fv(glGetUniformLocation(shader->GetProgram(), "MVP"), 1, GL_FALSE, &transform->MVP[0][0]);
 
 		glEnablei(GL_BLEND, vertexBuffer);
 		glDrawArrays(GL_LINES, 0, vertices.size());

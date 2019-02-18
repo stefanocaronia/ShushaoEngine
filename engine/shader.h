@@ -30,6 +30,7 @@ namespace se {
 
 			virtual void awake();
 			virtual void render();
+			virtual void exit();
 
 			GLuint GetProgram();
 
@@ -39,30 +40,21 @@ namespace se {
 			GLint texture = GL_TEXTURE0;
 			const GLfloat* mvp;
 
+			// attributes
 			GLint aPosition;
 			GLint aTextureCoord;
 			GLint aColor;
 
+			// uniforms
 			GLint uMvp;
-			GLint uTexture;
+			GLint uTextureId;
 			GLint uColor;
-
-			/*std::map<std::string, GLint> attributes {
-				{ "position", 0 },
-				{ "texturecoord", 0 },
-				{ "color", 0 }
-			};
-
-			std::map<std::string, GLint> uniforms {
-				{ "mvp", 0 },
-				{ "texture", 0 },
-				{ "color", 0 }
-			};*/
 
 		protected:
 
 			virtual void Awake();
 			virtual void Render();
+			virtual void Exit();
 
 		private:
 

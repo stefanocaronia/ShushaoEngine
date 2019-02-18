@@ -58,18 +58,6 @@ namespace se {
 			return false;
 		}
 
-		glUseProgram(programID);
-
-		aPosition = glGetAttribLocation(programID, "position");
-		aTextureCoord = glGetAttribLocation(programID, "texturecoord");
-		aColor = glGetAttribLocation(programID, "color");
-
-		uMvp = glGetUniformLocation(programID, "mvp");
-		uTexture = glGetUniformLocation(programID, "texture");
-		uColor = glGetUniformLocation(programID, "color");
-
-		glUseProgram(0);
-
 		return true;
 	}
 
@@ -88,9 +76,7 @@ namespace se {
 		using namespace std;
 
 		GLuint programID = GetProgram();
-		if (!programID) {
-			return;
-		}
+		if (!programID) return;
 
 		glUseProgram(programID);
 
@@ -99,35 +85,39 @@ namespace se {
 		aColor = glGetAttribLocation(programID, "color");
 
 		uMvp = glGetUniformLocation(programID, "mvp");
-		uTexture = glGetUniformLocation(programID, "texture");
+		uTextureId = glGetUniformLocation(programID, "textureid");
 		uColor = glGetUniformLocation(programID, "color");
-
-		glUseProgram(0);
 
 		Awake();
 
 		glUseProgram(0);
 	}
 
-	void Shader::Awake() {}
-
-	void Shader::Render() {}
-
 	void Shader::render() {
 
-		GLuint program = GetProgram();
-		if (!program) {
+		/*GLuint programID = GetProgram();
+		if (!programID) {
 			return;
-		}
-		// glUseProgram(program);
+		}*/
+
+		//glUseProgram(programID);
 
 		glUniform4f(uColor, color.r, color.g, color.b, color.a);
-		glUniform1i(uTexture, texture);
+		glUniform1i(uTextureId, texture);
 		glUniformMatrix4fv(uMvp, 1, GL_FALSE, mvp);
 
 		Render();
 
-		// glUseProgram(0);
+		//glUseProgram(0);
+	}
+
+	void Shader::exit() {
+
+		Exit();
+
+		glUseProgram(0);
+		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(1);
 	}
 
 	bool Shader::compile() {
@@ -237,5 +227,9 @@ namespace se {
 		return true;
 	}
 
+	void Shader::Awake() {}
 
+	void Shader::Render() {}
+
+	void Shader::Exit() {}
 }

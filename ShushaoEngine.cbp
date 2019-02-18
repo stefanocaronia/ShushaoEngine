@@ -373,10 +373,10 @@
 			<Option virtualFolder="engine/globals/" />
 		</Unit>
 		<Unit filename="engine/utility.cpp">
-			<Option virtualFolder="engine/globals/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/utility.h">
-			<Option virtualFolder="engine/globals/" />
+			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/vao.cpp">
 			<Option virtualFolder="engine/base/" />

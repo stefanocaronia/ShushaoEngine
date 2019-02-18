@@ -58,6 +58,18 @@ namespace se {
 			return false;
 		}
 
+		glUseProgram(programID);
+
+		aPosition = glGetAttribLocation(programID, "position");
+		aTextureCoord = glGetAttribLocation(programID, "texturecoord");
+		aColor = glGetAttribLocation(programID, "color");
+
+		uMvp = glGetUniformLocation(programID, "mvp");
+		uTextureId = glGetUniformLocation(programID, "textureid");
+		uColor = glGetUniformLocation(programID, "color");
+
+		glUseProgram(0);
+
 		return true;
 	}
 
@@ -78,37 +90,23 @@ namespace se {
 		GLuint programID = GetProgram();
 		if (!programID) return;
 
-		glUseProgram(programID);
 
-		aPosition = glGetAttribLocation(programID, "position");
-		aTextureCoord = glGetAttribLocation(programID, "texturecoord");
-		aColor = glGetAttribLocation(programID, "color");
-
-		uMvp = glGetUniformLocation(programID, "mvp");
-		uTextureId = glGetUniformLocation(programID, "textureid");
-		uColor = glGetUniformLocation(programID, "color");
 
 		Awake();
-
-		glUseProgram(0);
 	}
 
 	void Shader::render() {
 
-		/*GLuint programID = GetProgram();
+		GLuint programID = GetProgram();
 		if (!programID) {
 			return;
-		}*/
-
-		//glUseProgram(programID);
+		}
 
 		glUniform4f(uColor, color.r, color.g, color.b, color.a);
 		glUniform1i(uTextureId, texture);
 		glUniformMatrix4fv(uMvp, 1, GL_FALSE, mvp);
 
 		Render();
-
-		//glUseProgram(0);
 	}
 
 	void Shader::exit() {

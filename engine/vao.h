@@ -20,19 +20,19 @@ namespace se {
 
 			GLenum USAGE;
 
-			void SetVertices(std::vector<glm::vec3>);
-			void SetUv(std::vector<glm::vec2>);
-			void SetIndexes(std::vector<GLint>);
-			void SetColors(std::vector<Color>);
+			void SetVertices(std::vector<glm::vec3>&);
+			void SetUv(GLclampd*);
+			void SetIndexes(GLushort*);
+			void SetColors(std::vector<Color>&);
 
 		protected:
 
 		private:
 
 			std::vector<glm::vec3> vertices;
-			std::vector<glm::vec2> uv;
-			std::vector<GLint> indexes;
             std::vector<Color> colors;
+			GLclampd uv[8] = {99};
+			GLushort indexes[6] = {99};
 
 			GLuint vertexBuffer;
 			GLuint colorBuffer;

@@ -22,7 +22,7 @@ namespace se {
 	}
 
 	bool SpriteRenderer::isReady() {
-		return (sprite != nullptr && sprite->VAO.Ready && shader != nullptr && transform != nullptr);
+		return (sprite != nullptr && sprite->VAO->Ready && shader != nullptr && transform != nullptr);
 	}
 
 	void SpriteRenderer::Awake() {
@@ -32,8 +32,8 @@ namespace se {
 		shader = new Shader();
 		shader->awake();
 
-		if (!sprite->VAO.Ready) {
-			sprite->VAO.Init(shader);
+		if (!sprite->VAO->Ready) {
+			sprite->VAO->Init(shader);
 		}
 	}
 
@@ -47,7 +47,7 @@ namespace se {
 
 		if (!isReady()) return;
 
-		glBindVertexArray(sprite->VAO.Id);
+		glBindVertexArray(sprite->VAO->Id);
 		glUseProgram(shader->GetProgram());
 
 		shader->color = color;

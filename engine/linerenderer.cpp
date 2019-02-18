@@ -18,12 +18,15 @@ namespace se {
 			#include "wire.frag"
 		);
 		shader->name = "Wireframe";
+
+		VAO = new Vao(GL_DYNAMIC_DRAW);
 	}
 
 	LineRenderer::~LineRenderer() {
 		name = "Line Renderer";
 
-		if (shader != nullptr) delete(shader);
+		if (shader != nullptr) { delete(shader); shader = nullptr; }
+		if (VAO != nullptr) { delete(VAO); VAO = nullptr; }
 	}
 
 	LineRenderer::LineRenderer(std::string n) {
@@ -74,33 +77,14 @@ namespace se {
 
 		shader->awake();
 
-		VAO.SetVertices(vertices);
-		VAO.SetColors(colors);
-		VAO.Init(shader);
-
-		/*glGenVertexArrays(1, &VAO.Id);
-		glBindVertexArray(VAO.Id);
-
-		glGenBuffers(1, &vertexBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-		glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(vec3), &vertices[0], GL_STATIC_DRAW);
-		glVertexAttribPointer(ShaderLocation::POSITION, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-		glEnableVertexAttribArray(ShaderLocation::POSITION);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-		glGenBuffers(1, &colorBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
-		glBufferData(GL_ARRAY_BUFFER, colors.size() * sizeof(vec4), &colors[0], GL_STATIC_DRAW);
-		glVertexAttribPointer(ShaderLocation::COLOR, 4, GL_FLOAT, GL_FALSE, 0, (void*)0);
-		glEnableVertexAttribArray(ShaderLocation::COLOR);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-		glBindVertexArray(0);*/
+		VAO->SetVertices(vertices);
+		VAO->SetColors(colors);
+		VAO->Init(shader);
 	}
 
 	void LineRenderer::Render() {
 
-		glBindVertexArray(VAO.Id);
+		glBindVertexArray(VAO->Id);
 		glUseProgram(shader->GetProgram());
 
 		shader->color = color;

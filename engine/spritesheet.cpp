@@ -1,6 +1,7 @@
 #include "spritesheet.h"
 #include "resources.h"
 #include "textureatlas.h"
+#include "rect.h"
 #include "types.h"
 #include "utility.h"
 
@@ -53,7 +54,7 @@ namespace se {
 			return;
         }
 
-        for (const auto& slice : atlas->slices) {
+        for (const pair<Rect, PivotPosition>& slice : atlas->slices) {
             Rect rect = slice.first;
             PivotPosition pivotpos = slice.second;
 

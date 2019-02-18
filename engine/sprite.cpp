@@ -16,6 +16,8 @@ namespace se {
 	}
 
 	Sprite::~Sprite() {
+		delete(VAO);
+		VAO = nullptr;
 	}
 
 	Sprite::Sprite(string n) {
@@ -82,37 +84,21 @@ namespace se {
 
 	Sprite* Sprite::init() {
 
-		uv = { // The base texture coordinates of the sprite mesh.
-			{ 0.0f, 1.0f }, // Bottom-left of texture
-			{ 1.0f, 1.0f }, // Bottom-right of texture
-			{ 1.0f, 0.0f }, // Top-Right of texture
-			{ 0.0f, 0.0f } // Top-left of texture
-		};
-
-		indexes = {
-			0, 1, 2,
-			2, 3, 0
-		};
-
-		VAO.SetUv(uv);
-		VAO.SetIndexes(indexes);
+		VAO = new Vao(GL_STATIC_DRAW);
 
 		pivot.x = (pixel_pivot.x - (rect.width / 2)) / (float)pixelPerUnit;
 		pivot.y = -(pixel_pivot.y - (rect.height / 2)) / (float)pixelPerUnit;
 
-		GLfloat wX = ((rect.width / pixelPerUnit) / 2);
-		GLfloat wY = ((rect.height / pixelPerUnit) / 2);
+		float wX = ((rect.width / pixelPerUnit) / 2);
+		float wY = ((rect.height / pixelPerUnit) / 2);
 
+		vertices.clear();
 		vertices = {
 			{-wX - pivot.x, -wY - pivot.y, 0.0f}, // Bottom-left
 			{ wX - pivot.x, -wY - pivot.y, 0.0f}, // Bottom-right
 			{ wX - pivot.x,  wY - pivot.y, 0.0f}, // Top-right
 			{-wX - pivot.x,  wY - pivot.y, 0.0f} // Top-left
 		};
-
-		VAO.SetVertices(vertices);
-
-		// memcpy(vertices, v, sizeof(GLfloat) * 12);
 
 		if (rect.width < texture->width || rect.height < texture->height) {
 
@@ -124,52 +110,22 @@ namespace se {
 				rect.height / texture->height
 			);
 
-			uv = { // The base texture coordinates of the sprite mesh.
-				{ tsr.x, tsr.yMax}, // Bottom-left of texture
-				{ tsr.xMax, tsr.yMax}, // Bottom-right of texture
-				{ tsr.xMax, tsr.y}, // Top-Right of texture
-				{ tsr.x, tsr.y} // Top-left of texture
+			GLclampd u[8] = { // The base texture coordinates of the sprite mesh.
+				tsr.x, tsr.yMax, // Bottom-left of texture
+				tsr.xMax, tsr.yMax, // Bottom-right of texture
+				tsr.xMax, tsr.y, // Top-Right of texture
+				tsr.x, tsr.y // Top-left of texture
 			};
 
-			VAO.SetUv(uv);
-
-			// memcpy(uv, u, sizeof(GLclampd) * 8);
+			memcpy(uv, u, sizeof(GLclampd) * 8);
 		}
+
+		VAO->SetUv(uv);
+		VAO->SetVertices(vertices);
+		VAO->SetIndexes(indexes);
 
 		return this;
 	}
-
-	/*Sprite* Sprite::initVAO() {
-
-		glGenVertexArrays(1, &VAO);
-		glBindVertexArray(VAO);
-
-		glGenBuffers(1, &vertexBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STATIC_DRAW);
-
-		glGenBuffers(1, &indexBuffer);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indexes), &indexes, GL_STATIC_DRAW);
-
-		glGenBuffers(1, &uvBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, uvBuffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(uv), &uv, GL_STATIC_DRAW);
-
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-		glVertexAttribPointer(ShaderLocation::POSITION, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-		glEnableVertexAttribArray(ShaderLocation::POSITION);
-
-		glBindBuffer(GL_ARRAY_BUFFER, uvBuffer);
-		glVertexAttribPointer(ShaderLocation::TEXCOORD, 2, GL_DOUBLE, GL_FALSE, 0, (void*)0);
-		glEnableVertexAttribArray(ShaderLocation::TEXCOORD);
-
-		glBindVertexArray(0);
-
-		VAOInitialized = true;
-
-		return this;
-	}*/
 
 	vec2 Sprite::CalculatePivot(PivotPosition pp, Rect re, vec2 custom) {
 		vec2 piv;

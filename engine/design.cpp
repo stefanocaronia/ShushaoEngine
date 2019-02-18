@@ -216,11 +216,11 @@ namespace se {
 		glGenBuffers(1, &vertexBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 		glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
-		glVertexAttribPointer(ShaderLocation::POSITION, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-		glEnableVertexAttribArray(ShaderLocation::POSITION);
+		glVertexAttribPointer(shader->aCoord, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+		glEnableVertexAttribArray(shader->aCoord);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
-		glUniformMatrix4fv(glGetUniformLocation(shader->GetProgram(), "MVP"), 1, GL_FALSE, &MVP[0][0]);
+		glUniformMatrix4fv(shader->uMvp, 1, GL_FALSE, &MVP[0][0]);
 		glEnablei(GL_BLEND, vertexBuffer);
 	}
 
@@ -231,7 +231,7 @@ namespace se {
 	}
 
 	void Design::setColor(Color color) {
-		glUniform4f(glGetUniformLocation(shader->GetProgram(), "renderer_color"), color.r, color.g, color.b, color.a);
+		glUniform4f(shader->uColor, color.r, color.g, color.b, color.a);
 	}
 
 	//init

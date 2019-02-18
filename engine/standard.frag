@@ -3,12 +3,12 @@ R"(
 
 in vec2 out_texturecoord;
 
-uniform sampler2D textureid;
-uniform vec4 color;
+uniform sampler2D uTextureId;
+uniform vec4 uColor;
 
 out vec4 out_color;
 
 void main() {
-	out_color = texture(textureid, out_texturecoord).rgba * vec4(color);
+	out_color = texture(uTextureId, out_texturecoord).rgba * vec4(uColor);
 }
 )"

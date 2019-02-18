@@ -3,13 +3,13 @@ R"(
 
 in vec2 out_texturecoord;
 
-uniform sampler2D texture;
-uniform vec4 color;
+uniform sampler2D uTexture;
+uniform vec4 uColor;
 
 out vec4 out_color;
 
 void main(void) {
-	out_color = vec4(1, 1, 1, texture2D(texture, out_texturecoord).a) * color;
+	out_color = vec4(1, 1, 1, texture2D(uTexture, out_texturecoord).a) * uColor;
 }
 
 )"

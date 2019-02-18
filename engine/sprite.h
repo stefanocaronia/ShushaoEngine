@@ -22,7 +22,7 @@ namespace se {
 
 			Texture* texture = nullptr;
 
-			Vao VAO { GL_STATIC_DRAW };
+			Vao* VAO;
 
 			glm::vec2 pivot; // Location of the Sprite's center point in the vertices coordinates
 
@@ -30,17 +30,16 @@ namespace se {
 
 			glm::vec2 textureRectOffset; // Gets the offset of the rectangle this sprite uses on its texture to the original sprite bounds. If sprite mesh type is FullRect, offset is zero.
 
-			std::vector<glm::vec3> vertices;
-			std::vector<GLint> indexes;
-			std::vector<glm::vec2> uv;
+			std::vector<glm::vec3> vertices {
+				{-1.0f, -1.0f, 0.0f},  // Bottom-left
+				{ 1.0f, -1.0f, 0.0f}, // Bottom-right
+				{ 1.0f,  1.0f, 0.0f}, // Top-right
+				{-1.0f,  1.0f, 0.0f} // Top-left
+			};
 
-			/*
-
-			GLfloat vertices[12] = { // array containing sprite mesh vertex positions.
-				-1.0f, -1.0f, 0.0f,  // Bottom-left
-				 1.0f, -1.0f, 0.0f, // Bottom-right
-				 1.0f,  1.0f, 0.0f, // Top-right
-				-1.0f,  1.0f, 0.0f // Top-left
+			GLushort indexes[6] = {
+				0, 1, 2,
+				2, 3, 0
 			};
 
 			GLclampd uv[8] = { // The base texture coordinates of the sprite mesh.
@@ -49,11 +48,6 @@ namespace se {
 				1.0d, 0.0d, // Top-Right of texture
 				0.0d, 0.0d // Top-left of texture
 			};
-
-			GLushort indexes[6] = {
-				0, 1, 2,
-				2, 3, 0
-			};*/
 
 			// metodi
 			Rect GetRect();

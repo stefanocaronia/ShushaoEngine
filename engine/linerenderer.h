@@ -29,7 +29,7 @@ namespace se {
 			GLuint vertexBuffer;
 			GLuint colorBuffer;
 
-			Vao VAO { GL_DYNAMIC_DRAW };
+			Vao* VAO;
 
 			Shader* shader;
 

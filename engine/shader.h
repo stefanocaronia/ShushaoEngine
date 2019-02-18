@@ -41,7 +41,7 @@ namespace se {
 			const GLfloat* mvp;
 
 			// attributes
-			GLint aPosition;
+			GLint aCoord;
 			GLint aTextureCoord;
 			GLint aColor;
 

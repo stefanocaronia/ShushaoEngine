@@ -1,17 +1,18 @@
 #pragma once
 
 #include <string>
+#include <glm/glm.hpp>
 
 using namespace std;
 
 namespace se {
 
-	struct Color {
+	class Color {
 
 		public:
 
 			Color();
-			Color(float, float, float, float);
+			Color(float, float, float, float a = 1.0f);
 
 			float r; //	Red component of the color.
 			float g; //	Green component of the color.
@@ -24,6 +25,8 @@ namespace se {
 
 			float maxColorComponent(); //	Returns the maximum color component value: Max(r,g,b).
 			std::string ToString();
+
+			glm::vec4 rgba;
 
 			static Color black; // Solid black. RGBA is (0, 0, 0, 1).
 			static Color blue; // Solid blue. RGBA is (0, 0, 1, 1).

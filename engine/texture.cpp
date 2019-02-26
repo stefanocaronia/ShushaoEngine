@@ -20,6 +20,7 @@ namespace se {
 	bool Texture::Load(std::string filename) {
 
 		Surface = IMG_Load(filename.c_str());
+		name = util::basename(filename);
 
 		if (!Surface) {
 			Debug::Log(ERROR) << "IMG_Load " << IMG_GetError() << endl;
@@ -29,7 +30,7 @@ namespace se {
 		width = Surface->w;
 		height = Surface->h;
 
-		int Mode = Surface->format->BytesPerPixel == 4 ? GL_RGBA : GL_RGB;
+		int Mode = (Surface->format->BytesPerPixel == 4 ? GL_RGBA : GL_RGB);
 
 		glGenTextures(1, &TextureID);
 		glBindTexture(GL_TEXTURE_2D, TextureID);
@@ -39,6 +40,8 @@ namespace se {
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 0);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+		glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
 		glGenerateMipmap(GL_TEXTURE_2D);
 

@@ -110,14 +110,14 @@ namespace se {
 				rect.height / texture->height
 			);
 
-			GLclampd u[8] = { // The base texture coordinates of the sprite mesh.
+			uv = { // The base texture coordinates of the sprite mesh.
 				tsr.x, tsr.yMax, // Bottom-left of texture
 				tsr.xMax, tsr.yMax, // Bottom-right of texture
 				tsr.xMax, tsr.y, // Top-Right of texture
 				tsr.x, tsr.y // Top-left of texture
 			};
 
-			memcpy(uv, u, sizeof(GLclampd) * 8);
+			// memcpy(uv, u, sizeof(GLclampd) * 8);
 		}
 
 		VAO->SetUv(uv);

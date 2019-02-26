@@ -16,7 +16,7 @@ namespace se {
 		IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
 		// TTF_Init();
 
-		FT_Init_FreeType(&lFreetype);
+		// FT_Init_FreeType(&lFreetype);
 
 		Mix_Init(MIX_INIT_MP3 | MIX_INIT_OGG);
 		Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096);

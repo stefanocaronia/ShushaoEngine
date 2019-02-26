@@ -5,8 +5,8 @@
 
 namespace se {
 
-	bool Design::initDraw() {
-		if (readyToDraw) return true;
+	bool Design::Init() {
+		if (ready) return true;
 		if (!GLManager::ready) return false;
 
 		shader = new Shader();
@@ -15,16 +15,22 @@ namespace se {
 			,
 			#include "base.frag"
 		);
-		shader->name = "Base";
+		shader->name = "Wireframe";
 
-		vertices.reserve(256);
-		return readyToDraw = true;
+		//vertices.reserve(256);
+
+		VAO = new Vao(GL_STATIC_DRAW);
+		MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
+
+		return ready = true;
 	}
 
 	void Design::Clear() {
 		drawCalls.clear();
 		if (shader != nullptr) delete(shader);
 	}
+
+	//{ #region draw calls
 
 	void Design::AddDrawCall(DrawCall call) {
 		auto it = std::find(drawCalls.begin(), drawCalls.end(), call);
@@ -40,29 +46,27 @@ namespace se {
 
 		for (auto it = drawCalls.begin(); it != drawCalls.end(); ++it) {
             switch (it->element) {
-			case DrawElement::LINE:
-				_drawLine(it->start, it->end, it->color);
-				break;
-			case DrawElement::RAY:
-				_drawRay(it->start, it->dir, it->color);
-				break;
-			case DrawElement::CIRCLE:
-				_drawCircle(it->position, it->radius, it->color, it->mode);
-				break;
-			case DrawElement::POINT:
-				_drawPoint(it->position, it->color, it->tickness);
-				break;
-			case DrawElement::POLYGON:
-				_drawPolygon(it->vertices, it->color, it->mode);
-				break;
-			case DrawElement::VECTOR:
-				break;
+				case DrawElement::LINE:
+					_drawLine(it->start, it->end, it->color);
+					break;
+				case DrawElement::RAY:
+					_drawRay(it->start, it->dir, it->color);
+					break;
+				case DrawElement::CIRCLE:
+					_drawCircle(it->position, it->radius, it->color, it->mode);
+					break;
+				case DrawElement::POINT:
+					_drawPoint(it->position, it->color, it->tickness);
+					break;
+				case DrawElement::POLYGON:
+					_drawPolygon(it->vertices, it->color, it->mode);
+					break;
+				case DrawElement::VECTOR:
+					break;
             }
             if (it->duration > 0.0f && it->expire == 0.0f) it->expire = Time::time + it->duration;
 		}
 	}
-
-	//{ #region draw methods
 
 	void Design::DrawLine(glm::vec3 start, glm::vec3 end, Color color, float duration) {
 		DrawCall call;
@@ -99,7 +103,6 @@ namespace se {
 		AddDrawCall(call);
 	}
 
-
 	void Design::DrawRay(glm::vec3 start, glm::vec3 dir, Color color, float duration) {
 		DrawCall call;
 		call.element = DrawElement::RAY;
@@ -135,63 +138,101 @@ namespace se {
 		AddDrawCall(call);
 	}
 
-	void Design::_drawPoint(glm::vec3 position, Color color, int tickness) {
-		if (!initDraw()) return;
+	//}
 
+	//{ #region draw methods
+
+	void Design::_drawPoint(glm::vec3 position, Color color, int tickness) {
+		if (!Init()) return;
+
+		vertices.clear();
 		vertices = {position};
 
-		initVAO();
+		VAO->SetVertices(vertices);
 
-		setColor(color);
+		shader->Use();
+		VAO->Bind();
+
+		shader->SetMatrix("MVP", &MVP[0][0]);
+		shader->SetColor("render_color", color);
+
+		glEnablei(GL_BLEND, VAO->vertexBuffer);
 		glPointSize(tickness);
 		glDrawArrays(GL_POINTS, 0, 1);
 		glPointSize(1);
-		closeVAO();
+		glDisablei(GL_BLEND, VAO->vertexBuffer);
+
+		VAO->Unbind();
+		shader->Leave();
 	}
 
 	void Design::_drawLine(glm::vec3 start, glm::vec3 end, Color color) {
-		if (!initDraw()) return;
+		if (!Init()) return;
 
-		vertices = {start, end};
+		vector<glm::vec3> vertices = {start, end};
 
-		initVAO();
+		VAO->SetVertices(vertices);
 
-		setColor(color);
+		shader->Use();
+		VAO->Bind();
+
+		shader->SetMatrix("MVP", &MVP[0][0]);
+		shader->SetColor("render_color", color);
+
+		glEnablei(GL_BLEND, VAO->vertexBuffer);
 		glDrawArrays(GL_LINES, 0, vertices.size());
+		glDisablei(GL_BLEND, VAO->vertexBuffer);
 
-		closeVAO();
+		VAO->Unbind();
+		shader->Leave();
 	}
 
 	void Design::_drawRay(glm::vec3 start, glm::vec3 dir, Color color) {
-		if (!initDraw()) return;
+		if (!Init()) return;
 
-		vertices = {start, start + dir};
+		vector<glm::vec3> vertices = {start, start + dir};
 
-		initVAO();
+		VAO->SetVertices(vertices);
 
-		setColor(color);
+		shader->Use();
+		VAO->Bind();
+
+		shader->SetMatrix("MVP", &MVP[0][0]);
+		shader->SetColor("render_color", color);
+
+		glEnablei(GL_BLEND, VAO->vertexBuffer);
 		glDrawArrays(GL_LINES, 0, vertices.size());
+		glDisablei(GL_BLEND, VAO->vertexBuffer);
 
-		closeVAO();
+		VAO->Unbind();
+		shader->Leave();
 	}
 
 	void Design::_drawPolygon(std::vector<glm::vec3> vertices_, Color color, DrawMode mode) {
-		if (!initDraw()) return;
+		if (!Init()) return;
 
-		vertices.swap(vertices_);
+		VAO->SetVertices(vertices_);
+		VAO->Bind();
+		shader->Use();
 
-		initVAO();
+		glm::mat4 mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 
-		setColor(color);
-		glDrawArrays((mode == DrawMode::HOLLOW ? GL_LINE_LOOP : GL_TRIANGLE_FAN), 0, vertices.size());
+		shader->SetMatrix("MVP", &mvp[0][0]);
+		shader->SetColor("render_color", color);
 
-		closeVAO();
+		glEnablei(GL_BLEND, VAO->vertexBuffer);
+		glDrawArrays((mode == DrawMode::HOLLOW ? GL_LINE_LOOP : GL_TRIANGLE_FAN), 0, vertices_.size());
+		glDisablei(GL_BLEND, VAO->vertexBuffer);
+
+		shader->Leave();
+		VAO->Unbind();
+
 	}
 
 	void Design::_drawCircle(glm::vec3 position, float radius, Color color, DrawMode mode) {
-		if (!initDraw()) return;
+		if (!Init()) return;
 
-		vertices.clear();
+		vector<glm::vec3> vertices;
 		int NUM_DIVISIONS = 31;
 
 		for(int i = 0; i < NUM_DIVISIONS +1; i++) {
@@ -199,47 +240,30 @@ namespace se {
 			vertices.push_back({position.x + radius * cos((float) i / NUM_DIVISIONS * M_PI * 2), position.y + radius * sin((float) i / NUM_DIVISIONS * M_PI * 2), 0.0f});
 		}
 
-		initVAO();
+		VAO->SetVertices(vertices);
 
-		setColor(color);
+		shader->Use();
+		VAO->Bind();
+
+		shader->SetMatrix("MVP", &MVP[0][0]);
+		shader->SetColor("render_color", color);
+
+		glEnablei(GL_BLEND, VAO->vertexBuffer);
 		glDrawArrays((mode == DrawMode::FULL ? GL_TRIANGLE_STRIP : GL_LINE_LOOP), 0, vertices.size());
+		glDisablei(GL_BLEND, VAO->vertexBuffer);
 
-		closeVAO();
+		VAO->Unbind();
+		shader->Leave();
 	}
 
 	//}
 
-	void Design::initVAO() {
-		glUseProgram(shader->GetProgram());
-		glGenVertexArrays(1, &VAO);
-		glBindVertexArray(VAO);
-		glGenBuffers(1, &vertexBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-		glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
-		glVertexAttribPointer(shader->aCoord, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-		glEnableVertexAttribArray(shader->aCoord);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
-		glUniformMatrix4fv(shader->uMvp, 1, GL_FALSE, &MVP[0][0]);
-		glEnablei(GL_BLEND, vertexBuffer);
-	}
-
-	void Design::closeVAO() {
-		glDisablei(GL_BLEND, vertexBuffer);
-		glUseProgram(0);
-		glBindVertexArray(0);
-	}
-
-	void Design::setColor(Color color) {
-		glUniform4f(shader->uColor, color.r, color.g, color.b, color.a);
-	}
-
-	//init
-
+	// init
 	Shader* Design::shader = nullptr;
-	bool Design::readyToDraw;
-	GLuint Design::VAO;
-	GLuint Design::vertexBuffer;
+	bool Design::ready;
+	Vao* Design::VAO;
+	glm::mat4 Design::MVP;
+	//GLuint Design::vertexBuffer;
 	std::vector<glm::vec3> Design::vertices;
 	std::vector<DrawCall> Design::drawCalls;
 }

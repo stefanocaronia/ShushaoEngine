@@ -8,13 +8,17 @@ namespace se {
 		g = 0.0f;
 		b = 0.0f;
 		a = 1.0f;
+
+		rgba = {r, g, b, a};
 	}
 
-	Color::Color(float _r, float _g, float _b, float _a) {
-		r = _r;
-		g = _g;
-		b = _b;
-		a = _a;
+	Color::Color(float r_, float g_, float b_, float a_) {
+		r = r_;
+		g = g_;
+		b = b_;
+		a = a_;
+
+		rgba = {r, g, b, a};
 	}
 
 	float Color::maxColorComponent() {
@@ -22,7 +26,7 @@ namespace se {
 	}
 
 	string Color::ToString() {
-		return "("+ts(r)+","+ts(g)+","+ts(b)+")";
+		return "("+ts(r)+","+ts(g)+","+ts(b)+","+ts(a)+")";
 	}
 
 	Color Color::black = {0.0f, 0.0f, 0.0f, 1.0f};

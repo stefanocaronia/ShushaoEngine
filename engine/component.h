@@ -81,11 +81,11 @@ namespace se {
 			bool currentEnable;
 			bool started;
 
-			virtual void init();
-			virtual void update();
-			virtual void fixed();
-			virtual void render();
-			virtual void exit();
+			void init();
+			void update();
+			void fixed();
+			void render();
+			void exit();
 
 
 

@@ -6,6 +6,7 @@
 
 #include "color.h"
 #include "shader.h"
+#include "vao.h"
 
 namespace se {
 
@@ -68,15 +69,13 @@ namespace se {
 		private:
 
 			static Shader* shader;
-			static bool readyToDraw;
-			static GLuint VAO;
-			static GLuint vertexBuffer;
+			static bool ready;
+			//static GLuint VAO;
+			static Vao* VAO;
 			static std::vector<glm::vec3> vertices;
+			static glm::mat4 MVP;
 
-			static bool initDraw();
-			static void initVAO();
-			static void setColor(Color);
-			static void closeVAO();
+			static bool Init();
 
 			static void AddDrawCall(DrawCall);
 

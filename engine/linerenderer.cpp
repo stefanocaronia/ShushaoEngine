@@ -8,6 +8,8 @@
 
 namespace se {
 
+	using namespace glm;
+
 	LineRenderer::LineRenderer() {
 		name = "Line Renderer";
 
@@ -36,8 +38,8 @@ namespace se {
 	void LineRenderer::AddLine(const glm::vec3 start_point, const glm::vec3 end_point, Color col) {
 		vertices.push_back(start_point);
 		vertices.push_back(end_point);
-		colors.push_back(col);
-		colors.push_back(col);
+		colors.push_back(col.rgba);
+		colors.push_back(col.rgba);
 	}
 
 	void LineRenderer::AddPolyline(const std::vector<glm::vec3> points, Color col) {
@@ -46,10 +48,10 @@ namespace se {
 		for (glm::vec3 point : points) {
 			if (!isFirst) {
 				vertices.push_back(lastpoint);
-				colors.push_back(col);
+				colors.push_back(col.rgba);
 			}
 			vertices.push_back(point);
-			colors.push_back(col);
+			colors.push_back(col.rgba);
 			isFirst = false;
 			lastpoint = point;
 		}
@@ -64,47 +66,42 @@ namespace se {
 		for(int i = 0; i < NUM_DIVISIONS +1; i++) {
 			if (mode == DrawMode::FULL) if (i % 3 == 0) {
                     vertices.push_back({position.x,  position.y, 0.0f});
-                    colors.push_back(color);
+                    colors.push_back(color.rgba);
 			}
 			vertices.push_back({position.x + radius * cos((float) i / NUM_DIVISIONS * M_PI * 2), position.y + radius * sin((float) i / NUM_DIVISIONS * M_PI * 2), 0.0f});
-			colors.push_back(color);
+			colors.push_back(color.rgba);
 		}
 	}
 
 	void LineRenderer::Awake() {
 
-		using namespace glm;
-
 		shader->awake();
 
 		VAO->SetVertices(vertices);
 		VAO->SetColors(colors);
-		VAO->Init(shader);
 	}
+
+	void LineRenderer::Update() {}
 
 	void LineRenderer::Render() {
 
-		glBindVertexArray(VAO->Id);
-		glUseProgram(shader->GetProgram());
+		VAO->Bind();
+		shader->Use();
 
-		shader->color = color;
-		shader->mvp = &transform->MVP[0][0];
-		shader->render();
+		shader->SetMatrix("MVP", transform->uMVP());
+		shader->update();
 
-		glEnablei(GL_BLEND, vertexBuffer);
+		glEnablei(GL_BLEND, VAO->vertexBuffer);
 		glDrawArrays(GL_LINES, 0, vertices.size());
-		glDisablei(GL_BLEND, vertexBuffer);
+		glDisablei(GL_BLEND, VAO->vertexBuffer);
 
-		glUseProgram(0);
-		glBindVertexArray(0);
+		shader->Leave();
+		VAO->Unbind();
 	}
 
 	void LineRenderer::OnDestroy() {
 
-		glUseProgram(0);
-		glDisableVertexAttribArray(0);
-		glBindVertexArray(0);
+		shader->Leave();
+		VAO->Unbind();
 	}
-
-
 }

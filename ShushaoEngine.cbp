@@ -5,7 +5,7 @@
 		<Option title="ShushaoEngine" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="game\;engine\;engine\shaders\;engine\components\;engine\objects\;engine\physics\;engine\globals\;engine\entities\;engine\base\;" />
+		<Option virtualFolders="game\;engine\;engine\components\;engine\objects\;engine\physics\;engine\globals\;engine\entities\;engine\base\;engine\render\;engine\render\materials\;engine\render\shaders\;engine\render\shaders\glsl\;" />
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/ShushaoGame" prefix_auto="1" extension_auto="1" />
@@ -88,10 +88,10 @@
 			<Option virtualFolder="engine/objects/" />
 		</Unit>
 		<Unit filename="engine/base.frag">
-			<Option virtualFolder="engine/shaders/" />
+			<Option virtualFolder="engine/render/shaders/glsl/" />
 		</Unit>
 		<Unit filename="engine/base.vert">
-			<Option virtualFolder="engine/shaders/" />
+			<Option virtualFolder="engine/render/shaders/glsl/" />
 		</Unit>
 		<Unit filename="engine/camera.cpp">
 			<Option virtualFolder="engine/components/" />
@@ -148,10 +148,10 @@
 			<Option virtualFolder="engine/entities/" />
 		</Unit>
 		<Unit filename="engine/design.cpp">
-			<Option virtualFolder="engine/base/" />
+			<Option virtualFolder="engine/render/" />
 		</Unit>
 		<Unit filename="engine/design.h">
-			<Option virtualFolder="engine/base/" />
+			<Option virtualFolder="engine/render/" />
 		</Unit>
 		<Unit filename="engine/entity.cpp">
 			<Option virtualFolder="engine/objects/" />
@@ -163,13 +163,13 @@
 			<Option virtualFolder="engine/objects/" />
 		</Unit>
 		<Unit filename="engine/font.frag">
-			<Option virtualFolder="engine/shaders/" />
+			<Option virtualFolder="engine/render/shaders/glsl/" />
 		</Unit>
 		<Unit filename="engine/font.h">
 			<Option virtualFolder="engine/objects/" />
 		</Unit>
 		<Unit filename="engine/font.vert">
-			<Option virtualFolder="engine/shaders/" />
+			<Option virtualFolder="engine/render/shaders/glsl/" />
 		</Unit>
 		<Unit filename="engine/gamedata.cpp">
 			<Option virtualFolder="engine/base/" />
@@ -193,10 +193,10 @@
 			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/linerenderer.cpp">
-			<Option virtualFolder="engine/components/" />
+			<Option virtualFolder="engine/render/" />
 		</Unit>
 		<Unit filename="engine/linerenderer.h">
-			<Option virtualFolder="engine/components/" />
+			<Option virtualFolder="engine/render/" />
 		</Unit>
 		<Unit filename="engine/logger.cpp">
 			<Option virtualFolder="engine/base/" />
@@ -211,10 +211,10 @@
 			<Option virtualFolder="engine/entities/" />
 		</Unit>
 		<Unit filename="engine/material.cpp">
-			<Option virtualFolder="engine/objects/" />
+			<Option virtualFolder="engine/render/" />
 		</Unit>
 		<Unit filename="engine/material.h">
-			<Option virtualFolder="engine/objects/" />
+			<Option virtualFolder="engine/render/" />
 		</Unit>
 		<Unit filename="engine/object.cpp">
 			<Option virtualFolder="engine/base/" />
@@ -259,10 +259,10 @@
 			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/renderer.cpp">
-			<Option virtualFolder="engine/components/" />
+			<Option virtualFolder="engine/render/" />
 		</Unit>
 		<Unit filename="engine/renderer.h">
-			<Option virtualFolder="engine/components/" />
+			<Option virtualFolder="engine/render/" />
 		</Unit>
 		<Unit filename="engine/resources.cpp">
 			<Option virtualFolder="engine/base/" />
@@ -301,10 +301,10 @@
 			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/shader.cpp">
-			<Option virtualFolder="engine/objects/" />
+			<Option virtualFolder="engine/render/" />
 		</Unit>
 		<Unit filename="engine/shader.h">
-			<Option virtualFolder="engine/objects/" />
+			<Option virtualFolder="engine/render/" />
 		</Unit>
 		<Unit filename="engine/shushaoengine.h">
 			<Option virtualFolder="engine/globals/" />
@@ -316,10 +316,16 @@
 			<Option virtualFolder="engine/objects/" />
 		</Unit>
 		<Unit filename="engine/spriterenderer.cpp">
-			<Option virtualFolder="engine/components/" />
+			<Option virtualFolder="engine/render/" />
 		</Unit>
 		<Unit filename="engine/spriterenderer.h">
-			<Option virtualFolder="engine/components/" />
+			<Option virtualFolder="engine/render/" />
+		</Unit>
+		<Unit filename="engine/spritesdefaultmaterial.cpp">
+			<Option virtualFolder="engine/render/materials/" />
+		</Unit>
+		<Unit filename="engine/spritesdefaultmaterial.h">
+			<Option virtualFolder="engine/render/materials/" />
 		</Unit>
 		<Unit filename="engine/spritesheet.cpp">
 			<Option virtualFolder="engine/objects/" />
@@ -328,10 +334,16 @@
 			<Option virtualFolder="engine/objects/" />
 		</Unit>
 		<Unit filename="engine/standard.frag">
-			<Option virtualFolder="engine/shaders/" />
+			<Option virtualFolder="engine/render/shaders/glsl/" />
 		</Unit>
 		<Unit filename="engine/standard.vert">
-			<Option virtualFolder="engine/shaders/" />
+			<Option virtualFolder="engine/render/shaders/glsl/" />
+		</Unit>
+		<Unit filename="engine/standardshader.cpp">
+			<Option virtualFolder="engine/render/shaders/" />
+		</Unit>
+		<Unit filename="engine/standardshader.h">
+			<Option virtualFolder="engine/render/shaders/" />
 		</Unit>
 		<Unit filename="engine/system.cpp">
 			<Option virtualFolder="engine/base/" />
@@ -340,10 +352,10 @@
 			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/textrenderer.cpp">
-			<Option virtualFolder="engine/components/" />
+			<Option virtualFolder="engine/render/" />
 		</Unit>
 		<Unit filename="engine/textrenderer.h">
-			<Option virtualFolder="engine/components/" />
+			<Option virtualFolder="engine/render/" />
 		</Unit>
 		<Unit filename="engine/texture.cpp">
 			<Option virtualFolder="engine/objects/" />
@@ -379,16 +391,16 @@
 			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/vao.cpp">
-			<Option virtualFolder="engine/base/" />
+			<Option virtualFolder="engine/render/" />
 		</Unit>
 		<Unit filename="engine/vao.h">
-			<Option virtualFolder="engine/base/" />
+			<Option virtualFolder="engine/render/" />
 		</Unit>
 		<Unit filename="engine/wire.frag">
-			<Option virtualFolder="engine/shaders/" />
+			<Option virtualFolder="engine/render/shaders/glsl/" />
 		</Unit>
 		<Unit filename="engine/wire.vert">
-			<Option virtualFolder="engine/shaders/" />
+			<Option virtualFolder="engine/render/shaders/glsl/" />
 		</Unit>
 		<Unit filename="game.cpp">
 			<Option virtualFolder="game/" />

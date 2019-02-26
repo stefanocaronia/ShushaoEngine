@@ -1,10 +1,10 @@
 R"(
-#version 330 core
+#version 430
 
-uniform vec4 uColor;
-out vec4 out_color;
+layout(location=6) uniform vec4 render_color;
+out vec4 frag_color;
 
 void main() {
-	out_color = vec4(uColor);
+	frag_color = render_color;
 }
 )"

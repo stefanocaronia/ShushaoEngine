@@ -41,7 +41,6 @@ void Game::Awake() {
 	Resources::Load<Texture>("assets/night.jpg");
 	Resources::Load<Texture>("assets/pancsmile.png");
 	Resources::Load<TextureAtlas>("assets/walking.png")->AddGrid(vec2(16, 16), PivotPosition::BOTTOM);
-	//Resources::Add<Shader>("standard");
 	Resources::Add<Sprite>("pancrazio_sprite")->SetTexture(Resources::Get<Texture>("pancrazio"));
 
 	Resources::Load<Music>("assets/fizz.mp3");

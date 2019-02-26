@@ -3,8 +3,8 @@
 #include "debug.h"
 #include "sprite.h"
 #include "spriterenderer.h"
-#include "shader.h"
 #include "transform.h"
+#include "spritesdefaultmaterial.h"
 
 namespace se {
 
@@ -13,7 +13,7 @@ namespace se {
 	}
 
 	SpriteRenderer::~SpriteRenderer() {
-		if (shader != nullptr) delete(shader);
+		if (material != nullptr) delete(material);
 	}
 
 
@@ -22,58 +22,56 @@ namespace se {
 	}
 
 	bool SpriteRenderer::isReady() {
-		return (sprite != nullptr && sprite->VAO->Ready && shader != nullptr && transform != nullptr);
+		return (
+			sprite != nullptr &&
+			material != nullptr &&
+			material->shader != nullptr &&
+			transform != nullptr
+		);
 	}
 
 	void SpriteRenderer::Awake() {
 
 		transform->SetPivot(sprite->pivot);
 
-		shader = new Shader();
-		shader->awake();
-
-		if (!sprite->VAO->Ready) {
-			sprite->VAO->Init(shader);
-		}
+		material = new SpritesDefaultMaterial();
+		material->init();
+		material->SetMainTexture(sprite->texture);
+		// material->SetVector("texture_offset", {2.0f, 2.0f, 0, 0});
 	}
 
 	void SpriteRenderer::Update() {
-
 		if (!isReady()) return;
-
 	}
 
 	void SpriteRenderer::Render() {
 
 		if (!isReady()) return;
 
-		glBindVertexArray(sprite->VAO->Id);
-		glUseProgram(shader->GetProgram());
+		sprite->VAO->Bind();
+		material->shader->Use();
+		material->shader->SetColor("render_color", color);
+		material->shader->SetMatrix("MVP", transform->uMVP());
+		material->update();
 
-		shader->color = color;
-		shader->texture = GL_TEXTURE0;
-		shader->mvp = &transform->MVP[0][0];
-		shader->render();
-
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, sprite->texture->TextureID);
+		glActiveTexture(material->shader->GetTexture("main_texture"));
+		glBindTexture(GL_TEXTURE_2D, material->mainTexture->TextureID);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 
-		glUseProgram(0);
-		glBindVertexArray(0);
+		glBindTexture(GL_TEXTURE_2D, 0);
+
+		material->shader->Leave();
+		sprite->VAO->Unbind();
 	}
 
 	void SpriteRenderer::OnDestroy() {
 
 		if (!isReady()) return;
 
-		glUseProgram(0);
-		glBindTexture(GL_TEXTURE_2D, 0);
-		glBindVertexArray(0);
-		shader->exit();
-		delete(shader);
-		shader = nullptr;
+		sprite->VAO->Unbind();
+		material->shader->Leave();
+		material->shader->exit();
+		delete(material);
+		material = nullptr;
 	}
-
-
 }

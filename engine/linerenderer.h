@@ -21,10 +21,8 @@ namespace se {
 			~LineRenderer();
 			LineRenderer(std::string);
 
-			Color color = {1.0f, 1.0f, 1.0f, 1.0f}; //	Rendering color for the Sprite graphic.
-
             std::vector<glm::vec3> vertices;
-            std::vector<Color> colors;
+            std::vector<glm::vec4> colors;
 
 			GLuint vertexBuffer;
 			GLuint colorBuffer;
@@ -38,6 +36,7 @@ namespace se {
             void AddCircle(glm::vec3, float, Color, DrawMode);
 
 			void Awake();
+			void Update();
 			void Render();
 			void OnDestroy();
 

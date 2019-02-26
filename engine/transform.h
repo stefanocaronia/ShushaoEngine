@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtx/quaternion.hpp>
 
+#include "gllibs.h"
 #include "component.h"
 #include "constants.h"
 
@@ -59,6 +60,7 @@ namespace se {
 			void SetParent(Transform*, bool worldPositionStays = false);
 			void RemoveChild(Transform* t);
 			void AddChild(Transform* t);
+			GLfloat* uMVP();
 
 			glm::mat4 GetLocalToParentMatrix();
 			glm::mat4 GetLocalToWorldMatrix();

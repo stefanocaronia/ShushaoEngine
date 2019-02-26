@@ -180,6 +180,10 @@ namespace se {
 
 	}
 
+	GLfloat* Transform::uMVP() {
+		return &_MVP[0][0];
+	}
+
 	void Transform::Awake() {
 		buildMVP();
 	}

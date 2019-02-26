@@ -9,66 +9,87 @@
 
 namespace se {
 
+	struct ParameterValue {
+		GLfloat f = 0;
+		GLint i = 0;
+		Texture* tex = nullptr;
+		glm::mat4 mat {0};
+		glm::vec4 vec {0};
+		Color col = Color::clear;
+	};
+
+	class Parameter {
+	public:
+
+		Parameter(std::string name_, std::string var_, Uniform* uniform_) : name(name_), var(var_), uniform(uniform_) {}
+
+		std::string name;
+		std::string var;
+		Uniform* uniform;
+		ParameterValue value;
+
+		GLfloat GetFloat();
+        GLint GetInteger();
+        Texture* GetTexture();
+        glm::vec4 GetVector();
+        glm::mat4 GetMatrix();
+        Color GetColor();
+
+        void SetFloat(GLfloat);
+		void SetInteger(GLint);
+		void SetTexture(Texture*);
+		void SetVector(glm::vec4);
+		void SetMatrix(glm::mat4);
+		void SetColor(Color);
+	};
+
 	class Material : public Object	{
 
 		public:
+
+			std::map<std::string, Parameter> parameters;
+
 			Material();
 			~Material();
 
 			Color color; // The main material's color.
-			//doubleSidedGI; // Gets and sets whether the Double Sided Global Illumination setting is enabled for this material.
-			//enableInstancing; // Gets and sets whether GPU instancing is enabled for this material.
-			//globalIlluminationFlags; // Defines how the material should interact with lightmaps and lightprobes.
 			Texture* mainTexture; // The material's texture.
 			glm::vec2 mainTextureOffset; // The texture offset of the main texture.
 			glm::vec2 mainTextureScale; // The texture scale of the main texture.
-			//passCount; // How many passes are in this material (Read Only).
-			//renderQueue; // Render queue of this material.
 			Shader* shader; // The shader used by the material.
-			//string shaderKeywords[]; // Additional shader keywords set by this material.
 
-			// methods
+			void init();
+			void update();
 
-			//void CopyPropertiesFromMaterial(Material*); // Copy properties from other material into this material.
-			//void DisableKeyword(string); // Unset a shader keyword.
-			//void EnableKeyword(string); // Sets a shader keyword that is enabled by this material.
-			////FindPass(); // Returns the index of the pass passName.
-			//void GetColor(); // Get a named color value.
-			//void GetColorArray(); // Get a named color array.
-			//void GetFloat(); // Get a named float value.
-			//void GetFloatArray(); // Get a named float array.
-			//void GetInt(); // Get a named integer value.
-			//void GetMatrix(); // Get a named matrix value from the shader.
-			//void GetMatrixArray(); // Get a named matrix array.
-			//void GetPassName(); // Returns the name of the shader pass at index pass.
-			//void GetShaderPassEnabled(); // Checks whether a given Shader pass is enabled on this Material.
-			//void GetTag(); // Get the value of material's shader tag.
-			//void GetTexture(); // Get a named texture.
-			//void GetTextureOffset(); // Gets the placement offset of texture propertyName.
-			//void GetTextureScale(); // Gets the placement scale of texture propertyName.
-			//void GetVector(); // Get a named vector value.
-			//void GetVectorArray(); // Get a named vector array.
-			//void HasProperty(); // Checks if material's shader has a property of a given name.
-			//void IsKeywordEnabled(); // Is the shader keyword enabled on this material?
-			//void Lerp(); // Interpolate properties between two materials.
-			//void SetBuffer(); // Sets a named ComputeBuffer value.
-			//void SetColor(); // Sets a named color value.
-			//void SetColorArray(); // Sets a color array property.
-			//void SetFloat(); // Sets a named float value.
-			//void SetFloatArray(); // Sets a float array property.
-			//void SetInt(); // Sets a named integer value.
-			//void SetMatrix(); // Sets a named matrix for the shader.
-			//void SetMatrixArray(); // Sets a matrix array property.
-			//void SetOverrideTag(); // Sets an override tag/value on the material.
-			//void SetPass(); // Activate the given pass for rendering.
-			//void SetShaderPassEnabled(); // Enables or disables a Shader pass on a per-Material level.
-			//void SetTexture(); // Sets a named texture.
-			//void SetTextureOffset(); // Sets the placement offset of texture propertyName.
-			//void SetTextureScale(); // Sets the placement scale of texture propertyName.
-			//void SetVector(); // Sets a named vector value.
-			//void SetVectorArray(); // Sets a vector array property.
+			void SetShader(Shader*);
+			void SetMainTexture(Texture*);
+			void AddParameter(std::string, std::string, Uniform*);
+
+			/*Parameter* GetParameter(std::string var_) {
+				if (parameters.find(var_) != parameters.end()) {
+					return &parameters[var_];
+				}
+			}*/
+
+			GLfloat GetFloat(std::string var_);
+			GLint GetInteger(std::string var_);
+			Texture* GetTexture(std::string var_);
+			glm::vec4 GetVector(std::string var_);
+			glm::mat4 GetMatrix(std::string var_);
+			Color GetColor(std::string var_);
+
+			void SetFloat(std::string, GLfloat);
+			void SetInteger(std::string, GLint);
+			void SetTexture(std::string, Texture*);
+			void SetVector(std::string, glm::vec4);
+			void SetMatrix(std::string, glm::mat4);
+			void SetColor(std::string, Color);
 
 		protected:
+
+			// per override
+			virtual void Init() {};
+			virtual void Update() {};
 
 		private:
 	};

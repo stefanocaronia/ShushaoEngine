@@ -37,12 +37,12 @@ namespace se {
 				{-1.0f,  1.0f, 0.0f} // Top-left
 			};
 
-			GLushort indexes[6] = {
+			std::vector<GLushort> indexes = {
 				0, 1, 2,
 				2, 3, 0
 			};
 
-			GLclampd uv[8] = { // The base texture coordinates of the sprite mesh.
+			std::vector<GLclampd> uv = { // The base texture coordinates of the sprite mesh.
 				0.0d, 1.0d, // Bottom-left of texture
 				1.0d, 1.0d, // Bottom-right of texture
 				1.0d, 0.0d, // Top-Right of texture

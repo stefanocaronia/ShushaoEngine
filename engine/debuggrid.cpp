@@ -2,7 +2,6 @@
 
 #include "color.h"
 #include "debug.h"
-#include "shader.h"
 #include "linerenderer.h"
 
 namespace se {
@@ -10,20 +9,12 @@ namespace se {
 	DebugGrid::DebugGrid() {
 
 		LineRenderer* LR = AddComponent<LineRenderer>();
-		LR->shader = new Shader();
-
-		LR->shader->LoadFromString(
-			#include "wire.vert"
-			,
-			#include "wire.frag"
-		);
-
 		LR->sortingLayerID = Config::SortingLayers.over();
 
-		Color xcol = {0.0f, 1.0f, 0.0f, 1.0f};
-		Color ycol = {1.0f, 0.0f, 0.0f, 1.0f};
-		Color zcol = {0.0f, 0.0f, 1.0f, 1.0f};
-		Color gcol = {0.5f, 0.5f, 0.5f, 1.0f};
+		Color xcol = {0.0f, 1.0f, 0.0f, 0.6f};
+		Color ycol = {1.0f, 0.0f, 0.0f, 0.6f};
+		Color zcol = {0.0f, 0.0f, 1.0f, 0.6f};
+		Color gcol = {0.5f, 0.5f, 0.5f, 0.6f};
 
 		Color gco = gcol;
 		float alpha = 0.2f;
@@ -49,7 +40,6 @@ namespace se {
 				//parallele asse Z lungo X
 				LR->AddLine({i, 0.0f, -gridSize}, {i, 0.0f, gridSize}, gco);
 				LR->AddLine({-i, 0.0f, -gridSize}, {-i, 0.0f, gridSize}, gco);
-
 			}
 		}
 

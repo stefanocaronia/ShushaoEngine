@@ -1,13 +1,16 @@
 R"(
+#version 430
 
-#version 330 core
+/*
+	In questo shader il colore è deciso dall'array di vertex colors
+*/
 
 in vec4 rendered_color;
 
-out vec4 out_color;
+out vec4 frag_color;
 
 void main() {
-	out_color = vec4(rendered_color);
+	frag_color = vec4(rendered_color);
 }
 
 )"

@@ -18,6 +18,11 @@ namespace se {
 
 		protected:
 
+			virtual void Awake() {};
+			virtual void Update() {};
+			virtual void Render() {};
+			virtual void OnDestroy() {};
+
 			// messages
 
 			void OnBecameInvisible(); // OnBecameInvisible is called when the object is no longer visible by any camera.

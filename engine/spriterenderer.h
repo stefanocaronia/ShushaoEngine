@@ -5,6 +5,7 @@
 #include <glew.h>
 #include "renderer.h"
 #include "color.h"
+#include "material.h"
 
 namespace se {
 
@@ -43,7 +44,9 @@ namespace se {
 			//SpriteTileMode tileMode; //	The current tile mode of the Sprite Renderer.
 
 			Sprite* sprite = nullptr;
-			Shader* shader = nullptr;
+			Material* material = nullptr;
+
+		protected:
 
 			void Awake();
 			void Update();

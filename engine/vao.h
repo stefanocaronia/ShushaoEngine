@@ -13,31 +13,26 @@ namespace se {
 			~Vao();
 
 			GLuint Id;
-
-			bool Init(Shader*);
-
-			bool Ready = false;
-
-			GLenum USAGE;
-
-			void SetVertices(std::vector<glm::vec3>&);
-			void SetUv(GLclampd*);
-			void SetIndexes(GLushort*);
-			void SetColors(std::vector<Color>&);
-
-		protected:
-
-		private:
-
-			std::vector<glm::vec3> vertices;
-            std::vector<Color> colors;
-			GLclampd uv[8] = {99};
-			GLushort indexes[6] = {99};
+			GLenum GL_USAGE;
 
 			GLuint vertexBuffer;
 			GLuint colorBuffer;
 			GLuint indexBuffer;
 			GLuint uvBuffer;
+
+			void SetVertices(std::vector<glm::vec3>&);
+			void SetUv(std::vector<GLclampd>&);
+			void SetIndexes(std::vector<GLushort>&);
+			void SetColors(std::vector<glm::vec4>&);
+
+			void Reset();
+
+			void Bind() {
+				glBindVertexArray(Id);
+			}
+			void Unbind() {
+				glBindVertexArray(0);
+			}
 	};
 
 }

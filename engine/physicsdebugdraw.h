@@ -3,26 +3,19 @@
 #include <vector>
 #include <glew.h>
 #include <Box2D/Box2D.h>
+#include "vao.h"
 
 namespace se {
 
-	class Shader;
+	//class Shader;
 
 	class PhysicsDebugDraw : public b2Draw {
 		public:
 
 			bool init();
-			void initVAO();
-			void setColor(float r, float g, float b, float a);
-			void closeVAO();
-
-			bool readyToDraw = false;
-
-			GLuint VAO;
-			GLuint vertexBuffer;
 			std::vector<glm::vec3> vertices;
 			float alpha = 0.4f;
-
+			Vao* VAO;
 			Shader* shader = nullptr;
 
 			void DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color);

@@ -39,7 +39,7 @@ namespace se {
 
 	Logger& Logger::operator<<(std::ostream& (*os)(std::ostream&)) {
 
-		if (streamLevel < level) return *this;
+		if (streamLevel < level || !Debug::enabled) return *this;
 
 		if (streamLevel == INFO ) setColor(ConsoleColor::LIGHTGREY);
 		else if (streamLevel == WARNING ) setColor(ConsoleColor::YELLOW);

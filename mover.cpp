@@ -32,10 +32,9 @@ void Mover::Update() {
 		Disable();
 	}*/
 
-
 	double horizontal = Input::getAxis("horizontal");
 	if (Input::getAxis("horizontal") != 0) {
-        rb->body->ApplyForceToCenter({(float)horizontal * 10.0f, 0.0f}, true);
+        rb->body->ApplyForceToCenter({(float)horizontal * 0.4f, 0.0f}, true);
 	}
 
 }

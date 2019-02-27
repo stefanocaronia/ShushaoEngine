@@ -41,11 +41,12 @@ namespace se {
 	void Input::removeController(int instance) {
 		SDL_GameController* gc = controllers.at(instance).controller;
 		SDL_GameControllerClose(gc);
-		cout << "Disconnected: " << controllers.at(instance).toString() << endl;
+		Debug::Log(WARNING) << "Disconnected: " << controllers.at(instance).toString() << endl;
 		controllers.erase(instance);
 	}
 
 	void Input::printActiveControllers() {
+		if (!Debug::enabled) return;
 		Logger::setColor(ConsoleColor::RED);
 		cout << " InputManager Active Controllers:" << endl;
 		for (auto cm : controllers) {

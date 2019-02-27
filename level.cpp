@@ -64,11 +64,11 @@ Level::Level() {
 	// text->sortingLayerID = Config::SortingLayers["UI"];
 	// text->SetText("Hello Pancrazio!");
 
-	Design::DrawPolygon({
+	/*Design::DrawPolygon({
 		 {0.0f, 1.0f, 0.0f},
 		 {2.0f, 1.0f, 0.0f},
 		 {2.0f, -1.0f, 0.0f},
 		 {-1.0f, -1.0f, 0.0f}
-	}, Color::red, DrawMode::HOLLOW);
+	}, Color::red, DrawMode::HOLLOW);*/
 }
 

@@ -31,6 +31,7 @@ namespace se {
 			 *	e_pairBit ( draw broad-phase pairs )
 			 *	e_centerOfMassBit ( draw a marker at body CoM )
 			 */
+			debugDraw.Init();
 		}
 	}
 
@@ -64,7 +65,4 @@ namespace se {
 	PhysicsDebugDraw Physics::debugDraw;
 	PhysicsContactListener Physics::contactListener;
 	PhysicsContactFilter Physics::contactFilter;
-
-	//}
-
 }

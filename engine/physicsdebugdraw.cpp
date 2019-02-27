@@ -2,14 +2,19 @@
 #include "glmanager.h"
 #include "physicsdebugdraw.h"
 #include "design.h"
+#include "debug.h"
 
 #include <iostream>
 
 namespace se {
 
-	bool PhysicsDebugDraw::init() {
+	using namespace std;
+	using namespace glm;
+
+	bool PhysicsDebugDraw::Init() {
 		if (!GLManager::ready) return false;
-		vertices.reserve(256);
+		if (ready) return true;
+		// vertices.reserve(256);
 
 		shader = new Shader();
 		shader->LoadFromString(
@@ -20,15 +25,16 @@ namespace se {
 		shader->name = "Wireframe";
 		shader->awake();
 
-		VAO = new Vao(GL_STATIC_DRAW);
+		VAO = new Vao(GL_DYNAMIC_DRAW);
 
+		ready = true;
 		return true;
 	}
 
 	void PhysicsDebugDraw::DrawPolygon(const b2Vec2* b2vertices, int32 vertexCount, const b2Color& color) {
-		if (!init()) return;
+		if (!Init()) return;
 
-		vertices.clear();
+		vector<vec3> vertices;
 
 		for (int i = 0; i < vertexCount; i++) {
 			vertices.push_back({b2vertices[i].x, b2vertices[i].y, 0.0f});
@@ -50,9 +56,9 @@ namespace se {
 	}
 
 	void PhysicsDebugDraw::DrawSolidPolygon(const b2Vec2* b2vertices, int32 vertexCount, const b2Color& color) {
-		if (!init()) return;
+		if (!Init()) return;
 
-		vertices.clear();
+		vector<vec3> vertices;
 
 		for (int i = 0; i < vertexCount; i++) {
 			vertices.push_back({b2vertices[i].x, b2vertices[i].y, 0.0f});
@@ -76,13 +82,12 @@ namespace se {
 
 		shader->Leave();
 		VAO->Unbind();
-
 	}
 
 	void PhysicsDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color) {
-		if (!init()) return;
+		if (!Init()) return;
 
-		vertices.clear();
+		vector<vec3> vertices;
 		int NUM_DIVISIONS = 31;
 
 		for(int i = 0; i < NUM_DIVISIONS +1; i++) {
@@ -108,9 +113,9 @@ namespace se {
 	}
 
 	void PhysicsDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color) {
-		if (!init()) return;
+		if (!Init()) return;
 
-		vertices.clear();
+		vector<vec3> vertices;
 		int NUM_DIVISIONS = 31;
 
 		for(int i = 0; i < NUM_DIVISIONS +1; i++) {
@@ -137,10 +142,9 @@ namespace se {
 	}
 
 	void PhysicsDebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color) {
+		if (!Init()) return;
 
-		if (!init()) return;
-
-		vertices.clear();
+		vector<vec3> vertices;
 		vertices = {
 			{p1.x, p1.y, 0.0f},
 			{p2.x, p2.y, 0.0f},
@@ -166,9 +170,9 @@ namespace se {
 	}
 
 	void PhysicsDebugDraw::DrawTransform(const b2Transform& xf) {
-		if (!init()) return;
+		if (!Init()) return;
 
-		vertices.clear();
+		vector<vec3> vertices;
 		vertices = {
             {0.2f, 0.0f, 0.0f},
             {0.0f, 0.0f, 0.0f},

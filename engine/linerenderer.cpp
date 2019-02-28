@@ -16,7 +16,7 @@ namespace se {
 
 		shader = GLManager::GetShader("Wireframe Shader");
 
-		VAO = new Vao();
+		VAO = new Vao(VBO_VERTEX | VBO_COLOR);
 	}
 
 	LineRenderer::~LineRenderer() {

@@ -116,9 +116,9 @@ namespace se {
 			};
 		}
 
-		VAO = new Vao();
-
+		VAO = new Vao(VBO_VERTEX | VBO_INDEX | VBO_UV);
 		VAO->Init();
+
 		VAO->Use();
 		VAO->SetVertices(vertices);
 		VAO->SetUv(uv);

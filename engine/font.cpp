@@ -20,8 +20,18 @@ namespace se {
         FT_Set_Pixel_Sizes(face, 0, _size);
     }
 
+    void Font::setPixelSize(int size_) {
+		setSize(size_);
+    }
+
+	void Font::setWorldSize(float size_) {
+		setSize(size_ * Config::pixelPerUnit);
+	}
+
+
 	bool Font::Load(std::string filename) {
 		if (FT_New_Face(GLManager::lFreetype, filename.c_str(), 0, &face)) {
+			Debug::Log(ERROR) << "Could not load font: " << filename << endl;
             return false;
 		}
 		return true;

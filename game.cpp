@@ -30,9 +30,9 @@ Game::Game(string title) : Cycle(title) {
 	Config::pixelPerUnit = 16;
 
 	Debug::level = DebugLevel::INFO;
-	Debug::enabled = DEBUG;
+	Debug::enabled = true;
 	Debug::debugGridMode = GridMode::ORTHOGRAFIC;
-	Config::Physics::debug = DEBUG;
+	Config::Physics::debug = true;
 }
 
 void Game::Awake() {
@@ -50,6 +50,7 @@ void Game::Awake() {
 	Resources::Add<SpriteSheet>("walking")->Load(Resources::Get<TextureAtlas>("walking"));
 
 	Resources::Load<Font>("assets/modenine.ttf", "Modenine");
+	Resources::Load<Font>("assets/pixelperfect.ttf", "Pixel Perfect");
 
 	SceneManager::LoadScene<Level>("Level 1");
 

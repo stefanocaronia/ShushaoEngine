@@ -54,11 +54,9 @@ namespace se {
 		sprite->VAO->Use();
 		material->update();
 
-
 		glActiveTexture(material->shader->GetTexture("main_texture"));
 		glBindTexture(GL_TEXTURE_2D, material->mainTexture->TextureID);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
-
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		sprite->VAO->Leave();

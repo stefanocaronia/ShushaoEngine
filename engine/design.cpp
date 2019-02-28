@@ -14,7 +14,7 @@ namespace se {
 
 		shader->Use();
 
-		VAO = new Vao();
+		VAO = new Vao(VBO_VERTEX);
 		VAO->Init();
 
 		MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();

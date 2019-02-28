@@ -21,6 +21,8 @@ namespace se {
 
 			bool Load(std::string);
 			void setSize(int);
+			void setPixelSize(int);
+			void setWorldSize(float);
 
 		private:
 

@@ -19,7 +19,7 @@ namespace se {
 		shader->awake();
 		shader->Use();
 
-		VAO = new Vao();
+		VAO = new Vao(VBO_VERTEX);
 		VAO->Init();
 
 		ready = true;
@@ -63,7 +63,7 @@ namespace se {
 		shader->update();
 
 		VAO->Use();
-		VAO->SetVertices(vertices);
+		VAO->SetVertices(vertices, GL_DYNAMIC_DRAW);
 
 		glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 		shader->SetMVP(&MVP[0][0]);
@@ -92,7 +92,7 @@ namespace se {
 		shader->Use();
 
 		VAO->Use();
-		VAO->SetVertices(vertices);
+		VAO->SetVertices(vertices, GL_DYNAMIC_DRAW);
 		shader->update();
 
 		glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
@@ -118,12 +118,11 @@ namespace se {
 			vertices.push_back({center.x + radius * cos((float) i / NUM_DIVISIONS * M_PI * 2), center.y + radius * sin((float) i / NUM_DIVISIONS * M_PI * 2), 0.0f});
 		}
 
-
 		shader->Use();
 		shader->update();
 
 		VAO->Use();
-		VAO->SetVertices(vertices);
+		VAO->SetVertices(vertices, GL_DYNAMIC_DRAW);
 
 		glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 		shader->SetMVP(&MVP[0][0]);
@@ -150,7 +149,7 @@ namespace se {
 		shader->update();
 
 		VAO->Use();
-		VAO->SetVertices(vertices);
+		VAO->SetVertices(vertices, GL_DYNAMIC_DRAW);
 
 		glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 		shader->SetMVP(&MVP[0][0]);
@@ -185,7 +184,7 @@ namespace se {
 		shader->update();
 
 		VAO->Use();
-		VAO->SetVertices(vertices);
+		VAO->SetVertices(vertices, GL_DYNAMIC_DRAW);
 
 		glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 		shader->SetMVP(&MVP[0][0]);

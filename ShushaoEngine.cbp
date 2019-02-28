@@ -93,6 +93,12 @@
 		<Unit filename="engine/base.vert">
 			<Option virtualFolder="engine/render/shaders/glsl/" />
 		</Unit>
+		<Unit filename="engine/baseshader.cpp">
+			<Option virtualFolder="engine/render/shaders/" />
+		</Unit>
+		<Unit filename="engine/baseshader.h">
+			<Option virtualFolder="engine/render/shaders/" />
+		</Unit>
 		<Unit filename="engine/camera.cpp">
 			<Option virtualFolder="engine/components/" />
 		</Unit>
@@ -170,6 +176,12 @@
 		</Unit>
 		<Unit filename="engine/font.vert">
 			<Option virtualFolder="engine/render/shaders/glsl/" />
+		</Unit>
+		<Unit filename="engine/fontshader.cpp">
+			<Option virtualFolder="engine/render/shaders/" />
+		</Unit>
+		<Unit filename="engine/fontshader.h">
+			<Option virtualFolder="engine/render/shaders/" />
 		</Unit>
 		<Unit filename="engine/gamedata.cpp">
 			<Option virtualFolder="engine/base/" />
@@ -301,10 +313,10 @@
 			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/shader.cpp">
-			<Option virtualFolder="engine/render/" />
+			<Option virtualFolder="engine/render/shaders/" />
 		</Unit>
 		<Unit filename="engine/shader.h">
-			<Option virtualFolder="engine/render/" />
+			<Option virtualFolder="engine/render/shaders/" />
 		</Unit>
 		<Unit filename="engine/shushaoengine.h">
 			<Option virtualFolder="engine/globals/" />
@@ -401,6 +413,12 @@
 		</Unit>
 		<Unit filename="engine/wire.vert">
 			<Option virtualFolder="engine/render/shaders/glsl/" />
+		</Unit>
+		<Unit filename="engine/wireframeshader.cpp">
+			<Option virtualFolder="engine/render/shaders/" />
+		</Unit>
+		<Unit filename="engine/wireframeshader.h">
+			<Option virtualFolder="engine/render/shaders/" />
 		</Unit>
 		<Unit filename="game.cpp">
 			<Option virtualFolder="game/" />

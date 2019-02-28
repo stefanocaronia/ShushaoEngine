@@ -9,6 +9,7 @@
 #include "rect.h"
 #include "font.h"
 #include "shader.h"
+#include "vao.h"
 
 namespace se {
 
@@ -55,12 +56,8 @@ namespace se {
             std::string _text = "";
             std::string filename;
 
-            GLint attribute_coord;
-            GLint uniform_tex;
-            GLint uniform_color;
-            GLint uniform_mvp;
-
             GLuint vbo;
+            Vao* VAO;
 
             void write(const char*, float, float, float, float);
 

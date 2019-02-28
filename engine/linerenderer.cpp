@@ -1,6 +1,7 @@
 #include <vector>
 #include <glm/glm.hpp>
 
+#include "glmanager.h"
 #include "linerenderer.h"
 #include "transform.h"
 #include "color.h"
@@ -13,21 +14,13 @@ namespace se {
 	LineRenderer::LineRenderer() {
 		name = "Line Renderer";
 
-		shader = new Shader();
-		shader->LoadFromString(
-			#include "wire.vert"
-			,
-			#include "wire.frag"
-		);
-		shader->name = "Wireframe";
+		shader = GLManager::GetShader("Wireframe Shader");
 
-		VAO = new Vao(GL_DYNAMIC_DRAW);
+		VAO = new Vao();
 	}
 
 	LineRenderer::~LineRenderer() {
 		name = "Line Renderer";
-
-		if (shader != nullptr) { delete(shader); shader = nullptr; }
 		if (VAO != nullptr) { delete(VAO); VAO = nullptr; }
 	}
 
@@ -76,32 +69,38 @@ namespace se {
 	void LineRenderer::Awake() {
 
 		shader->awake();
+		shader->Use();
 
+		VAO->Init();
+		VAO->Use();
 		VAO->SetVertices(vertices);
 		VAO->SetColors(colors);
+		VAO->Leave();
+
+		shader->Leave();
 	}
 
 	void LineRenderer::Update() {}
 
 	void LineRenderer::Render() {
 
-		VAO->Bind();
 		shader->Use();
+		VAO->Use();
 
-		shader->SetMatrix("MVP", transform->uMVP());
+		shader->SetMVP(transform->uMVP());
 		shader->update();
 
 		glEnablei(GL_BLEND, VAO->vertexBuffer);
 		glDrawArrays(GL_LINES, 0, vertices.size());
 		glDisablei(GL_BLEND, VAO->vertexBuffer);
 
-		shader->Leave();
-		VAO->Unbind();
+		VAO->Leave();
+		shader->Use();
 	}
 
 	void LineRenderer::OnDestroy() {
 
 		shader->Leave();
-		VAO->Unbind();
+		VAO->Leave();
 	}
 }

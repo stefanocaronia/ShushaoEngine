@@ -11,18 +11,13 @@ namespace se {
 
 	TextRenderer::TextRenderer() {
 		name = "Font Renderer";
+		shader = GLManager::GetShader("Font Shader");
 
-		shader = new Shader();
-		shader->LoadFromString(
-			#include "font.vert"
-			,
-			#include "font.frag"
-		);
-		shader->name = "Font Shader";
+		VAO = new Vao();
 	}
 
 	TextRenderer::~TextRenderer() {
-		if (shader != nullptr) delete(shader);
+
 	}
 
 	TextRenderer::TextRenderer(string name_) {
@@ -55,15 +50,10 @@ namespace se {
 
 	void TextRenderer::Awake() {
 
-		glUseProgram(shader->GetProgram());
-        attribute_coord = glGetAttribLocation(shader->GetProgram(), "coord");
-        // attribute_coord = 0;
-        uniform_tex = glGetUniformLocation(shader->GetProgram(), "tex");
-        uniform_color = glGetUniformLocation(shader->GetProgram(), "color");
-        uniform_mvp = glGetUniformLocation(shader->GetProgram(), "MVP");
-        glUseProgram(0);
+		shader->awake();
 
-        glGenBuffers(1, &vbo);
+		shader->Use();
+		VAO->Init();
 	}
 
 	void TextRenderer::Update() {}
@@ -73,21 +63,15 @@ namespace se {
 		FT_GlyphSlot g = font->face->glyph;
 
 		GLuint tex;
-		glActiveTexture(GL_TEXTURE0);
 		glGenTextures(1, &tex);
+		glActiveTexture(shader->GetTexture("main_texture"));
 		glBindTexture(GL_TEXTURE_2D, tex);
-		glUniform1i(uniform_tex, GL_TEXTURE0);
 
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		glEnableVertexAttribArray(attribute_coord);
-		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		glVertexAttribPointer(attribute_coord, 4, GL_FLOAT, GL_FALSE, 0, 0);
 
 		for (p = text; *p; p++) {
 			if (FT_Load_Char (font->face, *p, FT_LOAD_RENDER) )
@@ -100,21 +84,23 @@ namespace se {
 			float w = g->bitmap.width * sx;
 			float h = g->bitmap.rows * sy;
 
-			GLfloat box[4][4] = {
+			vector<vec4> box {
 				{ x2,     -y2, 		0, 0 },
 				{ x2 + w, -y2, 		1, 0 },
 				{ x2,     -y2 - h, 	0, 1 },
-				{ x2 + w, -y2 - h, 	1, 1 },
+				{ x2 + w, -y2 - h, 	1, 1 }
 			};
 
-			glBufferData (GL_ARRAY_BUFFER, sizeof box, box, GL_DYNAMIC_DRAW);
-			glDrawArrays (GL_TRIANGLE_STRIP, 0, 4);
+			VAO->SetFontVertices(box, GL_DYNAMIC_DRAW);
+			glBindBuffer(GL_ARRAY_BUFFER, VAO->vertexFontBuffer);
+			glEnablei(GL_BLEND, VAO->vertexFontBuffer);
+			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+			glDisablei(GL_BLEND, VAO->vertexFontBuffer);
 
 			x += (g->advance.x / 64) * sx;
 			y += (g->advance.y / 64) * sy;
 		}
 
-		glDisableVertexAttribArray(attribute_coord);
 		glDeleteTextures(1, &tex);
 	}
 
@@ -122,17 +108,23 @@ namespace se {
 
 		if (!isReady()) return;
 
-		glUseProgram(shader->GetProgram());
 
-		glUniform4f(uniform_color, color.r, color.g, color.b, color.a);
-		glUniformMatrix4fv(uniform_mvp, 1, GL_FALSE, &transform->MVP[0][0]);
+		shader->Use();
+		shader->SetMVP(transform->uMVP());
+		shader->SetRenderColor(color);
+		shader->update();
+
+		VAO->Use();
 
 		font->setSize(40);
 		write(text.c_str(), 0.0f, 0.0f, scale.x, scale.y);
 
-		glUseProgram(0);
+		VAO->Leave();
+		shader->Leave();
 	}
 
-	void TextRenderer::OnDestroy() {}
+	void TextRenderer::OnDestroy() {
+
+	}
 
 }

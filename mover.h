@@ -9,6 +9,7 @@ class Mover : public se::Program {
 
 	protected:
 
+		void FixedUpdate();
 		void Update();
 		void Awake();
 

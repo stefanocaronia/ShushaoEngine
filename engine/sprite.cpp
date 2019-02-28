@@ -84,8 +84,6 @@ namespace se {
 
 	Sprite* Sprite::init() {
 
-		VAO = new Vao(GL_STATIC_DRAW);
-
 		pivot.x = (pixel_pivot.x - (rect.width / 2)) / (float)pixelPerUnit;
 		pivot.y = -(pixel_pivot.y - (rect.height / 2)) / (float)pixelPerUnit;
 
@@ -116,13 +114,16 @@ namespace se {
 				tsr.xMax, tsr.y, // Top-Right of texture
 				tsr.x, tsr.y // Top-left of texture
 			};
-
-			// memcpy(uv, u, sizeof(GLclampd) * 8);
 		}
 
-		VAO->SetUv(uv);
+		VAO = new Vao();
+
+		VAO->Init();
+		VAO->Use();
 		VAO->SetVertices(vertices);
+		VAO->SetUv(uv);
 		VAO->SetIndexes(indexes);
+		VAO->Leave();
 
 		return this;
 	}

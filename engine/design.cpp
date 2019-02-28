@@ -9,17 +9,14 @@ namespace se {
 		if (ready) return true;
 		if (!GLManager::ready) return false;
 
-		shader = new Shader();
-		shader->LoadFromString(
-			#include "base.vert"
-			,
-			#include "base.frag"
-		);
-		shader->name = "Wireframe";
+		shader = GLManager::GetShader("Base Shader");
+		shader->awake();
 
-		//vertices.reserve(256);
+		shader->Use();
 
-		VAO = new Vao(GL_STATIC_DRAW);
+		VAO = new Vao();
+		VAO->Init();
+
 		MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 
 		return ready = true;
@@ -148,10 +145,9 @@ namespace se {
 		vertices.clear();
 		vertices = {position};
 
-		VAO->SetVertices(vertices);
-
 		shader->Use();
-		VAO->Bind();
+		VAO->Use();
+		VAO->SetVertices(vertices);
 
 		shader->SetMatrix("MVP", &MVP[0][0]);
 		shader->SetColor("render_color", color);
@@ -162,7 +158,7 @@ namespace se {
 		glPointSize(1);
 		glDisablei(GL_BLEND, VAO->vertexBuffer);
 
-		VAO->Unbind();
+		VAO->Leave();
 		shader->Leave();
 	}
 
@@ -171,10 +167,9 @@ namespace se {
 
 		vector<glm::vec3> vertices = {start, end};
 
-		VAO->SetVertices(vertices);
-
 		shader->Use();
-		VAO->Bind();
+		VAO->Use();
+		VAO->SetVertices(vertices);
 
 		shader->SetMatrix("MVP", &MVP[0][0]);
 		shader->SetColor("render_color", color);
@@ -183,7 +178,7 @@ namespace se {
 		glDrawArrays(GL_LINES, 0, vertices.size());
 		glDisablei(GL_BLEND, VAO->vertexBuffer);
 
-		VAO->Unbind();
+		VAO->Leave();
 		shader->Leave();
 	}
 
@@ -192,10 +187,9 @@ namespace se {
 
 		vector<glm::vec3> vertices = {start, start + dir};
 
-		VAO->SetVertices(vertices);
-
 		shader->Use();
-		VAO->Bind();
+		VAO->Use();
+		VAO->SetVertices(vertices);
 
 		shader->SetMatrix("MVP", &MVP[0][0]);
 		shader->SetColor("render_color", color);
@@ -204,16 +198,17 @@ namespace se {
 		glDrawArrays(GL_LINES, 0, vertices.size());
 		glDisablei(GL_BLEND, VAO->vertexBuffer);
 
-		VAO->Unbind();
+		VAO->Leave();
 		shader->Leave();
 	}
 
 	void Design::_drawPolygon(std::vector<glm::vec3> vertices_, Color color, DrawMode mode) {
 		if (!Init()) return;
 
-		VAO->SetVertices(vertices_);
-		VAO->Bind();
 		shader->Use();
+		VAO->Use();
+
+		VAO->SetVertices(vertices_);
 
 		glm::mat4 mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 
@@ -224,9 +219,8 @@ namespace se {
 		glDrawArrays((mode == DrawMode::HOLLOW ? GL_LINE_LOOP : GL_TRIANGLE_FAN), 0, vertices_.size());
 		glDisablei(GL_BLEND, VAO->vertexBuffer);
 
+		VAO->Leave();
 		shader->Leave();
-		VAO->Unbind();
-
 	}
 
 	void Design::_drawCircle(glm::vec3 position, float radius, Color color, DrawMode mode) {
@@ -240,10 +234,12 @@ namespace se {
 			vertices.push_back({position.x + radius * cos((float) i / NUM_DIVISIONS * M_PI * 2), position.y + radius * sin((float) i / NUM_DIVISIONS * M_PI * 2), 0.0f});
 		}
 
+		shader->Use();
+		VAO->Use();
+
 		VAO->SetVertices(vertices);
 
-		shader->Use();
-		VAO->Bind();
+
 
 		shader->SetMatrix("MVP", &MVP[0][0]);
 		shader->SetColor("render_color", color);
@@ -252,7 +248,7 @@ namespace se {
 		glDrawArrays((mode == DrawMode::FULL ? GL_TRIANGLE_STRIP : GL_LINE_LOOP), 0, vertices.size());
 		glDisablei(GL_BLEND, VAO->vertexBuffer);
 
-		VAO->Unbind();
+		VAO->Leave();
 		shader->Leave();
 	}
 

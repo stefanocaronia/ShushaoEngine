@@ -55,20 +55,20 @@ Level::Level() {
 	backgroundRenderer->sprite = new Sprite("Background", Resources::Get<Texture>("night"));
 	backgroundRenderer->sprite->SetPixelPerUnit(64);
 
-	// Font* modenine = Resources::Get<Font>("Modenine");
-	// modenine->setSize(24);
+	/*Font* modenine = Resources::Get<Font>("Modenine");
+	modenine->setSize(24);
 
-	// TextRenderer* text = pancrazio->AddComponent<TextRenderer>();
-	// text->SetFont(modenine);
-	// text->name = "Text Test";
-	// text->sortingLayerID = Config::SortingLayers["UI"];
-	// text->SetText("Hello Pancrazio!");
+	TextRenderer* text = pancrazio->AddComponent<TextRenderer>();
+	text->SetFont(modenine);
+	text->name = "Text Test";
+	text->sortingLayerID = Config::SortingLayers["UI"];
+	text->SetText("Hello Pancrazio!");*/
 
 	/*Design::DrawPolygon({
 		 {0.0f, 1.0f, 0.0f},
 		 {2.0f, 1.0f, 0.0f},
 		 {2.0f, -1.0f, 0.0f},
 		 {-1.0f, -1.0f, 0.0f}
-	}, Color::red, DrawMode::HOLLOW);*/
+	}, Color::red, DrawMode::FULL);*/
 }
 

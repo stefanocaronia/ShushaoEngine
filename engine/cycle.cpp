@@ -26,7 +26,7 @@ namespace se {
 	}
 
 	Cycle::~Cycle() {
-		Debug::Log << "Cycle Destructor: " << endl;
+		Debug::Log << "Cycle Destructor" << endl;
 	}
 
 	bool Cycle::init() {
@@ -102,7 +102,7 @@ namespace se {
 		SceneManager::activeScene->run(Cycle::RENDER);
 		Render();
 		if (Physics::enabled && Physics::debug) Physics::world->DrawDebugData();
-		// Design::ProcessDrawCalls();
+		Design::ProcessDrawCalls();
 		Time::frameCount++;
 		GLManager::Swap();
 	}

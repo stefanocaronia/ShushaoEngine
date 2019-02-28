@@ -48,11 +48,12 @@ namespace se {
 
 		if (!isReady()) return;
 
-		sprite->VAO->Bind();
 		material->shader->Use();
-		material->shader->SetColor("render_color", color);
-		material->shader->SetMatrix("MVP", transform->uMVP());
+		material->shader->SetRenderColor(color);
+		material->shader->SetMVP(transform->uMVP());
+		sprite->VAO->Use();
 		material->update();
+
 
 		glActiveTexture(material->shader->GetTexture("main_texture"));
 		glBindTexture(GL_TEXTURE_2D, material->mainTexture->TextureID);
@@ -60,15 +61,15 @@ namespace se {
 
 		glBindTexture(GL_TEXTURE_2D, 0);
 
+		sprite->VAO->Leave();
 		material->shader->Leave();
-		sprite->VAO->Unbind();
 	}
 
 	void SpriteRenderer::OnDestroy() {
 
 		if (!isReady()) return;
 
-		sprite->VAO->Unbind();
+		sprite->VAO->Leave();
 		material->shader->Leave();
 		material->shader->exit();
 		delete(material);

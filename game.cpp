@@ -145,6 +145,14 @@ void Game::GetInput() {
 		Debug::Log << horizontal << endl;
 	}
 
+	if (Input::getKeyDown(SDL_SCANCODE_D)) {
+		Debug::enabled = !Debug::enabled;
+	}
+
+	if (Input::getKeyDown(SDL_SCANCODE_F)) {
+		Config::Physics::debug = !Config::Physics::debug;
+	}
+
 	if (Input::getKeyDown(SDL_SCANCODE_P)) {
 		if (Music::isPlaying()) {
 			Debug::Log << "PAUSE" << endl;

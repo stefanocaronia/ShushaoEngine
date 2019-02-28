@@ -9,29 +9,35 @@ namespace se {
 
 	class Vao {
 		public:
-			Vao(GLenum usage_ = GL_STATIC_DRAW);
+			Vao();
 			~Vao();
 
 			GLuint Id;
-			GLenum GL_USAGE;
 
 			GLuint vertexBuffer;
+			GLuint vertexFontBuffer;
 			GLuint colorBuffer;
 			GLuint indexBuffer;
 			GLuint uvBuffer;
 
-			void SetVertices(std::vector<glm::vec3>&);
-			void SetUv(std::vector<GLclampd>&);
-			void SetIndexes(std::vector<GLushort>&);
-			void SetColors(std::vector<glm::vec4>&);
+			bool inUse = false;
+
+			void SetVertices(std::vector<glm::vec3>&, GLenum usage_ = GL_STATIC_DRAW);
+			void SetUv(std::vector<GLclampd>&, GLenum usage_ = GL_STATIC_DRAW);
+			void SetIndexes(std::vector<GLushort>&, GLenum usage_ = GL_STATIC_DRAW);
+			void SetColors(std::vector<glm::vec4>&, GLenum usage_ = GL_STATIC_DRAW);
+			void SetFontVertices(std::vector<glm::vec4>&, GLenum usage_ = GL_STATIC_DRAW);
 
 			void Reset();
+			void Init();
 
-			void Bind() {
+			void Use() {
 				glBindVertexArray(Id);
+				inUse = true;
 			}
-			void Unbind() {
+			void Leave() {
 				glBindVertexArray(0);
+				inUse = false;
 			}
 	};
 

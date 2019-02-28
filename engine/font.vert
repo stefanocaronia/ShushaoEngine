@@ -1,14 +1,14 @@
 R"(
-#version 330 core
+#version 430
 
-in vec4 aCoord;
+layout(location=1) in vec4 vertex_coord;
 
-uniform mat4 uMvp;
+layout(location=5) uniform mat4 MVP;
 out vec2 out_texturecoord;
 
 void main(void) {
-	gl_Position = uMvp * vec4(aCoord.xy, 0.0f, 1.0f);
-	out_texturecoord = aCoord.zw;
+	gl_Position = MVP * vec4(vertex_coord.xy, 0.0f, 1.0f);
+	out_texturecoord = vertex_coord.zw;
 }
 
 )"

@@ -12,7 +12,16 @@
 namespace se {
 
 	void Resources::Clear() {
-		std::vector<Object*> toDelete;
+
+		for (auto& asset : Assets) {
+			if (asset.second != nullptr) {
+				Debug::Log << "Cancello " << asset.second->name << " (" + util::classtitle(typeid(*asset.second).name()) +")" << endl;
+				delete(asset.second);
+				asset.second=nullptr;
+			}
+		}
+
+		/*std::vector<Object*> toDelete;
 		for (auto const& asset : Assets) {
 			if (Assets[asset.first] == nullptr) continue;
 			toDelete.push_back(Assets[asset.first]);
@@ -20,10 +29,9 @@ namespace se {
 
 		for (Object* obj : toDelete) {
 			if (obj == nullptr) continue;
-			LOG("Cancello " + obj->name + " (" + util::toString(obj) +")");
+			Debug::Log << "Cancello " << obj->name << " (" + util::toString(obj) +")" << endl;
 			delete(obj);
-
-		}
+		}*/
 		Assets.clear();
 	}
 

@@ -4,9 +4,18 @@
 #include <SDL_mixer.h>
 #include <SDL_ttf.h>
 #include <iostream>
+#include <vector>
+
+#include "debug.h"
 #include "glmanager.h"
+#include "standardshader.h"
+#include "wireframeshader.h"
+#include "baseshader.h"
+#include "fontshader.h"
 
 namespace se {
+
+	using namespace std;
 
 	bool GLManager::Init(std::string title, bool fs) {
 
@@ -16,7 +25,7 @@ namespace se {
 		IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
 		// TTF_Init();
 
-		// FT_Init_FreeType(&lFreetype);
+		FT_Init_FreeType(&lFreetype);
 
 		Mix_Init(MIX_INIT_MP3 | MIX_INIT_OGG);
 		Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096);
@@ -65,6 +74,12 @@ namespace se {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+		// Shader predefiniti
+		AddShader(new StandardShader());
+		AddShader(new BaseShader());
+		AddShader(new WireframeShader());
+		AddShader(new FontShader());
+
 		ready = true;
 		return true;
 	}
@@ -78,6 +93,15 @@ namespace se {
 		Mix_CloseAudio();
 		Mix_Quit();
 		SDL_Quit();
+
+		for (auto& it : shaders) {
+			if (it.second != nullptr) {
+				Debug::Log << "Cancello " << it.second->name  << endl; //<< " (" + util::classtitle(typeid(*it.second).name()) +")"
+				delete(it.second);
+				it.second = nullptr;
+			}
+		}
+		shaders.clear();
 	}
 
 	void GLManager::Clear() {
@@ -124,6 +148,7 @@ namespace se {
 
 	bool GLManager::fullscreen = false;
 	bool GLManager::ready = false;
+	map<string, Shader*> GLManager::shaders;
 
 	unsigned int GLManager::DESKTOP_WIDTH;
 	unsigned int GLManager::DESKTOP_HEIGHT;

@@ -12,20 +12,15 @@ namespace se {
 	using namespace glm;
 
 	bool PhysicsDebugDraw::Init() {
-		if (!GLManager::ready) return false;
+		if (!GLManager::ready || !Config::Physics::debug) return false;
 		if (ready) return true;
-		// vertices.reserve(256);
 
-		shader = new Shader();
-		shader->LoadFromString(
-			#include "base.vert"
-			,
-			#include "base.frag"
-		);
-		shader->name = "Wireframe";
+		shader = GLManager::GetShader("Base Shader");
 		shader->awake();
+		shader->Use();
 
-		VAO = new Vao(GL_DYNAMIC_DRAW);
+		VAO = new Vao();
+		VAO->Init();
 
 		ready = true;
 		return true;
@@ -40,9 +35,9 @@ namespace se {
 			vertices.push_back({b2vertices[i].x, b2vertices[i].y, 0.0f});
 		}
 
-		VAO->SetVertices(vertices);
-		VAO->Bind();
 		shader->Use();
+		VAO->Use();
+		VAO->SetVertices(vertices, GL_DYNAMIC_DRAW);
 
 		glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 
@@ -51,8 +46,8 @@ namespace se {
 		shader->SetRenderColor({0.0f, 1.0f, 0.0f, alpha});
 		glDrawArrays(GL_LINE_LOOP, 0, vertices.size());
 
+		VAO->Leave();
 		shader->Leave();
-		VAO->Unbind();
 	}
 
 	void PhysicsDebugDraw::DrawSolidPolygon(const b2Vec2* b2vertices, int32 vertexCount, const b2Color& color) {
@@ -64,11 +59,11 @@ namespace se {
 			vertices.push_back({b2vertices[i].x, b2vertices[i].y, 0.0f});
 		}
 
-		VAO->SetVertices(vertices);
-
-		VAO->Bind();
 		shader->Use();
 		shader->update();
+
+		VAO->Use();
+		VAO->SetVertices(vertices);
 
 		glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 		shader->SetMVP(&MVP[0][0]);
@@ -80,8 +75,8 @@ namespace se {
 		glDrawArrays(GL_LINE_LOOP, 0, vertices.size());
 		glDisablei(GL_BLEND, VAO->vertexBuffer);
 
+		VAO->Leave();
 		shader->Leave();
-		VAO->Unbind();
 	}
 
 	void PhysicsDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color) {
@@ -94,10 +89,10 @@ namespace se {
 			vertices.push_back({center.x + radius * cos((float) i / NUM_DIVISIONS * M_PI * 2), center.y + radius * sin((float) i / NUM_DIVISIONS * M_PI * 2), 0.0f});
 		}
 
-		VAO->SetVertices(vertices);
-
-		VAO->Bind();
 		shader->Use();
+
+		VAO->Use();
+		VAO->SetVertices(vertices);
 		shader->update();
 
 		glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
@@ -108,8 +103,8 @@ namespace se {
 		glDrawArrays(GL_LINE_LOOP, 0, vertices.size());
 		glLineWidth(1);
 
+		VAO->Leave();
 		shader->Leave();
-		VAO->Unbind();
 	}
 
 	void PhysicsDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color) {
@@ -123,11 +118,12 @@ namespace se {
 			vertices.push_back({center.x + radius * cos((float) i / NUM_DIVISIONS * M_PI * 2), center.y + radius * sin((float) i / NUM_DIVISIONS * M_PI * 2), 0.0f});
 		}
 
-		VAO->SetVertices(vertices);
 
-		VAO->Bind();
 		shader->Use();
 		shader->update();
+
+		VAO->Use();
+		VAO->SetVertices(vertices);
 
 		glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 		shader->SetMVP(&MVP[0][0]);
@@ -137,8 +133,8 @@ namespace se {
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, vertices.size());
 		glLineWidth(1);
 
+		VAO->Leave();
 		shader->Leave();
-		VAO->Unbind();
 	}
 
 	void PhysicsDebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color) {
@@ -150,11 +146,11 @@ namespace se {
 			{p2.x, p2.y, 0.0f},
 		};
 
-		VAO->SetVertices(vertices);
-
-		VAO->Bind();
 		shader->Use();
 		shader->update();
+
+		VAO->Use();
+		VAO->SetVertices(vertices);
 
 		glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 		shader->SetMVP(&MVP[0][0]);
@@ -165,8 +161,8 @@ namespace se {
 		shader->SetRenderColor({color.r, color.g, color.b, alpha});
 		glDrawArrays(GL_LINE, 0, vertices.size());
 
+		VAO->Leave();
 		shader->Leave();
-		VAO->Unbind();
 	}
 
 	void PhysicsDebugDraw::DrawTransform(const b2Transform& xf) {
@@ -185,11 +181,11 @@ namespace se {
 			v = (rotation * v) + glm::vec3({xf.p.x, xf.p.y, 0.0f});
 		}
 
-		VAO->SetVertices(vertices);
-
-		VAO->Bind();
 		shader->Use();
 		shader->update();
+
+		VAO->Use();
+		VAO->SetVertices(vertices);
 
 		glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 		shader->SetMVP(&MVP[0][0]);
@@ -202,8 +198,8 @@ namespace se {
 		glDrawArrays(GL_LINE_STRIP, 1, 2);
 		glLineWidth(1);
 
+		VAO->Leave();
 		shader->Leave();
-		VAO->Unbind();
 	}
 
 }

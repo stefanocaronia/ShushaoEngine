@@ -19,10 +19,19 @@
                 "UNICODE",
                 "_UNICODE"
             ],
-            "compilerPath": "g++.exe",
+            "windowsSdkVersion": "10.0.14393.0",
+            "compilerPath": "g++",
             "cStandard": "c11",
-            "cppStandard": "c++11",
-            "intelliSenseMode": "clang-x64"
+            "cppStandard": "c++17",
+            "intelliSenseMode": "msvc-x64",
+            "browse": {
+                "path": [
+                    "${workspaceFolder}",
+                    "${workspaceFolder}/engine"
+                ],
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": ""
+            }
         }
     ],
     "version": 4

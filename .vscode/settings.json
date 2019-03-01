@@ -28,6 +28,7 @@
         "cstdint": "cpp",
         "cstdio": "cpp",
         "cstdlib": "cpp",
-        "cwchar": "cpp"
+        "cwchar": "cpp",
+        "iostream": "cpp"
     }
 }

@@ -35,7 +35,7 @@ namespace se {
 
 	void TextRenderer::Update() {}
 
-	void TextRenderer::write(const char *text_) {
+	void TextRenderer::write(string text_) {
 
 		vec2 offset_  = offset * (float)pixelPerUnit;
 		vec2 pos = offset_;
@@ -56,7 +56,7 @@ namespace se {
 
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-		for (p = text_; *p; p++) {
+		for (p = text_.c_str(); *p; p++) {
 			if (FT_Load_Char(font->face, *p, FT_LOAD_RENDER))
 				continue;
 
@@ -96,7 +96,7 @@ namespace se {
 
 		VAO->Use();
 
-		write(text.c_str());
+		write(text);
 
 		VAO->Leave();
 		shader->Leave();

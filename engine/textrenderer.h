@@ -12,6 +12,8 @@
 #include "vao.h"
 #include "config.h"
 
+/// TODO: deve renderizzare più righe? controllare com'è in unity
+
 namespace se {
 
 	class TextRenderer : public Renderer {
@@ -65,7 +67,7 @@ namespace se {
             GLuint vbo;
             Vao* VAO;
 
-            void write(const char* text_);
+            void write(std::string text_);
 
 	};
 

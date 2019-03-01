@@ -11,13 +11,10 @@ namespace se {
 
 		shader = GLManager::GetShader("Base Shader");
 		shader->awake();
-
 		shader->Use();
 
 		VAO = new Vao(VBO_VERTEX);
 		VAO->Init();
-
-		MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 
 		return ready = true;
 	}
@@ -149,14 +146,16 @@ namespace se {
 		VAO->Use();
 		VAO->SetVertices(vertices);
 
-		shader->SetMatrix("MVP", &MVP[0][0]);
-		shader->SetColor("render_color", color);
+		glm::mat4 mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 
-		glEnablei(GL_BLEND, VAO->vertexBuffer);
+		shader->SetMVP(&mvp[0][0]);
+		shader->SetRenderColor(color);
+
+		glEnablei(GL_BLEND, VAO->vertexBuffer->Id);
 		glPointSize(tickness);
 		glDrawArrays(GL_POINTS, 0, 1);
 		glPointSize(1);
-		glDisablei(GL_BLEND, VAO->vertexBuffer);
+		glDisablei(GL_BLEND, VAO->vertexBuffer->Id);
 
 		VAO->Leave();
 		shader->Leave();
@@ -171,12 +170,14 @@ namespace se {
 		VAO->Use();
 		VAO->SetVertices(vertices);
 
-		shader->SetMatrix("MVP", &MVP[0][0]);
-		shader->SetColor("render_color", color);
+		glm::mat4 mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 
-		glEnablei(GL_BLEND, VAO->vertexBuffer);
+		shader->SetMVP(&mvp[0][0]);
+		shader->SetRenderColor(color);
+
+		glEnablei(GL_BLEND, VAO->vertexBuffer->Id);
 		glDrawArrays(GL_LINES, 0, vertices.size());
-		glDisablei(GL_BLEND, VAO->vertexBuffer);
+		glDisablei(GL_BLEND, VAO->vertexBuffer->Id);
 
 		VAO->Leave();
 		shader->Leave();
@@ -189,14 +190,16 @@ namespace se {
 
 		shader->Use();
 		VAO->Use();
-		VAO->SetVertices(vertices);
+		VAO->SetVertices(vertices, GL_STATIC_DRAW);
 
-		shader->SetMatrix("MVP", &MVP[0][0]);
-		shader->SetColor("render_color", color);
+		glm::mat4 mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 
-		glEnablei(GL_BLEND, VAO->vertexBuffer);
+		shader->SetMVP(&mvp[0][0]);
+		shader->SetRenderColor(color);
+
+		glEnablei(GL_BLEND, VAO->vertexBuffer->Id);
 		glDrawArrays(GL_LINES, 0, vertices.size());
-		glDisablei(GL_BLEND, VAO->vertexBuffer);
+		glDisablei(GL_BLEND, VAO->vertexBuffer->Id);
 
 		VAO->Leave();
 		shader->Leave();
@@ -212,12 +215,12 @@ namespace se {
 
 		glm::mat4 mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 
-		shader->SetMatrix("MVP", &mvp[0][0]);
-		shader->SetColor("render_color", color);
+		shader->SetMVP(&mvp[0][0]);
+		shader->SetRenderColor(color);
 
-		glEnablei(GL_BLEND, VAO->vertexBuffer);
+		glEnablei(GL_BLEND, VAO->vertexBuffer->Id);
 		glDrawArrays((mode == DrawMode::HOLLOW ? GL_LINE_LOOP : GL_TRIANGLE_FAN), 0, vertices_.size());
-		glDisablei(GL_BLEND, VAO->vertexBuffer);
+		glDisablei(GL_BLEND, VAO->vertexBuffer->Id);
 
 		VAO->Leave();
 		shader->Leave();
@@ -239,14 +242,14 @@ namespace se {
 
 		VAO->SetVertices(vertices);
 
+		glm::mat4 mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 
+		shader->SetMVP(&mvp[0][0]);
+		shader->SetRenderColor(color);
 
-		shader->SetMatrix("MVP", &MVP[0][0]);
-		shader->SetColor("render_color", color);
-
-		glEnablei(GL_BLEND, VAO->vertexBuffer);
+		glEnablei(GL_BLEND, VAO->vertexBuffer->Id);
 		glDrawArrays((mode == DrawMode::FULL ? GL_TRIANGLE_STRIP : GL_LINE_LOOP), 0, vertices.size());
-		glDisablei(GL_BLEND, VAO->vertexBuffer);
+		glDisablei(GL_BLEND, VAO->vertexBuffer->Id);
 
 		VAO->Leave();
 		shader->Leave();
@@ -258,8 +261,6 @@ namespace se {
 	Shader* Design::shader = nullptr;
 	bool Design::ready;
 	Vao* Design::VAO;
-	glm::mat4 Design::MVP;
-	//GLuint Design::vertexBuffer;
 	std::vector<glm::vec3> Design::vertices;
 	std::vector<DrawCall> Design::drawCalls;
 }

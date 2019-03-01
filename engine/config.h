@@ -13,7 +13,7 @@ namespace Config {
 	extern bool debug;
 
 	// textures
-	extern int pixelPerUnit;
+	extern unsigned int pixelPerUnit;
 
 	// display
 	extern float displayAspect;

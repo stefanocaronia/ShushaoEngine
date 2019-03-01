@@ -20,9 +20,8 @@ namespace se {
 			const int& size = _size;
 
 			bool Load(std::string);
-			void setSize(int);
-			void setPixelSize(int);
-			void setWorldSize(float);
+			void SetSize(float);
+			void SetPixelSize(int);
 
 		private:
 

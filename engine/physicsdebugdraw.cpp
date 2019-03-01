@@ -68,12 +68,12 @@ namespace se {
 		glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 		shader->SetMVP(&MVP[0][0]);
 
-		glEnablei(GL_BLEND, VAO->vertexBuffer);
+		glEnablei(GL_BLEND, VAO->vertexBuffer->Id);
 		shader->SetRenderColor({color.r, color.g, color.b, color.a * alpha});
 		glDrawArrays(GL_TRIANGLE_FAN, 0, vertices.size());
 		shader->SetRenderColor({0.0f, 1.0f, 0.0f, alpha});
 		glDrawArrays(GL_LINE_LOOP, 0, vertices.size());
-		glDisablei(GL_BLEND, VAO->vertexBuffer);
+		glDisablei(GL_BLEND, VAO->vertexBuffer->Id);
 
 		VAO->Leave();
 		shader->Leave();

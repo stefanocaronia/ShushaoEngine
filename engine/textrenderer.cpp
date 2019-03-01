@@ -28,35 +28,18 @@ namespace se {
 		return (font != nullptr && shader != nullptr && transform != nullptr);
 	}
 
-	void TextRenderer::SetFont(Font* font_) {
-	    font = font_;
-	}
-
-    void TextRenderer::SetText(std::string text_) {
-        _text = text_;
-    }
-
-    void TextRenderer::SetScale(glm::fvec2 scale_) {
-        _scale = scale_;
-    }
-
-    void TextRenderer::SetColor(Color color_) {
-        _color = color_;
-    }
-
-    void TextRenderer::SetRect(Rect rect_) {
-        _rect = rect_;
-    }
-
 	void TextRenderer::Awake() {
-
 		shader->awake();
 		VAO->Init();
 	}
 
 	void TextRenderer::Update() {}
 
-	void TextRenderer::write(const char *text, float x, float y, float sx, float sy) {
+	void TextRenderer::write(const char *text_) {
+
+		vec2 offset_  = offset * (float)pixelPerUnit;
+		vec2 pos = offset_;
+
 		const char *p;
 		FT_GlyphSlot g = font->face->glyph;
 
@@ -73,16 +56,16 @@ namespace se {
 
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-		for (p = text; *p; p++) {
+		for (p = text_; *p; p++) {
 			if (FT_Load_Char(font->face, *p, FT_LOAD_RENDER))
 				continue;
 
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, g->bitmap.width, g->bitmap.rows, 0, GL_RED, GL_UNSIGNED_BYTE, g->bitmap.buffer);
 
-			float x2 = (x + g->bitmap_left * sx) / Config::pixelPerUnit;
-			float y2 = (-y - g->bitmap_top * sy) / Config::pixelPerUnit;
-			float w = (g->bitmap.width * sx) / Config::pixelPerUnit;
-			float h = (g->bitmap.rows * sy) / Config::pixelPerUnit;
+			float x2 = (pos.x + g->bitmap_left * scale.x) / Config::pixelPerUnit;
+			float y2 = (-pos.y - g->bitmap_top * scale.y) / Config::pixelPerUnit;
+			float w = (g->bitmap.width * scale.x) / Config::pixelPerUnit;
+			float h = (g->bitmap.rows * scale.y) / Config::pixelPerUnit;
 
 			vector<vec4> box {
 				{ x2,     -y2, 		0, 0 },
@@ -92,11 +75,11 @@ namespace se {
 			};
 
 			VAO->SetFontVertices(box, GL_DYNAMIC_DRAW);
-			glBindBuffer(GL_ARRAY_BUFFER, VAO->vertexFontBuffer);
+			glBindBuffer(GL_ARRAY_BUFFER, VAO->vertexFontBuffer->Id);
 			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
-			x += (g->advance.x / 64) * sx;
-			y += (g->advance.y / 64) * sy;
+			pos.x += ((g->advance.x) / 64) * scale.x;
+			pos.y += ((g->advance.y) / 64) * scale.y;
 		}
 
 		glDeleteTextures(1, &tex);
@@ -113,8 +96,7 @@ namespace se {
 
 		VAO->Use();
 
-		font->setWorldSize(0.5f);
-		write(text.c_str(), -1.0f, -1.0f, scale.x, scale.y);
+		write(text.c_str());
 
 		VAO->Leave();
 		shader->Leave();

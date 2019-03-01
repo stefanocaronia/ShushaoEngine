@@ -26,7 +26,7 @@ namespace se {
 
 			glm::vec2 pivot; // Location of the Sprite's center point in the vertices coordinates
 
-			int pixelPerUnit = Config::pixelPerUnit; // The number of pixels in the sprite that correspond to one unit in world space. (Read Only)
+			unsigned int pixelPerUnit = Config::pixelPerUnit; // The number of pixels in the sprite that correspond to one unit in world space. (Read Only)
 
 			glm::vec2 textureRectOffset; // Gets the offset of the rectangle this sprite uses on its texture to the original sprite bounds. If sprite mesh type is FullRect, offset is zero.
 
@@ -57,7 +57,7 @@ namespace se {
 			Sprite* SetTexture(Texture*);
 			Sprite* SetPivot(vec2);
 			Sprite* SetPivot(PivotPosition);
-			Sprite* SetPixelPerUnit(float);
+			Sprite* SetPixelPerUnit(unsigned int);
 
 			static glm::vec2 CalculatePivot(PivotPosition, Rect, vec2 custom = vec2(0,0));
 

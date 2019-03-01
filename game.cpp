@@ -27,7 +27,7 @@ Game::Game(string title) : Cycle(title) {
 
 	Config::displayWidth = 1024;
 	Config::displayHeight = Config::displayWidth / (16.0f/9.0f);
-	Config::pixelPerUnit = 16;
+	Config::pixelPerUnit = 128;
 
 	Debug::level = DebugLevel::INFO;
 	Debug::enabled = true;
@@ -41,7 +41,7 @@ void Game::Awake() {
 	Resources::Load<Texture>("assets/night.jpg");
 	Resources::Load<Texture>("assets/pancsmile.png");
 	Resources::Load<TextureAtlas>("assets/walking.png")->AddGrid(vec2(16, 16), PivotPosition::BOTTOM);
-	Resources::Add<Sprite>("pancrazio_sprite")->SetTexture(Resources::Get<Texture>("pancrazio"));
+	Resources::Add<Sprite>("pancrazio_sprite")->SetTexture(Resources::Get<Texture>("pancrazio"))->SetPixelPerUnit(16);
 
 	Resources::Load<Music>("assets/fizz.mp3");
 	Resources::Load<Effect>("assets/hit.wav");

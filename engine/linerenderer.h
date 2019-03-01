@@ -21,15 +21,11 @@ namespace se {
 			~LineRenderer();
 			LineRenderer(std::string);
 
+			Vao* VAO;
+			Shader* shader;
+
             std::vector<glm::vec3> vertices;
             std::vector<glm::vec4> colors;
-
-			GLuint vertexBuffer;
-			GLuint colorBuffer;
-
-			Vao* VAO;
-
-			Shader* shader;
 
 			void AddLine(glm::vec3, glm::vec3, Color);
 			void AddPolyline(std::vector<glm::vec3>, Color);

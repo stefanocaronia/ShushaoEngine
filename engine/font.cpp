@@ -15,19 +15,14 @@ namespace se {
 
 	Font::~Font()	{}
 
-	void Font::setSize(int size_) {
-        _size = size_;
+	void Font::SetSize(float wsize_) {
+        SetPixelSize(wsize_ * Config::pixelPerUnit);
+    }
+
+    void Font::SetPixelSize(int size_) {
+    	 _size = size_;
         FT_Set_Pixel_Sizes(face, 0, _size);
     }
-
-    void Font::setPixelSize(int size_) {
-		setSize(size_);
-    }
-
-	void Font::setWorldSize(float size_) {
-		setSize(size_ * Config::pixelPerUnit);
-	}
-
 
 	bool Font::Load(std::string filename) {
 		if (FT_New_Face(GLManager::lFreetype, filename.c_str(), 0, &face)) {

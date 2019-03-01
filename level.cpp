@@ -55,13 +55,12 @@ Level::Level() {
 	backgroundRenderer->sprite = new Sprite("Background", Resources::Get<Texture>("night"));
 	backgroundRenderer->sprite->SetPixelPerUnit(64);
 
-	Font* f = Resources::Get<Font>("Pixel Perfect");
+	//Font* f = Resources::Get<Font>("Pixel Perfect");
+	Font* f = Resources::Get<Font>("Modenine");
 
-	TextRenderer* text = pancrazio->AddComponent<TextRenderer>();
-	text->SetFont(f);
-	text->name = "Text Test";
+	TextRenderer* text = root->AddComponent<TextRenderer>();
 	text->sortingLayerID = Config::SortingLayers["UI"];
-	text->SetText("HELLO PANCRAZIO!");
+	text->SetFont(f)->SetText("HELLO PANCRAZIO!")->SetColor(Color::red)->SetSize(1.0f)->SetOffset({-1.0f, -1.0f});
 
 	/*Design::DrawPolygon({
 		 {0.0f, 1.0f, 0.0f},

@@ -7,9 +7,9 @@
 #include "rect.h"
 #include "types.h"
 
-using namespace std;
-
 namespace se {
+
+	using namespace std;
 
 	Sprite::Sprite() {
         name = "Sprite";
@@ -48,7 +48,7 @@ namespace se {
 		return this;
 	}
 
-	Sprite* Sprite::SetPixelPerUnit(float ppu) {
+	Sprite* Sprite::SetPixelPerUnit(unsigned int ppu) {
         pixelPerUnit = ppu;
 		init();
 		return this;
@@ -120,9 +120,9 @@ namespace se {
 		VAO->Init();
 
 		VAO->Use();
-		VAO->SetVertices(vertices);
-		VAO->SetUv(uv);
-		VAO->SetIndexes(indexes);
+		VAO->SetVertices(vertices, GL_STATIC_DRAW);
+		VAO->SetUv(uv, GL_STATIC_DRAW);
+		VAO->SetIndexes(indexes, GL_STATIC_DRAW);
 		VAO->Leave();
 
 		return this;

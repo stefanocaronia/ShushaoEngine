@@ -70,10 +70,8 @@ namespace se {
 
 			static Shader* shader;
 			static bool ready;
-			//static GLuint VAO;
 			static Vao* VAO;
 			static std::vector<glm::vec3> vertices;
-			static glm::mat4 MVP;
 
 			static bool Init();
 

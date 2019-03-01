@@ -1,7 +1,7 @@
 R"(
 #version 430
 
-layout(location=1) in vec4 vertex_coord;
+layout(location=8) in vec4 vertex_coord;
 
 layout(location=5) uniform mat4 MVP;
 out vec2 out_texturecoord;

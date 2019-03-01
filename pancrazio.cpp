@@ -28,7 +28,7 @@ Pancrazio::Pancrazio() {
 
 	/*animation = AddComponent<Animation>("walk");
 	animation->setFPS(1);
-	animation->setLoop(false);
+	animation->setLoop(true);
 	animation->addLayer("sprite")->setTarget(sr->sprite)->load(Resources::Get<SpriteSheet>("walking"));
 	animation->addLayer("size")->setTarget(transform->localScale)->load({
 		{1.0f, 1.0f, 0.0f},

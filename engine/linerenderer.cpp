@@ -73,8 +73,8 @@ namespace se {
 
 		VAO->Init();
 		VAO->Use();
-		VAO->SetVertices(vertices);
-		VAO->SetColors(colors);
+		VAO->SetVertices(vertices, GL_STATIC_DRAW);
+		VAO->SetColors(colors, GL_STATIC_DRAW);
 		VAO->Leave();
 
 		shader->Leave();
@@ -90,9 +90,9 @@ namespace se {
 		shader->SetMVP(transform->uMVP());
 		shader->update();
 
-		glEnablei(GL_BLEND, VAO->vertexBuffer);
+		glEnablei(GL_BLEND, VAO->vertexBuffer->Id);
 		glDrawArrays(GL_LINES, 0, vertices.size());
-		glDisablei(GL_BLEND, VAO->vertexBuffer);
+		glDisablei(GL_BLEND, VAO->vertexBuffer->Id);
 
 		VAO->Leave();
 		shader->Use();

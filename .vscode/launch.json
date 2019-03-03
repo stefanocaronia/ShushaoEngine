@@ -1,16 +1,17 @@
 {
     "version": "0.2.0",
     "configurations": [
-        {
+        { // F5
             "name": "Debug (GDB)",
             "type": "cppdbg",
             "request": "launch",
-            "targetArchitecture": "x86",
-            "program": "${workspaceRoot}/vsbuild/bin/Debug/${workspaceFolderBasename}.exe",
-            "miDebuggerPath":"gdb.exe",
+            "targetArchitecture": "x64",
+            /* "program": "${workspaceRoot}/bin/Debug/${workspaceFolderBasename}.exe", */
+            "program": "${workspaceRoot}/bin/Debug/ShushaoGame.exe",
+            "miDebuggerPath":"gdb.exe -q",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceRoot}/vsbuild/bin/Debug/",
+            "cwd": "${workspaceRoot}/bin/Debug/",
             "externalConsole": true,
             "preLaunchTask": "Build"　　
         }

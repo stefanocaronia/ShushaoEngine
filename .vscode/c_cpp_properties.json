@@ -26,7 +26,6 @@
             "intelliSenseMode": "msvc-x64",
             "browse": {
                 "path": [
-                    "${workspaceFolder}",
                     "${workspaceFolder}/engine"
                 ],
                 "limitSymbolsToIncludedHeaders": true,

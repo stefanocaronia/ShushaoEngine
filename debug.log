@@ -1,53 +1,10 @@
-00:03.205 [INFO] COLLISION: Pancrazio --> Ground
-00:03.236 [INFO] COLLISION EXIT: Pancrazio --> Ground
-00:04.702 [INFO] COLLISION: Pancrazio --> Ground
-00:04.752 [INFO] COLLISION EXIT: Pancrazio --> Ground
-00:04.969 [INFO] COLLISION: Pancrazio --> Ground
-00:05.152 [INFO] COLLISION EXIT: Pancrazio --> Ground
-00:05.185 [INFO] COLLISION: Pancrazio --> Ground
-00:05.287 [INFO] COLLISION EXIT: Pancrazio --> Ground
-00:05.319 [INFO] COLLISION: Pancrazio --> Ground
-00:05.541 [INFO] COLLISION EXIT: Pancrazio --> Ground
-00:05.542 [INFO] Entity Destructor: Main Camera
-00:05.543 [INFO] Component Destructor: Transform di Main Camera
-00:05.544 [INFO] Component Destructor: Camera di Main Camera
-00:05.545 [INFO] Entity Destructor: Debug Grid
-00:05.546 [INFO] Component Destructor: Transform di Debug Grid
-00:05.547 [INFO] Destructor di Shader standard
-00:05.548 [INFO] Component Destructor: Line Renderer di Debug Grid
-00:05.551 [INFO] Entity Destructor: Ground
-00:05.552 [INFO] Component Destructor: Transform di Ground
-00:05.554 [INFO] Component Destructor: Rigidbody 2D di Ground
-00:05.555 [INFO] Component Destructor: Box Collider 2D di Ground
-00:05.556 [INFO] Entity Destructor: Door
-00:05.557 [INFO] Component Destructor: Transform di Door
-00:05.558 [INFO] Component Destructor: Rigidbody 2D di Door
-00:05.559 [INFO] Component Destructor: Box Collider 2D di Door
-00:05.562 [INFO] Entity Destructor: Pancrazio
-00:05.563 [INFO] Component Destructor: Transform di Pancrazio
-00:05.564 [INFO] Destructor di Shader standard
-00:05.564 [INFO] Component Destructor: Sprite Renderer di Pancrazio
-00:05.565 [INFO] Component Destructor: Rigidbody 2D di Pancrazio
-00:05.567 [INFO] Component Destructor: box di Pancrazio
-00:05.568 [INFO] Component Destructor: trigger di Pancrazio
-00:05.569 [INFO] Component Destructor: Mover di Pancrazio
-00:05.572 [INFO] Entity Destructor: Son of Pancrazio
-00:05.573 [INFO] Component Destructor: Transform di Son of Pancrazio
-00:05.574 [INFO] Destructor di Shader standard
-00:05.575 [INFO] Component Destructor: Sprite Renderer di Son of Pancrazio
-00:05.576 [INFO] Component Destructor: Rigidbody 2D di Son of Pancrazio
-00:05.577 [INFO] Component Destructor: box di Son of Pancrazio
-00:05.578 [INFO] Component Destructor: trigger di Son of Pancrazio
-00:05.579 [INFO] <resources::Clear:23> Cancello fizz (0x4658e98)
-00:05.582 [INFO] <resources::Clear:23> Cancello hit (0x4658848)
-00:05.583 [INFO] <resources::Clear:23> Cancello night (0x4631860)
-00:05.584 [INFO] <resources::Clear:23> Cancello pancrazio (0x4631b00)
-00:05.586 [INFO] <resources::Clear:23> Cancello pancrazio_sprite (0x4658278)
-00:05.587 [INFO] <resources::Clear:23> Cancello pancsmile (0x46318d0)
-00:05.588 [INFO] <resources::Clear:23> Cancello shoot (0x4658a78)
-00:05.589 [INFO] <resources::Clear:23> Cancello walking (0x4658960)
-00:05.593 [INFO] <resources::Clear:23> Cancello walking_0 (0x4661ec0)
-00:05.594 [INFO] <resources::Clear:23> Cancello walking_1 (0x4662050)
-00:05.595 [INFO] <resources::Clear:23> Cancello walking_2 (0x46621e0)
-00:05.596 [INFO] <resources::Clear:23> Cancello walking_3 (0x4662370)
-00:05.663 [INFO] Cycle Destructor: 
+00:01.451 [ERROR] IMG_Load Couldn't open assets/pancrazio.png
+00:01.456 [ERROR] IMG_Load Couldn't open assets/night.jpg
+00:01.460 [ERROR] IMG_Load Couldn't open assets/pancsmile.png
+00:01.463 [ERROR] IMG_Load Couldn't open assets/walking.png
+00:01.466 [WARNING] <textureatlas::AddGrid:22> No texture loaded
+00:01.470 [ERROR] Impossibile caricare assets/fizz.mp3: Couldn't open 'assets/fizz.mp3'
+00:01.474 [ERROR] Impossibile caricare assets/hit.wav: Mix_LoadWAV_RW with NULL src
+00:01.477 [ERROR] Impossibile caricare assets/shoot.wav: Mix_LoadWAV_RW with NULL src
+00:01.480 [ERROR] Could not load font: assets/modenine.ttf
+00:01.484 [ERROR] Could not load font: assets/pixelperfect.ttf

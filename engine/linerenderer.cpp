@@ -16,7 +16,9 @@ namespace se {
 
 		shader = GLManager::GetShader("Wireframe Shader");
 
-		VAO = new Vao(VBO_VERTEX | VBO_COLOR);
+		VAO = new Vao();
+		VAO->AddBuffer("vertex", VBO_CONFIG_VERTEX);
+		VAO->AddBuffer("colors", VBO_CONFIG_COLOR);
 	}
 
 	LineRenderer::~LineRenderer() {
@@ -73,8 +75,8 @@ namespace se {
 
 		VAO->Init();
 		VAO->Use();
-		VAO->SetVertices(vertices, GL_STATIC_DRAW);
-		VAO->SetColors(colors, GL_STATIC_DRAW);
+		VAO->Load<vec3>("vertex", vertices);
+		VAO->Load<vec4>("colors", colors);
 		VAO->Leave();
 
 		shader->Leave();
@@ -90,9 +92,9 @@ namespace se {
 		shader->SetMVP(transform->uMVP());
 		shader->update();
 
-		glEnablei(GL_BLEND, VAO->vertexBuffer->Id);
+		glEnablei(GL_BLEND, VAO->GetBuffer("vertex")->Id);
 		glDrawArrays(GL_LINES, 0, vertices.size());
-		glDisablei(GL_BLEND, VAO->vertexBuffer->Id);
+		glDisablei(GL_BLEND, VAO->GetBuffer("vertex")->Id);
 
 		VAO->Leave();
 		shader->Use();

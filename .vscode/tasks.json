@@ -13,13 +13,31 @@
             "command": "mingw32-make -j 8"
         },
         {
-            "label": "Run",
+            "label": "Build Release",
+            "type": "shell",
+            "group": "build",
+            "command": "mingw32-make -j 8 BUILD=Release"
+        },
+        {
+            "label": "Rebuild",
+            "type": "shell",
+            "group": "build",
+            "command": "mingw32-make -j 8 rebuild"
+        },
+        {
+            "label": "Build & Run",
             "type": "shell",
             "group": {
                 "kind": "test",
                 "isDefault": true
             },
             "command": "mingw32-make -j 8 run"
+        },
+        {
+            "label": "Run",
+            "type": "shell",
+            "group": "test",
+            "command": "bin/Debug/ShushaoGame.exe"
         },
         {
             "label": "Clean",

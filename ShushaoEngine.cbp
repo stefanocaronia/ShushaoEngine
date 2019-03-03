@@ -3,6 +3,7 @@
 	<FileVersion major="1" minor="6" />
 	<Project>
 		<Option title="ShushaoEngine" />
+		<Option makefile="makefile" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Option virtualFolders="game\;engine\;engine\components\;engine\objects\;engine\physics\;engine\globals\;engine\entities\;engine\base\;engine\render\;engine\render\materials\;engine\render\shaders\;engine\render\shaders\glsl\;" />

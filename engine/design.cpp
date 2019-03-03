@@ -13,7 +13,8 @@ namespace se {
 		shader->awake();
 		shader->Use();
 
-		VAO = new Vao(VBO_VERTEX);
+		VAO = new Vao();
+		VAO->AddBuffer("vertex", VBO_CONFIG_VERTEX);
 		VAO->Init();
 
 		return ready = true;
@@ -144,18 +145,18 @@ namespace se {
 
 		shader->Use();
 		VAO->Use();
-		VAO->SetVertices(vertices);
+		VAO->Load<vec3>("vertex", vertices);
 
 		glm::mat4 mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 
 		shader->SetMVP(&mvp[0][0]);
 		shader->SetRenderColor(color);
 
-		glEnablei(GL_BLEND, VAO->vertexBuffer->Id);
+		glEnablei(GL_BLEND, VAO->GetBuffer("vertex")->Id);
 		glPointSize(tickness);
 		glDrawArrays(GL_POINTS, 0, 1);
 		glPointSize(1);
-		glDisablei(GL_BLEND, VAO->vertexBuffer->Id);
+		glDisablei(GL_BLEND, VAO->GetBuffer("vertex")->Id);
 
 		VAO->Leave();
 		shader->Leave();
@@ -168,16 +169,16 @@ namespace se {
 
 		shader->Use();
 		VAO->Use();
-		VAO->SetVertices(vertices);
+		VAO->Load<vec3>("vertex", vertices);
 
 		glm::mat4 mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 
 		shader->SetMVP(&mvp[0][0]);
 		shader->SetRenderColor(color);
 
-		glEnablei(GL_BLEND, VAO->vertexBuffer->Id);
+		glEnablei(GL_BLEND, VAO->GetBuffer("vertex")->Id);
 		glDrawArrays(GL_LINES, 0, vertices.size());
-		glDisablei(GL_BLEND, VAO->vertexBuffer->Id);
+		glDisablei(GL_BLEND, VAO->GetBuffer("vertex")->Id);
 
 		VAO->Leave();
 		shader->Leave();
@@ -190,37 +191,37 @@ namespace se {
 
 		shader->Use();
 		VAO->Use();
-		VAO->SetVertices(vertices, GL_STATIC_DRAW);
+		VAO->Load<vec3>("vertex", vertices);
 
 		glm::mat4 mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 
 		shader->SetMVP(&mvp[0][0]);
 		shader->SetRenderColor(color);
 
-		glEnablei(GL_BLEND, VAO->vertexBuffer->Id);
+		glEnablei(GL_BLEND, VAO->GetBuffer("vertex")->Id);
 		glDrawArrays(GL_LINES, 0, vertices.size());
-		glDisablei(GL_BLEND, VAO->vertexBuffer->Id);
+		glDisablei(GL_BLEND, VAO->GetBuffer("vertex")->Id);
 
 		VAO->Leave();
 		shader->Leave();
 	}
 
-	void Design::_drawPolygon(std::vector<glm::vec3> vertices_, Color color, DrawMode mode) {
+	void Design::_drawPolygon(std::vector<glm::vec3> vertices, Color color, DrawMode mode) {
 		if (!Init()) return;
 
 		shader->Use();
 		VAO->Use();
 
-		VAO->SetVertices(vertices_);
+		VAO->Load<vec3>("vertex", vertices);
 
 		glm::mat4 mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 
 		shader->SetMVP(&mvp[0][0]);
 		shader->SetRenderColor(color);
 
-		glEnablei(GL_BLEND, VAO->vertexBuffer->Id);
-		glDrawArrays((mode == DrawMode::HOLLOW ? GL_LINE_LOOP : GL_TRIANGLE_FAN), 0, vertices_.size());
-		glDisablei(GL_BLEND, VAO->vertexBuffer->Id);
+		glEnablei(GL_BLEND, VAO->GetBuffer("vertex")->Id);
+		glDrawArrays((mode == DrawMode::HOLLOW ? GL_LINE_LOOP : GL_TRIANGLE_FAN), 0, vertices.size());
+		glDisablei(GL_BLEND, VAO->GetBuffer("vertex")->Id);
 
 		VAO->Leave();
 		shader->Leave();
@@ -240,16 +241,16 @@ namespace se {
 		shader->Use();
 		VAO->Use();
 
-		VAO->SetVertices(vertices);
+		VAO->Load<vec3>("vertex", vertices);
 
 		glm::mat4 mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 
 		shader->SetMVP(&mvp[0][0]);
 		shader->SetRenderColor(color);
 
-		glEnablei(GL_BLEND, VAO->vertexBuffer->Id);
+		glEnablei(GL_BLEND, VAO->GetBuffer("vertex")->Id);
 		glDrawArrays((mode == DrawMode::FULL ? GL_TRIANGLE_STRIP : GL_LINE_LOOP), 0, vertices.size());
-		glDisablei(GL_BLEND, VAO->vertexBuffer->Id);
+		glDisablei(GL_BLEND, VAO->GetBuffer("vertex")->Id);
 
 		VAO->Leave();
 		shader->Leave();

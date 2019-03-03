@@ -43,51 +43,58 @@ SOURCES = $(wildcard $(SRCDIR)/*.$(SRCEXT)) $(wildcard $(addsuffix *.$(SRCEXT),$
 OBJECTS = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT)))
 
 #Defauilt Make
-all: $(TARGET) resources
-	@echo - Ho terminato la compilazione. Evviva!
+all: directories resources $(TARGET)
+	@echo - $(BUILD) Compilation done!! Yee!
 
-#Remake
-remake: clean all
+#Release Make
+release: relasesettings directories resources $(TARGET)
+	@echo - $(BUILD) Compilation done!! Yee!
+
+relasesettings:
+	BUILD = Release
+
+#Rebuild
+rebuild: clean all
 
 #Copy Resources from Resources Directory to Target Directory
 #@$(CP) -r $(RESDIR)/* $(TARGETDIR)/
 resources: directories
-	@echo - Copio le cartelle risorse
+	@echo - Copying resources
 	@rescopy $(BUILD)
 
 #Make the Directories
 directories:
-	@echo - Creo le directory target e build
+	@echo - Creating build directories
 	@$(MD) -p $(TARGETDIR)
 	@$(MD) -p $(BUILDDIR)
 
 #Clean only Objecst
 clean:
-	@echo - Eseguo una pulizia del target
-	@$(RM) -rf $(BUILDDIR)
-	@$(RM) -rf $(TARGETDIR)
+	@echo - Cleaning build
+	@$(RM) -rf obj/*
+	@$(RM) -rf bin/*
 
 #Link
 $(TARGET): $(OBJECTS)
-	@echo [$(CC)] Link eseguibile $(TARGET)
+	@echo - [$(CC)] Linking $(TARGET)
 	@$(CC) $(CFLAGS) -o $(TARGETDIR)/$(TARGET) $(OBJECTS) $(LIB)
 
 #Compile
 $(BUILDDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
-	@echo [$(CC)] Compiling: $< su $@
+	@echo - [$(CC)] Compiling: $<
 	@$(MD) -p $(dir $@)
 	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 run: all
-	@echo - Eseguo $(TARGET)
+	@echo - Running $(TARGET)
 	@cd $(TARGETDIR) && ./$(TARGET)
 
 debug: all
-	@echo [$(DB)] Eseguo $(TARGET) in debug mode...
+	@echo [$(DB)] Running Debug of $(TARGET)
 	@cd $(TARGETDIR) && $(DB) $(TARGET)
 
 cls:
 	@cls
 
 #Non-File Targets
-.PHONY: all remake clean resources directories run debug cls
+.PHONY: all release releasesettings rebuild clean resources directories run debug cls

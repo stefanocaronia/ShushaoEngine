@@ -10,6 +10,7 @@
 namespace se {
 
 	using namespace std;
+	using namespace glm;
 
 	Sprite::Sprite() {
         name = "Sprite";
@@ -116,13 +117,25 @@ namespace se {
 			};
 		}
 
-		VAO = new Vao(VBO_VERTEX | VBO_INDEX | VBO_UV);
+		/* VAO = new Vao(VBO_VERTEX | VBO_INDEX | VBO_UV);
 		VAO->Init();
 
 		VAO->Use();
 		VAO->SetVertices(vertices, GL_STATIC_DRAW);
 		VAO->SetUv(uv, GL_STATIC_DRAW);
 		VAO->SetIndexes(indexes, GL_STATIC_DRAW);
+		VAO->Leave(); */
+
+		VAO = new Vao();
+		VAO->AddBuffer("vertex", VBO_CONFIG_VERTEX);
+		VAO->AddBuffer("uv", VBO_CONFIG_UV);
+		VAO->AddBuffer("index", VBO_CONFIG_INDEX);
+		VAO->Init();
+
+		VAO->Use();
+		VAO->Load<vec3>("vertex", vertices);
+		VAO->Load<GLclampd>("uv", uv);
+		VAO->Load<GLushort>("index", indexes);
 		VAO->Leave();
 
 		return this;

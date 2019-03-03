@@ -47,7 +47,7 @@ void Game::Awake() {
 	Resources::Load<Effect>("assets/hit.wav");
 	Resources::Load<Effect>("assets/shoot.wav")->setVolume(40);
 
-	Resources::Add<SpriteSheet>("walking")->Load(Resources::Get<TextureAtlas>("walking"));
+	// Resources::Add<SpriteSheet>("walking")->Load(Resources::Get<TextureAtlas>("walking"));
 
 	Resources::Load<Font>("assets/modenine.ttf", "Modenine");
 	Resources::Load<Font>("assets/pixelperfect.ttf", "Pixel Perfect");

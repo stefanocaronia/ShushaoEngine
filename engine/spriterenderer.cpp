@@ -16,7 +16,6 @@ namespace se {
 		if (material != nullptr) delete(material);
 	}
 
-
 	SpriteRenderer::SpriteRenderer(string n) {
 		name = n;
 	}
@@ -56,7 +55,7 @@ namespace se {
 
 		glActiveTexture(material->shader->GetTexture("main_texture"));
 		glBindTexture(GL_TEXTURE_2D, material->mainTexture->TextureID);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
+		// glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		sprite->VAO->Leave();

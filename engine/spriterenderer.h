@@ -53,12 +53,6 @@ namespace se {
 			void Render();
 			void OnDestroy();
 
-		private:
-
-			GLint uniform_renderer_color;
-            GLint uniform_base_texture;
-            GLint uniform_mvp;
-
 	};
 
 }

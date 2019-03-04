@@ -46,4 +46,5 @@
 #include "collision2d.h"
 #include "font.h"
 #include "textrenderer.h"
+#include "meshrenderer.h"
 

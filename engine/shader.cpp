@@ -36,14 +36,7 @@ namespace se {
 	//}
 
 	Shader::Shader() {
-
-		LoadFromString(
-			#include "standard.vert"
-			,
-			#include "standard.frag"
-		);
-
-		name = "Standard";
+		name = "Shader";
 	}
 
 	Shader::Shader(std::string filename, std::string n) {

@@ -3,7 +3,8 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceRoot}/**",
+                "game",
+                "engine",
                 "../../mingw-dev-libs/glew/include/**",
                 "../../mingw-dev-libs/glm/**",
                 "../../mingw-dev-libs/SDL2/include/SDL2/**",
@@ -25,6 +26,7 @@
             "browse": {
                 "path": [
                     "${workspaceFolder}",
+                    "F:/bin/mingw64/mingw64",
                     "C:/bin/mingw64/mingw64"
                 ],
                 "limitSymbolsToIncludedHeaders": true,

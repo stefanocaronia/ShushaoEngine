@@ -1,6 +1,7 @@
 #include "globals.h"
 #include "level.h"
 #include "pancrazio.h"
+#include "starship.h"
 #include "mover.h"
 
 Level::Level() {
@@ -69,5 +70,8 @@ Level::Level() {
 		 {2.0f, -1.0f, 0.0f},
 		 {-1.0f, -1.0f, 0.0f}
 	}, Color::red, DrawMode::FULL);*/
+
+	AddEntity<Starship>("Ufo");
+
 }
 

@@ -50,7 +50,7 @@
             "label": "Run",
             "type": "shell",
             "group": "test",
-            "command": "bin/Debug/ShushaoGame.exe",
+            "command": "cd bin/Debug && ./ShushaoGame.exe",
             "presentation": {
                 "clear": true
             }

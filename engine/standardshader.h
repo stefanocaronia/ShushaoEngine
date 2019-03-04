@@ -12,9 +12,6 @@ namespace se {
 		protected:
 
 			void Awake();
-			void Update();
-
-		private:
 	};
 
 }

@@ -14,6 +14,7 @@ namespace se {
 
 	Sprite::Sprite() {
         name = "Sprite";
+		Init();
 	}
 
 	Sprite::~Sprite() {
@@ -23,47 +24,33 @@ namespace se {
 
 	Sprite::Sprite(string n) {
         name = n;
+		Init();
 	}
 
-	Sprite::Sprite(string n, Texture* _texture) {
+	Sprite::Sprite(string n, Texture* texture_) {
 		name = n;
-		rect.Set(0.0f, 0.0f, (float)_texture->width, (float)_texture->height);
-		pixel_pivot = CalculatePivot(PivotPosition::CENTER, rect);
-		texture = _texture;
-		init();
+		SetTexture(texture_);
+		Init();
 	}
 
-	Sprite::Sprite(string n, Texture* _texture, Rect _rect, PivotPosition _pivotPosition, vec2 _offset) {
-		name = n;
-        rect = _rect;
-		pixel_pivot = CalculatePivot(_pivotPosition, _rect);
-		textureRectOffset = _offset;
-		texture = _texture;
-		init();
-	}
-
-	Sprite* Sprite::SetRect(Rect _rect) {
-        rect = _rect;
-        pixel_pivot = CalculatePivot(PivotPosition::CENTER, _rect);
-		init();
+	Sprite* Sprite::SetRect(Rect rect_) {
+        rect = rect_;
+        pixel_pivot = CalculatePivot(PivotPosition::CENTER, rect_);
 		return this;
 	}
 
 	Sprite* Sprite::SetPixelPerUnit(unsigned int ppu) {
         pixelPerUnit = ppu;
-		init();
 		return this;
 	}
 
 	Sprite* Sprite::SetPivot(vec2 _pivot) {
         pixel_pivot = CalculatePivot(PivotPosition::CUSTOM, rect, _pivot);
-		init();
 		return this;
 	}
 
-	Sprite* Sprite::SetPivot(PivotPosition _pivotPosition) {
-        pixel_pivot = CalculatePivot(_pivotPosition, rect);
-		init();
+	Sprite* Sprite::SetPivot(PivotPosition pivotpos_) {
+        pixel_pivot = CalculatePivot(pivotpos_, rect);
 		return this;
 	}
 
@@ -71,7 +58,6 @@ namespace se {
         texture = texture_;
         rect.Set(0.0f, 0.0f, (float)texture_->width, (float)texture_->height);
 		pixel_pivot = CalculatePivot(PivotPosition::CENTER, rect);
-		init();
 		return this;
 	}
 
@@ -83,13 +69,24 @@ namespace se {
         return pivot;
 	}
 
-	Sprite* Sprite::init() {
+	Sprite* Sprite::Init() {
 
-		pivot.x = (pixel_pivot.x - (rect.width / 2)) / (float)pixelPerUnit;
-		pivot.y = -(pixel_pivot.y - (rect.height / 2)) / (float)pixelPerUnit;
+		VAO = new Vao();
+		VAO->AddBuffer("vertex", VBO_CONFIG_VERTEX);
+		VAO->AddBuffer("uv", VBO_CONFIG_UV);
+		VAO->AddBuffer("index", VBO_CONFIG_INDEX);
+		VAO->Init();
 
-		float wX = ((rect.width / pixelPerUnit) / 2);
-		float wY = ((rect.height / pixelPerUnit) / 2);
+		return this;
+	}
+
+	Sprite* Sprite::Build() {
+
+		pivot.x = (pixel_pivot.x - (rect.width / 2)) / (GLfloat)pixelPerUnit;
+		pivot.y = -(pixel_pivot.y - (rect.height / 2)) / (GLfloat)pixelPerUnit;
+
+		GLfloat wX = ((rect.width / pixelPerUnit) / 2);
+		GLfloat wY = ((rect.height / pixelPerUnit) / 2);
 
 		vertices.clear();
 		vertices = {
@@ -117,26 +114,13 @@ namespace se {
 			};
 		}
 
-		/* VAO = new Vao(VBO_VERTEX | VBO_INDEX | VBO_UV);
-		VAO->Init();
-
-		VAO->Use();
-		VAO->SetVertices(vertices, GL_STATIC_DRAW);
-		VAO->SetUv(uv, GL_STATIC_DRAW);
-		VAO->SetIndexes(indexes, GL_STATIC_DRAW);
-		VAO->Leave(); */
-
-		VAO = new Vao();
-		VAO->AddBuffer("vertex", VBO_CONFIG_VERTEX);
-		VAO->AddBuffer("uv", VBO_CONFIG_UV);
-		VAO->AddBuffer("index", VBO_CONFIG_INDEX);
-		VAO->Init();
-
 		VAO->Use();
 		VAO->Load<vec3>("vertex", vertices);
 		VAO->Load<GLclampd>("uv", uv);
 		VAO->Load<GLushort>("index", indexes);
 		VAO->Leave();
+
+		ready = true;
 
 		return this;
 	}

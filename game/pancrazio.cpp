@@ -9,7 +9,7 @@ Pancrazio::Pancrazio() {
 
 	sr = AddComponent<SpriteRenderer>();
 	//sr->shader = Resources::Get<Shader>("standard");
-	sr->sprite = Resources::Get<Sprite>("pancrazio_sprite")->SetPivot(PivotPosition::CENTER);
+	sr->sprite = Resources::Get<Sprite>("pancrazio_sprite");
 	sr->sortingLayerID = Config::SortingLayers["Characters"];
 
     rb = AddComponent<Rigidbody2D>();
@@ -24,7 +24,6 @@ Pancrazio::Pancrazio() {
 
 	//circlec = AddComponent<CircleCollider2D>("circle");
 	//circlec->SetShape({0.0f, 0.0f}, 1.0f);
-
 
 	/*animation = AddComponent<Animation>("walk");
 	animation->setFPS(1);

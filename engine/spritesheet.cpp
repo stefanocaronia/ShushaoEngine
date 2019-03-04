@@ -58,7 +58,10 @@ namespace se {
             Rect rect = slice.first;
             PivotPosition pivotpos = slice.second;
 
-			Sprite* sprite = new Sprite(name + "_" + ts(counter), atlas, rect, pivotpos);
+			Sprite* sprite = new Sprite(name + "_" + ts(counter), atlas);
+			sprite->SetRect(rect);
+			sprite->SetPivot(pivotpos);
+			sprite->Build();
 
 			if (sprite != nullptr) {
 				Resources::Add(sprite);

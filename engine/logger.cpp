@@ -55,9 +55,11 @@ namespace se {
 		ios_base::openmode mode = ios_base::out;
 		if (logStarted) mode = mode | ios_base::app;
 
-		debugfile.open(debugFilename, mode);
-		debugfile << buildmex.str();
-		debugfile.close();
+		if (streamLevel > INFO) {
+			debugfile.open(debugFilename, mode);
+			debugfile << buildmex.str();
+			debugfile.close();
+		}
 
 		logStarted = true;
 

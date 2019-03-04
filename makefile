@@ -1,4 +1,4 @@
-# Universal MakeFile v1.2
+# Universal MakeFile v1.3
 
 # Declaration of variables
 CC = g++
@@ -7,10 +7,17 @@ RM = rm
 MD = mkdir
 CP = cp
 BUILD = Debug
+DEBUG = true
+
+ifeq ($(BUILD),Debug)
+	DEBUG = true
+else
+	DEBUG = false
+endif
 
 #The Target Binary Program
-ROOT_DIR = $(CURDIR)
-THIS_DIR = $(shell basename "$(CURDIR)")
+ROOT_DIR = "$(CURDIR)"
+THIS_DIR = "$(shell basename "$(CURDIR)")"
 #TARGET = $(THIS_DIR).exe
 TARGET = ShushaoGame.exe
 
@@ -27,31 +34,27 @@ SRCEXT		= cpp
 OBJEXT		= o
 
 #Flags, Libraries and Includes
-CFLAGS		= -std=c++11 -DGLEW_STATIC -g -DDEBUG=$(DEBUG)
-LIB			= -L$(BASE_LIBS)/glew/lib -L$(BASE_LIBS)/freetype/lib -L$(BASE_LIBS)/SDL2/lib -L$(BASE_LIBS)/SDL2_image/lib -L$(BASE_LIBS)/SDL2_ttf/lib -L$(BASE_LIBS)/SDL2_mixer/lib -L$(BASE_LIBS)/Box2D/lib -lglew32 -lmingw32 -lopengl32 -lgdi32 -lglu32 -lfreetype -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lBox2D
-INC			= -I$(BASE_LIBS)/glew/include/GL -I$(BASE_LIBS)/glm -I$(BASE_LIBS)/freetype/include -I$(BASE_LIBS)/SDL2/include/SDL2 -I$(BASE_LIBS)/SDL2_image/include/SDL2 -I$(BASE_LIBS)/SDL2_ttf/include/SDL2 -I$(BASE_LIBS)/SDL2_mixer/include/SDL2 -I$(BASE_LIBS)/Box2D/include -I$(ROOT_DIR)/engine -I$(ROOT_DIR)
+COMFLAGS = -std=c++11 -fexceptions -DGLEW_STATIC -g -DDEBUG=$(DEBUG)
+LNKFLAGS =
+LIBDIRS	 = -L$(BASE_LIBS)/glew/lib -L$(BASE_LIBS)/freetype/lib -L$(BASE_LIBS)/SDL2/lib -L$(BASE_LIBS)/SDL2_image/lib -L$(BASE_LIBS)/SDL2_ttf/lib -L$(BASE_LIBS)/SDL2_mixer/lib -L$(BASE_LIBS)/Box2D/lib
+LIB 	 = -lglew32 -lmingw32 -lopengl32 -lgdi32 -lglu32 -lfreetype -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lBox2D
+INCDIRS  = -I$(BASE_LIBS)/glew/include/GL -I$(BASE_LIBS)/glm -I$(BASE_LIBS)/freetype/include -I$(BASE_LIBS)/SDL2/include/SDL2 -I$(BASE_LIBS)/SDL2_image/include/SDL2 -I$(BASE_LIBS)/SDL2_ttf/include/SDL2 -I$(BASE_LIBS)/SDL2_mixer/include/SDL2 -I$(BASE_LIBS)/Box2D/include -I$(ROOT_DIR)/engine -I$(ROOT_DIR)
 
 #Condizioni
 ifeq ($(DEBUG),true)
-	CFLAGS += -Wall -g -fexceptions
+	COMFLAGS += -Wall -g
 else
-	CFLAGS += -mwindows
+	COMFLAGS += -O2
+	LNKFLAGS += -s -mwindows
 endif
 
 subdirs = $(wildcard $(SRCDIR)/*/)
 SOURCES = $(wildcard $(SRCDIR)/*.$(SRCEXT)) $(wildcard $(addsuffix *.$(SRCEXT),$(subdirs)))
 OBJECTS = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT)))
 
-#Defauilt Make
-all: directories resources $(TARGET)
+#Defauilt
+all: resources $(TARGET)
 	@echo - $(BUILD) Compilation done!! Yee!
-
-#Release Make
-release: relasesettings directories resources $(TARGET)
-	@echo - $(BUILD) Compilation done!! Yee!
-
-relasesettings:
-	BUILD = Release
 
 #Rebuild
 rebuild: clean all
@@ -62,7 +65,7 @@ resources: directories
 	@echo - Copying resources
 	@rescopy $(BUILD)
 
-#Make the Directories
+#Make the directories
 directories:
 	@echo - Creating build directories
 	@$(MD) -p $(TARGETDIR)
@@ -76,25 +79,25 @@ clean:
 
 #Link
 $(TARGET): $(OBJECTS)
-	@echo - [$(CC)] Linking $(TARGET)
-	@$(CC) $(CFLAGS) -o $(TARGETDIR)/$(TARGET) $(OBJECTS) $(LIB)
+	@echo - Linking $(TARGET)
+	@$(CC) $(LNKFLAGS) -o $(TARGETDIR)/$(TARGET) $(OBJECTS) $(LIBDIRS) $(LIB)
 
 #Compile
 $(BUILDDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
-	@echo - [$(CC)] Compiling: $<
+	@echo - Compiling: $<
 	@$(MD) -p $(dir $@)
-	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
+	@$(CC) $(COMFLAGS) $(INCDIRS) -c $< -o $@
 
 run: all
 	@echo - Running $(TARGET)
 	@cd $(TARGETDIR) && ./$(TARGET)
 
 debug: all
-	@echo [$(DB)] Running Debug of $(TARGET)
+	@echo - Running Debug of $(TARGET)
 	@cd $(TARGETDIR) && $(DB) $(TARGET)
 
 cls:
 	@cls
 
 #Non-File Targets
-.PHONY: all release releasesettings rebuild clean resources directories run debug cls
+.PHONY: all release rebuild clean resources directories run debug cls

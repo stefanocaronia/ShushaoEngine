@@ -5,85 +5,19 @@
 #include "color.h"
 #include "shader.h"
 #include "debug.h"
+#include "vbo.h"
 
 namespace se {
-
-	class VboConfiguration {
-		public:
-
-			VboConfiguration(
-				GLenum target_ = GL_ARRAY_BUFFER,
-				GLuint location_ = 0,
-				GLint blocksize_ = 3,
-				GLenum type_ = GL_FLOAT,
-				GLboolean normalized_ = GL_FALSE,
-				GLsizei stride_ = 0,
-				const GLvoid* pointer_ = (GLvoid*)0,
-				GLenum usage_ = GL_STATIC_DRAW
-			) {
-				target = target_;
-				location = location_;
-				blocksize = blocksize_;
-				type = type_;
-				normalized = normalized_;
-				stride = stride_;
-				pointer = pointer_;
-				usage = usage_;
-			}
-
-			GLenum target = GL_ARRAY_BUFFER;
-			GLuint location = 0;
-			GLint blocksize = 3;
-			GLenum type = GL_FLOAT;
-			GLboolean normalized = GL_FALSE;
-			GLsizei stride = 0;
-			const GLvoid* pointer = (GLvoid*)0;
-			GLenum usage = GL_STATIC_DRAW;
-	};
-
-	extern VboConfiguration VBO_CONFIG_VERTEX;
-	extern VboConfiguration VBO_CONFIG_INDEX;
-	extern VboConfiguration VBO_CONFIG_COLOR;
-	extern VboConfiguration VBO_CONFIG_UV;
-	extern VboConfiguration VBO_CONFIG_FONT;
-
-	class Vbo : public Object {
-		public:
-
-			Vbo(VboConfiguration config_) : config(config_) {}
-			~Vbo();
-
-			GLuint Id = 0; // Vbo ID GL
-			GLsizeiptr buffersize = 0;
-
-			VboConfiguration config;
-
-			Vbo* Init();
-			Vbo* Delete();
-			Vbo* Bind();
-			Vbo* Unbind();
-
-			template<class T>
-			Vbo* Load(std::vector<T>& elements) {
-				GLsizeiptr oldsize = buffersize;
-				buffersize = elements.size() * sizeof(T);
-				if (oldsize == buffersize) {
-					glBufferSubData(config.target, 0, buffersize, &elements[0]);
-				} else {
-					glBufferData(config.target, buffersize, &elements[0], config.usage);
-				}
-				return this;
-			}
-
-	};
 
 	class Vao : public Object {
 		public:
 
+			Vao();
 			~Vao();
 
-			GLuint Id; // Vao ID GL
+			GLuint Id = 0; // Vao ID GL
 			bool inUse = false;
+			bool ready = false;
 
 			std::map<std::string, Vbo*> buffers;
 
@@ -108,9 +42,11 @@ namespace se {
 					return this;
 				}
 
-				(Vbo*)buffers[name_]->Bind();
-				(Vbo*)buffers[name_]->Load<T>(elements);
-				(Vbo*)buffers[name_]->Unbind();
+				if (!buffers[name_]->ready) {
+					buffers[name_]->Init();
+				}
+
+				buffers[name_]->Load<T>(elements);
 
 				return this;
 			}

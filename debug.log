@@ -1,10 +1,10 @@
-00:01.451 [ERROR] IMG_Load Couldn't open assets/pancrazio.png
-00:01.456 [ERROR] IMG_Load Couldn't open assets/night.jpg
-00:01.460 [ERROR] IMG_Load Couldn't open assets/pancsmile.png
-00:01.463 [ERROR] IMG_Load Couldn't open assets/walking.png
-00:01.466 [WARNING] <textureatlas::AddGrid:22> No texture loaded
-00:01.470 [ERROR] Impossibile caricare assets/fizz.mp3: Couldn't open 'assets/fizz.mp3'
-00:01.474 [ERROR] Impossibile caricare assets/hit.wav: Mix_LoadWAV_RW with NULL src
-00:01.477 [ERROR] Impossibile caricare assets/shoot.wav: Mix_LoadWAV_RW with NULL src
-00:01.480 [ERROR] Could not load font: assets/modenine.ttf
-00:01.484 [ERROR] Could not load font: assets/pixelperfect.ttf
+00:00.546 [ERROR] IMG_Load Couldn't open assets/pancrazio.png
+00:00.551 [ERROR] IMG_Load Couldn't open assets/night.jpg
+00:00.553 [ERROR] IMG_Load Couldn't open assets/pancsmile.png
+00:00.554 [ERROR] IMG_Load Couldn't open assets/walking.png
+00:00.555 [WARNING] <textureatlas::AddGrid:22> No texture loaded
+00:00.556 [ERROR] Impossibile caricare assets/fizz.mp3: Couldn't open 'assets/fizz.mp3'
+00:00.557 [ERROR] Impossibile caricare assets/hit.wav: Mix_LoadWAV_RW with NULL src
+00:00.558 [ERROR] Impossibile caricare assets/shoot.wav: Mix_LoadWAV_RW with NULL src
+00:00.559 [ERROR] Could not load font: assets/modenine.ttf
+00:00.561 [ERROR] Could not load font: assets/pixelperfect.ttf

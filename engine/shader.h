@@ -113,6 +113,10 @@ namespace se {
 			virtual void Update();
 			virtual void Exit();
 
+			std::string VertexShaderCode;
+			std::string FragmentShaderCode;
+			std::string GeometryShaderCode;
+
 		private:
 
 			GLuint programID = 0;
@@ -122,8 +126,6 @@ namespace se {
 			GLuint VertexShaderID;
 			GLuint FragmentShaderID;
 
-			std::string VertexShaderCode;
-			std::string FragmentShaderCode;
 
 			bool loadWithName(std::string, std::string);
 

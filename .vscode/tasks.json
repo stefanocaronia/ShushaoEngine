@@ -10,19 +10,29 @@
                 "kind": "build",
                 "isDefault": true
             },
-            "command": "mingw32-make -j 8"
+            "command": "mingw32-make -j 8",
+            "presentation": {
+                "clear": true
+            }
         },
         {
             "label": "Build Release",
             "type": "shell",
             "group": "build",
-            "command": "mingw32-make -j 8 BUILD=Release"
+            "command": "mingw32-make -j 8 BUILD=Release",
+            "problemMatcher": [],
+            "presentation": {
+                "clear": true
+            }
         },
         {
             "label": "Rebuild",
             "type": "shell",
             "group": "build",
-            "command": "mingw32-make -j 8 rebuild"
+            "command": "mingw32-make -j 8 rebuild",
+            "presentation": {
+                "clear": true
+            }
         },
         {
             "label": "Build & Run",
@@ -31,18 +41,28 @@
                 "kind": "test",
                 "isDefault": true
             },
-            "command": "mingw32-make -j 8 run"
+            "command": "mingw32-make -j 8 run",
+            "presentation": {
+                "clear": true
+            }
         },
         {
             "label": "Run",
             "type": "shell",
             "group": "test",
-            "command": "bin/Debug/ShushaoGame.exe"
+            "command": "bin/Debug/ShushaoGame.exe",
+            "presentation": {
+                "clear": true
+            }
         },
         {
             "label": "Clean",
             "type": "shell",
-            "command": "mingw32-make clean"
+            "command": "mingw32-make clean",
+            "problemMatcher": [],
+            "presentation": {
+                "clear": true
+            }
         }
     ]
 }

@@ -1,4 +1,5 @@
 #include "material.h"
+#include "debug.h"
 
 namespace se {
 
@@ -64,7 +65,7 @@ namespace se {
 
 	void Material::SetShader(Shader* shader_) {
 		shader = shader_;
-        init();
+        Init();
 	}
 
 	void Material::SetMainTexture(Texture* texture_) {
@@ -78,7 +79,9 @@ namespace se {
 
 	void Material::init() {
 
-		if (shader == nullptr) return;
+		if (shader == nullptr) {
+			Debug::Log(ERROR) << "Shader not loaded" << endl;
+		}
 
 		parameters.clear();
 

@@ -54,6 +54,7 @@ Level::Level() {
 	backgroundRenderer->sortingLayerID = Config::SortingLayers["Background"];
 	backgroundRenderer->sprite = new Sprite("Background", Resources::Get<Texture>("night"));
 	backgroundRenderer->sprite->SetPixelPerUnit(64);
+	backgroundRenderer->sprite->Build();
 
 	//Font* f = Resources::Get<Font>("Pixel Perfect");
 	Font* f = Resources::Get<Font>("Modenine");

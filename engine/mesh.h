@@ -15,7 +15,7 @@ namespace se {
         public:
 
             Mesh();
-            Mesh(string n);
+            Mesh(std::string objfilename);
             ~Mesh();
 
 			Vao* VAO = nullptr;

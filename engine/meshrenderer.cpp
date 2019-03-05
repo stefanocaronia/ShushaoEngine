@@ -9,7 +9,8 @@
 namespace se {
 
 	MeshRenderer::MeshRenderer() {
-		name = "Sprite Renderer";
+		name = "Mesh Renderer";
+		material = new MeshDefaultMaterial();
 	}
 
 	MeshRenderer::~MeshRenderer() {
@@ -31,11 +32,15 @@ namespace se {
 
 	void MeshRenderer::Awake() {
 
+		if (mesh == nullptr) {
+			Debug::Log(ERROR) << "Mesh undefined" << endl;
+			return;
+		}
+
 		if (!mesh->ready) {
 			mesh->Build();
 		}
 
-		material = new MeshDefaultMaterial();
 		material->init();
 	}
 
@@ -54,7 +59,7 @@ namespace se {
 
 		glActiveTexture(material->shader->GetTexture("main_texture"));
 		glBindTexture(GL_TEXTURE_2D, material->mainTexture->TextureID);
-		glDrawArrays(GL_TRIANGLES, 0, VAO->GetBuffer("vertex")->buffersize * 3);
+		glDrawArrays(GL_TRIANGLES, 0, mesh->VAO->GetBuffer("vertex")->size * 3);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		material->shader->Leave();

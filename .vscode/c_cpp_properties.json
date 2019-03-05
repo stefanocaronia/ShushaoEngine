@@ -3,8 +3,8 @@
         {
             "name": "Win32",
             "includePath": [
-                "game",
-                "engine",
+                "game/**",
+                "engine/**",
                 "../../mingw-dev-libs/glew/include/**",
                 "../../mingw-dev-libs/glm/**",
                 "../../mingw-dev-libs/SDL2/include/SDL2/**",

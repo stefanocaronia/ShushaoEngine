@@ -8,6 +8,9 @@ Level::Level() {
 
 	using namespace se;
 
+	AddEntity<Starship>("Ufo");
+	//return;
+
 	Entity* ground = AddEntity("Ground");
 	//Entity* container = AddEntity("Container");
 
@@ -70,8 +73,6 @@ Level::Level() {
 		 {2.0f, -1.0f, 0.0f},
 		 {-1.0f, -1.0f, 0.0f}
 	}, Color::red, DrawMode::FULL);*/
-
-	AddEntity<Starship>("Ufo");
 
 }
 

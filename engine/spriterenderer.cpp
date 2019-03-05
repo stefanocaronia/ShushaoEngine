@@ -31,6 +31,11 @@ namespace se {
 
 	void SpriteRenderer::Awake() {
 
+		if (sprite == nullptr) {
+			Debug::Log(ERROR) << "Sprite undefined" << endl;
+			return;
+		}
+
 		if (!sprite->ready) {
 			sprite->Build();
 		}

@@ -12,6 +12,7 @@
 #include "wireframeshader.h"
 #include "baseshader.h"
 #include "fontshader.h"
+#include "meshshader.h"
 
 namespace se {
 
@@ -79,6 +80,7 @@ namespace se {
 		AddShader(new BaseShader());
 		AddShader(new WireframeShader());
 		AddShader(new FontShader());
+		AddShader(new MeshShader());
 
 		ready = true;
 		return true;

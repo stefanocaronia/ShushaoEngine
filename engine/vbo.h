@@ -54,6 +54,7 @@ namespace se {
 
 			GLuint Id = 0; // Vbo ID GL
 			GLsizeiptr buffersize = 0;
+			GLuint size = 0;
 			bool ready = false;
 
 			VboConfiguration config;
@@ -70,6 +71,7 @@ namespace se {
 				}
 				Bind();
 				GLsizeiptr oldsize = buffersize;
+				size = elements.size();
 				buffersize = elements.size() * sizeof(T);
 				if (oldsize == buffersize) {
 					glBufferSubData(config.target, 0, buffersize, &elements[0]);

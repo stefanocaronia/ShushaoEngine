@@ -29,7 +29,7 @@
             "label": "Rebuild",
             "type": "shell",
             "group": "build",
-            "command": "mingw32-make -j 8 rebuild",
+            "command": "mingw32-make clean && mingw32-make -j 8",
             "presentation": {
                 "clear": true
             }

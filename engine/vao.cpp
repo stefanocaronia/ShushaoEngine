@@ -28,20 +28,21 @@ namespace se {
 	}
 
 	Vbo* Vao::AddBuffer(string name_, VboConfiguration config_) {
-		buffers[name_] = new Vbo(config_);
-		buffers[name_]->name = name_;
+		Vbo* buff = new Vbo(config_);
+		buff->name = name_;
+		AddBuffer(buff);
 		return buffers[name_];
 	}
 
-	Vbo* Vao::AddBuffer(Vbo* vbo) {
-		buffers[vbo->name] = vbo;
-		return vbo;
+	Vbo* Vao::AddBuffer(Vbo* vbo_) {
+		buffers[vbo_->name] = vbo_;
+		return vbo_;
 	}
 
-	Vbo* Vao::GetBuffer(std::string name) {
-		auto it = buffers.find(name);
+	Vbo* Vao::GetBuffer(std::string name_) {
+		auto it = buffers.find(name_);
 		if (it == buffers.end()) return nullptr;
-		return (Vbo*)buffers[name];
+		return (Vbo*)buffers[name_];
 	}
 
 	Vao* Vao::Use() {

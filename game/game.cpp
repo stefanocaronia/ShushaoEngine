@@ -43,10 +43,8 @@ void Game::Awake() {
 	Resources::Load<TextureAtlas>("assets/walking.png")->AddGrid(vec2(16, 16), PivotPosition::BOTTOM);
 	Resources::Add<Sprite>("pancrazio_sprite")->SetTexture(Resources::Get<Texture>("pancrazio"))->SetPixelPerUnit(16)->Build();
 
-	Resources::Load<Mesh>("assets/starship/ufo.obj");
-	Texture* ufo = Resources::Load<Texture>("assets/starship/ufo_diffuse.png");
-	Resources::Load<Texture>("assets/starship/ufo_normal.png");
-	Resources::Load<Texture>("assets/starship/ufo_spec.png");
+	Resources::Load<Mesh>("assets/cube.obj");
+	Resources::Load<Texture>("assets/cube.png");
 
 	Resources::Load<Music>("assets/fizz.mp3");
 	Resources::Load<Effect>("assets/hit.wav");
@@ -62,9 +60,9 @@ void Game::Awake() {
 	Camera* camera = SceneManager::activeScene->activeCamera;
 	camera->backgroundColor = {0.2f, 0.2f, 0.8f, 1.0f};
 	camera->setOrthographic(false);
-	camera->setNearClipPlane(12.0f);
+	/* camera->setNearClipPlane(12.0f);
 	camera->setFarClipPlane(1.0f);
-	camera->setOrthographicSize(5.0f);
+	camera->setOrthographicSize(5.0f); */
 
 	camera->transform->localPosition = {0.0f, 3.0f, 10.0f};
 	camera->transform->localRotation = Transform::QUATERNION_IDENTITY;

@@ -6,7 +6,7 @@
 		<Option makefile="makefile" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="game\;engine\;engine\components\;engine\objects\;engine\physics\;engine\globals\;engine\entities\;engine\base\;engine\render\;engine\render\materials\;engine\render\shaders\;engine\render\shaders\glsl\;" />
+		<Option virtualFolders="engine\;engine\components\;engine\objects\;engine\physics\;engine\globals\;engine\entities\;engine\base\;engine\render\;engine\render\materials\;engine\render\shaders\;engine\render\shaders\glsl\;game\;" />
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/ShushaoGame" prefix_auto="1" extension_auto="1" />
@@ -409,6 +409,12 @@
 		<Unit filename="engine/vao.h">
 			<Option virtualFolder="engine/render/" />
 		</Unit>
+		<Unit filename="engine/vbo.cpp">
+			<Option virtualFolder="engine/render/" />
+		</Unit>
+		<Unit filename="engine/vbo.h">
+			<Option virtualFolder="engine/render/" />
+		</Unit>
 		<Unit filename="engine/wire.frag">
 			<Option virtualFolder="engine/render/shaders/glsl/" />
 		</Unit>
@@ -421,37 +427,36 @@
 		<Unit filename="engine/wireframeshader.h">
 			<Option virtualFolder="engine/render/shaders/" />
 		</Unit>
-		<Unit filename="game.cpp">
+		<Unit filename="game/game.cpp">
 			<Option virtualFolder="game/" />
 		</Unit>
-		<Unit filename="game.h">
+		<Unit filename="game/game.h">
 			<Option virtualFolder="game/" />
 		</Unit>
-		<Unit filename="globals.h">
+		<Unit filename="game/globals.h">
 			<Option virtualFolder="game/" />
 		</Unit>
-		<Unit filename="level.cpp">
+		<Unit filename="game/level.cpp">
 			<Option virtualFolder="game/" />
 		</Unit>
-		<Unit filename="level.h">
+		<Unit filename="game/level.h">
 			<Option virtualFolder="game/" />
 		</Unit>
-		<Unit filename="main.cpp">
+		<Unit filename="game/main.cpp">
 			<Option virtualFolder="game/" />
 		</Unit>
-		<Unit filename="mover.cpp">
+		<Unit filename="game/mover.cpp">
 			<Option virtualFolder="game/" />
 		</Unit>
-		<Unit filename="mover.h">
+		<Unit filename="game/mover.h">
 			<Option virtualFolder="game/" />
 		</Unit>
-		<Unit filename="pancrazio.cpp">
+		<Unit filename="game/pancrazio.cpp">
 			<Option virtualFolder="game/" />
 		</Unit>
-		<Unit filename="pancrazio.h">
+		<Unit filename="game/pancrazio.h">
 			<Option virtualFolder="game/" />
 		</Unit>
-		<Unit filename="rescopy.bat" />
 		<Extensions>
 			<code_completion />
 			<envvars />

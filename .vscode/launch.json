@@ -27,7 +27,6 @@
             "type": "cppdbg",
             "request": "launch",
             "targetArchitecture": "x64",
-            /* "program": "${workspaceRoot}/bin/Debug/${workspaceFolderBasename}.exe", */
             "program": "${workspaceRoot}/bin/Debug/ShushaoGame.exe",
             "miDebuggerPath":"gdb.exe",
             "args": ["-q"],

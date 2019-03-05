@@ -41,9 +41,9 @@ namespace se {
 
 		if (streamLevel < level || !Debug::enabled) return *this;
 
-		if (streamLevel == INFO ) setColor(ConsoleColor::LIGHTGREY);
-		else if (streamLevel == WARNING ) setColor(ConsoleColor::YELLOW);
-		else if (streamLevel == ERROR ) setColor(ConsoleColor::RED);
+		if (streamLevel == INFO) setColor(ConsoleColor::LIGHTGREY);
+		else if (streamLevel == WARNING) setColor(ConsoleColor::YELLOW);
+		else if (streamLevel == ERROR) setColor(ConsoleColor::RED);
 
 		if (sender != "") sender = "<" + sender + "> ";
 
@@ -67,6 +67,8 @@ namespace se {
 		stream.str("");
 		streamLevel = DebugLevel::INFO;
 		sender = "";
+
+		if (streamLevel == ERROR) exit(1);
 
 		return *this;
 	}

@@ -9,7 +9,7 @@ Level::Level() {
 	using namespace se;
 
 	AddEntity<Starship>("Ufo");
-	//return;
+	return;
 
 	Entity* ground = AddEntity("Ground");
 	//Entity* container = AddEntity("Container");

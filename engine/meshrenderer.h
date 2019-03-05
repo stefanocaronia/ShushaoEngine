@@ -26,6 +26,16 @@ namespace se {
 			Mesh* mesh = nullptr;
 			Material* material = nullptr;
 
+			MeshRenderer* SetMesh(Mesh* mesh_) {
+				mesh = mesh_;
+				return this;
+			}
+
+			MeshRenderer* SetMaterial(Material* material_) {
+				material = material_;
+				return this;
+			}
+
 		protected:
 
 			void Awake();
@@ -34,11 +44,6 @@ namespace se {
 			void OnDestroy();
 
 		private:
-
-			GLint uniform_renderer_color;
-            GLint uniform_base_texture;
-            GLint uniform_mvp;
-
 	};
 
 }

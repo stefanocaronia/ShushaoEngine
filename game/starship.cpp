@@ -6,10 +6,10 @@ Starship::Starship() {
 
 	using namespace glm;
 
-	MeshRenderer* mr = AddComponent<MeshRenderer>();
-
-	mr->mesh = Resources::Get<Mesh>("cube");
-	mr->material->SetMainTexture(Resources::Get<Texture>("cube"));
+	mr = AddComponent<MeshRenderer>();
+	Mesh* cube = Resources::Get<Mesh>("cube");
+	mr->SetMesh(Resources::Get<Mesh>("cube"));
+	mr->material->SetMainTexture(Resources::Get<Texture>("cube_diffuse"));
 
 	//transform->SetLocalPosition({0.0f, 0.0f, 20.0f});
 

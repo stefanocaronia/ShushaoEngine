@@ -20,6 +20,17 @@ namespace se {
 		GL_STATIC_DRAW
 	};
 
+	VboConfiguration VBO_CONFIG_NORMAL = {
+		GL_ARRAY_BUFFER,
+		ShaderLocation::LOCATION_NORMAL,
+		3,
+		GL_FLOAT,
+		GL_FALSE,
+		0,
+		(void*)0,
+		GL_STATIC_DRAW
+	};
+
 	VboConfiguration VBO_CONFIG_INDEX = {
 		GL_ELEMENT_ARRAY_BUFFER,
 		0

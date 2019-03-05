@@ -8,7 +8,6 @@ namespace se {
 	}
 
 	void MeshDefaultMaterial::Init() {
-		if (diffuse != nullptr) SetMainTexture(diffuse);
 		if (normal != nullptr) SetTexture("normal", normal);
 		if (bump != nullptr) SetTexture("bump", bump);
 		if (specular != nullptr) SetTexture("specular", specular);

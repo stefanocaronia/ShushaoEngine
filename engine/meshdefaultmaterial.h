@@ -9,7 +9,6 @@ namespace se {
 		public:
 			MeshDefaultMaterial();
 
-			Texture* diffuse = nullptr;
 			Texture* normal = nullptr;
 			Texture* bump = nullptr;
 			Texture* specular = nullptr;

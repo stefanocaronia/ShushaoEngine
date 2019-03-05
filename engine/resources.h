@@ -20,6 +20,13 @@ namespace se {
 			template <class T>
 			static T* Load(std::string filename, std::string name) {
 				T* resource = new T(filename, name);
+				auto it = Assets.find(resource->name);
+				if (it != Assets.end()) {
+					Debug::Log(WARNING) << "Resource " << resource->name << " already loaded" << endl;
+					delete(resource);
+					resource = nullptr;
+					return nullptr;
+				}
 				Assets[name] = resource;
 				return resource;
 			}
@@ -27,27 +34,40 @@ namespace se {
 			template <class T>
 			static T* Add(std::string name) {
 				T* resource = new T(name);
+				auto it = Assets.find(resource->name);
+				if (it != Assets.end()) {
+					Debug::Log(WARNING) << "Resource " << resource->name << " already loaded" << endl;
+					delete(resource);
+					resource = nullptr;
+					return nullptr;
+				}
 				Assets[name] = resource;
 				return resource;
 			}
 
 			template <class T>
 			static T* Add(T* asset) {
-				Assets[asset->name] = asset;
-				return asset;
+				Assets[asset->name] = (T*)asset;
+				auto it = Assets.find(asset->name);
+				if (it != Assets.end()) {
+					Debug::Log(WARNING) << "Resource " << asset->name << " already loaded" << endl;
+					return nullptr;
+				}
+				return (T*)asset;
 			}
-
-			/*template <class T>
-			static T* Add(std::string name, T* asset) {
-				Assets[name] = asset;
-				return asset;
-			}*/
 
 			template <class T>
 			static T* Load(std::string filename) {
 				T* resource = new T(filename);
-				Assets[resource->name] = resource;
-				return resource;
+				auto it = Assets.find(resource->name);
+				if (it != Assets.end()) {
+					Debug::Log(WARNING) << "Resource " << resource->name << " already loaded" << endl;
+					delete(resource);
+					resource = nullptr;
+					return nullptr;
+				}
+				Assets[resource->name] = (T*)resource;
+				return (T*)resource;
 			}
 
 			template <class T>

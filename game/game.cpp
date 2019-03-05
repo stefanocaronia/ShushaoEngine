@@ -44,7 +44,7 @@ void Game::Awake() {
 	Resources::Add<Sprite>("pancrazio_sprite")->SetTexture(Resources::Get<Texture>("pancrazio"))->SetPixelPerUnit(16)->Build();
 
 	Resources::Load<Mesh>("assets/cube.obj");
-	Resources::Load<Texture>("assets/cube.png");
+	Resources::Load<Texture>("assets/cube_diffuse.png");
 
 	Resources::Load<Music>("assets/fizz.mp3");
 	Resources::Load<Effect>("assets/hit.wav");

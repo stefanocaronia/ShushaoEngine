@@ -42,6 +42,7 @@ namespace se {
 
 	extern VboConfiguration VBO_CONFIG_VERTEX;
 	extern VboConfiguration VBO_CONFIG_INDEX;
+	extern VboConfiguration VBO_CONFIG_NORMAL;
 	extern VboConfiguration VBO_CONFIG_COLOR;
 	extern VboConfiguration VBO_CONFIG_UV;
 	extern VboConfiguration VBO_CONFIG_FONT;

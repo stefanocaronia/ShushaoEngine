@@ -10,7 +10,7 @@ namespace se {
 			DebugGrid();
 
 			float gridSize = 1000.0f;
-			float gizmoMagnitude = 4.0f;
+			float gizmoMagnitude = 2.0f;
 
 	};
 

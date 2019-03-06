@@ -2,15 +2,19 @@
 
 #include "debug.h"
 #include "mesh.h"
+#include "color.h"
 #include "meshrenderer.h"
+#include "meshshader.h"
 #include "transform.h"
-#include "meshdefaultmaterial.h"
+#include "glmanager.h"
+#include "meshshader.h"
 
 namespace se {
 
 	MeshRenderer::MeshRenderer() {
 		name = "Mesh Renderer";
-		material = new MeshDefaultMaterial();
+		material = new Material();
+		material->SetShader(GLManager::GetShader<MeshShader>());
 	}
 
 	MeshRenderer::~MeshRenderer() {
@@ -56,14 +60,14 @@ namespace se {
 		mesh->VAO->Use();
 		material->shader->Use();
 		material->shader->SetMVP(transform->uMVP());
+		material->shader->SetRenderColor(material->color);
 		material->update();
 
-		glActiveTexture(material->shader->GetTexture("main_texture"));
+		glActiveTexture(GL_TEXTURE0);
+		//glActiveTexture(material->shader->GetTexture("diffuse_map"));
 		glBindTexture(GL_TEXTURE_2D, material->mainTexture->TextureID);
-		//glDrawArrays(GL_TRIANGLES, 0, mesh->VAO->GetBuffer("vertex")->size * 3);
-
-		int size;  glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &size);
-		glDrawElements(GL_TRIANGLES, size/sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
+		glDrawArrays(GL_TRIANGLES, 0, mesh->VAO->GetBuffer("vertex")->size * 3);
+		//glDrawElements(GL_TRIANGLES, mesh->VAO->GetBuffer("index")->size, GL_UNSIGNED_SHORT, 0);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		material->shader->Leave();

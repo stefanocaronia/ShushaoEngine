@@ -3,6 +3,7 @@
 #include "physicsdebugdraw.h"
 #include "design.h"
 #include "debug.h"
+#include "baseshader.h"
 
 #include <iostream>
 
@@ -15,7 +16,7 @@ namespace se {
 		if (!GLManager::ready || !Config::Physics::debug) return false;
 		if (ready) return true;
 
-		shader = GLManager::GetShader("Base Shader");
+		shader = GLManager::GetShader<BaseShader>();
 		shader->awake();
 		shader->Use();
 

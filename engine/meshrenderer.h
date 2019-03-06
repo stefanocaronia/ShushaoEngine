@@ -22,7 +22,6 @@ namespace se {
 
 			bool isReady();
 
-			Vao* VAO = nullptr;
 			Mesh* mesh = nullptr;
 			Material* material = nullptr;
 

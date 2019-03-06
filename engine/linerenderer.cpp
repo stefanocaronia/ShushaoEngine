@@ -5,7 +5,7 @@
 #include "linerenderer.h"
 #include "transform.h"
 #include "color.h"
-#include "shader.h"
+#include "wireframeshader.h"
 
 namespace se {
 
@@ -14,7 +14,7 @@ namespace se {
 	LineRenderer::LineRenderer() {
 		name = "Line Renderer";
 
-		shader = GLManager::GetShader("Wireframe Shader");
+		shader = GLManager::GetShader<WireframeShader>();
 
 
 	}

@@ -11,10 +11,10 @@ namespace se {
 		LineRenderer* LR = AddComponent<LineRenderer>();
 		LR->sortingLayerID = Config::SortingLayers.over();
 
-		Color xcol = {0.0f, 1.0f, 0.0f, 0.6f};
-		Color ycol = {1.0f, 0.0f, 0.0f, 0.6f};
-		Color zcol = {0.0f, 0.0f, 1.0f, 0.6f};
-		Color gcol = {0.5f, 0.5f, 0.5f, 0.6f};
+		Color xcol = {0.0f, 1.0f, 0.0f, 0.5f};
+		Color ycol = {1.0f, 0.0f, 0.0f, 0.5f};
+		Color zcol = {0.0f, 0.0f, 1.0f, 0.5f};
+		Color gcol = {0.5f, 0.5f, 0.5f, 0.1f};
 
 		Color gco = gcol;
 		float alpha = 0.2f;

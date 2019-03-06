@@ -29,6 +29,10 @@ namespace se {
 		glUniform4f(location, value.x,  value.y,  value.z,  value.w);
 	}
 
+	void Uniform::SetVector(glm::vec3& value) {
+		glUniform3f(location, value.x,  value.y,  value.z);
+	}
+
 	void Uniform::SetColor(Color& value) {
 		glUniform4f(location, value.r,  value.g,  value.b,  value.a);
 	}
@@ -85,7 +89,7 @@ namespace se {
 		// base uniforms
 		AddUniform("Model View Projection", "MVP", UniformType::MATRIX, ShaderLocation::LOCATION_MVP, true);
 		AddUniform("Render Color", "render_color", UniformType::COLOR, ShaderLocation::LOCATION_RENDER_COLOR, true);
-		AddUniform("Main Texture", 	"main_texture", UniformType::TEXTURE, ShaderLocation::LOCATION_MAIN_TEXTURE);
+		AddUniform("Main Texture", 	"diffuse_map", UniformType::TEXTURE, ShaderLocation::LOCATION_DIFFUSE_MAP);
 
 		return true;
 	}
@@ -267,6 +271,11 @@ namespace se {
 	void Shader::SetMatrix(string var_, GLfloat* value) {
 		auto it = uniforms.find(var_);
 		if (it != uniforms.end()) it->second.SetMatrix(value);
+	}
+
+	void Shader::SetVector(string var_, glm::vec3 value) {
+		auto it = uniforms.find(var_);
+		if (it != uniforms.end()) it->second.SetVector(value);
 	}
 
 	void Shader::SetVector(string var_, glm::vec4 value) {

@@ -96,11 +96,11 @@ namespace se {
 		Mix_Quit();
 		SDL_Quit();
 
-		for (auto& it : shaders) {
-			if (it.second != nullptr) {
-				Debug::Log << "Cancello " << it.second->name  << endl; //<< " (" + util::classtitle(typeid(*it.second).name()) +")"
-				delete(it.second);
-				it.second = nullptr;
+		for (auto& shader : shaders) {
+			if (shader != nullptr) {
+				Debug::Log << "Cancello " << shader->name  << endl; //<< " (" + util::classtitle(typeid(*it.second).name()) +")"
+				delete(shader);
+				shader = nullptr;
 			}
 		}
 		shaders.clear();
@@ -150,7 +150,7 @@ namespace se {
 
 	bool GLManager::fullscreen = false;
 	bool GLManager::ready = false;
-	map<string, Shader*> GLManager::shaders;
+	vector<Shader*> GLManager::shaders;
 
 	unsigned int GLManager::DESKTOP_WIDTH;
 	unsigned int GLManager::DESKTOP_HEIGHT;

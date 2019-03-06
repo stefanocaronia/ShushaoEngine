@@ -40,26 +40,23 @@ namespace se {
 			static void Reset();
 
 			static Shader* AddShader(Shader* shader) {
-				shaders[shader->name] = shader;
+				shaders.push_back(shader);
 				return shader;
 			}
 
-			template <class T>
-			static T* GetShader(std::string name) {
-				auto it = shaders.find(name);
-				if (it == shaders.end()) return nullptr;
-				return (T*)shaders[name];
-			}
-
-			static Shader* GetShader(std::string name) {
-				auto it = shaders.find(name);
-				if (it == shaders.end()) return nullptr;
-				return (Shader*)shaders[name];
+			template<class T>
+			static T* GetShader(std::string _name = "") {	// Returns the component of Type type if the game object has one attached, null if it doesn't.
+				for(auto& shader: shaders) {
+					if (dynamic_cast<T*>(shader)) {
+						if (_name == "" || shader->name == _name) return dynamic_cast<T*>(shader);
+					}
+				}
+				return nullptr;
 			}
 
 		private:
 
-			static std::map<std::string, Shader*> shaders;
+			static std::vector<Shader*> shaders;
 
 	};
 

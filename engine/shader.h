@@ -25,8 +25,11 @@ namespace se {
 		LOCATION_NORMAL = 4,
 		LOCATION_MVP = 5,
 		LOCATION_RENDER_COLOR = 6,
-		LOCATION_MAIN_TEXTURE = 7,
-		LOCATION_FONTCOORD = 8
+		LOCATION_DIFFUSE_MAP = 7,
+		LOCATION_NORMAL_MAP = 8,
+		LOCATION_BUMP_MAP = 9,
+		LOCATION_SPECULAR_MAP = 10,
+		LOCATION_FONTCOORD = 11
 	};
 
 	class Uniform {
@@ -52,6 +55,7 @@ namespace se {
 			void SetInteger(GLint&);
 			void SetTexture(GLenum&);
 			void SetMatrix(GLfloat*);
+			void SetVector(glm::vec3&);
 			void SetVector(glm::vec4&);
 			void SetColor(Color&);
 	};
@@ -98,6 +102,7 @@ namespace se {
 			void SetInteger(std::string, GLint);
 			void SetTexture(std::string, GLenum);
 			void SetMatrix(std::string, GLfloat*);
+			void SetVector(std::string, glm::vec3);
 			void SetVector(std::string, glm::vec4);
 			void SetColor(std::string, Color);
 

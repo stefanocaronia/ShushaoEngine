@@ -65,7 +65,7 @@ namespace se {
 
 	void Material::SetShader(Shader* shader_) {
 		shader = shader_;
-        Init();
+        init();
 	}
 
 	void Material::SetMainTexture(Texture* texture_) {
@@ -102,7 +102,7 @@ namespace se {
 		for (const auto& it : parameters) {
 			Parameter parameter = it.second;
 			if (parameter.uniform->locked ||
-				parameter.uniform->location == ShaderLocation::LOCATION_MAIN_TEXTURE ||
+				parameter.uniform->location == ShaderLocation::LOCATION_DIFFUSE_MAP ||
 				parameter.uniform->location == ShaderLocation::LOCATION_RENDER_COLOR ||
 				parameter.uniform->location == ShaderLocation::LOCATION_MVP) {
 				continue;

@@ -4,6 +4,7 @@
 #include "glmanager.h"
 #include "transform.h"
 #include "debug.h"
+#include "fontshader.h"
 
 namespace se {
 
@@ -11,7 +12,7 @@ namespace se {
 
 	TextRenderer::TextRenderer() {
 		name = "Font Renderer";
-		shader = GLManager::GetShader("Font Shader");
+		shader = GLManager::GetShader<FontShader>();
 
 		VAO = new Vao();
 		VAO->AddBuffer("vertex", VBO_CONFIG_FONT);
@@ -46,7 +47,7 @@ namespace se {
 
 		GLuint tex;
 		glGenTextures(1, &tex);
-		glActiveTexture(shader->GetTexture("main_texture"));
+		glActiveTexture(shader->GetTexture("diffuse_map"));
 		glBindTexture(GL_TEXTURE_2D, tex);
 
 

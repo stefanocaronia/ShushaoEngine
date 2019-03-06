@@ -58,13 +58,14 @@ void Game::Awake() {
 	SceneManager::LoadScene<Level>("Level 1");
 
 	Camera* camera = SceneManager::activeScene->activeCamera;
-	camera->backgroundColor = {0.2f, 0.2f, 0.8f, 1.0f};
+	camera->backgroundColor = {0.05f, 0.05f, 0.1f, 1.0f};
 	camera->setOrthographic(false);
 	/* camera->setNearClipPlane(12.0f);
 	camera->setFarClipPlane(1.0f);
 	camera->setOrthographicSize(5.0f); */
-
-	camera->transform->localPosition = {0.0f, 3.0f, 10.0f};
+	camera->setFarClipPlane(20.0f);
+	//camera->transform->localPosition = {0.0f, 0.0f, 10.0f};
+	camera->transform->localPosition = {1.0f, 3.0f, 6.0f};
 	camera->transform->localRotation = Transform::QUATERNION_IDENTITY;
 
 	Input::printActiveControllers();

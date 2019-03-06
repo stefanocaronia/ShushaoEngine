@@ -84,7 +84,7 @@ namespace se {
 			Bind();
 			glEnableVertexAttribArray(config.location);
 			glVertexAttribPointer(config.location, config.blocksize, config.type, config.normalized, config.stride, config.pointer);
-			Unbind();
+			// Unbind();
 		}
 
 		ready = true;

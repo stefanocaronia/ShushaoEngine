@@ -2,6 +2,7 @@
 #include "design.h"
 #include "glmanager.h"
 #include "scenemanager.h"
+#include "baseshader.h"
 
 namespace se {
 
@@ -9,7 +10,7 @@ namespace se {
 		if (ready) return true;
 		if (!GLManager::ready) return false;
 
-		shader = GLManager::GetShader("Base Shader");
+		shader = GLManager::GetShader<BaseShader>();
 		shader->awake();
 		shader->Use();
 

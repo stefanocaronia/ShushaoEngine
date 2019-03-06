@@ -1,4 +1,5 @@
 # Universal MakeFile v1.3
+# Compatible with Code::blocks
 
 # Declaration of variables
 CC = g++
@@ -8,6 +9,10 @@ MD = mkdir
 CP = cp
 BUILD = Debug
 DEBUG = true
+
+BULLET = "*"
+BULLET2 = "."
+TAB = "  "
 
 ifeq ($(BUILD),Debug)
 	DEBUG = true
@@ -34,7 +39,7 @@ SRCEXT		= cpp
 OBJEXT		= o
 
 #Flags, Libraries and Includes
-COMFLAGS = -std=c++11 -fexceptions -DGLEW_STATIC -g -DDEBUG=$(DEBUG)
+COMFLAGS = -std=c++11 -fexceptions -DGLEW_STATIC -g -DDEBUG=$(DEBUG) -pipe
 LNKFLAGS =
 LIBDIRS	 = -L$(BASE_LIBS)/glew/lib -L$(BASE_LIBS)/freetype/lib -L$(BASE_LIBS)/SDL2/lib -L$(BASE_LIBS)/SDL2_image/lib -L$(BASE_LIBS)/SDL2_ttf/lib -L$(BASE_LIBS)/SDL2_mixer/lib -L$(BASE_LIBS)/Box2D/lib
 LIB 	 = -lglew32 -lmingw32 -lopengl32 -lgdi32 -lglu32 -lfreetype -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lBox2D
@@ -53,47 +58,50 @@ SOURCES = $(wildcard $(SRCDIR)/*.$(SRCEXT)) $(wildcard $(addsuffix *.$(SRCEXT),$
 OBJECTS = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT)))
 
 #Defauilt
-all: resources $(TARGET)
-	@echo - $(BUILD) Compilation done!! Yee!
+all: directories resources compstart $(TARGET)
+	@echo $(BULLET) $(BUILD) Compilation and linking done!
 
 #Rebuild
 rebuild: clean all
 
 #Copy Resources from Resources Directory to Target Directory
 #@$(CP) -r $(RESDIR)/* $(TARGETDIR)/
-resources: directories
-	@echo - Copying resources
+resources:
+	@echo $(BULLET) Copying resources
 	@rescopy $(BUILD)
 
 #Make the directories
 directories:
-	@echo - Creating build directories
+	@echo $(BULLET) Checking build directories
 	@$(MD) -p $(TARGETDIR)
 	@$(MD) -p $(BUILDDIR)
 
 #Clean only Objecst
 clean:
-	@echo - Cleaning build
+	@echo $(BULLET) Cleaning build
 	@$(RM) -rf obj/*
 	@$(RM) -rf bin/*
 
 #Link
 $(TARGET): $(OBJECTS)
-	@echo - Linking $(TARGET)
+	@echo $(BULLET) Linking $(TARGET)
 	@$(CC) $(LNKFLAGS) -o $(TARGETDIR)/$(TARGET) $(OBJECTS) $(LIBDIRS) $(LIB)
+
+compstart:
+	@echo $(BULLET) Compilation
 
 #Compile
 $(BUILDDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
-	@echo - Compiling: $<
+	@echo $(TAB)$(BULLET2) Compiling: $<
 	@$(MD) -p $(dir $@)
 	@$(CC) $(COMFLAGS) $(INCDIRS) -c $< -o $@
 
 run: all
-	@echo - Running $(TARGET)
+	@echo $(BULLET) Running $(TARGET)
 	@cd $(TARGETDIR) && ./$(TARGET)
 
 debug: all
-	@echo - Running Debug of $(TARGET)
+	@echo $(BULLET) Running Debug of $(TARGET)
 	@cd $(TARGETDIR) && $(DB) $(TARGET)
 
 cls:

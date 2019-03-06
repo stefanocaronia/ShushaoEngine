@@ -29,12 +29,21 @@ namespace se {
 
 			in vec2 out_texturecoord;
 
-			layout(location=7) uniform sampler2D main_texture;
+			layout(location=6) uniform vec4 render_color;
+			layout(location=7) uniform sampler2D diffuse_map;
+
+			uniform sampler2D normal_map;
+			uniform sampler2D bump_map;
+			uniform sampler2D specular_map;
+
+			uniform vec4 ambient_color;
+			uniform vec4 diffuse_color;
+			uniform vec4 specular_color;
 
 			out vec4 frag_color;
 
 			void main() {
-				frag_color = texture2D(main_texture, out_texturecoord);
+				frag_color = texture2D(diffuse_map, out_texturecoord); // * vec4(render_color);
 			}
 		)glsl";
 	}
@@ -42,13 +51,20 @@ namespace se {
 	void MeshShader::Awake() {
 
 		// custom uniforms
-		// AddUniform("Main Texture Offset", "main_texture_offset", UniformType::VECTOR);
+		// AddUniform("Main Texture Offset", "diffuse_map_offset", UniformType::VECTOR);
+		AddUniform("Ambient reflection", "ambient_color", UniformType::COLOR);
+		AddUniform("Diffuse reflection", "diffuse_color", UniformType::COLOR);
+		AddUniform("Specular reflection", "specular_color", UniformType::COLOR);
+
+		AddUniform("Normal Map", "normal_map", UniformType::TEXTURE);
+		AddUniform("Bump Map", "bump_map", UniformType::TEXTURE);
+		AddUniform("Specular Map", "specular_map", UniformType::TEXTURE);
 
 		// valorizzazione
-		SetTexture("main_texture", GL_TEXTURE0);
-		SetTexture("normal", GL_TEXTURE1);
-		SetTexture("bump", GL_TEXTURE2);
-		SetTexture("specular", GL_TEXTURE3);
+		SetTexture("diffuse_map", GL_TEXTURE0);
+		SetTexture("normal_map", GL_TEXTURE1);
+		SetTexture("bump_map", GL_TEXTURE2);
+		SetTexture("specular_map", GL_TEXTURE3);
 	}
 
 }

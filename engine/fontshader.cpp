@@ -9,7 +9,7 @@ namespace se {
 		VertexShaderCode = R"glsl(
 			#version 430
 
-			layout(location=8) in vec4 vertex_coord;
+			layout(location=11) in vec4 vertex_coord;
 
 			layout(location=5) uniform mat4 MVP;
 			out vec2 out_texturecoord;
@@ -27,18 +27,18 @@ namespace se {
 			in vec2 out_texturecoord;
 
 			layout(location=6) uniform vec4 render_color;
-			layout(location=7) uniform sampler2D main_texture;
+			layout(location=7) uniform sampler2D diffuse_map;
 
 			out vec4 frag_color;
 
 			void main(void) {
-				frag_color = vec4(1, 1, 1, texture2D(main_texture, out_texturecoord).r) * render_color;
+				frag_color = vec4(1, 1, 1, texture2D(diffuse_map, out_texturecoord).r) * render_color;
 			}
 
 		)glsl";
 	}
 
 	void FontShader::Awake() {
-		SetTexture("main_texture", GL_TEXTURE0);
+		SetTexture("diffuse_map", GL_TEXTURE0);
 	}
 }

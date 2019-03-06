@@ -52,7 +52,7 @@ namespace se {
 			Material();
 			~Material();
 
-			Color color; // The main material's color.
+			Color color = Color::white; // The main material's color.
 			Texture* mainTexture = nullptr; // The material's texture.
 			glm::vec2 mainTextureOffset; // The texture offset of the main texture.
 			glm::vec2 mainTextureScale; // The texture scale of the main texture.

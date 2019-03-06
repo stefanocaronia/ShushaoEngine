@@ -29,12 +29,12 @@ namespace se {
 			in vec2 out_texturecoord;
 
 			layout(location=6) uniform vec4 render_color;
-			layout(location=7) uniform sampler2D main_texture;
+			layout(location=7) uniform sampler2D diffuse_map;
 
 			out vec4 frag_color;
 
 			void main() {
-				frag_color = texture2D(main_texture, out_texturecoord) * vec4(render_color);
+				frag_color = texture2D(diffuse_map, out_texturecoord) * vec4(render_color);
 			}
 		)glsl";
 	}
@@ -42,10 +42,10 @@ namespace se {
 	void StandardShader::Awake() {
 
 		// custom uniforms
-		// AddUniform("Main Texture Offset", "main_texture_offset", UniformType::VECTOR);
+		// AddUniform("Main Texture Offset", "diffuse_map_offset", UniformType::VECTOR);
 
 		// valorizzazione
-		SetTexture("main_texture", GL_TEXTURE0);
+		SetTexture("diffuse_map", GL_TEXTURE0);
 	}
 
 }

@@ -57,7 +57,8 @@ namespace se {
 		if (!SceneManager::activeSceneSet)
 			return;
 
-		SceneManager::activeScene->ScanActiveComponentsInScene();
+		SceneManager::activeScene->ScanActiveComponents();
+		SceneManager::activeScene->ScanActiveLights();
 		SceneManager::activeScene->run(Cycle::INIT); // vengono chiamati gli Awake di tutti gli oggetti attivi
 
 		Camera* activeCamera = SceneManager::activeScene->activeCamera;
@@ -72,7 +73,8 @@ namespace se {
 
 			Time::Update();
 
-			SceneManager::activeScene->ScanActiveComponentsInScene();
+			SceneManager::activeScene->ScanActiveComponents();
+			SceneManager::activeScene->ScanActiveLights();
 
 			Input::update();
 			GetInput();
@@ -87,6 +89,8 @@ namespace se {
 			if (Time::renderDeltaTime >= Time::frameLimitDuration) {
 				render();
 			}
+
+			SceneManager::activeScene->componentsScanned = false;
 		}
 
 		exit();

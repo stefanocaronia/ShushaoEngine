@@ -24,6 +24,8 @@ namespace se {
 			Vao* Init();
 			Vao* Use();
 			Vao* Leave();
+			Vao* EnablePointers();
+			Vao* DisablePointers();
 
 			Vbo* AddBuffer(std::string name_, VboConfiguration config_);
 			Vbo* AddBuffer(Vbo* vbo);

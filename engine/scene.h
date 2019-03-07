@@ -13,6 +13,7 @@
 #include "gamedata.h"
 #include "debuggrid.h"
 #include "renderer.h"
+#include "light.h"
 
 namespace se {
 
@@ -25,22 +26,34 @@ namespace se {
 			Scene();
 			~Scene();
 
-			std::string name;
+			std::string name = "";
 			int BuildIndex;
 			bool isLoaded = false;
 
 			Entity* root;
-
 			Camera* activeCamera;
+
+			std::vector<Entity*> Entities;
+			std::vector<Component*> ActiveComponents;
+			std::vector<Light*> ActiveLights;
+
+			void run(std::string);
 
 			std::vector<Entity*> GetRootEntitys();
 
-			void ScanActiveComponentsInScene();
+			// scan
+			void ScanActiveComponents();
+			void ScanActiveLights();
+			bool componentsScanned = false;
+
+			// debug
 			void PrintActiveComponentsInScene();
 			void PrintActiveRenderersInScene();
+			void PrintActiveLightsInScene();
 			void PrintHierarchy();
 
-			void run(std::string);
+			Entity* AddEntity(Entity*);
+			Entity* AddEntity(std::string);
 
 			template<class T>
 			T* AddEntity(std::string _name = "") { // Adds a Entity of class T (Prefab)
@@ -62,13 +75,6 @@ namespace se {
 				}
 				return nullptr;
 			}
-
-			Entity* AddEntity(std::string);
-
-			void AddEntity(Entity*);
-
-			std::vector<Entity*> Entities;
-			std::vector<Component*> ActiveComponents;
 
 		private:
 	};

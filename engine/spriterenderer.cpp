@@ -66,7 +66,9 @@ namespace se {
 
 		glActiveTexture(material->shader->GetTexture("diffuse_map"));
 		glBindTexture(GL_TEXTURE_2D, material->mainTexture->TextureID);
+		sprite->VAO->GetBuffer("index")->Bind();
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
+		sprite->VAO->GetBuffer("index")->Unbind();
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		material->shader->Leave();

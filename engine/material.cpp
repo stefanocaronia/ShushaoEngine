@@ -112,8 +112,10 @@ namespace se {
 					parameter.uniform->SetInteger(parameter.value.i);
 					break;
 				case UniformType::TEXTURE:
-					glActiveTexture(parameter.uniform->texture);
-					glBindTexture(GL_TEXTURE_2D, parameter.value.tex->TextureID);
+					if (parameter.value.tex != nullptr) {
+						glActiveTexture(parameter.uniform->texture);
+						glBindTexture(GL_TEXTURE_2D, parameter.value.tex->TextureID);
+					}
 					break;
 				case UniformType::FLOAT:
 					parameter.uniform->SetFloat(parameter.value.f);

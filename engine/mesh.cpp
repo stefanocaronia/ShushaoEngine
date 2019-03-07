@@ -50,12 +50,13 @@ namespace se {
             return this;
         }
 
-        while (1) {
+        while (true) {
+
             char lineHeader[128];
 
             // read the first word of the line
             int res = fscanf(file, "%s", lineHeader);
-            if (res == EOF) break;  // EOF = End Of File. Quit the loop.
+            if (res == EOF) break;
 
             // Vertices
             if (strcmp(lineHeader, "v") == 0) {
@@ -99,32 +100,30 @@ namespace se {
             }
         }
 
-        // For each vertex of each triangle
-        for (unsigned int i = 0; i < vertexIndices.size(); i++) {
-            glm::vec3 vertex = temp_vertices[vertexIndices[i] - 1];
-            vertexData.push_back(vertex);
-            indexesData.push_back(vertexIndices[i]);
-        }
+        // For each triangle
+        for (unsigned int v = 0; v < vertexIndices.size(); v += 3) {
+            // For each vertex of the triangle
+            for (unsigned int i = 0; i < 3; i += 1) {
+                unsigned int vertexIndex = vertexIndices[v + i];
+                glm::vec3 vertex = temp_vertices[vertexIndex - 1];
 
-        // For each vertex of each triangle
-        if (uvIndices.size() > 0)
-            for (unsigned int i = 0; i < uvIndices.size(); i++) {
-                glm::vec2 uv = temp_uvs[uvIndices[i] - 1];
+                unsigned int uvIndex = uvIndices[v + i];
+                glm::vec2 uv = temp_uvs[uvIndex - 1];
+
+                unsigned int normalIndex = normalIndices[v + i];
+                glm::vec3 normal = temp_normals[normalIndex - 1];
+
+                vertexData.push_back(vertex);
                 uvData.push_back(uv);
-            }
-
-        // For each vertex of each triangle
-        if (normalIndices.size() > 0)
-            for (unsigned int i = 0; i < normalIndices.size(); i++) {
-                glm::vec3 normal = temp_normals[normalIndices[i] - 1];
                 normalsData.push_back(normal);
             }
+        }
 
         VAO->Use();
 		VAO->Load<vec3>("vertex", vertexData);
-		VAO->Load<GLushort>("index", indexesData);
-		if (uvData.size() > 0)      VAO->Load<vec2>("uv", uvData);
-		if (normalsData.size() > 0) VAO->Load<vec3>("normal", normalsData);
+		VAO->Load<GLushort>("index", vertexIndices);
+		VAO->Load<vec2>("uv", uvData);
+		VAO->Load<vec3>("normal", normalsData);
 		VAO->Leave();
 
         ready = true;

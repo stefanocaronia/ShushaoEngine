@@ -8,11 +8,15 @@ Level::Level() {
 
 	using namespace se;
 
+	Entity* ambient = AddEntity("Ambient Light");
+	ambient->AddComponent<Light>();
+	ambient->GetComponent<Light>()->type = LightType::DIRECTIONAL;
+
 	AddEntity<Starship>("Ufo");
-	return;
+
+	// return;
 
 	Entity* ground = AddEntity("Ground");
-	//Entity* container = AddEntity("Container");
 
 	ground->transform->SetLocalPosition({0.0f, -4.0f, 0.0f});
 	Rigidbody2D* groundrb = ground->AddComponent<Rigidbody2D>();

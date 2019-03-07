@@ -98,6 +98,7 @@ void Game::Awake() {
 		SceneManager::activeScene->PrintHierarchy();
 		SceneManager::activeScene->PrintActiveComponentsInScene();
 		SceneManager::activeScene->PrintActiveRenderersInScene();
+		SceneManager::activeScene->PrintActiveLightsInScene();
 		System::ListServices();
 		camera->print();
 		Resources::toString();

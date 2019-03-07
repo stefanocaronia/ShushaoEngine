@@ -79,7 +79,7 @@ namespace se {
 				} else {
 					glBufferData(config.target, buffersize, &elements[0], config.usage);
 				}
-				//Unbind();
+				Unbind();
 				return this;
 			}
 

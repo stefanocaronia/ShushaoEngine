@@ -50,13 +50,29 @@ namespace se {
 			Debug::Log(ERROR) << "VAO not initializated" << endl;
 		}
 		glBindVertexArray(Id);
+		EnablePointers();
 		inUse = true;
 		return this;
 	}
 
 	Vao* Vao::Leave() {
 		glBindVertexArray(0);
+		DisablePointers();
 		inUse = false;
+		return this;
+	}
+
+	Vao* Vao::EnablePointers() {
+		for (auto& it : buffers) {
+			glEnableVertexAttribArray(it.second->config.location);
+		}
+		return this;
+	}
+
+	Vao* Vao::DisablePointers() {
+		for (auto& it : buffers) {
+			glDisableVertexAttribArray(it.second->config.location);
+		}
 		return this;
 	}
 

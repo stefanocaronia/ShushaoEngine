@@ -21,7 +21,9 @@ namespace se {
 	class Parameter {
 	public:
 
-		Parameter(std::string name_, std::string var_, Uniform* uniform_) : name(name_), var(var_), uniform(uniform_) {}
+		Parameter(std::string name_, std::string var_, Uniform* uniform_) : name(name_), var(var_), uniform(uniform_) {
+			value.tex = nullptr;
+		}
 
 		std::string name;
 		std::string var;

@@ -66,8 +66,12 @@ namespace se {
 		glActiveTexture(GL_TEXTURE0);
 		//glActiveTexture(material->shader->GetTexture("diffuse_map"));
 		glBindTexture(GL_TEXTURE_2D, material->mainTexture->TextureID);
+		/* mesh->VAO->GetBuffer("vertex")->Bind();
 		glDrawArrays(GL_TRIANGLES, 0, mesh->VAO->GetBuffer("vertex")->size * 3);
-		//glDrawElements(GL_TRIANGLES, mesh->VAO->GetBuffer("index")->size, GL_UNSIGNED_SHORT, 0);
+		mesh->VAO->GetBuffer("vertex")->Unbind(); */
+		mesh->VAO->GetBuffer("index")->Bind();
+		glDrawElements(GL_TRIANGLES, mesh->VAO->GetBuffer("index")->size, GL_UNSIGNED_SHORT, 0);
+		mesh->VAO->GetBuffer("index")->Unbind();
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		material->shader->Leave();

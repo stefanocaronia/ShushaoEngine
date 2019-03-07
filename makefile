@@ -9,10 +9,40 @@ MD = mkdir
 CP = cp
 BUILD = Debug
 DEBUG = true
+COLORS = true
 
-BULLET = "*"
-BULLET2 = "."
-TAB = "  "
+BULLET = ""
+BULLET2 = ""
+TAB = ""
+
+# Black        0;30     Dark Gray     1;30
+# Red          0;31     Light Red     1;31
+# Green        0;32     Light Green   1;32
+# Brown/Orange 0;33     Yellow        1;33
+# Blue         0;34     Light Blue    1;34
+# Purple       0;35     Light Purple  1;35
+# Cyan         0;36     Light Cyan    1;36
+# Light Gray   0;37     White         1;37
+
+ifeq ($(COLORS),true)
+	CRED 	= "\033[1;31m"
+	CBLUE 	= "\033[1;34m"
+	CYELLOW = "\033[1;33m"
+	CGREEN 	= "\033[1;32m"
+	CGREY 	= "\033[1;30m"
+	CLGREY 	= "\033[0;37m"
+	CCYAN 	= "\033[1;36m"
+	CEND 	= "\033[0m"
+else
+	CRED 	= ""
+	CBLUE 	= ""
+	CYELLOW = ""
+	CGREEN 	= ""
+	CGREY 	= ""
+	CLGREY 	= ""
+	CCYAN 	= ""
+	CEND 	= ""
+endif
 
 ifeq ($(BUILD),Debug)
 	DEBUG = true
@@ -39,7 +69,7 @@ SRCEXT		= cpp
 OBJEXT		= o
 
 #Flags, Libraries and Includes
-COMFLAGS = -std=c++11 -fexceptions -DGLEW_STATIC -g -DDEBUG=$(DEBUG) -pipe
+COMFLAGS =  -MMD -MP -std=c++11 -fexceptions -DGLEW_STATIC -g -DDEBUG=$(DEBUG)
 LNKFLAGS =
 LIBDIRS	 = -L$(BASE_LIBS)/glew/lib -L$(BASE_LIBS)/freetype/lib -L$(BASE_LIBS)/SDL2/lib -L$(BASE_LIBS)/SDL2_image/lib -L$(BASE_LIBS)/SDL2_ttf/lib -L$(BASE_LIBS)/SDL2_mixer/lib -L$(BASE_LIBS)/Box2D/lib
 LIB 	 = -lglew32 -lmingw32 -lopengl32 -lgdi32 -lglu32 -lfreetype -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lBox2D
@@ -56,56 +86,62 @@ endif
 subdirs = $(wildcard $(SRCDIR)/*/)
 SOURCES = $(wildcard $(SRCDIR)/*.$(SRCEXT)) $(wildcard $(addsuffix *.$(SRCEXT),$(subdirs)))
 OBJECTS = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT)))
+DEPENDS = $(OBJECTS:.o=.d)
 
 #Defauilt
-all: directories resources compstart $(TARGET)
-	@echo $(BULLET) $(BUILD) Compilation and linking done!
+all: prebuild directories resources | compstart $(TARGET)
+	@echo -e $(BULLET)$(CGREEN)$(BUILD)Compilation and linking done! $(CEND)
+
+prebuild:
+	@echo -e $(CYELLOW)Building $(THIS_DIR) "("$(BUILD)")"$(CEND)
 
 #Rebuild
-rebuild: clean all
+rebuild: prebuild clean directories resources | compstart $(TARGET)
 
 #Copy Resources from Resources Directory to Target Directory
-#@$(CP) -r $(RESDIR)/* $(TARGETDIR)/
 resources:
-	@echo $(BULLET) Copying resources
+	@echo -e $(BULLET)$(CBLUE)Copying resources $(CEND)
 	@rescopy $(BUILD)
 
 #Make the directories
 directories:
-	@echo $(BULLET) Checking build directories
+	@echo -e $(BULLET)$(CBLUE)Checking build directories $(CEND)
 	@$(MD) -p $(TARGETDIR)
 	@$(MD) -p $(BUILDDIR)
 
 #Clean only Objecst
 clean:
-	@echo $(BULLET) Cleaning build
+	@echo -e $(BULLET)$(CBLUE)Cleaning build $(CEND)
 	@$(RM) -rf obj/*
 	@$(RM) -rf bin/*
 
+compstart:
+	@echo -e $(BULLET)$(CBLUE)Compilation $(CEND)
+
 #Link
 $(TARGET): $(OBJECTS)
-	@echo $(BULLET) Linking $(TARGET)
+	@echo -e $(BULLET)$(CBLUE)Linking $(TARGET) $(CEND)
 	@$(CC) $(LNKFLAGS) -o $(TARGETDIR)/$(TARGET) $(OBJECTS) $(LIBDIRS) $(LIB)
-
-compstart:
-	@echo $(BULLET) Compilation
 
 #Compile
 $(BUILDDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
-	@echo $(TAB)$(BULLET2) Compiling: $<
+	@echo -e $(TAB)$(BULLET2)$(CGREY)Compiling: $(CCYAN)$<$(CEND)
 	@$(MD) -p $(dir $@)
 	@$(CC) $(COMFLAGS) $(INCDIRS) -c $< -o $@
 
 run: all
-	@echo $(BULLET) Running $(TARGET)
+	@echo -e $(BULLET)$(CYELLOW)Running $(TARGET) $(CEND)
 	@cd $(TARGETDIR) && ./$(TARGET)
 
 debug: all
-	@echo $(BULLET) Running Debug of $(TARGET)
+	@echo -e $(BULLET)$(CYELLOW)Running Debug of $(TARGET) $(CEND)
 	@cd $(TARGETDIR) && $(DB) $(TARGET)
 
 cls:
 	@cls
 
 #Non-File Targets
-.PHONY: all release rebuild clean resources directories run debug cls
+.PHONY: all prebuild release rebuild clean resources directories run debug cls
+
+# include dependency files (*.d) if available
+-include $(DEPENDS)

@@ -75,6 +75,7 @@ namespace se {
 
 	Vbo* Vbo::Init() {
 		if (ready) {
+			Debug::Log(WARNING) << "Vbo " << name << " already initializated" << endl;
 			return this;
 		}
 
@@ -84,7 +85,7 @@ namespace se {
 			Bind();
 			glEnableVertexAttribArray(config.location);
 			glVertexAttribPointer(config.location, config.blocksize, config.type, config.normalized, config.stride, config.pointer);
-			// Unbind();
+			Unbind();
 		}
 
 		ready = true;
@@ -98,13 +99,19 @@ namespace se {
 	}
 
 	Vbo* Vbo::Bind() {
-		//if (!config.target) return this;
+		if (!config.target) {
+			Debug::Log(ERROR) << "Can't bind Vbo " << name << ", no target array set" << endl;
+			return this;
+		}
 		glBindBuffer(config.target, Id);
 		return this;
 	}
 
 	Vbo* Vbo::Unbind() {
-		//if (!config.target) return this;
+		if (!config.target) {
+			Debug::Log(WARNING) << "Can't unbind " << name << ", no target array set" << endl;
+			return this;
+		}
 		glBindBuffer(config.target, 0);
 		return this;
 	}

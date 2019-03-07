@@ -8,6 +8,8 @@
 
 namespace se {
 
+	using namespace std;
+
 	Scene::Scene() {
 
 		name = "Scene";
@@ -41,14 +43,31 @@ namespace se {
 		return entity;
 	}
 
-	void Scene::ScanActiveComponentsInScene() {
-
+	void Scene::ScanActiveComponents() {
+		if (componentsScanned) return;
 		ActiveComponents.clear();
         ActiveComponents = root->transform->GetActiveComponentsInChildren();
+		componentsScanned = true;
+	}
+
+	void Scene::ScanActiveLights() {
+		ScanActiveComponents();
+		ActiveLights.clear();
+		for (Component* component : ActiveComponents) {
+			if (dynamic_cast<Light*>(component)) {
+				ActiveLights.push_back((Light*)component);
+			}
+		}
+
+		/* std::copy_if (ActiveComponents.begin(), ActiveComponents.end(), std::back_inserter(ActiveLights), [](Component* component){
+			return dynamic_cast<Light*>(component);
+		}); */
+
 	}
 
 	void Scene::PrintActiveComponentsInScene() {
-		ScanActiveComponentsInScene();
+		ScanActiveComponents();
+		if (!Debug::enabled) return;
 		Logger::setColor(ConsoleColor::DARKCYAN);
 		std::cout << " Scene " << name << " Active Components:" << std::endl;
 		for (Component* component : ActiveComponents) {
@@ -57,9 +76,21 @@ namespace se {
 		Logger::setColor(ConsoleColor::LIGHTGREY);
 	}
 
-	void Scene::PrintActiveRenderersInScene() {
-		ScanActiveComponentsInScene();
+	void Scene::PrintActiveLightsInScene() {
+		ScanActiveLights();
+		if (!Debug::enabled) return;
 		Logger::setColor(ConsoleColor::PINK);
+		std::cout << " Scene " << name << " Active Lights:" << std::endl;
+		for (Light* light : ActiveLights) {
+			std::cout << "  - " << light->GetTypeDesc() << " light " << light->getTitle() << " (" << light->entity->name << ")" << std::endl;
+		}
+		Logger::setColor(ConsoleColor::LIGHTGREY);
+	}
+
+	void Scene::PrintActiveRenderersInScene() {
+		ScanActiveComponents();
+		if (!Debug::enabled) return;
+		Logger::setColor(ConsoleColor::DARKPURPLE);
 		std::cout << " Scene " << name << " Active Renderers:" << std::endl;
 		for (Component* component : ActiveComponents) {
 			if (!dynamic_cast<Renderer*>(component)) continue;
@@ -76,6 +107,7 @@ namespace se {
 	}
 
 	void Scene::PrintHierarchy() {
+		if (!Debug::enabled) return;
 		Logger::setColor(ConsoleColor::GREEN);
 		std::cout << " Scene " << name << "" << std::endl;
 		root->PrintHierarchy(0);
@@ -83,15 +115,13 @@ namespace se {
 	}
 
 	vector<Entity*> Scene::GetRootEntitys() {
-
 		// TODO: I GAMEOBJECT CON PARENT ROOT
-
 		return Entities;
-
 	}
 
-	void Scene::AddEntity(Entity* pEntity) {
+	Entity* Scene::AddEntity(Entity* pEntity) {
 		pEntity->transform->SetParent(root->transform);
 		Entities.push_back(pEntity);
+		return pEntity;
 	}
 }

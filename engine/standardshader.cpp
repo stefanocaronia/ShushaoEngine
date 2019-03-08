@@ -42,10 +42,9 @@ namespace se {
 	void StandardShader::Awake() {
 
 		// custom uniforms
-		// AddUniform("Main Texture Offset", "diffuse_map_offset", UniformType::VECTOR);
+		AddUniform("Diffuse Map", "diffuse_map", UniformType::TEXTURE, ShaderLocation::LOCATION_DIFFUSE_MAP);
 
 		// valorizzazione
 		SetTexture("diffuse_map", GL_TEXTURE0);
 	}
-
 }

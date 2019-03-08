@@ -61,7 +61,7 @@ void Game::Awake() {
 	bool meshTest = true;
 
 	Camera* camera = SceneManager::activeScene->activeCamera;
-	camera->backgroundColor = {0.05f, 0.05f, 0.1f, 1.0f};
+	camera->backgroundColor = {0.05f, 0.05f, 0.2f, 1.0f};
 
 	if (meshTest) {
 		camera->setOrthographic(false);

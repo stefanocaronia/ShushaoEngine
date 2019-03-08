@@ -12,7 +12,7 @@
 #include "vao.h"
 #include "config.h"
 
-/// TODO: deve renderizzare più righe? controllare com'è in unity
+// TODO: deve renderizzare piÃ¹ righe? controllare com'Ã¨ in unity
 
 namespace se {
 

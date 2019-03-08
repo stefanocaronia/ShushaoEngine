@@ -15,7 +15,7 @@ namespace se {
 		shader = GLManager::GetShader<FontShader>();
 
 		VAO = new Vao();
-		VAO->AddBuffer("vertex", VBO_CONFIG_FONT);
+		VAO->AddBuffer(Vbo::VERTICES, VBO_CONFIG_FONT);
 	}
 
 	TextRenderer::~TextRenderer() {
@@ -76,8 +76,8 @@ namespace se {
 				{ x2 + w, -y2 - h, 	1, 1 }
 			};
 
-			VAO->Load<vec4>("vertex", box);
-			glBindBuffer(GL_ARRAY_BUFFER, VAO->GetBuffer("vertex")->Id);
+			VAO->Load<vec4>(Vbo::VERTICES, box);
+			glBindBuffer(GL_ARRAY_BUFFER, VAO->GetBuffer(Vbo::VERTICES)->Id);
 			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
 			pos.x += ((g->advance.x) / 64) * scale.x;

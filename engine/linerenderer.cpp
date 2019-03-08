@@ -72,12 +72,12 @@ namespace se {
 		shader->Use();
 
 		VAO = new Vao();
-		VAO->AddBuffer("vertex", VBO_CONFIG_VERTEX);
+		VAO->AddBuffer(Vbo::VERTICES, VBO_CONFIG_VERTEX);
 		VAO->AddBuffer("colors", VBO_CONFIG_COLOR);
 		VAO->Init();
 
 		VAO->Use();
-		VAO->Load<vec3>("vertex", vertices);
+		VAO->Load<vec3>(Vbo::VERTICES, vertices);
 		VAO->Load<vec4>("colors", colors);
 		VAO->Leave();
 
@@ -94,9 +94,9 @@ namespace se {
 		shader->SetMVP(transform->uMVP());
 		shader->update();
 
-		glEnablei(GL_BLEND, VAO->GetBuffer("vertex")->Id);
+		glEnablei(GL_BLEND, VAO->GetBuffer(Vbo::VERTICES)->Id);
 		glDrawArrays(GL_LINES, 0, vertices.size());
-		glDisablei(GL_BLEND, VAO->GetBuffer("vertex")->Id);
+		glDisablei(GL_BLEND, VAO->GetBuffer(Vbo::VERTICES)->Id);
 
 		VAO->Leave();
 		shader->Use();

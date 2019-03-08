@@ -17,11 +17,6 @@ namespace se {
 		Init();
 	}
 
-	Sprite::~Sprite() {
-		delete(VAO);
-		VAO = nullptr;
-	}
-
 	Sprite::Sprite(string n) {
         name = n;
 		Init();
@@ -31,6 +26,20 @@ namespace se {
 		name = n;
 		SetTexture(texture_);
 		Init();
+	}
+
+	Sprite::~Sprite() {
+		delete(VAO);
+		VAO = nullptr;
+	}
+
+	Sprite* Sprite::Init() {
+		VAO = new Vao();
+		VAO->AddBuffer(Vbo::VERTICES, VBO_CONFIG_VERTEX);
+		VAO->AddBuffer(Vbo::UV, VBO_CONFIG_UV);
+		VAO->AddBuffer(Vbo::INDEXES, VBO_CONFIG_INDEX);
+		VAO->Init();
+		return this;
 	}
 
 	Sprite* Sprite::SetRect(Rect rect_) {
@@ -69,17 +78,6 @@ namespace se {
         return pivot;
 	}
 
-	Sprite* Sprite::Init() {
-
-		VAO = new Vao();
-		VAO->AddBuffer("vertex", VBO_CONFIG_VERTEX);
-		VAO->AddBuffer("uv", VBO_CONFIG_UV);
-		VAO->AddBuffer("index", VBO_CONFIG_INDEX);
-		VAO->Init();
-
-		return this;
-	}
-
 	Sprite* Sprite::Build() {
 
 		pivot.x = (pixel_pivot.x - (rect.width / 2)) / (GLfloat)pixelPerUnit;
@@ -115,13 +113,12 @@ namespace se {
 		}
 
 		VAO->Use();
-		VAO->Load<vec3>("vertex", vertices);
-		VAO->Load<GLclampd>("uv", uv);
-		VAO->Load<GLushort>("index", indexes);
+		VAO->Load<vec3>(Vbo::VERTICES, vertices);
+		VAO->Load<GLclampd>(Vbo::UV, uv);
+		VAO->Load<GLushort>(Vbo::INDEXES, indexes);
 		VAO->Leave();
 
 		ready = true;
-
 		return this;
 	}
 
@@ -142,4 +139,4 @@ namespace se {
 
 		return piv - re.position;
 	}
-}
+} // namespace se

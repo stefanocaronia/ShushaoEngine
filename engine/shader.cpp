@@ -19,6 +19,7 @@ namespace se {
 
 	void Uniform::SetTexture(GLenum& value) {
 		glUniform1i(location, value);
+		texture = value;
 	}
 
 	void Uniform::SetMatrix(GLfloat* value) {
@@ -35,6 +36,61 @@ namespace se {
 
 	void Uniform::SetColor(Color& value) {
 		glUniform4f(location, value.r,  value.g,  value.b,  value.a);
+	}
+
+	//}
+
+	//{ #region uniform setter
+
+	void Shader::SetFloat(string var_, GLfloat value) {
+		auto it = uniforms.find(var_);
+		if (it != uniforms.end()) it->second.SetFloat(value);
+	}
+
+	void Shader::SetInteger(string var_, GLint value) {
+		auto it = uniforms.find(var_);
+		if (it != uniforms.end()) it->second.SetInteger(value);
+	}
+
+	void Shader::SetTexture(string var_, GLenum value) {
+		auto it = uniforms.find(var_);
+		if (it != uniforms.end()) {
+			it->second.SetTexture(value);
+		}
+	}
+
+	void Shader::SetMatrix(string var_, GLfloat* value) {
+		auto it = uniforms.find(var_);
+		if (it != uniforms.end()) it->second.SetMatrix(value);
+	}
+
+	void Shader::SetVector(string var_, glm::vec3 value) {
+		auto it = uniforms.find(var_);
+		if (it != uniforms.end()) it->second.SetVector(value);
+	}
+
+	void Shader::SetVector(string var_, glm::vec4 value) {
+		auto it = uniforms.find(var_);
+		if (it != uniforms.end()) it->second.SetVector(value);
+	}
+
+	void Shader::SetColor(string var_, Color value) {
+		auto it = uniforms.find(var_);
+		if (it != uniforms.end()) it->second.SetColor(value);
+	}
+
+	GLenum Shader::GetTexture(string var_) {
+		auto it = uniforms.find(var_);
+		if (it != uniforms.end()) return it->second.texture;
+		return 0;
+	}
+
+	void Shader::SetMVP(GLfloat* value) {
+		SetMatrix("MVP", value);
+	}
+
+	void Shader::SetRenderColor(Color value) {
+		SetColor("render_color", value);
 	}
 
 	//}
@@ -89,17 +145,28 @@ namespace se {
 		// base uniforms
 		AddUniform("Model View Projection", "MVP", UniformType::MATRIX, ShaderLocation::LOCATION_MVP, true);
 		AddUniform("Render Color", "render_color", UniformType::COLOR, ShaderLocation::LOCATION_RENDER_COLOR, true);
-		AddUniform("Main Texture", 	"diffuse_map", UniformType::TEXTURE, ShaderLocation::LOCATION_DIFFUSE_MAP);
 
 		return true;
 	}
 
 	void Shader::AddUniform(std::string name_, std::string var_, UniformType type_, GLuint location_, bool locked_) {
-		uniforms.insert(pair<string, Uniform>(var_, { name_, var_, type_, location_, locked_ }));
+		uniforms.insert(pair<string, Uniform>(var_, {
+			name_,
+			var_,
+			type_,
+			location_,
+			locked_
+		}));
 	}
 
 	void Shader::AddUniform(std::string var_, UniformType type_, GLuint location_, bool locked_) {
-		uniforms.insert(pair<string, Uniform>(var_, { var_, var_, type_, location_, locked_ }));
+		uniforms.insert(pair<string, Uniform>(var_, {
+			var_,
+			var_,
+			type_,
+			location_,
+			locked_
+		}));
 	}
 
 	GLuint Shader::GetProgram() {
@@ -142,6 +209,18 @@ namespace se {
 	void Shader::Awake() {}
 	void Shader::Update() {}
 	void Shader::Exit() {}
+
+	void Shader::Use() {
+		if (!programID) return;
+		glUseProgram(programID);
+		inUse = true;
+	}
+
+	void Shader::Leave() {
+		if (!programID) return;
+		glUseProgram(0);
+		inUse = false;
+	}
 
 	//{ #region compile
 
@@ -254,58 +333,6 @@ namespace se {
 
 	//}
 
-	//{ #region uniform setter
-
-	void Shader::SetFloat(string var_, GLfloat value) {
-		auto it = uniforms.find(var_);
-		if (it != uniforms.end()) it->second.SetFloat(value);
-	}
-
-	void Shader::SetInteger(string var_, GLint value) {
-		auto it = uniforms.find(var_);
-		if (it != uniforms.end()) it->second.SetInteger(value);
-	}
-
-	void Shader::SetTexture(string var_, GLenum value) {
-		auto it = uniforms.find(var_);
-		if (it != uniforms.end()) it->second.SetTexture(value);
-	}
-
-	void Shader::SetMatrix(string var_, GLfloat* value) {
-		auto it = uniforms.find(var_);
-		if (it != uniforms.end()) it->second.SetMatrix(value);
-	}
-
-	void Shader::SetVector(string var_, glm::vec3 value) {
-		auto it = uniforms.find(var_);
-		if (it != uniforms.end()) it->second.SetVector(value);
-	}
-
-	void Shader::SetVector(string var_, glm::vec4 value) {
-		auto it = uniforms.find(var_);
-		if (it != uniforms.end()) it->second.SetVector(value);
-	}
-
-	void Shader::SetColor(string var_, Color value) {
-		auto it = uniforms.find(var_);
-		if (it != uniforms.end()) it->second.SetColor(value);
-	}
-
-	GLenum Shader::GetTexture(string var_) {
-		auto it = uniforms.find(var_);
-		if (it != uniforms.end()) return it->second.texture;
-		return 0;
-	}
-
-	void Shader::SetMVP(GLfloat* value) {
-		SetMatrix("MVP", value);
-	}
-
-	void Shader::SetRenderColor(Color value) {
-		SetColor("render_color", value);
-	}
-
-	//}
 
 
 }

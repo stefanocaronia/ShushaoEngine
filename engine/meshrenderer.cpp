@@ -2,12 +2,10 @@
 
 #include "debug.h"
 #include "mesh.h"
-#include "color.h"
 #include "meshrenderer.h"
 #include "meshshader.h"
 #include "transform.h"
 #include "glmanager.h"
-#include "resources.h"
 
 namespace se {
 
@@ -64,9 +62,9 @@ namespace se {
 
 		glActiveTexture(material->shader->GetTexture("diffuse_map"));
 		glBindTexture(GL_TEXTURE_2D, material->mainTexture->TextureID);
-		mesh->VAO->GetBuffer("vertex")->Bind();
-		glDrawArrays(GL_TRIANGLES, 0, mesh->VAO->GetBuffer("vertex")->size * 3);
-		mesh->VAO->GetBuffer("vertex")->Unbind();
+		mesh->VAO->GetBuffer(Vbo::VERTICES)->Bind();
+		glDrawArrays(GL_TRIANGLES, 0, mesh->VAO->GetBuffer(Vbo::VERTICES)->size * 3);
+		mesh->VAO->GetBuffer(Vbo::VERTICES)->Unbind();
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		material->shader->Leave();

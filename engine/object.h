@@ -35,7 +35,6 @@ namespace se {
 			static Object* Instantiate(Object*, glm::vec3, glm::quat);
 			static Object* Instantiate(Object*, glm::vec3, glm::quat, Transform*);
 
-
 	};
 
 }

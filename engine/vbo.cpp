@@ -9,25 +9,22 @@ namespace se {
 	using namespace glm;
 	using namespace std;
 
+	const std::string Vbo::VERTICES = "vertices";
+	const std::string Vbo::NORMALS = "normals";
+	const std::string Vbo::INDEXES = "indexes";
+	const std::string Vbo::UV = "uv";
+
 	VboConfiguration VBO_CONFIG_VERTEX = {
 		GL_ARRAY_BUFFER,
 		ShaderLocation::LOCATION_POSITION,
-		3,
-		GL_FLOAT,
-		GL_FALSE,
-		0,
-		(void*)0,
+		3, GL_FLOAT, GL_FALSE, 0, (void*)0,
 		GL_STATIC_DRAW
 	};
 
 	VboConfiguration VBO_CONFIG_NORMAL = {
 		GL_ARRAY_BUFFER,
 		ShaderLocation::LOCATION_NORMAL,
-		3,
-		GL_FLOAT,
-		GL_FALSE,
-		0,
-		(void*)0,
+		3, GL_FLOAT, GL_FALSE, 0, (void*)0,
 		GL_STATIC_DRAW
 	};
 
@@ -39,33 +36,21 @@ namespace se {
 	VboConfiguration VBO_CONFIG_COLOR {
 		GL_ARRAY_BUFFER,
 		ShaderLocation::LOCATION_COLOR,
-		4,
-		GL_FLOAT,
-		GL_FALSE,
-		0,
-		(void*)0,
+		4, GL_FLOAT, GL_FALSE, 0, (void*)0,
 		GL_STATIC_DRAW
 	};
 
 	VboConfiguration VBO_CONFIG_UV {
 		GL_ARRAY_BUFFER,
 		ShaderLocation::LOCATION_TEXCOORD,
-		2,
-		GL_DOUBLE,
-		GL_FALSE,
-		0,
-		(void*)0,
+		2, GL_DOUBLE, GL_FALSE, 0, (void*)0,
 		GL_STATIC_DRAW
 	};
 
 	VboConfiguration VBO_CONFIG_FONT {
 		GL_ARRAY_BUFFER,
 		ShaderLocation::LOCATION_FONTCOORD,
-		4,
-		GL_FLOAT,
-		GL_FALSE,
-		0,
-		(void*)0,
+		4, GL_FLOAT, GL_FALSE, 0, (void*)0,
 		GL_DYNAMIC_DRAW
 	};
 

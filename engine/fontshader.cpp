@@ -39,6 +39,9 @@ namespace se {
 	}
 
 	void FontShader::Awake() {
+
+		AddUniform("Diffuse Map", "diffuse_map", UniformType::TEXTURE, ShaderLocation::LOCATION_DIFFUSE_MAP);
+
 		SetTexture("diffuse_map", GL_TEXTURE0);
 	}
 }

@@ -1,67 +1,59 @@
 #include <string>
 #include <typeinfo>
 
-#include "object.h"
-#include "gamedata.h"
-#include "utility.h"
 #include "debug.h"
+#include "gamedata.h"
+#include "object.h"
+#include "utility.h"
 
 namespace se {
 
-	Object::Object() {
+Object::Object() {
+    name = "Object";
+    GameData::RegisterObject(this);
+}
 
-		name = "Object";
+Object::Object(std::string _name) {
+    name = _name;
+    GameData::RegisterObject(this);
+}
 
-		GameData::RegisterObject(this);
-	}
+Object::~Object() {
+    Destroy(this);
+}
 
-	Object::Object(std::string _name) {
+bool Object::operator==(const char* _name) {
+    return name == _name;
+}
 
-		name = _name;
+bool Object::operator==(const Object& obj) {
+    return obj.InstanceID == InstanceID;
+}
 
-		GameData::RegisterObject(this);
-	}
+std::string Object::ToString() {
+    return name;
+}
 
-	Object::~Object() {
-		Destroy(this);
-	}
+int Object::GetInstanceID() {
+    return InstanceID;
+}
 
-	bool Object::operator==(const char* _name) {
-		return name == _name;
-	}
+void Object::Destroy(Object* obj, float t) {
+    // TODO:
+    // GameData::UnRegisterObject(this.InstanceID);
 
-	bool Object::operator==(const Object& obj) {
-		return obj.InstanceID == InstanceID;
-	}
+    // TODO: eliminazione ritardata con t
 
-	std::string Object::ToString() {
-		return name;
-	}
+    // delete obj;
+}
 
-	int Object::GetInstanceID() {
-		return InstanceID;
-	}
+void Object::Destroy(Object* obj) {
+    // TODO: eliminazione ritardata con t
 
-	void Object::Destroy(Object *obj, float t) {
+    // delete obj;
+}
 
-		// TODO:
-		// GameData::UnRegisterObject(this.InstanceID);
-
-		// TODO: eliminazione ritardata con t
-
-		// delete obj;
-
-	}
-
-	void Object::Destroy(Object *obj) {
-
-		// TODO: eliminazione ritardata con t
-
-		// delete obj;
-
-	}
-
-	/* 	TODO: Clones the object original and returns the clone.
+/* 	TODO: Clones the object original and returns the clone.
 
 		This function makes a copy of an object in a similar way to the Duplicate command in the editor. If you are cloning a Entity then you can also optionally
 		specify its position and rotation (these default to the original Entity's position and rotation otherwise). If you are cloning a Component then the Entity
@@ -77,30 +69,29 @@ namespace se {
 		The active status of a Entity at the time of cloning will be passed on, so if the original is inactive then the clone will be created in an inactive state too.
 	*/
 
-	Object* Object::Instantiate(Object* original) {
-		// TODO
-		return nullptr;
-	}
-
-	Object* Object::Instantiate(Object* original, Transform* parent) {
-		// TODO
-		return nullptr;
-	}
-
-    Object* Object::Instantiate(Object* original, Transform* parent, bool instantiateInWorldSpace) {
-		// TODO
-		return nullptr;
-    }
-
-    Object* Object::Instantiate(Object* original, vec3 position, quat rotation) {
-		// TODO
-		return nullptr;
-    }
-
-    Object* Object::Instantiate(Object* original, vec3 position, quat rotation, Transform* parent) {
-		// TODO
-		return nullptr;
-    }
-
-
+Object* Object::Instantiate(Object* original) {
+    // TODO
+    return nullptr;
 }
+
+Object* Object::Instantiate(Object* original, Transform* parent) {
+    // TODO
+    return nullptr;
+}
+
+Object* Object::Instantiate(Object* original, Transform* parent, bool instantiateInWorldSpace) {
+    // TODO
+    return nullptr;
+}
+
+Object* Object::Instantiate(Object* original, vec3 position, quat rotation) {
+    // TODO
+    return nullptr;
+}
+
+Object* Object::Instantiate(Object* original, vec3 position, quat rotation, Transform* parent) {
+    // TODO
+    return nullptr;
+}
+
+}  // namespace se

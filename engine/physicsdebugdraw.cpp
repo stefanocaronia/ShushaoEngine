@@ -21,7 +21,7 @@ namespace se {
 		shader->Use();
 
 		VAO = new Vao();
-		VAO->AddBuffer("vertex", VBO_CONFIG_VERTEX);
+		VAO->AddBuffer(Vbo::VERTICES, VBO_CONFIG_VERTEX);
 		VAO->Init();
 
 		ready = true;
@@ -39,7 +39,7 @@ namespace se {
 
 		shader->Use();
 		VAO->Use();
-		VAO->Load<vec3>("vertex", vertices);
+		VAO->Load<vec3>(Vbo::VERTICES, vertices);
 
 		glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 
@@ -65,17 +65,17 @@ namespace se {
 		shader->update();
 
 		VAO->Use();
-		VAO->Load<vec3>("vertex", vertices);
+		VAO->Load<vec3>(Vbo::VERTICES, vertices);
 
 		glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 		shader->SetMVP(&MVP[0][0]);
 
-		glEnablei(GL_BLEND, VAO->GetBuffer("vertex")->Id);
+		glEnablei(GL_BLEND, VAO->GetBuffer(Vbo::VERTICES)->Id);
 		shader->SetRenderColor({color.r, color.g, color.b, color.a * alpha});
 		glDrawArrays(GL_TRIANGLE_FAN, 0, vertices.size());
 		shader->SetRenderColor({0.0f, 1.0f, 0.0f, alpha});
 		glDrawArrays(GL_LINE_LOOP, 0, vertices.size());
-		glDisablei(GL_BLEND, VAO->GetBuffer("vertex")->Id);
+		glDisablei(GL_BLEND, VAO->GetBuffer(Vbo::VERTICES)->Id);
 
 		VAO->Leave();
 		shader->Leave();
@@ -94,7 +94,7 @@ namespace se {
 		shader->Use();
 
 		VAO->Use();
-		VAO->Load<vec3>("vertex", vertices);
+		VAO->Load<vec3>(Vbo::VERTICES, vertices);
 		shader->update();
 
 		glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
@@ -124,7 +124,7 @@ namespace se {
 		shader->update();
 
 		VAO->Use();
-		VAO->Load<vec3>("vertex", vertices);
+		VAO->Load<vec3>(Vbo::VERTICES, vertices);
 
 		glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 		shader->SetMVP(&MVP[0][0]);
@@ -151,7 +151,7 @@ namespace se {
 		shader->update();
 
 		VAO->Use();
-		VAO->Load<vec3>("vertex", vertices);
+		VAO->Load<vec3>(Vbo::VERTICES, vertices);
 
 		glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 		shader->SetMVP(&MVP[0][0]);
@@ -186,7 +186,7 @@ namespace se {
 		shader->update();
 
 		VAO->Use();
-		VAO->Load<vec3>("vertex", vertices);
+		VAO->Load<vec3>(Vbo::VERTICES, vertices);
 
 		glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 		shader->SetMVP(&MVP[0][0]);

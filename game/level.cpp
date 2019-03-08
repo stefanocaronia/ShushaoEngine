@@ -10,10 +10,12 @@ Level::Level() {
 
 	Entity* ambient = AddEntity("Ambient Light");
 	ambient->AddComponent<Light>();
-	ambient->GetComponent<Light>()->type = LightType::DIRECTIONAL;
+	Light* light = ambient->GetComponent<Light>();
+	light->type = LightType::DIRECTIONAL;
+	light->color = Color::yellow;
 
 	AddEntity<Starship>("Ufo");
-	// return;
+	return;
 
 	Entity* ground = AddEntity("Ground");
 

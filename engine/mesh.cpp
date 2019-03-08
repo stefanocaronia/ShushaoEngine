@@ -23,16 +23,15 @@ namespace se {
 	}
 
     Mesh::~Mesh() {
-        /* delete (VAO);
-        VAO = nullptr; */
+        delete (VAO);
+        VAO = nullptr;
     }
 
     Mesh* Mesh::Init() {
         VAO = new Vao();
-        VAO->AddBuffer("vertex", VBO_CONFIG_VERTEX);
-        VAO->AddBuffer("uv", VBO_CONFIG_UV);
-        VAO->AddBuffer("normal", VBO_CONFIG_NORMAL);
-        //VAO->AddBuffer("index", VBO_CONFIG_INDEX);
+        VAO->AddBuffer(Vbo::VERTICES, VBO_CONFIG_VERTEX);
+        VAO->AddBuffer(Vbo::UV, VBO_CONFIG_UV);
+        VAO->AddBuffer(Vbo::NORMALS, VBO_CONFIG_NORMAL);
         VAO->Init();
         return this;
     }
@@ -159,14 +158,13 @@ namespace se {
  */
 
         VAO->Use();
-		VAO->Load<vec3>("vertex", vertexData);
-		// VAO->Load<GLushort>("index", vertexIndices);
-		VAO->Load<GLclampd>("uv", uvData);
-		VAO->Load<vec3>("normal", normalsData);
+		VAO->Load<vec3>(Vbo::VERTICES, vertexData);
+		VAO->Load<GLclampd>(Vbo::UV, uvData);
+		VAO->Load<vec3>(Vbo::NORMALS, normalsData);
 		VAO->Leave();
 
         ready = true;
         return this;
     }
 
-}  // namespace se
+} // namespace se

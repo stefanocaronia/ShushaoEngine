@@ -71,27 +71,17 @@ namespace se {
 			Shader(std::string, std::string);
 			~Shader();
 
+			bool inUse = false;
+
 			bool Init();
+			void Use();
+			void Leave();
 			bool Load(std::string);
 			void LoadFromString(std::string vsc, std::string fsc);
 
 			void awake();
 			void update();
 			void exit();
-
-			bool inUse = false;
-
-			void Use() {
-				if (!programID) return;
-				glUseProgram(programID);
-				inUse = true;
-			}
-
-			void Leave() {
-				if (!programID) return;
-				glUseProgram(0);
-				inUse = false;
-			}
 
 			GLuint GetProgram();
 
@@ -130,7 +120,7 @@ namespace se {
 
 			GLuint VertexShaderID;
 			GLuint FragmentShaderID;
-
+			GLuint GeometryShaderID;
 
 			bool loadWithName(std::string, std::string);
 

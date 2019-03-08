@@ -11,6 +11,7 @@ prebuild:
 
 #Rebuild
 rebuild: prebuild clean | directories resources $(TARGET)
+	@echo -e $(CEND)$(BULLET)$(CGREEN)$(BUILD) Clean, Compilation and linking done! $(CEND)
 
 #Copy Resources from Resources Directory to Target Directory
 resources:
@@ -30,8 +31,8 @@ clean:
 	@$(RM) -rf bin/*
 
 compilation:
-	@echo -e $(BULLET)$(CBLUE)Compilation $(CEND)$(CCYAN)
-	@$(MAKE) -f .makefiles/compile.mk --silent -j 8 -Oline
+	@echo -e $(BULLET)$(CBLUE)Compilation $(CEND)$(CGREY)
+	@$(MAKE) -f .makefiles/compile.mk --silent -j -Oline
 
 run: all
 	@echo -e $(BULLET)$(CYELLOW)Running $(TARGET) $(CEND)

@@ -27,7 +27,7 @@ namespace se {
 		glDeleteVertexArrays(1, &Id);
 	}
 
-	Vbo* Vao::AddBuffer(string name_, VboConfiguration config_) {
+	Vbo* Vao::AddBuffer(const string name_, VboConfiguration config_) {
 		Vbo* buff = new Vbo(config_);
 		buff->name = name_;
 		AddBuffer(buff);
@@ -39,7 +39,7 @@ namespace se {
 		return vbo_;
 	}
 
-	Vbo* Vao::GetBuffer(std::string name_) {
+	Vbo* Vao::GetBuffer(const std::string name_) {
 		auto it = buffers.find(name_);
 		if (it == buffers.end()) return nullptr;
 		return (Vbo*)buffers[name_];

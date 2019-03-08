@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include <vector>
 #include "gllibs.h"
 #include "object.h"
@@ -49,6 +50,11 @@ namespace se {
 
 	class Vbo : public Object {
 		public:
+
+			static const std::string VERTICES;
+			static const std::string NORMALS;
+			static const std::string INDEXES;
+			static const std::string UV;
 
 			Vbo(VboConfiguration config_) : config(config_) {}
 			~Vbo();

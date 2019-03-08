@@ -46,14 +46,11 @@ namespace se {
 
 			std::string getTitle();
 
-
-			/* impossibile per riferimenti circolari?
-
+			/* TODO: impossibile per riferimenti circolari? Pare di sì.
 			template<class T>
 			T* GetComponent(std::string _name = "") {	// Returns the component of Type type if the game object has one attached, null if it doesn't.
 				return entity->GetComponent<T>(_name);
 			}*/
-
 
 		protected:
 

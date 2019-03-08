@@ -57,15 +57,15 @@ namespace se {
 
 		sprite->VAO->Use();
 		material->shader->Use();
-		material->shader->SetRenderColor(color);
+		material->shader->SetRenderColor(material->color);
 		material->shader->SetMVP(transform->uMVP());
 		material->update();
 
 		glActiveTexture(material->shader->GetTexture("diffuse_map"));
 		glBindTexture(GL_TEXTURE_2D, material->mainTexture->TextureID);
-		sprite->VAO->GetBuffer("index")->Bind();
+		sprite->VAO->GetBuffer(Vbo::INDEXES)->Bind();
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
-		sprite->VAO->GetBuffer("index")->Unbind();
+		sprite->VAO->GetBuffer(Vbo::INDEXES)->Unbind();
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		material->shader->Leave();

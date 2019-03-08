@@ -101,21 +101,14 @@ namespace se {
 
 		for (const auto& it : parameters) {
 			Parameter parameter = it.second;
-			if (parameter.uniform->locked ||
-				parameter.uniform->location == ShaderLocation::LOCATION_DIFFUSE_MAP ||
-				parameter.uniform->location == ShaderLocation::LOCATION_RENDER_COLOR ||
-				parameter.uniform->location == ShaderLocation::LOCATION_MVP) {
+
+			if (parameter.uniform->locked) {
 				continue;
 			}
+
 			switch (parameter.uniform->type) {
 				case UniformType::INTEGER:
 					parameter.uniform->SetInteger(parameter.value.i);
-					break;
-				case UniformType::TEXTURE:
-					/*if (parameter.value.tex != nullptr) {
-						glActiveTexture(parameter.uniform->texture);
-						glBindTexture(GL_TEXTURE_2D, parameter.value.tex->TextureID);
-					}*/
 					break;
 				case UniformType::FLOAT:
 					parameter.uniform->SetFloat(parameter.value.f);
@@ -129,8 +122,9 @@ namespace se {
 				case UniformType::COLOR:
 					parameter.uniform->SetColor(parameter.value.col);
 					break;
+				case UniformType::TEXTURE:
+					break;
 			}
-
 		}
 
 		Update();

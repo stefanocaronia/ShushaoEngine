@@ -40,10 +40,10 @@ namespace se {
 			uniform vec4 diffuse_color;
 			uniform vec4 specular_color;
 
-			out vec3 frag_color;
+			out vec4 frag_color;
 
 			void main() {
-				frag_color = texture(diffuse_map, UV).rgb;
+				frag_color = texture2D(diffuse_map, UV) * vec4(render_color);
 			}
 
 		)glsl";
@@ -56,6 +56,7 @@ namespace se {
 		AddUniform("Diffuse reflection", "diffuse_color", UniformType::COLOR);
 		AddUniform("Specular reflection", "specular_color", UniformType::COLOR);
 
+		AddUniform("Diffuse Map", "diffuse_map", UniformType::TEXTURE, ShaderLocation::LOCATION_DIFFUSE_MAP);
 		AddUniform("Normal Map", "normal_map", UniformType::TEXTURE);
 		AddUniform("Bump Map", "bump_map", UniformType::TEXTURE);
 		AddUniform("Specular Map", "specular_map", UniformType::TEXTURE);

@@ -118,6 +118,7 @@ namespace se {
 		GLuint programID = GetProgram();
 		if (!programID) return;
 
+		Use();
 		Awake();
 
 		for (auto& it : uniforms) {
@@ -125,6 +126,8 @@ namespace se {
 				it.second.location = glGetUniformLocation(programID, it.first.c_str());
 			}
 		}
+
+		Leave();
 	}
 
 	void Shader::update() {

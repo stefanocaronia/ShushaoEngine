@@ -26,8 +26,8 @@
             "browse": {
                 "path": [
                     "${workspaceFolder}",
-                    "F:/bin/mingw64/mingw64/",
-                    "C:/bin/mingw64/mingw64/"
+                    "F:/bin/mingw64/mingw64",
+                    "C:/bin/mingw64/mingw64"
                 ],
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""

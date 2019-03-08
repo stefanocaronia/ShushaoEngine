@@ -14,11 +14,11 @@ namespace se {
 
 			layout(location=5) uniform mat4 MVP;
 
-			out vec2 out_texturecoord;
+			out vec2 UV;
 
 			void main() {
 				gl_Position = MVP * vec4(vertex_coord, 1.0);
-				out_texturecoord = texture_coord;
+				UV = texture_coord;
 			}
 		)glsl";
 
@@ -26,7 +26,7 @@ namespace se {
 			#version 430
 			/*	Standard Fragment Shader */
 
-			in vec2 out_texturecoord;
+			in vec2 UV;
 
 			layout(location=6) uniform vec4 render_color;
 			layout(location=7) uniform sampler2D diffuse_map;
@@ -34,7 +34,7 @@ namespace se {
 			out vec4 frag_color;
 
 			void main() {
-				frag_color = texture2D(diffuse_map, out_texturecoord) * vec4(render_color);
+				frag_color = texture2D(diffuse_map, UV) * vec4(render_color);
 			}
 		)glsl";
 	}

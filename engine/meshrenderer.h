@@ -7,10 +7,9 @@
 #include "color.h"
 #include "material.h"
 #include "mesh.h"
+#include "shader.h"
 
 namespace se {
-
-	class Shader;
 
 	class MeshRenderer : public Renderer {
 

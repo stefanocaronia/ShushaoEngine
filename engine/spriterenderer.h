@@ -6,22 +6,10 @@
 #include "renderer.h"
 #include "color.h"
 #include "material.h"
+#include "sprite.h"
+#include "shader.h"
 
 namespace se {
-
-	/*enum SpriteDrawMode {
-		Simple,
-		Sliced,
-		Tiled
-	};
-
-	enum SpriteTileMode {
-		Continuous,
-		Adaptive
-	};*/
-
-	class Shader;
-	class Sprite;
 
 	class SpriteRenderer : public Renderer {
 
@@ -33,18 +21,23 @@ namespace se {
 
 			bool isReady();
 
-			//float adaptiveModeThreshold; //	The current threshold for Sprite Renderer tiling.
-			Color color = {1.0f, 1.0f, 1.0f, 1.0f}; //	Rendering color for the Sprite graphic.
-			//SpriteDrawMode drawMode; //	The current draw mode of the Sprite Renderer.
-			bool flipX;//	Flips the sprite on the X axis.
-			bool flipY; //	Flips the sprite on the Y axis.
-			// maskInteraction //	Specifies how the sprite interacts with the masks.
-			glm::vec2 size; //	Property to set/get the size to render when the SpriteRenderer.drawMode is set to SpriteDrawMode.NineSlice.
-
-			//SpriteTileMode tileMode; //	The current tile mode of the Sprite Renderer.
-
 			Sprite* sprite = nullptr;
 			Material* material = nullptr;
+
+			SpriteRenderer* SetSprite(Sprite* sprite_) {
+				sprite = sprite_;
+				return this;
+			}
+
+			SpriteRenderer* SetMaterial(Material* material_) {
+				material = material_;
+				return this;
+			}
+
+			Color color = {1.0f, 1.0f, 1.0f, 1.0f}; //	Rendering color for the Sprite graphic.
+			bool flipX;//	Flips the sprite on the X axis.
+			bool flipY; //	Flips the sprite on the Y axis.
+			glm::vec2 size; //	Property to set/get the size to render when the SpriteRenderer.drawMode is set to SpriteDrawMode.NineSlice.
 
 		protected:
 

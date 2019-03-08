@@ -21,9 +21,10 @@ namespace se {
 			Vao* VAO = nullptr;
 
             std::vector<glm::vec3> vertexData;
-            std::vector<glm::vec2> uvData;
+            std::vector<GLclampd> uvData;
             std::vector<glm::vec3> normalsData;
             std::vector<GLushort> indexesData;
+
 
 			bool ready = false;
 

@@ -32,7 +32,7 @@ namespace se {
         VAO->AddBuffer("vertex", VBO_CONFIG_VERTEX);
         VAO->AddBuffer("uv", VBO_CONFIG_UV);
         VAO->AddBuffer("normal", VBO_CONFIG_NORMAL);
-        VAO->AddBuffer("index", VBO_CONFIG_INDEX);
+        //VAO->AddBuffer("index", VBO_CONFIG_INDEX);
         VAO->Init();
         return this;
     }
@@ -100,8 +100,31 @@ namespace se {
             }
         }
 
+        // For each vertex of each triangle
+        for (unsigned int i = 0; i < vertexIndices.size(); i++) {
+            glm::vec3 vertex = temp_vertices[vertexIndices[i] - 1];
+            vertexData.push_back(vertex);
+        }
+
+        // For each vertex of each triangle
+        if (uvIndices.size() > 0)
+            for (unsigned int i = 0; i < uvIndices.size(); i++) {
+                unsigned int uvIndex = uvIndices[i];
+                glm::vec2 uv = temp_uvs[uvIndex - 1];
+                uvData.push_back(uv.x);
+                uvData.push_back(uv.y);
+            }
+
+        // For each vertex of each triangle
+        if (normalIndices.size() > 0)
+            for (unsigned int i = 0; i < normalIndices.size(); i++) {
+                unsigned int normalIndex = normalIndices[i];
+                glm::vec3 normal = temp_normals[normalIndex - 1];
+                normalsData.push_back(normal);
+            }
+
         // For each triangle
-        for (unsigned int v = 0; v < vertexIndices.size(); v += 3) {
+        /* for (unsigned int v = 0; v < vertexIndices.size(); v += 3) {
             // For each vertex of the triangle
             for (unsigned int i = 0; i < 3; i += 1) {
                 unsigned int vertexIndex = vertexIndices[v + i];
@@ -117,12 +140,28 @@ namespace se {
                 uvData.push_back(uv);
                 normalsData.push_back(normal);
             }
-        }
+        } */
+
+
+        /* vertexData = {
+				{-1.0f, -1.0f, 0.0f},  	// Bottom-left
+				{ 1.0f, -1.0f, 0.0f}, 	// Bottom-right
+				{ 1.0f,  1.0f, 0.0f}, 	// Top-right
+				{-1.0f,  1.0f, 0.0f} 	// Top-left
+			};
+
+		uvData = {
+				0.0f, 1.0f, // Bottom-left of texture
+				1.0f, 1.0f, // Bottom-right of texture
+				1.0f, 0.0f, // Top-Right of texture
+				0.0f, 0.0f 	// Top-left of texture
+			};
+ */
 
         VAO->Use();
 		VAO->Load<vec3>("vertex", vertexData);
-		VAO->Load<GLushort>("index", vertexIndices);
-		VAO->Load<vec2>("uv", uvData);
+		// VAO->Load<GLushort>("index", vertexIndices);
+		VAO->Load<GLclampd>("uv", uvData);
 		VAO->Load<vec3>("normal", normalsData);
 		VAO->Leave();
 

@@ -44,10 +44,7 @@ namespace se {
 		}
 
 		transform->SetPivot(sprite->pivot);
-
-
 		material->SetMainTexture(sprite->texture);
-		// material->SetVector("texture_offset", {2.0f, 2.0f, 0, 0});
 	}
 
 	void SpriteRenderer::Update() {

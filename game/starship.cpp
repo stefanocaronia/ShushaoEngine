@@ -8,8 +8,8 @@ Starship::Starship() {
 
 	mr = AddComponent<MeshRenderer>();
 	mr->SetMesh(Resources::Get<Mesh>("cube"));
-	mr->material->SetMainTexture(Resources::Get<Texture>("cube_diffuse"));
+	mr->material->SetMainTexture(Resources::Get<Texture>("tap"));
 
-	transform->SetLocalScale({2.0f, 2.0f, 2.0f});
+	// transform->SetLocalScale({2.0f, 2.0f, 2.0f});
 
 }

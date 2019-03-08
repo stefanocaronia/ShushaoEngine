@@ -7,7 +7,7 @@
 #include "meshshader.h"
 #include "transform.h"
 #include "glmanager.h"
-#include "meshshader.h"
+#include "resources.h"
 
 namespace se {
 
@@ -46,7 +46,6 @@ namespace se {
 			return;
 		}
 
-		material->init();
 	}
 
 	void MeshRenderer::Update() {
@@ -59,19 +58,15 @@ namespace se {
 
 		mesh->VAO->Use();
 		material->shader->Use();
-		material->shader->SetMVP(transform->uMVP());
 		material->shader->SetRenderColor(material->color);
+		material->shader->SetMVP(transform->uMVP());
 		material->update();
 
-		glActiveTexture(GL_TEXTURE0);
-		//glActiveTexture(material->shader->GetTexture("diffuse_map"));
+		glActiveTexture(material->shader->GetTexture("diffuse_map"));
 		glBindTexture(GL_TEXTURE_2D, material->mainTexture->TextureID);
-		/* mesh->VAO->GetBuffer("vertex")->Bind();
+		mesh->VAO->GetBuffer("vertex")->Bind();
 		glDrawArrays(GL_TRIANGLES, 0, mesh->VAO->GetBuffer("vertex")->size * 3);
-		mesh->VAO->GetBuffer("vertex")->Unbind(); */
-		mesh->VAO->GetBuffer("index")->Bind();
-		glDrawElements(GL_TRIANGLES, mesh->VAO->GetBuffer("index")->size, GL_UNSIGNED_SHORT, 0);
-		mesh->VAO->GetBuffer("index")->Unbind();
+		mesh->VAO->GetBuffer("vertex")->Unbind();
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		material->shader->Leave();

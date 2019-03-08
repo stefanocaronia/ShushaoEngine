@@ -45,6 +45,7 @@ void Game::Awake() {
 
 	Resources::Load<Mesh>("assets/cube.obj");
 	Resources::Load<Texture>("assets/cube_diffuse.png");
+	Resources::Load<Texture>("assets/tap.jpg");
 
 	Resources::Load<Music>("assets/fizz.mp3");
 	Resources::Load<Effect>("assets/hit.wav");
@@ -57,16 +58,24 @@ void Game::Awake() {
 
 	SceneManager::LoadScene<Level>("Level 1");
 
+	bool meshTest = true;
+
 	Camera* camera = SceneManager::activeScene->activeCamera;
 	camera->backgroundColor = {0.05f, 0.05f, 0.1f, 1.0f};
-	camera->setOrthographic(false);
-	/* camera->setNearClipPlane(12.0f);
-	camera->setFarClipPlane(1.0f);
-	camera->setOrthographicSize(5.0f); */
-	camera->setFarClipPlane(20.0f);
-	//camera->transform->localPosition = {0.0f, 0.0f, 10.0f};
-	camera->transform->localPosition = {1.0f, 3.0f, 6.0f};
-	camera->transform->localRotation = Transform::QUATERNION_IDENTITY;
+
+	if (meshTest) {
+		camera->setOrthographic(false);
+		camera->setFarClipPlane(20.0f);
+		camera->transform->localPosition = {1.0f, 3.0f, 6.0f};
+		camera->transform->localRotation = Transform::QUATERNION_IDENTITY;
+	} else {
+		camera->setOrthographic(true);
+		camera->setNearClipPlane(12.0f);
+		camera->setFarClipPlane(1.0f);
+		camera->setOrthographicSize(5.0f);
+		camera->transform->localPosition = {0.0f, 0.0f, 10.0f};
+		camera->transform->localRotation = Transform::QUATERNION_IDENTITY;
+	}
 
 	Input::printActiveControllers();
 
@@ -188,4 +197,17 @@ void Game::GetInput() {
 	} else if (Input::getKey(SDL_SCANCODE_U)) {
 		Debug::Log << Music::addVolume(-1) << endl;
 	}
+
+	if (Input::getKey(SDL_SCANCODE_C)) {
+		vec3 pos = SceneManager::activeScene->activeCamera->transform->position;
+		SceneManager::activeScene->activeCamera->transform->SetLocalPosition({
+			pos.x - (2.4f * Time::deltaTime), pos.y, pos.z
+		});
+	} else if (Input::getKey(SDL_SCANCODE_V)) {
+		vec3 pos = SceneManager::activeScene->activeCamera->transform->position;
+		SceneManager::activeScene->activeCamera->transform->SetLocalPosition({
+			pos.x + (2.4f * Time::deltaTime), pos.y, pos.z
+		});
+	}
+
 }

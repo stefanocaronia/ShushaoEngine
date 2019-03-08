@@ -70,7 +70,7 @@ namespace se {
 
 	void Material::SetMainTexture(Texture* texture_) {
 		mainTexture = texture_;
-		SetTexture("main_texture", mainTexture);
+		SetTexture("diffuse_map", mainTexture);
 	}
 
 	void Material::AddParameter(string name_, string var_, Uniform* uniform_) {
@@ -112,10 +112,10 @@ namespace se {
 					parameter.uniform->SetInteger(parameter.value.i);
 					break;
 				case UniformType::TEXTURE:
-					if (parameter.value.tex != nullptr) {
+					/*if (parameter.value.tex != nullptr) {
 						glActiveTexture(parameter.uniform->texture);
 						glBindTexture(GL_TEXTURE_2D, parameter.value.tex->TextureID);
-					}
+					}*/
 					break;
 				case UniformType::FLOAT:
 					parameter.uniform->SetFloat(parameter.value.f);

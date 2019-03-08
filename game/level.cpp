@@ -13,7 +13,6 @@ Level::Level() {
 	ambient->GetComponent<Light>()->type = LightType::DIRECTIONAL;
 
 	AddEntity<Starship>("Ufo");
-
 	// return;
 
 	Entity* ground = AddEntity("Ground");
@@ -56,7 +55,9 @@ Level::Level() {
 	//sonOfPancrazio->GetComponent<CircleCollider2D>()->ResetShape(); // <---- collegare al transform addirittura? fare dei callback transformChanged
 	//sonOfPancrazio->transform->setLocalRotation({0,0,20});
 
-	SpriteRenderer* backgroundRenderer = root->AddComponent<SpriteRenderer>();
+	Entity* bkg = AddEntity("Background");
+	//bkg->transform->SetLocalPosition({0.0f, 0.0f, -0.5f});
+	SpriteRenderer* backgroundRenderer = bkg->AddComponent<SpriteRenderer>();
 	// backgroundRenderer->shader = Resources::Get<Shader>("standard");
 	backgroundRenderer->name = "Background Renderer";
 	backgroundRenderer->sortingLayerID = Config::SortingLayers["Background"];

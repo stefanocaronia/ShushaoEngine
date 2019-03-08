@@ -10,7 +10,7 @@
                 "kind": "build",
                 "isDefault": true
             },
-            "command": "mingw32-make -j 8",//  -Oline
+            "command": "mingw32-make",//  -Oline
             "presentation": {
                 "clear": true
             }
@@ -19,7 +19,7 @@
             "label": "Build Release",
             "type": "shell",
             "group": "build",
-            "command": "mingw32-make -j 8 BUILD=Release",
+            "command": "mingw32-make BUILD=Release",
             "problemMatcher": [],
             "presentation": {
                 "clear": true
@@ -29,8 +29,8 @@
             "label": "Rebuild",
             "type": "shell",
             "group": "build",
-            //"command": "mingw32-make -j 8 -O rebuild",
-            "command": "mingw32-make clean && mingw32-make -j 8",
+            "command": "mingw32-make rebuild",
+            //"command": "mingw32-make clean && mingw32-make",
             "presentation": {
                 "clear": true
             }
@@ -42,7 +42,7 @@
                 "kind": "test",
                 "isDefault": true
             },
-            "command": "mingw32-make -j 8 run",
+            "command": "mingw32-make run",
             "presentation": {
                 "clear": true
             }

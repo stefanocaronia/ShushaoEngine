@@ -47,9 +47,8 @@ namespace se {
 
 		GLuint tex;
 		glGenTextures(1, &tex);
-		glActiveTexture(shader->GetTexture("diffuse_map"));
+		glActiveTexture(shader->GetTextureIndex("diffuse_map"));
 		glBindTexture(GL_TEXTURE_2D, tex);
-
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);

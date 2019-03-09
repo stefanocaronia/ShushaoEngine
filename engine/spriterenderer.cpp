@@ -12,7 +12,7 @@ namespace se {
 	SpriteRenderer::SpriteRenderer() {
 		name = "Sprite Renderer";
 		material = new Material();
-		material->SetShader(GLManager::GetShader<StandardShader>());
+		material->SetShader(new StandardShader());
 	}
 
 	SpriteRenderer::~SpriteRenderer() {
@@ -61,12 +61,13 @@ namespace se {
 		material->shader->SetMVP(transform->uMVP());
 		material->update();
 
-		glActiveTexture(material->shader->GetTexture("diffuse_map"));
+		glActiveTexture(material->shader->GetTextureIndex("diffuse_map"));
 		glBindTexture(GL_TEXTURE_2D, material->mainTexture->TextureID);
+
 		sprite->VAO->GetBuffer(Vbo::INDEXES)->Bind();
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 		sprite->VAO->GetBuffer(Vbo::INDEXES)->Unbind();
-		glBindTexture(GL_TEXTURE_2D, 0);
+		// glBindTexture(GL_TEXTURE_2D, 0);
 
 		material->shader->Leave();
 		sprite->VAO->Leave();

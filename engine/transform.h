@@ -60,7 +60,9 @@ namespace se {
 			void SetParent(Transform*, bool worldPositionStays = false);
 			void RemoveChild(Transform* t);
 			void AddChild(Transform* t);
-			GLfloat* uMVP();
+
+			GLfloat* uMVP(); // MVP Matrix for uniforms
+			GLfloat* uM(); // Model Matrix for uniforms
 
 			glm::mat4 GetLocalToParentMatrix();
 			glm::mat4 GetLocalToWorldMatrix();

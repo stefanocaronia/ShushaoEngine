@@ -32,6 +32,7 @@ namespace se {
         VAO->AddBuffer(Vbo::VERTICES, VBO_CONFIG_VERTEX);
         VAO->AddBuffer(Vbo::UV, VBO_CONFIG_UV);
         VAO->AddBuffer(Vbo::NORMALS, VBO_CONFIG_NORMAL);
+        //VAO->AddBuffer(Vbo::INDEXES, VBO_CONFIG_INDEX);
         VAO->Init();
         return this;
     }
@@ -98,7 +99,7 @@ namespace se {
                 normalIndices.push_back(normalIndex[2]);
             }
         }
-
+/*
         // For each vertex of each triangle
         for (unsigned int i = 0; i < vertexIndices.size(); i++) {
             glm::vec3 vertex = temp_vertices[vertexIndices[i] - 1];
@@ -120,12 +121,12 @@ namespace se {
                 unsigned int normalIndex = normalIndices[i];
                 glm::vec3 normal = temp_normals[normalIndex - 1];
                 normalsData.push_back(normal);
-            }
+            } */
 
-        // For each triangle
-        /* for (unsigned int v = 0; v < vertexIndices.size(); v += 3) {
-            // For each vertex of the triangle
-            for (unsigned int i = 0; i < 3; i += 1) {
+
+        for (unsigned int v = 0; v < vertexIndices.size(); v += 3) { // For each triangle
+            for (unsigned int i = 0; i < 3; i += 1) { // For each vertex of the triangle
+
                 unsigned int vertexIndex = vertexIndices[v + i];
                 glm::vec3 vertex = temp_vertices[vertexIndex - 1];
 
@@ -136,11 +137,11 @@ namespace se {
                 glm::vec3 normal = temp_normals[normalIndex - 1];
 
                 vertexData.push_back(vertex);
-                uvData.push_back(uv);
+                uvData.push_back(uv.x);
+                uvData.push_back(uv.y);
                 normalsData.push_back(normal);
             }
-        } */
-
+        }
 
         /* vertexData = {
 				{-1.0f, -1.0f, 0.0f},  	// Bottom-left
@@ -157,10 +158,19 @@ namespace se {
 			};
  */
 
+        /* for (auto& vertex : vertexData) {
+            Debug::Log(WARNING) << vertex.x << ", " << vertex.y << ", " << vertex.z << endl;
+        }
+
+        for (auto& vertex : normalsData) {
+            Debug::Log << vertex.x << ", " << vertex.y << ", " << vertex.z << endl;
+        }
+ */
         VAO->Use();
 		VAO->Load<vec3>(Vbo::VERTICES, vertexData);
 		VAO->Load<GLclampd>(Vbo::UV, uvData);
 		VAO->Load<vec3>(Vbo::NORMALS, normalsData);
+		//VAO->Load<GLushort>(Vbo::INDEXES, vertexIndices);
 		VAO->Leave();
 
         ready = true;

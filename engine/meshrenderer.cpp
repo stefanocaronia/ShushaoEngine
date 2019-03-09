@@ -3,7 +3,7 @@
 #include "debug.h"
 #include "mesh.h"
 #include "meshrenderer.h"
-#include "meshshader.h"
+#include "phongshader.h"
 #include "transform.h"
 #include "glmanager.h"
 
@@ -12,7 +12,7 @@ namespace se {
 	MeshRenderer::MeshRenderer() {
 		name = "Mesh Renderer";
 		material = new Material();
-		material->SetShader(GLManager::GetShader<MeshShader>());
+		material->SetShader(new PhongShader());
 	}
 
 	MeshRenderer::~MeshRenderer() {
@@ -56,16 +56,13 @@ namespace se {
 
 		mesh->VAO->Use();
 		material->shader->Use();
-		material->shader->SetRenderColor(material->color);
 		material->shader->SetMVP(transform->uMVP());
+		material->shader->SetM(transform->uM());
 		material->update();
 
-		glActiveTexture(material->shader->GetTexture("diffuse_map"));
-		glBindTexture(GL_TEXTURE_2D, material->mainTexture->TextureID);
 		mesh->VAO->GetBuffer(Vbo::VERTICES)->Bind();
-		glDrawArrays(GL_TRIANGLES, 0, mesh->VAO->GetBuffer(Vbo::VERTICES)->size * 3);
+		glDrawArrays(GL_TRIANGLES, 0, mesh->VAO->GetBuffer(Vbo::VERTICES)->size);
 		mesh->VAO->GetBuffer(Vbo::VERTICES)->Unbind();
-		glBindTexture(GL_TEXTURE_2D, 0);
 
 		material->shader->Leave();
 		mesh->VAO->Leave();

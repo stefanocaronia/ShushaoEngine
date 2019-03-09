@@ -54,6 +54,7 @@ namespace se {
 
 			Entity* AddEntity(Entity*);
 			Entity* AddEntity(std::string);
+			Entity* GetEntity(std::string);
 
 			template<class T>
 			T* AddEntity(std::string _name = "") { // Adds a Entity of class T (Prefab)
@@ -68,7 +69,7 @@ namespace se {
 			}
 
 			template<class T>
-			T* GetEntity() {	// Returns the component of Type type if the game object has one attached, null if it doesn't.
+			T* GetEntity() {
 				for(Entity* entity: Entities) {
 					if (dynamic_cast<T*>(entity))
 						return dynamic_cast<T*>(entity);

@@ -45,6 +45,7 @@ void Game::Awake() {
 
 	Resources::Load<Mesh>("assets/cube.obj");
 	Resources::Load<Texture>("assets/cube_diffuse.png");
+	Resources::Load<Texture>("assets/cube_specular.png");
 	Resources::Load<Texture>("assets/tap.jpg");
 
 	Resources::Load<Music>("assets/fizz.mp3");
@@ -58,12 +59,12 @@ void Game::Awake() {
 
 	SceneManager::LoadScene<Level>("Level 1");
 
-	bool meshTest = true;
+	bool perspectiveTest = false;
 
 	Camera* camera = SceneManager::activeScene->activeCamera;
 	camera->backgroundColor = {0.05f, 0.05f, 0.2f, 1.0f};
 
-	if (meshTest) {
+	if (perspectiveTest) {
 		camera->setOrthographic(false);
 		camera->setFarClipPlane(20.0f);
 		camera->transform->localPosition = {1.0f, 3.0f, 6.0f};
@@ -207,6 +208,34 @@ void Game::GetInput() {
 		vec3 pos = SceneManager::activeScene->activeCamera->transform->position;
 		SceneManager::activeScene->activeCamera->transform->SetLocalPosition({
 			pos.x + (2.4f * Time::deltaTime), pos.y, pos.z
+		});
+	}
+
+	if (Input::getKey(SDL_SCANCODE_B)) {
+		Entity* lightEntity = SceneManager::activeScene->GetEntity("Point 1");
+		vec3 pos = lightEntity->transform->position;
+		lightEntity->transform->SetLocalPosition({
+			pos.x - (2.4f * Time::deltaTime), pos.y, pos.z
+		});
+	} else if (Input::getKey(SDL_SCANCODE_N)) {
+		Entity* lightEntity = SceneManager::activeScene->GetEntity("Point 1");
+		vec3 pos = lightEntity->transform->position;
+		lightEntity->transform->SetLocalPosition({
+			pos.x + (2.4f * Time::deltaTime), pos.y, pos.z
+		});
+	}
+
+	if (Input::getKey(SDL_SCANCODE_G)) {
+		Entity* lightEntity = SceneManager::activeScene->GetEntity("Directional");
+		vec3 pos = lightEntity->transform->position;
+		lightEntity->transform->SetLocalPosition({
+			pos.x - (10 * Time::deltaTime), pos.y, pos.z
+		});
+	} else if (Input::getKey(SDL_SCANCODE_H)) {
+		Entity* lightEntity = SceneManager::activeScene->GetEntity("Directional");
+		vec3 rot = lightEntity->transform->GetLocalEulerAngles();
+		lightEntity->transform->SetLocalRotation({
+			rot.x + (10 * Time::deltaTime), rot.y, rot.z
 		});
 	}
 

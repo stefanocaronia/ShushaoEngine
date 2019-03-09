@@ -9,9 +9,9 @@ namespace se {
 		VertexShaderCode = R"glsl(
 			#version 430
 
-			layout(location=11) in vec4 vertex_coord;
-
+			layout(location=1) in vec4 vertex_coord;
 			layout(location=5) uniform mat4 MVP;
+
 			out vec2 UV;
 
 			void main(void) {
@@ -27,7 +27,8 @@ namespace se {
 			in vec2 UV;
 
 			layout(location=6) uniform vec4 render_color;
-			layout(location=7) uniform sampler2D diffuse_map;
+
+			uniform sampler2D diffuse_map;
 
 			out vec4 frag_color;
 
@@ -40,8 +41,8 @@ namespace se {
 
 	void FontShader::Awake() {
 
-		AddUniform("Diffuse Map", "diffuse_map", UniformType::TEXTURE, ShaderLocation::LOCATION_DIFFUSE_MAP);
+		AddUniform("Diffuse Map", "diffuse_map", UniformType::TEXTURE);
 
-		SetTexture("diffuse_map", GL_TEXTURE0);
+		SetTextureIndex("diffuse_map", GL_TEXTURE0);
 	}
 }

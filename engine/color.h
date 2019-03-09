@@ -27,6 +27,7 @@ namespace se {
 			std::string ToString();
 
 			glm::vec4 rgba;
+			glm::vec3 rgb;
 
 			static Color black; // Solid black. RGBA is (0, 0, 0, 1).
 			static Color blue; // Solid blue. RGBA is (0, 0, 1, 1).

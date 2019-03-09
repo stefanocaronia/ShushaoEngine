@@ -1,6 +1,10 @@
 #include "light.h"
+#include "transform.h"
+#include "entity.h"
 
 namespace se {
+
+	using namespace glm;
 
 	Light::Light() {
 	}
@@ -14,6 +18,23 @@ namespace se {
 			case LightType::DISC: return "Disc"; break;
 		}
 		return "NP";
+	}
+
+	UniformLight Light::GetUniform() {
+		return {
+			entity->transform->position,
+			entity->transform->forward,
+			ambient.rgb,
+			diffuse.rgb,
+			specular.rgb,
+			attenuation.constant,
+			attenuation.linear,
+			attenuation.quadratic
+		};
+	}
+
+	void Light::Update() {
+		direction = entity->transform->forward;
 	}
 
 } // namespace se

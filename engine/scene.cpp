@@ -43,6 +43,14 @@ namespace se {
 		return entity;
 	}
 
+	Entity* Scene::GetEntity(std::string name_) {
+		for(Entity* entity: Entities) {
+			if (entity->name == name_)
+				return entity;
+		}
+		return nullptr;
+	}
+
 	void Scene::ScanActiveComponents() {
 		if (componentsScanned) return;
 		ActiveComponents.clear();

@@ -175,17 +175,21 @@ namespace se {
 		glm::mat4 M = GetLocalToWorldMatrix();
 		glm::mat4 P = SceneManager::activeScene->activeCamera->Projection;
 		glm::mat4 V = SceneManager::activeScene->activeCamera->getViewMatrix();
-
 		_MVP = P * V * M;
-
 	}
 
 	GLfloat* Transform::uMVP() {
 		return &_MVP[0][0];
 	}
 
+	GLfloat* Transform::uM() {
+		glm::mat4 M = GetLocalToWorldMatrix();
+		return &M[0][0];
+	}
+
 	void Transform::Awake() {
 		buildMVP();
+		Invalidate();
 	}
 
 	void Transform::Update() {

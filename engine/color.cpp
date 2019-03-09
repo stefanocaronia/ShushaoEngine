@@ -19,6 +19,7 @@ namespace se {
 		a = a_;
 
 		rgba = {r, g, b, a};
+		rgb = {r, g, b};
 	}
 
 	float Color::maxColorComponent() {

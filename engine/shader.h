@@ -6,6 +6,7 @@
 
 #include "object.h"
 #include "color.h"
+#include "light.h"
 
 namespace se {
 
@@ -15,7 +16,8 @@ namespace se {
 		MATRIX,
 		VECTOR,
 		TEXTURE,
-		COLOR
+		COLOR,
+		LIGHT
 	};
 
 	enum ShaderLocation {
@@ -24,12 +26,7 @@ namespace se {
 		LOCATION_COLOR = 3,
 		LOCATION_NORMAL = 4,
 		LOCATION_MVP = 5,
-		LOCATION_RENDER_COLOR = 6,
-		LOCATION_DIFFUSE_MAP = 7,
-		LOCATION_NORMAL_MAP = 8,
-		LOCATION_BUMP_MAP = 9,
-		LOCATION_SPECULAR_MAP = 10,
-		LOCATION_FONTCOORD = 11
+		LOCATION_RENDER_COLOR = 6
 	};
 
 	class Uniform {
@@ -53,11 +50,12 @@ namespace se {
 
 			void SetFloat(GLfloat&);
 			void SetInteger(GLint&);
-			void SetTexture(GLenum&);
+			void SetTextureIndex(GLenum&);
 			void SetMatrix(GLfloat*);
 			void SetVector(glm::vec3&);
 			void SetVector(glm::vec4&);
 			void SetColor(Color&);
+			void SetLight(UniformLight&);
 	};
 
 	class Shader : public Object {
@@ -85,21 +83,28 @@ namespace se {
 
 			GLuint GetProgram();
 
-            void AddUniform(std::string name_, std::string var_, UniformType type_, GLuint location_ = 0, bool locked_ = false);
-            void AddUniform(std::string var_, UniformType type_, GLuint location_ = 0, bool locked_ = false);
+            void AddUniform(std::string name_, std::string var_, UniformType type_, GLuint location_ = 0);
+            void AddUniform(std::string var_, UniformType type_, GLuint location_ = 0);
+			void AddShaderUniform(std::string var_, UniformType type_, GLuint location_ = 0);
+			void AddShaderUniform(std::string name_, std::string var_, UniformType type_, GLuint location_ = 0);
 
             void SetFloat(std::string, GLfloat);
 			void SetInteger(std::string, GLint);
-			void SetTexture(std::string, GLenum);
+			void SetTextureIndex(std::string, GLenum);
 			void SetMatrix(std::string, GLfloat*);
 			void SetVector(std::string, glm::vec3);
 			void SetVector(std::string, glm::vec4);
 			void SetColor(std::string, Color);
+			void SetLight(string, UniformLight&);
 
-			GLenum GetTexture(std::string);
+			GLenum GetTextureIndex(std::string);
 
 			void SetMVP(GLfloat*);
+			void SetM(GLfloat*);
 			void SetRenderColor(Color);
+
+			void Enable(std::string var);
+			void Disable(std::string var);
 
 		protected:
 

@@ -76,6 +76,7 @@
 			<Add directory="../../mingw-dev-libs/SDL2_mixer/lib" />
 			<Add directory="../../mingw-dev-libs/Box2D/lib" />
 		</Linker>
+		<Unit filename="engine/ShushaoEngine.layout" />
 		<Unit filename="engine/animation.cpp">
 			<Option virtualFolder="engine/components/" />
 		</Unit>
@@ -205,6 +206,8 @@
 		<Unit filename="engine/input.h">
 			<Option virtualFolder="engine/base/" />
 		</Unit>
+		<Unit filename="engine/light.cpp" />
+		<Unit filename="engine/light.h" />
 		<Unit filename="engine/linerenderer.cpp">
 			<Option virtualFolder="engine/render/" />
 		</Unit>
@@ -229,12 +232,20 @@
 		<Unit filename="engine/material.h">
 			<Option virtualFolder="engine/render/" />
 		</Unit>
+		<Unit filename="engine/mesh.cpp" />
+		<Unit filename="engine/mesh.h" />
+		<Unit filename="engine/meshrenderer.cpp" />
+		<Unit filename="engine/meshrenderer.h" />
+		<Unit filename="engine/model.cpp.old" />
+		<Unit filename="engine/model.h.old" />
 		<Unit filename="engine/object.cpp">
 			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/object.h">
 			<Option virtualFolder="engine/base/" />
 		</Unit>
+		<Unit filename="engine/phongshader.cpp" />
+		<Unit filename="engine/phongshader.h" />
 		<Unit filename="engine/physics.cpp">
 			<Option virtualFolder="engine/physics/" />
 		</Unit>

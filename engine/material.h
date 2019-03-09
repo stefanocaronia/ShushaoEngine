@@ -67,12 +67,6 @@ namespace se {
 			void SetMainTexture(Texture*);
 			void AddParameter(std::string, std::string, Uniform*);
 
-			/*Parameter* GetParameter(std::string var_) {
-				if (parameters.find(var_) != parameters.end()) {
-					return &parameters[var_];
-				}
-			}*/
-
 			GLfloat GetFloat(std::string var_);
 			GLint GetInteger(std::string var_);
 			Texture* GetTexture(std::string var_);

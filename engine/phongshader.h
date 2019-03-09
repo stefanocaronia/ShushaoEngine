@@ -4,14 +4,15 @@
 
 namespace se {
 
-	class MeshShader : public Shader {
+	class PhongShader : public Shader {
 
 		public:
-			MeshShader();
+			PhongShader();
 
 		protected:
 
 			void Awake();
+			void Update();
 	};
 
 }

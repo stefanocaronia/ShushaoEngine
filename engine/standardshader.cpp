@@ -29,7 +29,8 @@ namespace se {
 			in vec2 UV;
 
 			layout(location=6) uniform vec4 render_color;
-			layout(location=7) uniform sampler2D diffuse_map;
+
+			uniform sampler2D diffuse_map;
 
 			out vec4 frag_color;
 
@@ -42,9 +43,9 @@ namespace se {
 	void StandardShader::Awake() {
 
 		// custom uniforms
-		AddUniform("Diffuse Map", "diffuse_map", UniformType::TEXTURE, ShaderLocation::LOCATION_DIFFUSE_MAP);
+		AddUniform("Diffuse Map", "diffuse_map", UniformType::TEXTURE);
 
 		// valorizzazione
-		SetTexture("diffuse_map", GL_TEXTURE0);
+		SetTextureIndex("diffuse_map", GL_TEXTURE0);
 	}
 }

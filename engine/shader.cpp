@@ -4,6 +4,7 @@
 #include "shader.h"
 #include "debug.h"
 #include "utility.h"
+#include "light.h"
 
 namespace se {
 
@@ -17,8 +18,8 @@ namespace se {
 		glUniform1i(location, value);
 	}
 
-	void Uniform::SetTexture(GLenum& value) {
-		glUniform1i(location, value);
+	void Uniform::SetTextureIndex(GLenum& value) {
+		glUniform1i(location, (GLint)value);
 		texture = value;
 	}
 
@@ -44,42 +45,79 @@ namespace se {
 
 	void Shader::SetFloat(string var_, GLfloat value) {
 		auto it = uniforms.find(var_);
-		if (it != uniforms.end()) it->second.SetFloat(value);
+		if (it != uniforms.end()) {
+			it->second.SetFloat(value);
+		} else {
+			glUniform1f(glGetUniformLocation(programID, var_.c_str()), (GLfloat)value);
+		}
 	}
 
 	void Shader::SetInteger(string var_, GLint value) {
 		auto it = uniforms.find(var_);
-		if (it != uniforms.end()) it->second.SetInteger(value);
+		if (it != uniforms.end()) {
+			it->second.SetInteger(value);
+		} else {
+			glUniform1i(glGetUniformLocation(programID, var_.c_str()), (GLint)value);
+		}
 	}
 
-	void Shader::SetTexture(string var_, GLenum value) {
+	void Shader::SetTextureIndex(string var_, GLenum value) {
 		auto it = uniforms.find(var_);
 		if (it != uniforms.end()) {
-			it->second.SetTexture(value);
+			it->second.SetTextureIndex(value);
+		} else {
+			glUniform1i(glGetUniformLocation(programID, var_.c_str()), (GLint)value);
 		}
+	}
+
+	void Shader::SetLight(string var_, UniformLight& value) {
+		glUniform3f(glGetUniformLocation(programID, (var_ + ".position").c_str()), value.position.x, value.position.y, value.position.z);
+		glUniform3f(glGetUniformLocation(programID, (var_ + ".direction").c_str()), value.direction.x, value.direction.y, value.direction.z);
+		glUniform3f(glGetUniformLocation(programID, (var_ + ".ambient").c_str()), value.ambient.r, value.ambient.g, value.ambient.b);
+		glUniform3f(glGetUniformLocation(programID, (var_ + ".diffuse").c_str()), value.ambient.r, value.ambient.g, value.ambient.b);
+		glUniform3f(glGetUniformLocation(programID, (var_ + ".specular").c_str()), value.ambient.r, value.ambient.g, value.ambient.b);
+		glUniform1f(glGetUniformLocation(programID, (var_ + ".linear").c_str()), value.linear);
+		glUniform1f(glGetUniformLocation(programID, (var_ + ".quadratic").c_str()), value.quadratic);
+		glUniform1f(glGetUniformLocation(programID, (var_ + ".cutoff").c_str()), value.cutoff);
 	}
 
 	void Shader::SetMatrix(string var_, GLfloat* value) {
 		auto it = uniforms.find(var_);
-		if (it != uniforms.end()) it->second.SetMatrix(value);
+		if (it != uniforms.end()) {
+			it->second.SetMatrix(value);
+		} else {
+			glUniformMatrix4fv(glGetUniformLocation(programID, var_.c_str()), 1, GL_FALSE, (GLfloat*)value);
+		}
 	}
 
 	void Shader::SetVector(string var_, glm::vec3 value) {
 		auto it = uniforms.find(var_);
-		if (it != uniforms.end()) it->second.SetVector(value);
+		if (it != uniforms.end()) {
+			it->second.SetVector(value);
+		} else {
+			glUniform3f(glGetUniformLocation(programID, var_.c_str()), value.x,  value.y,  value.z);
+		}
 	}
 
 	void Shader::SetVector(string var_, glm::vec4 value) {
 		auto it = uniforms.find(var_);
-		if (it != uniforms.end()) it->second.SetVector(value);
+		if (it != uniforms.end()) {
+			it->second.SetVector(value);
+		} else {
+			glUniform4f(glGetUniformLocation(programID, var_.c_str()), value.x,  value.y,  value.z,  value.w);
+		}
 	}
 
 	void Shader::SetColor(string var_, Color value) {
 		auto it = uniforms.find(var_);
-		if (it != uniforms.end()) it->second.SetColor(value);
+		if (it != uniforms.end()) {
+			it->second.SetColor(value);
+		} else {
+			glUniform4f(glGetUniformLocation(programID, var_.c_str()), value.r,  value.g,  value.b,  value.a);
+		}
 	}
 
-	GLenum Shader::GetTexture(string var_) {
+	GLenum Shader::GetTextureIndex(string var_) {
 		auto it = uniforms.find(var_);
 		if (it != uniforms.end()) return it->second.texture;
 		return 0;
@@ -89,8 +127,20 @@ namespace se {
 		SetMatrix("MVP", value);
 	}
 
+	void Shader::SetM(GLfloat* value) {
+		SetMatrix("M", value);
+	}
+
 	void Shader::SetRenderColor(Color value) {
 		SetColor("render_color", value);
+	}
+
+	void Shader::Enable(std::string var_) {
+		SetInteger("enabled_" + var_, 1);
+	}
+
+	void Shader::Disable(std::string var_) {
+		SetInteger("enabled_" + var_, 0);
 	}
 
 	//}
@@ -124,6 +174,7 @@ namespace se {
 
 		if (VertexShaderID > 0) glDeleteShader(VertexShaderID);
 		if (FragmentShaderID > 0) glDeleteShader(FragmentShaderID);
+		if (GeometryShaderID > 0) glDeleteShader(GeometryShaderID);
 		if (programID > 0) glDeleteProgram(programID);
 	}
 
@@ -143,29 +194,49 @@ namespace se {
 		}
 
 		// base uniforms
-		AddUniform("Model View Projection", "MVP", UniformType::MATRIX, ShaderLocation::LOCATION_MVP, true);
-		AddUniform("Render Color", "render_color", UniformType::COLOR, ShaderLocation::LOCATION_RENDER_COLOR, true);
+		AddShaderUniform("Model View Projection", "MVP", UniformType::MATRIX, ShaderLocation::LOCATION_MVP);
+		AddShaderUniform("Render Color", "render_color", UniformType::COLOR, ShaderLocation::LOCATION_RENDER_COLOR);
 
 		return true;
 	}
 
-	void Shader::AddUniform(std::string name_, std::string var_, UniformType type_, GLuint location_, bool locked_) {
+	void Shader::AddUniform(std::string name_, std::string var_, UniformType type_, GLuint location_) {
 		uniforms.insert(pair<string, Uniform>(var_, {
 			name_,
 			var_,
 			type_,
 			location_,
-			locked_
+			false
 		}));
 	}
 
-	void Shader::AddUniform(std::string var_, UniformType type_, GLuint location_, bool locked_) {
+	void Shader::AddUniform(std::string var_, UniformType type_, GLuint location_) {
 		uniforms.insert(pair<string, Uniform>(var_, {
 			var_,
 			var_,
 			type_,
 			location_,
-			locked_
+			false
+		}));
+	}
+
+	void Shader::AddShaderUniform(std::string var_, UniformType type_, GLuint location_) {
+		uniforms.insert(pair<string, Uniform>(var_, {
+			var_,
+			var_,
+			type_,
+			location_,
+			true
+		}));
+	}
+
+	void Shader::AddShaderUniform(std::string name_, std::string var_, UniformType type_, GLuint location_) {
+		uniforms.insert(pair<string, Uniform>(var_, {
+			name_,
+			var_,
+			type_,
+			location_,
+			true
 		}));
 	}
 
@@ -188,9 +259,10 @@ namespace se {
 		Use();
 		Awake();
 
+		// setting uniform locations where not set
 		for (auto& it : uniforms) {
 			if (!it.second.location) {
-				it.second.location = glGetUniformLocation(programID, it.first.c_str());
+				it.second.location = glGetUniformLocation(programID, (const GLchar *)it.first.c_str());
 			}
 		}
 

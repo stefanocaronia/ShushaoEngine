@@ -32,7 +32,7 @@ clean:
 
 compilation:
 	@echo -e $(BULLET)$(CBLUE)Compilation $(CEND)$(CGREY)
-	@$(MAKE) -f .makefiles/compile.mk --silent -j -Oline
+	@$(MAKE) -f .makefiles/compile.mk --silent -j 8 -Oline
 
 run: all
 	@echo -e $(BULLET)$(CYELLOW)Running $(TARGET) $(CEND)

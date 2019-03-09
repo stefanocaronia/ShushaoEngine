@@ -49,7 +49,7 @@ namespace se {
 
 	VboConfiguration VBO_CONFIG_FONT {
 		GL_ARRAY_BUFFER,
-		ShaderLocation::LOCATION_FONTCOORD,
+		ShaderLocation::LOCATION_POSITION,
 		4, GL_FLOAT, GL_FALSE, 0, (void*)0,
 		GL_DYNAMIC_DRAW
 	};
@@ -74,7 +74,6 @@ namespace se {
 		}
 
 		ready = true;
-
 		return this;
 	}
 

@@ -88,7 +88,9 @@ namespace se {
 		shader->awake();
 
 		for (auto &it : shader->uniforms) {
-			AddParameter(it.second.name, it.first, &it.second);
+			if (!it.second.locked) {
+				AddParameter(it.second.name, it.first, &it.second);
+			}
 		}
 
 		Init();
@@ -98,6 +100,8 @@ namespace se {
 
 		if (!shader->inUse) shader->Use();
 		shader->update();
+
+		GLenum textureIndex = GL_TEXTURE0;
 
 		for (const auto& it : parameters) {
 			Parameter parameter = it.second;
@@ -123,6 +127,13 @@ namespace se {
 					parameter.uniform->SetColor(parameter.value.col);
 					break;
 				case UniformType::TEXTURE:
+					if (parameter.value.tex != nullptr) {
+						shader->Enable(parameter.var);
+						shader->SetTextureIndex(parameter.var, textureIndex);
+						glActiveTexture(textureIndex++);
+						glBindTexture(GL_TEXTURE_2D, parameter.value.tex->TextureID);
+					}
+				case UniformType::LIGHT:
 					break;
 			}
 		}

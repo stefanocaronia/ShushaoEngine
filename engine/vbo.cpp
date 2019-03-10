@@ -43,7 +43,7 @@ namespace se {
 	VboConfiguration VBO_CONFIG_UV {
 		GL_ARRAY_BUFFER,
 		ShaderLocation::LOCATION_TEXCOORD,
-		2, GL_DOUBLE, GL_FALSE, 0, (void*)0,
+		2, GL_FLOAT, GL_FALSE, 0, (void*)0,
 		GL_STATIC_DRAW
 	};
 

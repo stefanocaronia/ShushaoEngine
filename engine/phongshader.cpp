@@ -23,8 +23,8 @@ namespace se {
 				gl_Position = MVP * vec4(vertex_coord, 1.0);
 				FragPos = vec3(M * vec4(vertex_coord, 1.0));
 				UV = texture_coord;
-				Normal = mat3(transpose(inverse(M))) * normal_value;
-				// Normal = normal_value;
+				// Normal = mat3(transpose(inverse(M))) * normal_value;
+				Normal = normal_value;
 			}
 
 		)glsl";
@@ -76,8 +76,8 @@ namespace se {
 
 			out vec4 frag_color;
 
-			vec3 CalcLight(Light light, vec3 normal, vec3 viewDir);
-			vec3 CalcLight(Light light, vec3 normal, vec3 fragPos, vec3 viewDir);
+			vec3 CalcDirLight(Light light, vec3 normal, vec3 viewDir);
+			vec3 CalcPointLight(Light light, vec3 normal, vec3 fragPos, vec3 viewDir);
 
 			void main() {
 
@@ -90,16 +90,14 @@ namespace se {
 				}
 
 				vec3 viewDir = normalize(view_position - FragPos);
-				diffuse_map_fragcolor = enabled_diffuse_map ? texture2D(diffuse_map, UV) : vec4(0.0);
-				specular_map_fragcolor = enabled_specular_map ? texture2D(specular_map, UV) : vec4(0.0);
 
 				// Directional lighting
-				vec3 result = CalcLight(directional_light, norm, viewDir);
+				vec3 result = CalcDirLight(directional_light, norm, viewDir);
 
 				// Point lights
 				for(int i = 0; i < MAX_POINT_LIGHTS; i++) {
 					if (i >= point_lights_number) break;
-					result += CalcLight(point_lights[i], norm, FragPos, viewDir);
+					result += CalcPointLight(point_lights[i], norm, FragPos, viewDir);
 				}
 
 				// phase 3: Spot light
@@ -109,11 +107,9 @@ namespace se {
 				} */
 
 				frag_color = vec4(result, 1.0);
-				// frag_color = diffuse_map_fragcolor + diffuse_color;
-				// frag_color = texture(specular_map, UV);
 			}
 
-			vec3 CalcLight(Light light, vec3 normal, vec3 viewDir) {
+			vec3 CalcDirLight(Light light, vec3 normal, vec3 viewDir) {
 
 				vec3 lightDir = normalize(-light.direction);
 
@@ -127,14 +123,23 @@ namespace se {
 				vec3 ambient, diffuse, specular;
 
 				// combine results
-				ambient = light.ambient * (vec3(diffuse_map_fragcolor) + vec3(ambient_color));
-				diffuse = light.diffuse * diff * (vec3(diffuse_map_fragcolor) + vec3(diffuse_color));
-				specular = light.specular * spec * (vec3(specular_map_fragcolor) + vec3(specular_color));
+				if (enabled_diffuse_map) {
+					ambient = light.ambient * vec3(texture2D(diffuse_map, UV));
+					diffuse = light.diffuse * diff * vec3(texture2D(diffuse_map, UV));
+				} else {
+					ambient = light.ambient * vec3(ambient_color);
+					diffuse = light.diffuse * diff * vec3(diffuse_color);
+				}
+				if (enabled_specular_map) {
+					specular = light.specular * spec * vec3(texture2D(specular_map, UV));
+				} else {
+					specular = light.specular * spec * vec3(specular_color);
+				}
 
 				return (ambient + diffuse + specular);
 			}
 
-			vec3 CalcLight(Light light, vec3 normal, vec3 fragPos, vec3 viewDir) {
+			vec3 CalcPointLight(Light light, vec3 normal, vec3 fragPos, vec3 viewDir) {
 
 				vec3 lightDir = normalize(light.position - fragPos);
 
@@ -152,9 +157,18 @@ namespace se {
 				vec3 ambient, diffuse, specular;
 
 				// combine results
-				ambient = light.ambient * (vec3(diffuse_map_fragcolor) + vec3(ambient_color));
-				diffuse = light.diffuse * diff * (vec3(diffuse_map_fragcolor) + vec3(diffuse_color));
-				specular = light.specular * spec * (vec3(specular_map_fragcolor) + vec3(specular_color));
+				if (enabled_diffuse_map) {
+					ambient = light.ambient * vec3(texture2D(diffuse_map, UV));
+					diffuse = light.diffuse * diff * vec3(texture2D(diffuse_map, UV));
+				} else {
+					ambient = light.ambient * vec3(ambient_color);
+					diffuse = light.diffuse * diff * vec3(diffuse_color);
+				}
+				if (enabled_specular_map) {
+					specular = light.specular * spec * vec3(texture2D(specular_map, UV));
+				} else {
+					specular = light.specular * spec * vec3(specular_color);
+				}
 
 				ambient  *= attenuation;
 				diffuse  *= attenuation;
@@ -182,7 +196,7 @@ namespace se {
 		AddShaderUniform("M", UniformType::MATRIX);
 		AddShaderUniform("point_lights_number", UniformType::INTEGER);
 		AddShaderUniform("spot_lights_number", UniformType::INTEGER);
-		AddShaderUniform("directional_light", UniformType::COLOR);
+		// AddShaderUniform("directional_light", UniformType::LIGHT);
 		AddShaderUniform("enabled_diffuse_map", UniformType::INTEGER);
 		AddShaderUniform("enabled_normal_map", UniformType::INTEGER);
 		AddShaderUniform("enabled_specular_map", UniformType::INTEGER);

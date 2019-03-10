@@ -1,2 +1,8 @@
 
-se setto la local scale si attiva solo dopo che muovo???
+3D
+
+- caricare mesh con assimp
+- draw per index
+- load material da classe material
+- classe model (più mesh)?
+- importatore assimp di model?

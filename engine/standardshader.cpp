@@ -46,6 +46,6 @@ namespace se {
 		AddUniform("Diffuse Map", "diffuse_map", UniformType::TEXTURE);
 
 		// valorizzazione
-		SetTextureIndex("diffuse_map", GL_TEXTURE0);
+		SetTextureIndex("diffuse_map", 0);
 	}
 }

@@ -64,6 +64,10 @@ namespace se {
 		glDrawArrays(GL_TRIANGLES, 0, mesh->VAO->GetBuffer(Vbo::VERTICES)->size);
 		mesh->VAO->GetBuffer(Vbo::VERTICES)->Unbind();
 
+		/* mesh->VAO->GetBuffer(Vbo::INDEXES)->Bind();
+		glDrawElements(GL_TRIANGLES, mesh->VAO->GetBuffer(Vbo::INDEXES)->size, GL_UNSIGNED_SHORT, 0);
+		mesh->VAO->GetBuffer(Vbo::INDEXES)->Unbind();*/
+
 		material->shader->Leave();
 		mesh->VAO->Leave();
 	}

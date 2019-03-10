@@ -8,20 +8,20 @@ Level::Level() {
 
 	using namespace se;
 
-	Entity* directional = AddEntity("Directional");
-	directional->transform->SetLocalRotation({20,10,0});
+	/* Entity* directional = AddEntity("Directional");
+	directional->transform->SetLocalRotation({20, 10, 0});
 	Light* light = directional->AddComponent<Light>();
 	light->type = LightType::DIRECTIONAL;
-	light->ambient  = {0.1f, 0.1f, 0.1f};
-	light->diffuse  = {0.8f, 0.8f, 0.8f};
+	light->ambient  = {0.2f, 0.2f, 0.2f};
+	light->diffuse  = {1.0f, 0.5f, 0.5f};
 	light->specular = {1.0f, 1.0f, 1.0f};
 
 	Entity* point = AddEntity("Point 1");
-	point->transform->SetLocalPosition({3.0f, 0.0f, 4.0f});
+	point->transform->SetLocalPosition({3.0f, 1.7f, 4.0f});
 	Light* plight =point->AddComponent<Light>();
 	plight->type = LightType::POINT;
-	plight->ambient  = {0.1f, 0.1f, 0.1f};
-	plight->diffuse  = {0.2f, 0.3f, 0.5f};
+	plight->ambient  = {0.3f, 0.3f, 0.3f};
+	plight->diffuse  = {0.7f, 0.7f, 0.7f};
 	plight->specular = {1.0f, 1.0f, 1.0f};
 	plight->attenuation = {0.6f, 0.09f, 0.012f};
 
@@ -30,13 +30,13 @@ Level::Level() {
 	mr->material->SetColor("ambient_color", Color::white);
 	mr->material->SetColor("diffuse_color", Color::white);
 	mr->material->SetColor("specular_color", Color::white);
-	mr->material->SetFloat("shininess", 24.0f);
-	mr->transform->SetLocalScale({0.2f, 0.2f, 0.2f});
+	mr->material->SetFloat("shininess", 20.0f);
+	mr->transform->SetLocalScale({0.1f, 0.1f, 0.1f});
 
-	AddEntity<Starship>("Ufo");
+	AddEntity<Starship>("Cassa");
 	Entity* mah = AddEntity<Starship>("mah");
 	mah->transform->SetLocalPosition({4.0f, 2.0f, -1.0f});
-	mah->transform->SetLocalRotation({10, 10, 0});
+	mah->transform->SetLocalRotation({10, 10, 0}); */
 	//return;
 
 	Entity* ground = AddEntity("Ground");

@@ -8,7 +8,6 @@ Pancrazio::Pancrazio() {
 	using namespace glm;
 
 	sr = AddComponent<SpriteRenderer>();
-	//sr->shader = Resources::Get<Shader>("standard");
 	sr->sprite = Resources::Get<Sprite>("pancrazio_sprite");
 	sr->sortingLayerID = Config::SortingLayers["Characters"];
 

@@ -34,16 +34,20 @@ namespace se {
 				{-1.0f,  1.0f, 0.0f} 	// Top-left
 			};
 
+			std::vector<glm::vec3> normals {
+				{ 0.0f,  0.0f, -1.0f}
+			};
+
 			std::vector<GLushort> indexes {
 				0, 1, 2,
 				2, 3, 0
 			};
 
-			std::vector<GLclampd> uv {
-				0.0f, 1.0f, // Bottom-left of texture
-				1.0f, 1.0f, // Bottom-right of texture
-				1.0f, 0.0f, // Top-Right of texture
-				0.0f, 0.0f 	// Top-left of texture
+			std::vector<glm::vec2> uv {
+				{0.0f, 1.0f}, // Bottom-left of texture
+				{1.0f, 1.0f}, // Bottom-right of texture
+				{1.0f, 0.0f}, // Top-Right of texture
+				{0.0f, 0.0f}	// Top-left of texture
 			};
 
 			// metodi

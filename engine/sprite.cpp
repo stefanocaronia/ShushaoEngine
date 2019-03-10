@@ -37,6 +37,7 @@ namespace se {
 		VAO = new Vao();
 		VAO->AddBuffer(Vbo::VERTICES, VBO_CONFIG_VERTEX);
 		VAO->AddBuffer(Vbo::UV, VBO_CONFIG_UV);
+		VAO->AddBuffer(Vbo::NORMALS, VBO_CONFIG_NORMAL);
 		VAO->AddBuffer(Vbo::INDEXES, VBO_CONFIG_INDEX);
 		VAO->Init();
 		return this;
@@ -105,16 +106,17 @@ namespace se {
 			);
 
 			uv = { // The base texture coordinates of the sprite mesh.
-				tsr.x, tsr.yMax, // Bottom-left of texture
-				tsr.xMax, tsr.yMax, // Bottom-right of texture
-				tsr.xMax, tsr.y, // Top-Right of texture
-				tsr.x, tsr.y // Top-left of texture
+				{tsr.x, tsr.yMax}, // Bottom-left of texture
+				{tsr.xMax, tsr.yMax}, // Bottom-right of texture
+				{tsr.xMax, tsr.y}, // Top-Right of texture
+				{tsr.x, tsr.y} // Top-left of texture
 			};
 		}
 
 		VAO->Use();
 		VAO->Load<vec3>(Vbo::VERTICES, vertices);
-		VAO->Load<GLclampd>(Vbo::UV, uv);
+		VAO->Load<vec2>(Vbo::UV, uv);
+		VAO->Load<vec3>(Vbo::NORMALS, normals);
 		VAO->Load<GLushort>(Vbo::INDEXES, indexes);
 		VAO->Leave();
 

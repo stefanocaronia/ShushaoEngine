@@ -101,7 +101,7 @@ namespace se {
 		if (!shader->inUse) shader->Use();
 		shader->update();
 
-		GLenum textureIndex = GL_TEXTURE0;
+		GLenum textureUnit = GL_TEXTURE0;
 
 		for (const auto& it : parameters) {
 			Parameter parameter = it.second;
@@ -129,9 +129,11 @@ namespace se {
 				case UniformType::TEXTURE:
 					if (parameter.value.tex != nullptr) {
 						shader->Enable(parameter.var);
-						shader->SetTextureIndex(parameter.var, textureIndex);
-						glActiveTexture(textureIndex++);
+						GLint textureIndex = textureUnit - GL_TEXTURE0;
+						parameter.uniform->SetTextureIndex(textureIndex);
+						glActiveTexture(textureUnit);
 						glBindTexture(GL_TEXTURE_2D, parameter.value.tex->TextureID);
+						textureUnit++;
 					}
 				case UniformType::LIGHT:
 					break;

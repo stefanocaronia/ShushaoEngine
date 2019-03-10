@@ -45,6 +45,7 @@ void Game::Awake() {
 
 	Resources::Load<Mesh>("assets/cube.obj");
 	Resources::Load<Texture>("assets/cube_diffuse.png");
+	Resources::Load<Texture>("assets/cube_diffuse_brutto.png");
 	Resources::Load<Texture>("assets/cube_specular.png");
 	Resources::Load<Texture>("assets/tap.jpg");
 

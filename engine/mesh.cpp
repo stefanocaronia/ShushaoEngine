@@ -5,6 +5,7 @@
 
 #include "utility.h"
 #include "mesh.h"
+#include "debug.h"
 
 namespace se {
 
@@ -38,6 +39,11 @@ namespace se {
     }
 
     Mesh* Mesh::Load(string filename) {
+
+        indexesData.clear();
+        normalsData.clear();
+        indexesData.clear();
+        uvData.clear();
 
         std::vector<GLushort> vertexIndices, uvIndices, normalIndices;
         std::vector<glm::vec3> temp_vertices;
@@ -99,30 +105,6 @@ namespace se {
                 normalIndices.push_back(normalIndex[2]);
             }
         }
-/*
-        // For each vertex of each triangle
-        for (unsigned int i = 0; i < vertexIndices.size(); i++) {
-            glm::vec3 vertex = temp_vertices[vertexIndices[i] - 1];
-            vertexData.push_back(vertex);
-        }
-
-        // For each vertex of each triangle
-        if (uvIndices.size() > 0)
-            for (unsigned int i = 0; i < uvIndices.size(); i++) {
-                unsigned int uvIndex = uvIndices[i];
-                glm::vec2 uv = temp_uvs[uvIndex - 1];
-                uvData.push_back(uv.x);
-                uvData.push_back(uv.y);
-            }
-
-        // For each vertex of each triangle
-        if (normalIndices.size() > 0)
-            for (unsigned int i = 0; i < normalIndices.size(); i++) {
-                unsigned int normalIndex = normalIndices[i];
-                glm::vec3 normal = temp_normals[normalIndex - 1];
-                normalsData.push_back(normal);
-            } */
-
 
         for (unsigned int v = 0; v < vertexIndices.size(); v += 3) { // For each triangle
             for (unsigned int i = 0; i < 3; i += 1) { // For each vertex of the triangle
@@ -137,44 +119,48 @@ namespace se {
                 glm::vec3 normal = temp_normals[normalIndex - 1];
 
                 vertexData.push_back(vertex);
-                uvData.push_back(uv.x);
-                uvData.push_back(uv.y);
+                uvData.push_back(uv);
                 normalsData.push_back(normal);
+                indexesData.push_back(vertexIndex);
             }
         }
 
-        /* vertexData = {
-				{-1.0f, -1.0f, 0.0f},  	// Bottom-left
-				{ 1.0f, -1.0f, 0.0f}, 	// Bottom-right
-				{ 1.0f,  1.0f, 0.0f}, 	// Top-right
-				{-1.0f,  1.0f, 0.0f} 	// Top-left
-			};
+        for(auto& v: vertexIndices)
+            indexesData.push_back(v);
 
-		uvData = {
-				0.0f, 1.0f, // Bottom-left of texture
-				1.0f, 1.0f, // Bottom-right of texture
-				1.0f, 0.0f, // Top-Right of texture
-				0.0f, 0.0f 	// Top-left of texture
-			};
- */
+        PrintData();
 
-        /* for (auto& vertex : vertexData) {
-            Debug::Log(WARNING) << vertex.x << ", " << vertex.y << ", " << vertex.z << endl;
-        }
-
-        for (auto& vertex : normalsData) {
-            Debug::Log << vertex.x << ", " << vertex.y << ", " << vertex.z << endl;
-        }
- */
         VAO->Use();
 		VAO->Load<vec3>(Vbo::VERTICES, vertexData);
-		VAO->Load<GLclampd>(Vbo::UV, uvData);
+		VAO->Load<vec2>(Vbo::UV, uvData);
 		VAO->Load<vec3>(Vbo::NORMALS, normalsData);
-		//VAO->Load<GLushort>(Vbo::INDEXES, vertexIndices);
+		// VAO->Load<GLushort>(Vbo::INDEXES, indexesData);
 		VAO->Leave();
 
         ready = true;
         return this;
+    }
+
+    void Mesh::PrintData() {
+        Debug::Log(WARNING) << "vertices:" << endl;
+        for (auto& element : vertexData) {
+            Debug::Log << element.x << ", " << element.y << ", " << element.z << endl;
+        }
+
+        Debug::Log(WARNING) << "uv:" << endl;
+        for (auto& element : uvData) {
+            Debug::Log << element.x << ", " << element.y << endl;
+        }
+
+        Debug::Log(WARNING) << "normals:" << endl;
+        for (auto& element : normalsData) {
+            Debug::Log << element.x << ", " << element.y << ", " << element.z << endl;
+        }
+
+        Debug::Log(WARNING) << "indexes:" << endl;
+        for (auto& element : indexesData) {
+            Debug::Log << element << endl;
+        }
     }
 
 } // namespace se

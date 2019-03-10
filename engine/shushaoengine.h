@@ -47,4 +47,5 @@
 #include "font.h"
 #include "textrenderer.h"
 #include "meshrenderer.h"
+#include "phongshader.h"
 

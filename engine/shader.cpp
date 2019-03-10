@@ -18,7 +18,7 @@ namespace se {
 		glUniform1i(location, value);
 	}
 
-	void Uniform::SetTextureIndex(GLenum& value) {
+	void Uniform::SetTextureIndex(GLint& value) {
 		glUniform1i(location, (GLint)value);
 		texture = value;
 	}
@@ -61,7 +61,7 @@ namespace se {
 		}
 	}
 
-	void Shader::SetTextureIndex(string var_, GLenum value) {
+	void Shader::SetTextureIndex(string var_, GLint value) {
 		auto it = uniforms.find(var_);
 		if (it != uniforms.end()) {
 			it->second.SetTextureIndex(value);
@@ -71,11 +71,11 @@ namespace se {
 	}
 
 	void Shader::SetLight(string var_, UniformLight& value) {
-		glUniform3f(glGetUniformLocation(programID, (var_ + ".position").c_str()), value.position.x, value.position.y, value.position.z);
-		glUniform3f(glGetUniformLocation(programID, (var_ + ".direction").c_str()), value.direction.x, value.direction.y, value.direction.z);
-		glUniform3f(glGetUniformLocation(programID, (var_ + ".ambient").c_str()), value.ambient.r, value.ambient.g, value.ambient.b);
-		glUniform3f(glGetUniformLocation(programID, (var_ + ".diffuse").c_str()), value.ambient.r, value.ambient.g, value.ambient.b);
-		glUniform3f(glGetUniformLocation(programID, (var_ + ".specular").c_str()), value.ambient.r, value.ambient.g, value.ambient.b);
+		glUniform3f(glGetUniformLocation(programID, (var_ + ".position").c_str()), value.position[0], value.position[1], value.position[2]);
+		glUniform3f(glGetUniformLocation(programID, (var_ + ".direction").c_str()), value.direction[0], value.direction[1], value.direction[2]);
+		glUniform3f(glGetUniformLocation(programID, (var_ + ".ambient").c_str()), value.ambient[0], value.ambient[1], value.ambient[2]);
+		glUniform3f(glGetUniformLocation(programID, (var_ + ".diffuse").c_str()), value.diffuse[0], value.diffuse[1], value.diffuse[2]);
+		glUniform3f(glGetUniformLocation(programID, (var_ + ".specular").c_str()), value.specular[0], value.specular[1], value.specular[2]);
 		glUniform1f(glGetUniformLocation(programID, (var_ + ".linear").c_str()), value.linear);
 		glUniform1f(glGetUniformLocation(programID, (var_ + ".quadratic").c_str()), value.quadratic);
 		glUniform1f(glGetUniformLocation(programID, (var_ + ".cutoff").c_str()), value.cutoff);
@@ -104,7 +104,7 @@ namespace se {
 		if (it != uniforms.end()) {
 			it->second.SetVector(value);
 		} else {
-			glUniform4f(glGetUniformLocation(programID, var_.c_str()), value.x,  value.y,  value.z,  value.w);
+			glUniform4f(glGetUniformLocation(programID, var_.c_str()), value[0],  value.y,  value.z,  value.w);
 		}
 	}
 

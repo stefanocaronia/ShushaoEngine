@@ -31,7 +31,7 @@ Game::Game(string title) : Cycle(title) {
 
 	Debug::level = DebugLevel::INFO;
 	Debug::enabled = true;
-	Debug::debugGridMode = GridMode::PERSPECTIVE;
+	Debug::debugGridMode = GridMode::ORTHOGRAFIC;
 	Config::Physics::debug = true;
 }
 
@@ -40,7 +40,7 @@ void Game::Awake() {
 	Resources::Load<Texture>("assets/pancrazio.png");
 	Resources::Load<Texture>("assets/night.jpg");
 	Resources::Load<Texture>("assets/pancsmile.png");
-	Resources::Load<TextureAtlas>("assets/walking.png")->AddGrid(vec2(16, 16), PivotPosition::BOTTOM);
+	Resources::Load<TextureAtlas>("assets/walking.png")->AddGrid(vec2(16, 16), Align::BOTTOM);
 	Resources::Add<Sprite>("pancrazio_sprite")->SetTexture(Resources::Get<Texture>("pancrazio"))->SetPixelPerUnit(16)->Build();
 
 	Resources::Load<Mesh>("assets/cube.obj");

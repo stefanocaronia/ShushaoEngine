@@ -2,6 +2,9 @@ bin/
 obj/
 lib/
 
+# vscode
+.vscode/ipch
+
 # codeblocks
 
 *.layout

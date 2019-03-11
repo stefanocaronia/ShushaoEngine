@@ -128,7 +128,7 @@ namespace se {
         for(auto& v: vertexIndices)
             indexesData.push_back(v);
 
-        PrintData();
+        // PrintData();
 
         VAO->Use();
 		VAO->Load<vec3>(Vbo::VERTICES, vertexData);

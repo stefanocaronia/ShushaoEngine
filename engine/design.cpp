@@ -6,6 +6,9 @@
 
 namespace se {
 
+	using namespace std;
+	using namespace glm;
+
 	bool Design::Init() {
 		if (ready) return true;
 		if (!GLManager::ready) return false;
@@ -128,6 +131,20 @@ namespace se {
 		call.mode = mode;
 		call.position = position;
 		call.radius = radius;
+		call.color = color;
+		call.duration = duration;
+
+		AddDrawCall(call);
+	}
+
+	void Design::DrawRect(glm::vec3 position, Rect rect, Color color, DrawMode mode, float duration) {
+
+		rect.SetX(rect.x + position.x);
+		rect.SetY(rect.y + position.y);
+		DrawCall call;
+		call.element = DrawElement::POLYGON;
+		call.mode = mode;
+		call.vertices = rect.GetVertices3D();
 		call.color = color;
 		call.duration = duration;
 

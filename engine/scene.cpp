@@ -5,6 +5,7 @@
 #include <windows.h>
 
 #include "scene.h"
+#include "cycle.h"
 
 namespace se {
 
@@ -55,7 +56,35 @@ namespace se {
 		if (componentsScanned) return;
 		ActiveComponents.clear();
         ActiveComponents = root->transform->GetActiveComponentsInChildren();
+		SortActiveComponents();
 		componentsScanned = true;
+	}
+
+	void Scene::SortActiveComponents() {
+		sort(ActiveComponents.begin(), ActiveComponents.end(), []( Component* ca, Component* cb ) {
+
+			int sortingLayerA = 0;
+			int sortingLayerB = 0;
+			int orderInLayerA = 0;
+			int orderInLayerB = 0;
+
+			if (dynamic_cast<Renderer*>(ca)) {
+				sortingLayerA = ((Renderer*)ca)->sortingLayerID;
+				orderInLayerA = ((Renderer*)ca)->sortingOrder;
+			}
+
+			if (dynamic_cast<Renderer*>(cb)) {
+				sortingLayerB = ((Renderer*)cb)->sortingLayerID;
+				orderInLayerB = ((Renderer*)cb)->sortingOrder;
+			}
+
+			if (sortingLayerA == sortingLayerB)
+				return orderInLayerA < orderInLayerB;
+			else
+				return sortingLayerA < sortingLayerB;
+
+			return false;
+		});
 	}
 
 	void Scene::ScanActiveLights() {
@@ -66,11 +95,15 @@ namespace se {
 				ActiveLights.push_back((Light*)component);
 			}
 		}
+	}
 
-		/* std::copy_if (ActiveComponents.begin(), ActiveComponents.end(), std::back_inserter(ActiveLights), [](Component* component){
-			return dynamic_cast<Light*>(component);
-		}); */
-
+	void Scene::ScanActiveRenderers() {
+		ScanActiveComponents();
+		for (Component* component : ActiveComponents) {
+			if (dynamic_cast<Renderer*>(component) && ((Renderer*)component)->overlay) {
+				ActiveOverlayRenderers.push_back((Renderer*)component);
+			}
+		}
 	}
 
 	void Scene::PrintActiveComponentsInScene() {
@@ -109,8 +142,19 @@ namespace se {
 	}
 
 	void Scene::run(string cycle) {
-		for (Component* c : ActiveComponents) {
-			c->run(cycle);
+		for (Component* component : ActiveComponents) {
+			// non renderizzo i renderer overlay
+			if (cycle == Cycle::RENDER && dynamic_cast<Renderer*>(component) && ((Renderer*)component)->overlay) {
+				return;
+			} else {
+				component->run(cycle);
+			}
+        }
+	}
+
+	void Scene::overlayRender() {
+		for (Renderer* renderer : ActiveOverlayRenderers) {
+			renderer->run(Cycle::RENDER);
         }
 	}
 

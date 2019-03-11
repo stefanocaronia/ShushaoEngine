@@ -8,90 +8,93 @@
 
 namespace se {
 
-Object::Object() {
-    name = "Object";
-    GameData::RegisterObject(this);
-}
+    using namespace std;
+    using namespace glm;
 
-Object::Object(std::string _name) {
-    name = _name;
-    GameData::RegisterObject(this);
-}
+    Object::Object() {
+        name = "Object";
+        GameData::RegisterObject(this);
+    }
 
-Object::~Object() {
-    Destroy(this);
-}
+    Object::Object(std::string _name) {
+        name = _name;
+        GameData::RegisterObject(this);
+    }
 
-bool Object::operator==(const char* _name) {
-    return name == _name;
-}
+    Object::~Object() {
+        Destroy(this);
+    }
 
-bool Object::operator==(const Object& obj) {
-    return obj.InstanceID == InstanceID;
-}
+    bool Object::operator==(const char* _name) {
+        return name == _name;
+    }
 
-std::string Object::ToString() {
-    return name;
-}
+    bool Object::operator==(const Object& obj) {
+        return obj.InstanceID == InstanceID;
+    }
 
-int Object::GetInstanceID() {
-    return InstanceID;
-}
+    std::string Object::ToString() {
+        return name;
+    }
 
-void Object::Destroy(Object* obj, float t) {
-    // TODO:
-    // GameData::UnRegisterObject(this.InstanceID);
+    int Object::GetInstanceID() {
+        return InstanceID;
+    }
 
-    // TODO: eliminazione ritardata con t
+    void Object::Destroy(Object* obj, float t) {
+        // TODO:
+        // GameData::UnRegisterObject(this.InstanceID);
 
-    // delete obj;
-}
+        // TODO: eliminazione ritardata con t
 
-void Object::Destroy(Object* obj) {
-    // TODO: eliminazione ritardata con t
+        // delete obj;
+    }
 
-    // delete obj;
-}
+    void Object::Destroy(Object* obj) {
+        // TODO: eliminazione ritardata con t
 
-/* 	TODO: Clones the object original and returns the clone.
+        // delete obj;
+    }
 
-		This function makes a copy of an object in a similar way to the Duplicate command in the editor. If you are cloning a Entity then you can also optionally
-		specify its position and rotation (these default to the original Entity's position and rotation otherwise). If you are cloning a Component then the Entity
-		it is attached to will also be cloned, again with an optional position and rotation.
+    /* 	TODO: Clones the object original and returns the clone.
 
-		When you clone a Entity or Component, all child objects and components will also be cloned with their properties set like those of the original object.
+            This function makes a copy of an object in a similar way to the Duplicate command in the editor. If you are cloning a Entity then you can also optionally
+            specify its position and rotation (these default to the original Entity's position and rotation otherwise). If you are cloning a Component then the Entity
+            it is attached to will also be cloned, again with an optional position and rotation.
 
-		By default the parent of the new object will be null, so it will not be a "sibling" of the original. However, you can still set the parent using the overloaded
-		methods. If a parent is specified and no position and rotation is specified, the position and rotation of the original will be used for the cloned object's local
-		position and rotation, or its world position and rotation if the instantiateInWorldSpace parameter is true. If the position and rotation is specified, they will
-		be used as the object's position and rotation in world space.
+            When you clone a Entity or Component, all child objects and components will also be cloned with their properties set like those of the original object.
 
-		The active status of a Entity at the time of cloning will be passed on, so if the original is inactive then the clone will be created in an inactive state too.
-	*/
+            By default the parent of the new object will be null, so it will not be a "sibling" of the original. However, you can still set the parent using the overloaded
+            methods. If a parent is specified and no position and rotation is specified, the position and rotation of the original will be used for the cloned object's local
+            position and rotation, or its world position and rotation if the instantiateInWorldSpace parameter is true. If the position and rotation is specified, they will
+            be used as the object's position and rotation in world space.
 
-Object* Object::Instantiate(Object* original) {
-    // TODO
-    return nullptr;
-}
+            The active status of a Entity at the time of cloning will be passed on, so if the original is inactive then the clone will be created in an inactive state too.
+        */
 
-Object* Object::Instantiate(Object* original, Transform* parent) {
-    // TODO
-    return nullptr;
-}
+    Object* Object::Instantiate(Object* original) {
+        // TODO
+        return nullptr;
+    }
 
-Object* Object::Instantiate(Object* original, Transform* parent, bool instantiateInWorldSpace) {
-    // TODO
-    return nullptr;
-}
+    Object* Object::Instantiate(Object* original, Transform* parent) {
+        // TODO
+        return nullptr;
+    }
 
-Object* Object::Instantiate(Object* original, vec3 position, quat rotation) {
-    // TODO
-    return nullptr;
-}
+    Object* Object::Instantiate(Object* original, Transform* parent, bool instantiateInWorldSpace) {
+        // TODO
+        return nullptr;
+    }
 
-Object* Object::Instantiate(Object* original, vec3 position, quat rotation, Transform* parent) {
-    // TODO
-    return nullptr;
-}
+    Object* Object::Instantiate(Object* original, vec3 position, quat rotation) {
+        // TODO
+        return nullptr;
+    }
+
+    Object* Object::Instantiate(Object* original, vec3 position, quat rotation, Transform* parent) {
+        // TODO
+        return nullptr;
+    }
 
 }  // namespace se

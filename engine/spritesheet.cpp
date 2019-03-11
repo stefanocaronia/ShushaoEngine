@@ -54,9 +54,9 @@ namespace se {
 			return;
         }
 
-        for (const pair<Rect, PivotPosition>& slice : atlas->slices) {
+        for (const pair<Rect, Align>& slice : atlas->slices) {
             Rect rect = slice.first;
-            PivotPosition pivotpos = slice.second;
+            Align pivotpos = slice.second;
 
 			Sprite* sprite = new Sprite(name + "_" + ts(counter), atlas);
 			sprite->SetRect(rect);

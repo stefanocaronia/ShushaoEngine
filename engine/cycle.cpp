@@ -107,6 +107,7 @@ namespace se {
 		Render();
 		if (Physics::enabled && Physics::debug) Physics::world->DrawDebugData();
 		Design::ProcessDrawCalls();
+		SceneManager::activeScene->overlayRender();
 		Time::frameCount++;
 		GLManager::Swap();
 	}

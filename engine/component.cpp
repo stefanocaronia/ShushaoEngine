@@ -10,6 +10,7 @@
 #include "gamedata.h"
 #include "collision2d.h"
 #include "collider2d.h"
+#include "entity.h"
 
 namespace se {
 
@@ -62,30 +63,6 @@ namespace se {
             activeComponents.insert(activeComponents.end(), newComponents.begin(), newComponents.end());
         }
 
-        sort(activeComponents.begin(), activeComponents.end(), []( Component* ca, Component* cb ) {
-
-			int sortingLayerA = 0;
-			int sortingLayerB = 0;
-			int orderInLayerA = 0;
-			int orderInLayerB = 0;
-
-			if (dynamic_cast<Renderer*>(ca)) {
-				sortingLayerA = ((Renderer*)ca)->sortingLayerID;
-				orderInLayerA = ((Renderer*)ca)->sortingOrder;
-			}
-
-			if (dynamic_cast<Renderer*>(cb)) {
-				sortingLayerB = ((Renderer*)cb)->sortingLayerID;
-				orderInLayerB = ((Renderer*)cb)->sortingOrder;
-			}
-
-			if (sortingLayerA == sortingLayerB)
-				return orderInLayerA < orderInLayerB;
-			else
-				return sortingLayerA < sortingLayerB;
-
-			return false;
-		});
 
 		return activeComponents;
 	}
@@ -155,7 +132,7 @@ namespace se {
 		if (!currentEnable) return;
 
 		Render();
-		OnPostRender();
+		OnPostRender(); // FIXME: probabilmente questa va eseguita alla fine del cycle di rendering della scene
 	}
 
 	void Component::exit() {

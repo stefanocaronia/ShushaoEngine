@@ -45,7 +45,7 @@ namespace se {
 
 	Sprite* Sprite::SetRect(Rect rect_) {
         rect = rect_;
-        pixel_pivot = CalculatePivot(PivotPosition::CENTER, rect_);
+        pixel_pivot = CalculatePivot(Align::CENTER, rect_);
 		return this;
 	}
 
@@ -55,11 +55,11 @@ namespace se {
 	}
 
 	Sprite* Sprite::SetPivot(vec2 _pivot) {
-        pixel_pivot = CalculatePivot(PivotPosition::CUSTOM, rect, _pivot);
+        pixel_pivot = CalculatePivot(Align::CUSTOM, rect, _pivot);
 		return this;
 	}
 
-	Sprite* Sprite::SetPivot(PivotPosition pivotpos_) {
+	Sprite* Sprite::SetPivot(Align pivotpos_) {
         pixel_pivot = CalculatePivot(pivotpos_, rect);
 		return this;
 	}
@@ -67,7 +67,7 @@ namespace se {
 	Sprite* Sprite::SetTexture(Texture* texture_) {
         texture = texture_;
         rect.Set(0.0f, 0.0f, (float)texture_->width, (float)texture_->height);
-		pixel_pivot = CalculatePivot(PivotPosition::CENTER, rect);
+		pixel_pivot = CalculatePivot(Align::CENTER, rect);
 		return this;
 	}
 
@@ -124,19 +124,19 @@ namespace se {
 		return this;
 	}
 
-	vec2 Sprite::CalculatePivot(PivotPosition pp, Rect re, vec2 custom) {
+	vec2 Sprite::CalculatePivot(Align pp, Rect re, vec2 custom) {
 		vec2 piv;
 		switch (pp) {
-			case (PivotPosition::CENTER): piv= re.center; break;
-			case (PivotPosition::TOPLEFT): piv = re.topleft; break;
-			case (PivotPosition::TOPRIGHT): piv = re.topright; break;
-			case (PivotPosition::TOP): piv = re.top; break;
-			case (PivotPosition::LEFT): piv = re.left; break;
-			case (PivotPosition::RIGHT): piv = re.right; break;
-			case (PivotPosition::BOTTOMLEFT): piv = re.bottomleft; break;
-			case (PivotPosition::BOTTOMRIGHT): piv = re.bottomright; break;
-			case (PivotPosition::BOTTOM): piv = re.bottom; break;
-			case (PivotPosition::CUSTOM): return custom; break;
+			case (Align::CENTER): piv= re.center; break;
+			case (Align::TOPLEFT): piv = re.topleft; break;
+			case (Align::TOPRIGHT): piv = re.topright; break;
+			case (Align::TOP): piv = re.top; break;
+			case (Align::LEFT): piv = re.left; break;
+			case (Align::RIGHT): piv = re.right; break;
+			case (Align::BOTTOMLEFT): piv = re.bottomleft; break;
+			case (Align::BOTTOMRIGHT): piv = re.bottomright; break;
+			case (Align::BOTTOM): piv = re.bottom; break;
+			case (Align::CUSTOM): return custom; break;
 		}
 
 		return piv - re.position;

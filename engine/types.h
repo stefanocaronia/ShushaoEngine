@@ -2,7 +2,7 @@
 
 namespace se {
 
-    enum class PivotPosition {
+    enum class Align {
         CENTER,
         LEFT,
         RIGHT,

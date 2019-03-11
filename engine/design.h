@@ -1,12 +1,13 @@
 #pragma once
 
 #include <glm/glm.hpp>
-#include <glew.h>
+#include <GL/glew.h>
 #include <vector>
 
 #include "color.h"
 #include "shader.h"
 #include "vao.h"
+#include "rect.h"
 
 namespace se {
 
@@ -61,6 +62,7 @@ namespace se {
 			static void DrawRay(glm::vec3 start, glm::vec3 dir, Color color, float duration = 0.0f);
 			static void DrawPolygon(std::vector<glm::vec3> vertices_, Color color, DrawMode mode = DrawMode::HOLLOW, float duration = 0.0f);
 			static void DrawCircle(glm::vec3 position, float radius, Color color, DrawMode mode = DrawMode::HOLLOW, float duration = 0.0f);
+			static void DrawRect(glm::vec3 position, Rect rect, Color color, DrawMode mode = DrawMode::HOLLOW, float duration = 0.0f);
 
 			static void ProcessDrawCalls();
 

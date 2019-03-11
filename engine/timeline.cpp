@@ -7,6 +7,9 @@
 
 namespace se {
 
+	using namespace std;
+	using namespace glm;
+
 	Timeline::Timeline(std::string _name) : Object(_name) {};
 
 	Timeline::~Timeline() {

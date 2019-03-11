@@ -11,6 +11,7 @@ namespace se {
 			Renderer();
 
 			bool enabled;  // Makes the rendered 3D object visible if enabled.
+			bool overlay = false;
 
 			bool isVisible; //Is this renderer visible in any camera? (Read Only)
 			int sortingLayerID = 0; //Unique ID of the Renderer's sorting layer.

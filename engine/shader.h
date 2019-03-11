@@ -2,7 +2,7 @@
 
 #include <string>
 #include <map>
-#include <glew.h>
+#include <GL/glew.h>
 
 #include "object.h"
 #include "color.h"

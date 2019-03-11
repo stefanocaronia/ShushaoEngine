@@ -17,13 +17,13 @@ namespace se {
 			TextureAtlas(std::string filename) : Texture(filename) {};
 			TextureAtlas(std::string filename, std::string n) : Texture(filename, n) {};
 
-			vector<pair<Rect, PivotPosition>> slices;
+			vector<pair<Rect, Align>> slices;
 
-			void AddSlice(Rect, PivotPosition pp = PivotPosition::CENTER);
+			void AddSlice(Rect, Align pp = Align::CENTER);
 
             void AddGrid(
 				glm::vec2,
-				PivotPosition pp = PivotPosition::CENTER,
+				Align pp = Align::CENTER,
 				glm::vec2 = glm::vec2(0,0),
 				glm::vec2 = glm::vec2(0,0)
 			);

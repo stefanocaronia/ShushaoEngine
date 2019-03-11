@@ -4,19 +4,20 @@
 #include "debug.h"
 #include "types.h"
 
-using namespace std;
-
 namespace se {
 
-	void TextureAtlas::AddSlice(Rect _rect, PivotPosition _pivotPosition) {
+	using namespace std;
+	using namespace glm;
+
+	void TextureAtlas::AddSlice(Rect _rect, Align _Align) {
 		if (TextureID == 0) {
 			Debug::Log(WARNING, SOURCE) << "No texture loaded" << endl;
 			return;
 		}
-		slices.push_back({_rect, _pivotPosition});
+		slices.push_back({_rect, _Align});
 	}
 
-	void TextureAtlas::AddGrid(vec2 _size, PivotPosition _pivotPos, vec2 _offset, vec2 _padding) {
+	void TextureAtlas::AddGrid(vec2 _size, Align _pivotPos, vec2 _offset, vec2 _padding) {
 
 		if (TextureID == 0) {
 			Debug::Log(WARNING, SOURCE) << "No texture loaded" << endl;

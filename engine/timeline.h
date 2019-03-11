@@ -40,11 +40,6 @@ namespace se {
 				backupValue = var;
 			}
 
-			/*void setTarget(const T& var) {
-				target = (T*)&var;
-				backupValue = var;
-			}*/
-
 			void setTarget(T*& var) {
 				//if (&var == nullptr) return;
 				target = var;

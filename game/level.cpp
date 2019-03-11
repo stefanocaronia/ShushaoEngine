@@ -39,6 +39,17 @@ Level::Level() {
 	mah->transform->SetLocalRotation({10, 10, 0}); */
 	//return;
 
+	//Font* f = Resources::Get<Font>("Pixel Perfect");
+	Font* f = Resources::Get<Font>("Modenine");
+
+	TextRenderer* text = root->AddComponent<TextRenderer>();
+	text->sortingLayerID = Config::SortingLayers["UI"];
+	text->SetFont(f)->SetText("Hello game engine!")->SetColor(Color::blue)->SetSize(0.5f);
+	text->SetRect({0,0,8,3});
+	text->SetPivot(Align::TOP);
+	text->SetAlign(Align::BOTTOMRIGHT);
+	return;
+
 	Entity* ground = AddEntity("Ground");
 
 	ground->transform->SetLocalPosition({0.0f, -4.0f, 0.0f});
@@ -88,13 +99,6 @@ Level::Level() {
 	backgroundRenderer->sprite = new Sprite("Background", Resources::Get<Texture>("night"));
 	backgroundRenderer->sprite->SetPixelPerUnit(64);
 	backgroundRenderer->sprite->Build();
-
-	//Font* f = Resources::Get<Font>("Pixel Perfect");
-	Font* f = Resources::Get<Font>("Modenine");
-
-	TextRenderer* text = root->AddComponent<TextRenderer>();
-	text->sortingLayerID = Config::SortingLayers["UI"];
-	text->SetFont(f)->SetText("HELLO PANCRAZIO!")->SetColor(Color::red)->SetSize(1.0f)->SetOffset({-1.0f, -1.0f});
 
 	/*Design::DrawPolygon({
 		 {0.0f, 1.0f, 0.0f},

@@ -9,6 +9,9 @@
 
 namespace se {
 
+	using namespace std;
+	using namespace glm;
+
 	Camera::Camera() {
 		name = "Camera";
 

@@ -58,11 +58,11 @@ namespace se {
 
 			Sprite* SetRect(Rect);
 			Sprite* SetTexture(Texture*);
-			Sprite* SetPivot(PivotPosition);
-			Sprite* SetPivot(vec2);
+			Sprite* SetPivot(Align);
+			Sprite* SetPivot(glm::vec2);
 			Sprite* SetPixelPerUnit(unsigned int);
 
-			static glm::vec2 CalculatePivot(PivotPosition, Rect, vec2 custom = vec2(0,0));
+			static glm::vec2 CalculatePivot(Align, Rect, glm::vec2 custom = glm::vec2(0,0));
 
 		protected:
 

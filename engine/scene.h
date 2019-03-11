@@ -36,14 +36,19 @@ namespace se {
 			std::vector<Entity*> Entities;
 			std::vector<Component*> ActiveComponents;
 			std::vector<Light*> ActiveLights;
+			//std::vector<Renderer*> ActiveRenderers;
+			std::vector<Renderer*> ActiveOverlayRenderers;
 
 			void run(std::string);
+			void overlayRender();
 
 			std::vector<Entity*> GetRootEntitys();
 
 			// scan
 			void ScanActiveComponents();
+			void SortActiveComponents();
 			void ScanActiveLights();
+			void ScanActiveRenderers();
 			bool componentsScanned = false;
 
 			// debug

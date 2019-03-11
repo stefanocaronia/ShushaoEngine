@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 
-#include <glew.h>
+#include <GL/glew.h>
 #include "renderer.h"
 #include "color.h"
 #include "material.h"

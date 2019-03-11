@@ -3,6 +3,9 @@
 
 namespace se {
 
+	using namespace std;
+	using namespace glm;
+
 	PhongShader::PhongShader() {
 		name = "Mesh Shader";
 

@@ -1,9 +1,12 @@
-#include "rect.h"
-
 #include <iostream>
 #include <sstream>
 
+#include "rect.h"
+
 namespace se {
+
+	using namespace glm;
+	using namespace std;
 
 	Rect::Rect() {
 
@@ -122,6 +125,21 @@ namespace se {
 
 	void Rect::SetMin(vec2 _min) {
 		Set(_min.x, _min.y, (xMax - _min.x), (yMax - _min.y));
+	}
+
+	vector<vec2> Rect::GetVertices() {
+		return {
+			topleft, topright, bottomright, bottomleft
+		};
+	}
+
+	vector<vec3> Rect::GetVertices3D() {
+		return {
+			{topleft.x, topleft.y, 0.0f},
+			{topright.x, topright.y, 0.0f},
+			{bottomright.x, bottomright.y, 0.0f},
+			{bottomleft.x, bottomleft.y, 0.0f}
+		};
 	}
 
 	Rect Rect::zero = {0.0f, 0.0f, 0.0f, 0.0f};

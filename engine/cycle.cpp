@@ -59,7 +59,19 @@ namespace se {
 
 		SceneManager::activeScene->ScanActiveComponents();
 		SceneManager::activeScene->ScanActiveLights();
-		SceneManager::activeScene->run(Cycle::INIT); // vengono chiamati gli Awake di tutti gli oggetti attivi
+		SceneManager::activeScene->run(Cycle::INIT); // vengono chiamati qui gli Awake di tutti gli oggetti attivi
+
+		if (Debug::enabled) {
+			SceneManager::activeScene->PrintHierarchy();
+			SceneManager::activeScene->PrintActiveComponentsInScene();
+			SceneManager::activeScene->PrintActiveRenderersInScene();
+			SceneManager::activeScene->PrintActiveLightsInScene();
+			System::ListServices();
+			SceneManager::activeScene->activeCamera->print();
+			Resources::toString();
+			Config::Layers.toString("Layers");
+			Config::SortingLayers.toString("SortingLayers");
+		}
 
 		Camera* activeCamera = SceneManager::activeScene->activeCamera;
 
@@ -107,7 +119,7 @@ namespace se {
 		Render();
 		if (Physics::enabled && Physics::debug) Physics::world->DrawDebugData();
 		Design::ProcessDrawCalls();
-		SceneManager::activeScene->overlayRender();
+		SceneManager::activeScene->renderOverlay();
 		Time::frameCount++;
 		GLManager::Swap();
 	}

@@ -54,37 +54,24 @@ namespace se {
 
 	void Scene::ScanActiveComponents() {
 		if (componentsScanned) return;
+
 		ActiveComponents.clear();
+		ActiveOverlayRenderers.clear();
+
+		// ottengo i component attivi
         ActiveComponents = root->transform->GetActiveComponentsInChildren();
-		SortActiveComponents();
+
+		for (Component* component : ActiveComponents) {
+			Renderer* renderer = dynamic_cast<Renderer*>(component);
+			if (renderer != nullptr && renderer->overlay)
+				ActiveOverlayRenderers.push_back(component);
+		}
+
+		// ordino tutti gli oggetti in ordine di rendering
+		Component::Sort(ActiveComponents);
+		Component::Sort(ActiveOverlayRenderers);
+
 		componentsScanned = true;
-	}
-
-	void Scene::SortActiveComponents() {
-		sort(ActiveComponents.begin(), ActiveComponents.end(), []( Component* ca, Component* cb ) {
-
-			int sortingLayerA = 0;
-			int sortingLayerB = 0;
-			int orderInLayerA = 0;
-			int orderInLayerB = 0;
-
-			if (dynamic_cast<Renderer*>(ca)) {
-				sortingLayerA = ((Renderer*)ca)->sortingLayerID;
-				orderInLayerA = ((Renderer*)ca)->sortingOrder;
-			}
-
-			if (dynamic_cast<Renderer*>(cb)) {
-				sortingLayerB = ((Renderer*)cb)->sortingLayerID;
-				orderInLayerB = ((Renderer*)cb)->sortingOrder;
-			}
-
-			if (sortingLayerA == sortingLayerB)
-				return orderInLayerA < orderInLayerB;
-			else
-				return sortingLayerA < sortingLayerB;
-
-			return false;
-		});
 	}
 
 	void Scene::ScanActiveLights() {
@@ -93,15 +80,6 @@ namespace se {
 		for (Component* component : ActiveComponents) {
 			if (dynamic_cast<Light*>(component)) {
 				ActiveLights.push_back((Light*)component);
-			}
-		}
-	}
-
-	void Scene::ScanActiveRenderers() {
-		ScanActiveComponents();
-		for (Component* component : ActiveComponents) {
-			if (dynamic_cast<Renderer*>(component) && ((Renderer*)component)->overlay) {
-				ActiveOverlayRenderers.push_back((Renderer*)component);
 			}
 		}
 	}
@@ -138,23 +116,29 @@ namespace se {
 			int layerID = ((Renderer*)component)->sortingLayerID;
 			std::cout << "  - " << "[" << Config::SortingLayers[layerID] << " (" << layerID << ")" << ", " << ((Renderer*)component)->sortingOrder << "] " << component->getTitle()<< " (" << component->entity->name << ")" << std::endl;
 		}
+		std::cout << " Scene " << name << " Active Overlay Renderers:" << std::endl;
+		for (Component* component : ActiveOverlayRenderers) {
+			if (!dynamic_cast<Renderer*>(component)) continue;
+			int layerID = ((Renderer*)component)->sortingLayerID;
+			std::cout << "  - " << "[" << Config::SortingLayers[layerID] << " (" << layerID << ")" << ", " << ((Renderer*)component)->sortingOrder << "] " << component->getTitle()<< " (" << component->entity->name << ")" << std::endl;
+		}
 		Logger::setColor(ConsoleColor::LIGHTGREY);
 	}
 
 	void Scene::run(string cycle) {
 		for (Component* component : ActiveComponents) {
-			// non renderizzo i renderer overlay
-			if (cycle == Cycle::RENDER && dynamic_cast<Renderer*>(component) && ((Renderer*)component)->overlay) {
-				return;
-			} else {
-				component->run(cycle);
+			if (cycle == Cycle::RENDER) {
+				Renderer* renderer = dynamic_cast<Renderer*>(component);
+				if (renderer != nullptr && renderer->overlay) // non eseguo il rendering degli overlay in questo ciclo
+					continue;
 			}
+			component->run(cycle);
         }
 	}
 
-	void Scene::overlayRender() {
-		for (Renderer* renderer : ActiveOverlayRenderers) {
-			renderer->run(Cycle::RENDER);
+	void Scene::renderOverlay() {
+		for (Component* component : ActiveOverlayRenderers) {
+			component->run(Cycle::RENDER);
         }
 	}
 

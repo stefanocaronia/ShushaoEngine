@@ -104,21 +104,10 @@ void Game::Awake() {
 	horizontal->altNegativeButton = SDL_SCANCODE_LEFT;
 	horizontal->controllerAxis = SDL_CONTROLLER_AXIS_LEFTX;
 	horizontal->deadZone = 0.2f;
-
-	if (Debug::enabled) {
-		SceneManager::activeScene->PrintHierarchy();
-		SceneManager::activeScene->PrintActiveComponentsInScene();
-		SceneManager::activeScene->PrintActiveRenderersInScene();
-		SceneManager::activeScene->PrintActiveLightsInScene();
-		System::ListServices();
-		camera->print();
-		Resources::toString();
-		Config::Layers.toString("Layers");
-		Config::SortingLayers.toString("SortingLayers");
-	}
 }
 
 void Game::Start() {
+
 
 }
 

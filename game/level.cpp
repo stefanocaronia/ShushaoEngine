@@ -48,6 +48,22 @@ Level::Level() {
 	text->SetRect({0,0,8,3});
 	text->SetPivot(Align::TOP);
 	text->SetAlign(Align::BOTTOMRIGHT);
+
+	Entity* canvasObject = AddEntity("Canvas");
+	canvasObject->AddComponent<Canvas>();
+	TextRenderer* text1 = canvasObject->AddComponent<TextRenderer>();
+	text1->sortingLayerID = Config::SortingLayers["Background"];
+	text1->SetFont(f)->SetText("IO STO IN UNA CANVAS")->SetColor(Color::red)->SetSize(0.6f);
+	text1->SetRect({0,0,8,3});
+	text1->SetPivot(Align::CENTER);
+	text1->SetAlign(Align::CENTER);
+
+	TextRenderer* text2 = canvasObject->AddComponent<TextRenderer>();
+	text2->SetFont(f)->SetText("prova 123")->SetColor(Color::red)->SetSize(0.4f);
+	text2->SetRect({0,0,10,10});
+	text2->SetPivot(Align::CENTER);
+	text2->SetAlign(Align::TOPLEFT);
+
 	return;
 
 	Entity* ground = AddEntity("Ground");

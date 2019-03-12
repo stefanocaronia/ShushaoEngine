@@ -52,6 +52,8 @@ namespace se {
 				return entity->GetComponent<T>(_name);
 			}*/
 
+			static void Sort(std::vector<Component*>&);
+
 		protected:
 
 			virtual void Awake(); // Awake is called when the script instance is being loaded.

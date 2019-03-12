@@ -7,6 +7,8 @@
 #include "object.h"
 #include "utility.h"
 #include "component.h"
+#include "renderer.h"
+#include "canvas.h"
 
 namespace se {
 
@@ -52,6 +54,14 @@ namespace se {
 				component->transform = transform;
 				component->entity = this;
 				component->name = (_name == "" ? util::classtitle<T>() : _name);
+
+				// tratto i componenti se siamo in una canvas
+				if (GetComponent<Canvas>() != nullptr) {
+					if (dynamic_cast<Renderer*>(component)) {
+						((Renderer*)component)->overlay = true;
+					}
+				}
+
 				Components.push_back(component);
 				return component;
 			}

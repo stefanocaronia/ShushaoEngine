@@ -11,7 +11,7 @@ namespace se {
 		OVERLAY
 	};
 
-	class Canvas : public Renderer {
+	class Canvas : public Component {
 
 		public:
 
@@ -21,7 +21,7 @@ namespace se {
 
 			const RenderMode& renderMode = _renderMode;
 
-			std::vector<Renderer*> ChildRenderers;
+			std::vector<Component*> ChildRenderers;
 
 			void ScanChildRenderers();
 

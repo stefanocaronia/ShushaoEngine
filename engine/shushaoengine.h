@@ -48,4 +48,5 @@
 #include "textrenderer.h"
 #include "meshrenderer.h"
 #include "phongshader.h"
+#include "canvas.h"
 

@@ -37,10 +37,10 @@ namespace se {
 			std::vector<Component*> ActiveComponents;
 			std::vector<Light*> ActiveLights;
 			//std::vector<Renderer*> ActiveRenderers;
-			std::vector<Renderer*> ActiveOverlayRenderers;
+			std::vector<Component*> ActiveOverlayRenderers;
 
 			void run(std::string);
-			void overlayRender();
+			void renderOverlay();
 
 			std::vector<Entity*> GetRootEntitys();
 

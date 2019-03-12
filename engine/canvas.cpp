@@ -1,6 +1,7 @@
 #include "canvas.h"
 #include "entity.h"
 #include "transform.h"
+#include "renderer.h"
 
 namespace se {
 
@@ -18,22 +19,23 @@ namespace se {
 	}
 
 	void Canvas::ScanChildRenderers() {
-		ChildRenderers.clear();
+		//ChildRenderers.clear();
 		vector<Component*> components = entity->transform->GetActiveComponentsInChildren();
 		for (auto& component : components) {
 			if (dynamic_cast<Renderer*>(component)) {
-				ChildRenderers.push_back((Renderer*)component);
 				((Renderer*)component)->overlay = true;
+				//ChildRenderers.push_back(renderer);
+				// Debug::Log << "imposto renderer " << renderer->name << " a overlay" << endl;
 			}
 		}
 	}
 
 	void Canvas::Awake() {
-		ScanChildRenderers();
+		//ScanChildRenderers();
 	}
 
 	void Canvas::Update() {
-		ScanChildRenderers();
+		//ScanChildRenderers();
 	}
 
     void Canvas::Render() {

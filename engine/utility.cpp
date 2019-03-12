@@ -70,6 +70,7 @@ namespace util {
 
 		return {roll, pitch, yaw};
 	}
+
 }  // namespace util
 
 //{ #region VectorMap

@@ -98,6 +98,8 @@ namespace se {
 
 		float width = 0;
 		float height = 0;
+		unsigned int pixelHeight = 0;
+		unsigned int baselineGap = 0;
 
 		vec2 lpos;
 
@@ -107,10 +109,13 @@ namespace se {
 
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, g->bitmap.width, g->bitmap.rows, 0, GL_RED, GL_UNSIGNED_BYTE, g->bitmap.buffer);
 
+			pixelHeight = std::max(pixelHeight, g->bitmap.rows);
 			width += (((g->advance.x) / 64) * scale.x) / Config::pixelPerUnit;
-			float thisHeight = (g->bitmap.rows * scale.y) / Config::pixelPerUnit;
-			float thisBearing = (g->bitmap_top * scale.y) / Config::pixelPerUnit;
 			height = std::max(height, (g->bitmap.rows * scale.y) / Config::pixelPerUnit);
+
+			if (g->bitmap.rows > (unsigned int)g->bitmap_top) {
+				baselineGap = std::max(baselineGap, (unsigned int)(g->bitmap.rows - g->bitmap_top));
+			}
 		}
 
 		Rect textBox {0, 0, width, height};
@@ -155,6 +160,11 @@ namespace se {
 
 		}
 
+		bool baseline;
+		if (bottomAlign == BottomAlign::HEIGHT && (align == Align::BOTTOMLEFT || align == Align::BOTTOM || align == Align::BOTTOMRIGHT)) {
+			baseline = false;
+		}
+
 		for (p = text_.c_str(); *p; p++) {
 			if (FT_Load_Char(font->face, *p, FT_LOAD_RENDER))
 				continue;
@@ -162,7 +172,7 @@ namespace se {
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, g->bitmap.width, g->bitmap.rows, 0, GL_RED, GL_UNSIGNED_BYTE, g->bitmap.buffer);
 
 			float x2 = (pos.x + g->bitmap_left * scale.x) / Config::pixelPerUnit;
-			float y2 = (-pos.y - g->bitmap_top * scale.y) / Config::pixelPerUnit;
+			float y2 = (-pos.y - (g->bitmap_top + (baseline ? 0 : baselineGap)) * scale.y) / Config::pixelPerUnit;
 			float w = (g->bitmap.width * scale.x) / Config::pixelPerUnit;
 			float h = (g->bitmap.rows * scale.y) / Config::pixelPerUnit;
 

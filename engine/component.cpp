@@ -63,7 +63,6 @@ namespace se {
             activeComponents.insert(activeComponents.end(), newComponents.begin(), newComponents.end());
         }
 
-
 		return activeComponents;
 	}
 
@@ -158,5 +157,33 @@ namespace se {
 	void Component::OnEnable() {}
 	void Component::OnDisable() {}
 	void Component::OnDestroy() {}
+
+	// static
+	void Component::Sort(vector<Component*>& components) {
+		sort(components.begin(), components.end(), []( Component* ca, Component* cb ) {
+
+			int sortingLayerA = 0;
+			int sortingLayerB = 0;
+			int orderInLayerA = 0;
+			int orderInLayerB = 0;
+
+			if (dynamic_cast<Renderer*>(ca)) {
+				sortingLayerA = ((Renderer*)ca)->sortingLayerID;
+				orderInLayerA = ((Renderer*)ca)->sortingOrder;
+			}
+
+			if (dynamic_cast<Renderer*>(cb)) {
+				sortingLayerB = ((Renderer*)cb)->sortingLayerID;
+				orderInLayerB = ((Renderer*)cb)->sortingOrder;
+			}
+
+			if (sortingLayerA == sortingLayerB)
+				return orderInLayerA < orderInLayerB;
+			else
+				return sortingLayerA < sortingLayerB;
+
+			return false;
+		});
+	}
 
 }

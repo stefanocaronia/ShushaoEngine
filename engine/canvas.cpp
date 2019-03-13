@@ -1,49 +1,52 @@
 #include "canvas.h"
 #include "entity.h"
 #include "transform.h"
-#include "renderer.h"
+#include "glmanager.h"
 
 namespace se {
 
     using namespace std;
     using namespace glm;
 
-	Canvas::Canvas() {
-		name = "Canvas";
-	}
-
 	Canvas::~Canvas() {}
 
-	Canvas::Canvas(string name_) {
-		name = name_;
+	void Canvas::setup() {
+		entity->transform->rectTransform = true;
+		entity->canvas = this;
+		processRenderMode();
 	}
 
-	void Canvas::ScanChildRenderers() {
-		//ChildRenderers.clear();
-		vector<Component*> components = entity->transform->GetActiveComponentsInChildren();
-		for (auto& component : components) {
-			if (dynamic_cast<Renderer*>(component)) {
-				((Renderer*)component)->overlay = true;
-				//ChildRenderers.push_back(renderer);
-				// Debug::Log << "imposto renderer " << renderer->name << " a overlay" << endl;
-			}
+	Canvas* Canvas::SetRenderMode(RenderMode value)	{
+		_renderMode = value;
+		processRenderMode();
+		return this;
+	}
+
+	void Canvas::processRenderMode() {
+		switch (renderMode) {
+			case RenderMode::SCREEN:
+				//transform->SetPosition({-GLManager::VIEWPORT.x/2, -GLManager::VIEWPORT.y/2, 0.0f});
+				transform->SetPosition({0.0f, 0.0f, 0.0f});
+				transform->SetPivot(PivotPosition::BOTTOMLEFT);
+				transform->SetRectSize({GLManager::VIEWPORT.x, GLManager::VIEWPORT.y});
+				break;
+			case RenderMode::WORLD:
+			case RenderMode::CAMERA:
+				break;
 		}
 	}
 
 	void Canvas::Awake() {
-		//ScanChildRenderers();
 	}
 
 	void Canvas::Update() {
-		//ScanChildRenderers();
+		processRenderMode();
 	}
 
     void Canvas::Render() {
-
 	}
 
 	void Canvas::OnDestroy() {
-
 	}
 
 }

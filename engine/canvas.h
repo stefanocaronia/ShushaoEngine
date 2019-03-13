@@ -8,24 +8,24 @@ namespace se {
 
 	enum class RenderMode {
 		WORLD,
-		OVERLAY
+		SCREEN,
+		CAMERA
 	};
 
 	class Canvas : public Component {
 
 		public:
 
-			Canvas();
-			Canvas(std::string);
+			virtual void setup();
 			~Canvas();
 
 			const RenderMode& renderMode = _renderMode;
 
 			std::vector<Component*> ChildRenderers;
 
-			void ScanChildRenderers();
+			// void ScanChildRenderers();
 
-			Canvas* SetRenderMode(RenderMode value)	{ _renderMode = value; return this;}
+			Canvas* SetRenderMode(RenderMode value);
 
 			void Awake();
 			void Update();
@@ -34,8 +34,8 @@ namespace se {
 
         private:
 
-            Rect _rect;
 			RenderMode _renderMode = RenderMode::WORLD;
+			void processRenderMode();
 
 	};
 

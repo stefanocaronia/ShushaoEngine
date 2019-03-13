@@ -12,7 +12,7 @@ namespace se {
 
 		public:
 
-			Camera();
+			virtual void setup();
 
 			Color backgroundColor;
 

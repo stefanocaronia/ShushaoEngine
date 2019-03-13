@@ -1,13 +1,11 @@
 #include "light.h"
 #include "transform.h"
 #include "entity.h"
+#include "design.h"
 
 namespace se {
 
 	using namespace glm;
-
-	Light::Light() {
-	}
 
 	std::string Light::GetTypeDesc() {
 		switch (type) {
@@ -35,6 +33,13 @@ namespace se {
 
 	void Light::Update() {
 		direction = entity->transform->forward;
+	}
+
+	void Light::Render() {
+		if (Debug::enabled) {
+			Design::DrawVector(transform->position, direction, Color::red, true);
+		}
+
 	}
 
 } // namespace se

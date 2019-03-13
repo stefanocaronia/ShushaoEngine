@@ -17,6 +17,7 @@
 namespace se {
 
 	using namespace std;
+	using namespace glm;
 
 	bool GLManager::Init(std::string title, bool fs) {
 
@@ -44,6 +45,7 @@ namespace se {
 		SDL_GetDesktopDisplayMode(0, &dm);
 		DESKTOP_WIDTH = dm.w;
 		DESKTOP_HEIGHT = dm.h;
+		VIEWPORT = {DESKTOP_WIDTH / Config::pixelPerUnit, DESKTOP_HEIGHT / Config::pixelPerUnit};
 
 		if (fullscreen) {
 			gWindow = SDL_CreateWindow(title.c_str(), 0, 0, DESKTOP_WIDTH, DESKTOP_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN_DESKTOP);
@@ -76,13 +78,6 @@ namespace se {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		// Shader predefiniti
-		AddShader(new StandardShader());
-		AddShader(new BaseShader());
-		AddShader(new WireframeShader());
-		AddShader(new FontShader());
-		AddShader(new PhongShader());
-
 		ready = true;
 		return true;
 	}
@@ -97,14 +92,14 @@ namespace se {
 		Mix_Quit();
 		SDL_Quit();
 
-		for (auto& shader : shaders) {
+		/* for (auto& shader : shaders) {
 			if (shader != nullptr) {
 				Debug::Log << "Cancello " << shader->name  << endl; //<< " (" + util::classtitle(typeid(*it.second).name()) +")"
 				delete(shader);
 				shader = nullptr;
 			}
 		}
-		shaders.clear();
+		shaders.clear(); */
 	}
 
 	void GLManager::Clear() {
@@ -151,12 +146,13 @@ namespace se {
 
 	bool GLManager::fullscreen = false;
 	bool GLManager::ready = false;
-	vector<Shader*> GLManager::shaders;
+	//vector<Shader*> GLManager::shaders;
 
 	unsigned int GLManager::DESKTOP_WIDTH;
 	unsigned int GLManager::DESKTOP_HEIGHT;
 	unsigned int GLManager::WIDTH;
 	unsigned int GLManager::HEIGHT;
+	vec2 GLManager::VIEWPORT;
 }
 
 

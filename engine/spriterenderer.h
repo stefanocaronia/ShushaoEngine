@@ -15,9 +15,8 @@ namespace se {
 
 		public:
 
-			SpriteRenderer();
+			virtual void setup();
 			~SpriteRenderer();
-			SpriteRenderer(std::string);
 
 			bool isReady();
 

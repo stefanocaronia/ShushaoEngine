@@ -4,10 +4,6 @@
 
 namespace se {
 
-	Program::Program() {
-		//ctor
-	}
-
 	Program::~Program() {
 		//dtor
 	}

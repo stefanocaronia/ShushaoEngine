@@ -15,19 +15,13 @@
 namespace se {
 
 	Component::Component() {
-
-		name = "Component";
+		name = getTitle();
 		enabled = true;
-
 		GameData::RegisterComponent(this);
-
-		init();
-
 	}
 
 	Component::~Component() {
 		Debug::Log << "Component Destructor: " << name << " di " << entity->name << endl;
-
 		exit();
 	}
 
@@ -51,6 +45,7 @@ namespace se {
 		if (!entity->activeSelf) return vector<Component*>();
 
 		std::vector<Component*> activeComponents;
+		activeComponents.clear();
 
 		for (Component* c : entity->Components) {
 			if (c->enabled) {
@@ -59,6 +54,7 @@ namespace se {
 		}
 
 		for (Transform* t : entity->transform->children) {
+			if (t == nullptr) continue;
             std::vector<Component*> newComponents = t->GetActiveComponentsInChildren();
             activeComponents.insert(activeComponents.end(), newComponents.begin(), newComponents.end());
         }

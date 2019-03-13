@@ -19,8 +19,11 @@ namespace se {
 			Component();
 			virtual ~Component();
 
-			Entity* entity;
-			Transform* transform;
+			// è obbligatorio implementarla nelle derived e va eseguita a mano dopo l'istanziazione
+			virtual void setup() = 0;
+
+			Entity* entity = nullptr;
+			Transform* transform = nullptr;
 			std::string tag;
 
 			bool enabled = true;
@@ -47,9 +50,15 @@ namespace se {
 			std::string getTitle();
 
 			/* TODO: impossibile per riferimenti circolari? Pare di sì.
+
 			template<class T>
 			T* GetComponent(std::string _name = "") {	// Returns the component of Type type if the game object has one attached, null if it doesn't.
 				return entity->GetComponent<T>(_name);
+			}
+
+			template<class T>
+			T* AddComponent(std::string _name = "") { // Adds a component to the entity
+				return entity->AddComponent<T>(_name);
 			}*/
 
 			static void Sort(std::vector<Component*>&);

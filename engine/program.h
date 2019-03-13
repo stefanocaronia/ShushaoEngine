@@ -6,7 +6,8 @@ namespace se {
 
 	class Program : public Component {
 		public:
-			Program();
+
+			virtual void setup() { name = "Program"; }
 			~Program();
 
 			//void CancelInvoke(); //	Cancels all Invoke calls on this MonoBehaviour.

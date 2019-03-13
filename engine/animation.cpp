@@ -35,7 +35,7 @@ namespace se {
 
 	void Animation::setFPS(int _fps) {
 		fps = _fps;
-		setup();
+		initialize();
 	}
 
 	void Animation::setState(AnimationState _state) {
@@ -120,13 +120,13 @@ namespace se {
 
 	void Animation::Awake() {
 		if (layers.empty()) return;
-		setup();
+		initialize();
 		ready = true;
 		state = AnimationState::STOP;
 		if (startState == AnimationState::PLAY) play();
 	}
 
-	void Animation::setup() {
+	void Animation::initialize() {
 		frames = getFrameCount();
         frameDuration = 1.0f / (float)fps;
         duration = frames * frameDuration;

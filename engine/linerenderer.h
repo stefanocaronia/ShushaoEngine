@@ -17,9 +17,9 @@ namespace se {
 
 		public:
 
-			LineRenderer();
+			virtual void setup();
+
 			~LineRenderer();
-			LineRenderer(std::string);
 
 			Vao* VAO;
 			Shader* shader;

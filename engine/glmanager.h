@@ -7,7 +7,7 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-#include "shader.h"
+#include <glm/glm.hpp>
 
 namespace se {
 
@@ -28,24 +28,23 @@ namespace se {
 			static unsigned int DESKTOP_HEIGHT;
 			static unsigned int WIDTH;
 			static unsigned int HEIGHT;
+			static glm::vec2 VIEWPORT;
 
 			static bool Init(std::string, bool);
 			static void Quit();
-
 			static void Clear();
 			static void Clear(float, float, float, float, float);
-
 			static void SetFullscreen(bool);
 			static void ToggleFullscreen();
 			static void Swap();
 			static void Reset();
 
-			static Shader* AddShader(Shader* shader) {
+			/* static Shader* AddShader(Shader* shader) {
 				shaders.push_back(shader);
 				return shader;
-			}
+			} */
 
-			template<class T>
+			/* template<class T>
 			static T* GetShader(std::string _name = "") {	// Returns the component of Type type if the game object has one attached, null if it doesn't.
 				for(auto& shader: shaders) {
 					if (dynamic_cast<T*>(shader)) {
@@ -53,11 +52,11 @@ namespace se {
 					}
 				}
 				return nullptr;
-			}
+			} */
 
 		private:
 
-			static std::vector<Shader*> shaders;
+			//static std::vector<Shader*> shaders;
 
 	};
 

@@ -1,8 +1,17 @@
 
+TODO: Canvas system e rendering overlay
+TODO: Coroutines
+TODO: funzioni rotate 2D in transform
+TODO: aggiungere contatti in contact listener
+TODO: gestire regole di collisione coi layer
+TODO: Instantiate
+TODO: filtro collisioni custom: impedire collisioni stesso oggetto
+TODO: proprietà del rigidbody, damping, bullet, gravityscale, mass
+
 3D
 
-- caricare mesh con assimp
-- draw per index
-- load material da classe material
-- classe model (più mesh)?
-- importatore assimp di model?
+TODO: caricare mesh con assimp
+TODO: draw per index
+TODO: load material da classe material
+TODO: classe model (più mesh)?
+TODO: importatore assimp di model?

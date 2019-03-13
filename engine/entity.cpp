@@ -44,7 +44,8 @@ namespace se {
         }
 
         for (Transform* t : transform->children)
-            t->entity->SendMessage(methodName);*/
+            t->entity->SendMessage(methodName);
+*/
 
 	}
 
@@ -112,6 +113,7 @@ namespace se {
 
 	void Entity::setParent(Entity* other) {
 		transform->SetParent(other->transform);
+		canvas = other->canvas;
 	}
 
 

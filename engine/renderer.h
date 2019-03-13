@@ -8,7 +8,7 @@ namespace se {
 
 		public:
 
-			Renderer();
+			virtual void setup() { name = "Renderer"; }
 
 			bool enabled;  // Makes the rendered 3D object visible if enabled.
 			bool overlay = false;

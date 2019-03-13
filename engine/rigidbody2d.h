@@ -19,6 +19,8 @@ namespace se {
 
 		public:
 
+			virtual void setup() { name = "Rigidbody 2D"; }
+
 			b2Body* body = nullptr;
 
 			glm::vec2 position = glm::vec2(0, 0);

@@ -12,10 +12,21 @@ namespace se {
 			layout(location=1) in vec4 vertex_coord;
 			layout(location=5) uniform mat4 MVP;
 
+			uniform mat4 M;
+
+			uniform vec2 viewport;
+			uniform bool enabled_viewport;
+
 			out vec2 UV;
 
 			void main(void) {
-				gl_Position = MVP * vec4(vertex_coord.xy, 0.0f, 1.0f);
+
+				if (enabled_viewport) {
+					gl_Position = vec4(2 * (vertex_coord.xy / viewport.xy) - 1, 0, 1);
+				} else {
+					gl_Position = MVP * vec4(vertex_coord.xy, 0.0f, 1.0f);
+				}
+
 				UV = vertex_coord.zw;
 			}
 
@@ -29,6 +40,7 @@ namespace se {
 			layout(location=6) uniform vec4 render_color;
 
 			uniform sampler2D diffuse_map;
+			uniform bool enabled_viewport;
 
 			out vec4 frag_color;
 
@@ -42,6 +54,10 @@ namespace se {
 	void FontShader::Awake() {
 
 		AddUniform("Diffuse Map", "diffuse_map", UniformType::TEXTURE);
+
+		AddShaderUniform("M", UniformType::MATRIX);
+		AddShaderUniform("viewport", UniformType::VECTOR);
+		AddShaderUniform("enabled_viewport", UniformType::INTEGER);
 
 		SetTextureIndex("diffuse_map", 0);
 	}

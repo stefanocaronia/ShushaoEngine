@@ -9,18 +9,13 @@
 
 namespace se {
 
-	MeshRenderer::MeshRenderer() {
-		name = "Mesh Renderer";
+	void MeshRenderer::setup() {
 		material = new Material();
 		material->SetShader(new PhongShader());
 	}
 
 	MeshRenderer::~MeshRenderer() {
 		if (material != nullptr) delete(material);
-	}
-
-	MeshRenderer::MeshRenderer(string n) {
-		name = n;
 	}
 
 	bool MeshRenderer::isReady() {

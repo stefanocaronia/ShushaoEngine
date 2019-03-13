@@ -11,7 +11,7 @@ namespace se {
 
 	//{ #region Collider2D (base virtual class)
 
-	Collider2D::Collider2D() {
+	void Collider2D::setup() {
 		fixtureDef.density = density;
 		fixtureDef.friction = friction;
 		fixtureDef.restitution = restitution;

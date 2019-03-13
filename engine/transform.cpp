@@ -6,11 +6,13 @@
 #include "transform.h"
 #include "scenemanager.h"
 #include "utility.h"
+#include "design.h"
+#include "color.h"
 
 namespace se {
 
-	Transform::Transform() {
-		name = "Transform";
+	void Transform::setup() {
+		//
 	}
 
 	//{ #region parenting
@@ -30,6 +32,11 @@ namespace se {
 		}
 
 		parent = newpa;
+		if (parent->entity->canvas != nullptr) {
+			entity->canvas = parent->entity->canvas;
+		} else {
+			entity->canvas = nullptr;
+		}
 
 		if (worldPositionStays) {
 			localPosition = _position - parent->position;
@@ -93,7 +100,7 @@ namespace se {
 
 	void Transform::SetPosition(glm::vec3 position_) {
 		if (isRoot) return;
-		origin = WORLD;
+		origin = Origin::WORLD;
 		Invalidate();
 		//localPosition = isAtRoot() ? position_ : parent->position - position_;
 		_position = position_;
@@ -102,7 +109,7 @@ namespace se {
 
 	void Transform::SetLocalPosition(glm::vec3 position_) {
 		if (isRoot) return;
-		origin = LOCAL;
+		origin = Origin::LOCAL;
 		localPosition = position_;
 		Invalidate();
 		_position = GetWorldPosition();
@@ -111,7 +118,7 @@ namespace se {
 
 	void Transform::SetLocalRotation(glm::vec3 angles_) { // angles_ is in radians
 		if (isRoot) return;
-		origin = LOCAL;
+		origin = Origin::LOCAL;
 		localRotation = glm::quat(angles_ * DEGTORAD);
 		Invalidate();
 		_rotation = GetWorldOrientation();
@@ -120,7 +127,7 @@ namespace se {
 
 	void Transform::SetLocalRotation(glm::quat rotation_) {
 		if (isRoot) return;
-		origin = LOCAL;
+		origin = Origin::LOCAL;
 		localRotation = rotation_;
 		Invalidate();
 		_rotation = GetWorldOrientation();
@@ -129,7 +136,7 @@ namespace se {
 
 	void Transform::SetRotation(glm::vec3 angles_) { // angles_ is in radians
 		if (isRoot) return;
-		origin = WORLD;
+		origin = Origin::WORLD;
 		_rotation = glm::quat(angles_ * DEGTORAD);
 		//localRotation = _rotation;
 		setupDirections();
@@ -137,7 +144,7 @@ namespace se {
 
 	void Transform::SetRotation(glm::quat rotation_) {
 		if (isRoot) return;
-		origin = WORLD;
+		origin = Origin::WORLD;
 		_rotation = rotation_;
 		Invalidate();
 		//localRotation = _rotation * parent->rotation;
@@ -190,18 +197,45 @@ namespace se {
 	void Transform::Awake() {
 		buildMVP();
 		Invalidate();
+		updateRectTransforms();
 	}
 
 	void Transform::Update() {
 
-		if (origin == LOCAL) {
+		if (origin == Origin::LOCAL) {
 			_position = GetWorldPosition();
 			_rotation = GetWorldOrientation();
+		}
+
+		if (rectTransform) {
+			updateRectTransforms();
+
+			if (Debug::enabled && Debug::drawRectTransforms) {
+				Design::DrawRect(position, rect, {0.1, 0.1, 0.6, 0.3}, DrawMode::FULL);
+			}
 		}
 
 		setupDirections();
 
 		buildMVP();
+	}
+
+	void Transform::ForceUpdateRectTransforms() {
+		updateRectTransforms();
+	}
+
+	void Transform::updateRectTransforms() { // private
+		_rect.SetX(-(_rect.width * pivot.x));
+		_rect.SetY(-(_rect.height * pivot.y));
+	}
+
+	void Transform::Render() {
+
+		if (Debug::enabled && Debug::drawTransforms) {
+			Design::DrawVector(position, up / 3.0f, Color::green);
+			Design::DrawVector(position, right / 3.0f, Color::red);
+			Design::DrawVector(position, forward / 3.0f, Color::blue);
+		}
 	}
 
 	glm::mat4 Transform::GetLocalToParentMatrix() {
@@ -214,7 +248,7 @@ namespace se {
 
 	glm::mat4 Transform::GetLocalToWorldMatrix() {
 		if (matrixInvalid) {
-			if (origin == WORLD) {
+			if (origin == Origin::WORLD) {
 				_localToWorldMatrix = GetRootMatrix();
 			} else if (isAtRoot()) {
 				_localToWorldMatrix = GetLocalToParentMatrix();

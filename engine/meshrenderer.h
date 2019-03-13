@@ -15,9 +15,8 @@ namespace se {
 
 		public:
 
-			MeshRenderer();
+			virtual void setup();
 			~MeshRenderer();
-			MeshRenderer(std::string);
 
 			bool isReady();
 

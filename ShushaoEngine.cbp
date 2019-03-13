@@ -375,10 +375,10 @@
 		<Unit filename="engine/system.h">
 			<Option virtualFolder="engine/base/" />
 		</Unit>
-		<Unit filename="engine/textrenderer.cpp">
+		<Unit filename="engine/text.cpp">
 			<Option virtualFolder="engine/render/" />
 		</Unit>
-		<Unit filename="engine/textrenderer.h">
+		<Unit filename="engine/text.h">
 			<Option virtualFolder="engine/render/" />
 		</Unit>
 		<Unit filename="engine/texture.cpp">

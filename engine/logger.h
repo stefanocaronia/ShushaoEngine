@@ -79,4 +79,5 @@ namespace se {
 
 			static void setColor(ConsoleColor);
 	};
-}
+
+}

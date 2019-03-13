@@ -4,11 +4,9 @@
 
 #include "logger.h"
 
-using namespace std;
-
 namespace se {
 
-	enum GridMode {
+	enum class GridMode {
 		ORTHOGRAFIC,
 		PERSPECTIVE
 	};
@@ -19,6 +17,8 @@ namespace se {
 
 			static bool enabled;
 			static bool gridEnabled;
+			static bool drawTransforms;
+			static bool drawRectTransforms;
 			static GridMode debugGridMode;
 			static DebugLevel level;
 			static Logger Log;

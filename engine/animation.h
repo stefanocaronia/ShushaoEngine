@@ -16,8 +16,10 @@ namespace se {
 
 	class Animation : public Component {
 
+
 		public:
 
+			virtual void setup() { name = "Animation"; }
 			~Animation();
 
 			Timeline* addLayer(string);
@@ -43,7 +45,7 @@ namespace se {
 
 			vector<Timeline*> layers;
 
-			void setup();
+			void initialize();
 
 			// lifecycle
 			void Awake();

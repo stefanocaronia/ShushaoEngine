@@ -11,21 +11,12 @@ namespace se {
 
 	using namespace glm;
 
-	LineRenderer::LineRenderer() {
-		name = "Line Renderer";
-
-		shader = GLManager::GetShader<WireframeShader>();
-
-
+	void LineRenderer::setup() {
+		shader = new WireframeShader();
 	}
 
 	LineRenderer::~LineRenderer() {
-		name = "Line Renderer";
 		if (VAO != nullptr) { delete(VAO); VAO = nullptr; }
-	}
-
-	LineRenderer::LineRenderer(std::string n) {
-		name = n;
 	}
 
 	void LineRenderer::AddLine(const glm::vec3 start_point, const glm::vec3 end_point, Color col) {

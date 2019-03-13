@@ -35,6 +35,10 @@ namespace se {
 		glUniform3f(location, value.x,  value.y,  value.z);
 	}
 
+	void Uniform::SetVector(glm::vec2& value) {
+		glUniform2f(location, value.x,  value.y);
+	}
+
 	void Uniform::SetColor(Color& value) {
 		glUniform4f(location, value.r,  value.g,  value.b,  value.a);
 	}
@@ -104,7 +108,16 @@ namespace se {
 		if (it != uniforms.end()) {
 			it->second.SetVector(value);
 		} else {
-			glUniform4f(glGetUniformLocation(programID, var_.c_str()), value[0],  value.y,  value.z,  value.w);
+			glUniform4f(glGetUniformLocation(programID, var_.c_str()), value.x,  value.y,  value.z,  value.w);
+		}
+	}
+
+	void Shader::SetVector(string var_, glm::vec2 value) {
+		auto it = uniforms.find(var_);
+		if (it != uniforms.end()) {
+			it->second.SetVector(value);
+		} else {
+			glUniform2f(glGetUniformLocation(programID, var_.c_str()), value.x,  value.y);
 		}
 	}
 

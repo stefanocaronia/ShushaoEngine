@@ -138,11 +138,11 @@ namespace ShushaoEngine {
 
 		glGenBuffers(1, &vertexBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-		glBufferData(GL_ARRAY_BUFFER, vertexData.size() * sizeof(vec3), &vertexData[0], GL_DYNAMIC_DRAW); // TODO GL_STATIC_DRAW
+		glBufferData(GL_ARRAY_BUFFER, vertexData.size() * sizeof(vec3), &vertexData[0], GL_DYNAMIC_DRAW);
 
 		glGenBuffers(1, &uvBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, uvBuffer);
-		glBufferData(GL_ARRAY_BUFFER, uvData.size() * sizeof(vec2), &uvData[0], GL_DYNAMIC_DRAW); // TODO GL_STATIC_DRAW
+		glBufferData(GL_ARRAY_BUFFER, uvData.size() * sizeof(vec2), &uvData[0], GL_DYNAMIC_DRAW);
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, textureID);

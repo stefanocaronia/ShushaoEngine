@@ -84,8 +84,7 @@ else
 	LNKFLAGS += -s -mwindows
 endif
 
-subdirs = $(wildcard $(SRCDIR)/*/)
-SOURCES = $(wildcard $(SRCDIR)/*.$(SRCEXT)) $(wildcard $(addsuffix *.$(SRCEXT),$(subdirs)))
+SOURCES = $(wildcard $(SRCDIR)/**/*.$(SRCEXT)) $(wildcard $(SRCDIR)/*/*/*.$(SRCEXT))
 OBJECTS = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT)))
 DEPENDS = $(OBJECTS:.o=.d)
 

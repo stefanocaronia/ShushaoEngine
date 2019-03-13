@@ -9,18 +9,13 @@
 
 namespace se {
 
-	SpriteRenderer::SpriteRenderer() {
-		name = "Sprite Renderer";
+	void SpriteRenderer::setup() {
 		material = new Material();
 		material->SetShader(new StandardShader());
 	}
 
 	SpriteRenderer::~SpriteRenderer() {
 		if (material != nullptr) delete(material);
-	}
-
-	SpriteRenderer::SpriteRenderer(string n) {
-		name = n;
 	}
 
 	bool SpriteRenderer::isReady() {

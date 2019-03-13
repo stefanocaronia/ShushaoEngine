@@ -13,7 +13,7 @@ namespace se {
 
 		public:
 
-			Collider2D();
+			virtual void setup();
 
 			Rigidbody2D* rigidbody = nullptr;
 			b2FixtureDef fixtureDef;

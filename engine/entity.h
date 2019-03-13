@@ -25,6 +25,7 @@ namespace se {
 			~Entity();
 
 			Transform* transform = nullptr;
+			Canvas* canvas = nullptr;
 			Scene* scene = nullptr;	// Scene that the Entity is part of.
 
 			std::vector<Component*> Components;
@@ -51,9 +52,31 @@ namespace se {
 			template<class T>
 			T* AddComponent(std::string _name = "") { // Adds a component class named className to the game object.
 				T* component = new T();
+
+				component->name = (_name == "" ? component->getTitle() : _name);
+				// component->name = (_name == "" ? util::classtitle<T>() : _name);
 				component->transform = transform;
 				component->entity = this;
+				component->setup(); // va sempre chiamato
+
+				// tratto i componenti se siamo in una canvas
+				if (GetComponent<Canvas>() != nullptr) {
+					if (dynamic_cast<Renderer*>(component)) {
+						((Renderer*)component)->overlay = true;
+					}
+				}
+
+				Components.push_back(component);
+				return component;
+			}
+
+			template<class T>
+			T* AddProgram(std::string _name = "") { // Adds a component class named className to the game object.
+				T* component = new T();
 				component->name = (_name == "" ? util::classtitle<T>() : _name);
+				component->transform = transform;
+				component->entity = this;
+				component->setup(); // va sempre chiamato
 
 				// tratto i componenti se siamo in una canvas
 				if (GetComponent<Canvas>() != nullptr) {
@@ -76,7 +99,7 @@ namespace se {
 			}
 
 			template<class T>
-			T* GetComponentInChildren();	// TODO: Returns the component of Type type in the GameObject or any of its children using depth first search.
+			T* GetComponentInChildren(); // TODO: Returns the component of Type type in the GameObject or any of its children using depth first search.
 
 			template<class T>
 			T* GetComponentInParent();	// TODO: Returns the component of Type type in the Entity or any of its parents.

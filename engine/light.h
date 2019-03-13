@@ -37,7 +37,7 @@ namespace se {
 
 		public:
 
-			Light();
+			virtual void setup() { name = "Light"; }
 
 			bool enabled;
 
@@ -56,6 +56,7 @@ namespace se {
 		protected:
 
 			void Update();
+			void Render();
 	};
 
 }

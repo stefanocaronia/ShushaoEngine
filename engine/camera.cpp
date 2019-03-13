@@ -12,11 +12,8 @@ namespace se {
 	using namespace std;
 	using namespace glm;
 
-	Camera::Camera() {
-		name = "Camera";
-
+	void Camera::setup() {
 		aspect = (float)Config::displayWidth / (float)Config::displayHeight;
-
 		Projection = getProjectionMatrix();
 	}
 

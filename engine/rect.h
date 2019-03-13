@@ -48,9 +48,9 @@ namespace se {
 			bool Overlaps(Rect);	// Returns true if the other rectangle overlaps this one. If allowInverse is present and true, the widths and heights of the Rects are allowed to take negative values (ie, the min value is greater than the max), and the test will still work.
 			void Set(float, float, float, float); 	 // Set components of an existing Rect.
 
-			std::string ToString();	// TODO: Returns a nicely formatted string for this Rect.
+			std::string ToString();
 
-			// operator == // TODO
+			// TODO operator ==
 
 			void SetX(float);
 			void SetY(float);

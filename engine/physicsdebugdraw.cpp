@@ -16,7 +16,7 @@ namespace se {
 		if (!GLManager::ready || !Config::Physics::debug) return false;
 		if (ready) return true;
 
-		shader = GLManager::GetShader<BaseShader>();
+		shader = new BaseShader();
 		shader->awake();
 		shader->Use();
 

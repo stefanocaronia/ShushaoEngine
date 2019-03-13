@@ -38,6 +38,7 @@ namespace se {
 		Color color = {1.0f, 1.0f, 1.0f, 1.0f};
 		float duration = 0.0f; // seconds
 		float expire = 0.0f;
+		bool normalized = false;
 
 		bool operator==(DrawCall other) {
 			return (color == other.color &&
@@ -47,6 +48,7 @@ namespace se {
 					dir == other.dir &&
 					position == other.position &&
 					vertices == other.vertices &&
+					normalized == other.normalized &&
 					mode == other.mode &&
 					element == other.element);
 		}
@@ -63,6 +65,7 @@ namespace se {
 			static void DrawPolygon(std::vector<glm::vec3> vertices_, Color color, DrawMode mode = DrawMode::HOLLOW, float duration = 0.0f);
 			static void DrawCircle(glm::vec3 position, float radius, Color color, DrawMode mode = DrawMode::HOLLOW, float duration = 0.0f);
 			static void DrawRect(glm::vec3 position, Rect rect, Color color, DrawMode mode = DrawMode::HOLLOW, float duration = 0.0f);
+			static void DrawVector(glm::vec3 start, glm::vec3 end, Color color, bool normalized = false, float duration = 0.0f);
 
 			static void ProcessDrawCalls();
 
@@ -84,6 +87,7 @@ namespace se {
 			static void _drawRay(glm::vec3 start, glm::vec3 dir, Color color);
 			static void _drawPolygon(std::vector<glm::vec3> vertices_, Color color, DrawMode mode = DrawMode::HOLLOW);
 			static void _drawCircle(glm::vec3 position, float radius, Color color, DrawMode mode = DrawMode::HOLLOW);
+			static void _drawVector(glm::vec3 start, glm::vec3 end, Color color, bool normalized = false);
 
 			static std::vector<DrawCall> drawCalls;
 	};

@@ -42,27 +42,31 @@ Level::Level() {
 	//Font* f = Resources::Get<Font>("Pixel Perfect");
 	Font* f = Resources::Get<Font>("Modenine");
 
-	TextRenderer* text = root->AddComponent<TextRenderer>();
+	Entity* label = AddEntity("Label");
+	Text* text = label->AddComponent<Text>();
 	text->sortingLayerID = Config::SortingLayers["UI"];
 	text->SetFont(f)->SetText("Hello game engine!")->SetColor(Color::blue)->SetSize(0.5f);
-	text->SetRect({0,0,8,3});
-	text->SetPivot(Align::TOP);
-	text->SetAlign(Align::BOTTOMRIGHT);
+	text->transform->SetPivot(PivotPosition::TOPLEFT);
+	text->transform->SetRectSize({8,3});
+	text->transform->SetLocalScale({2,2,0});
+	text->SetAlign(Align::TOPLEFT);
 
-	Entity* canvasObject = AddEntity("Canvas");
-	canvasObject->AddComponent<Canvas>();
-	TextRenderer* text1 = canvasObject->AddComponent<TextRenderer>();
+	Entity* canvas = AddEntity<ui::Canvas>("Canvas");
+	canvas->GetComponent<Canvas>()->SetRenderMode(RenderMode::SCREEN);
+	canvas->transform->SetLocalPosition({-3.0f, -1.0f, 0.0f});
+	canvas->transform->SetRectSize({4,2});
+	canvas->transform->SetPivot(PivotPosition::CENTER);
+
+	Text* text1 = canvas->AddComponent<Text>();
 	text1->sortingLayerID = Config::SortingLayers["Background"];
-	text1->SetFont(f)->SetText("IO STO IN UNA CANVAS")->SetColor(Color::red)->SetSize(0.6f);
-	text1->SetRect({0,0,8,3});
-	text1->SetPivot(Align::CENTER);
-	text1->SetAlign(Align::CENTER);
+	text1->SetFont(f)->SetText("CANVAS")->SetColor(Color::red)->SetSize(0.5f);
+	text1->SetAlign(Align::BOTTOMRIGHT);
 
-	TextRenderer* text2 = canvasObject->AddComponent<TextRenderer>();
+	/*Text* text2 = canvasObject->AddComponent<Text>();
 	text2->SetFont(f)->SetText("prova 123")->SetColor(Color::red)->SetSize(0.4f);
-	text2->SetRect({0,0,10,10});
+	text2->transform->SetRect({0,0,10,10});
 	text2->SetPivot(Align::CENTER);
-	text2->SetAlign(Align::TOPLEFT);
+	text2->SetAlign(Align::BOTTOM); */
 
 	return;
 
@@ -91,7 +95,7 @@ Level::Level() {
 	//pancrazio->GetComponent<Animation>()->Disable();
 	pancrazio->transform->SetLocalRotation({0,0,30});
 
-	pancrazio->AddComponent<Mover>();
+	pancrazio->AddProgram<Mover>();
 
 	Pancrazio* sonOfPancrazio = AddEntity<Pancrazio>("Son of Pancrazio");
 	sonOfPancrazio->setParent(pancrazio);

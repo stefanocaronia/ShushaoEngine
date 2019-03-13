@@ -52,6 +52,7 @@ namespace se {
 			void SetInteger(GLint&);
 			void SetTextureIndex(GLint&);
 			void SetMatrix(GLfloat*);
+			void SetVector(glm::vec2&);
 			void SetVector(glm::vec3&);
 			void SetVector(glm::vec4&);
 			void SetColor(Color&);
@@ -92,6 +93,7 @@ namespace se {
 			void SetInteger(std::string, GLint);
 			void SetTextureIndex(std::string, GLint);
 			void SetMatrix(std::string, GLfloat*);
+			void SetVector(std::string, glm::vec2);
 			void SetVector(std::string, glm::vec3);
 			void SetVector(std::string, glm::vec4);
 			void SetColor(std::string, Color);

@@ -13,7 +13,7 @@ namespace se {
 		if (ready) return true;
 		if (!GLManager::ready) return false;
 
-		shader = GLManager::GetShader<BaseShader>();
+		shader = new BaseShader();
 		shader->awake();
 		shader->Use();
 
@@ -39,9 +39,6 @@ namespace se {
 	}
 
 	void Design::ProcessDrawCalls() {
-		drawCalls.erase(std::remove_if(drawCalls.begin(), drawCalls.end(), [=](DrawCall& c) {
-			return (c.duration > 0.0f && c.expire > 0.0f && Time::time > c.expire);
-		}), drawCalls.end());
 
 		for (auto it = drawCalls.begin(); it != drawCalls.end(); ++it) {
             switch (it->element) {
@@ -61,10 +58,16 @@ namespace se {
 					_drawPolygon(it->vertices, it->color, it->mode);
 					break;
 				case DrawElement::VECTOR:
+					_drawVector(it->start, it->end, it->color, it->normalized);
 					break;
             }
+
             if (it->duration > 0.0f && it->expire == 0.0f) it->expire = Time::time + it->duration;
 		}
+
+		drawCalls.erase(std::remove_if(drawCalls.begin(), drawCalls.end(), [=](DrawCall& c) {
+			return (c.duration == 0.0f || (c.duration > 0.0f && c.expire > 0.0f && Time::time > c.expire));
+		}), drawCalls.end());
 	}
 
 	void Design::DrawLine(glm::vec3 start, glm::vec3 end, Color color, float duration) {
@@ -73,6 +76,18 @@ namespace se {
 		call.mode = DrawMode::HOLLOW;
 		call.start = start;
 		call.end = end;
+		call.color = color;
+		call.duration = duration;
+
+		AddDrawCall(call);
+	}
+
+	void Design::DrawVector(glm::vec3 start, glm::vec3 end, Color color, bool normalized, float duration) {
+		DrawCall call;
+		call.element = DrawElement::VECTOR;
+		call.start = start;
+		call.end = end;
+		call.normalized = normalized;
 		call.color = color;
 		call.duration = duration;
 
@@ -196,6 +211,41 @@ namespace se {
 
 		glEnablei(GL_BLEND, VAO->GetBuffer(Vbo::VERTICES)->Id);
 		glDrawArrays(GL_LINES, 0, vertices.size());
+		glDisablei(GL_BLEND, VAO->GetBuffer(Vbo::VERTICES)->Id);
+
+		VAO->Leave();
+		shader->Leave();
+	}
+
+	void Design::_drawVector(glm::vec3 start, glm::vec3 end, Color color, bool normalized) {
+		if (!Init()) return;
+
+		GLfloat bxs = 0.02f;
+		if (normalized) end = normalize(end);
+		vector<vec3> vertices = {
+			vec3( -bxs,  -bxs, 0.0f) + start,
+			vec3( -bxs,  bxs, 0.0f) + start,
+			vec3( bxs,  bxs, 0.0f) + start,
+			vec3( bxs,  -bxs, 0.0f) + start,
+			vec3( -bxs,  -bxs, 0.0f) + start,
+			start,
+			start + end,
+			start
+		};
+
+		shader->Use();
+		VAO->Use();
+		VAO->Load<vec3>(Vbo::VERTICES, vertices);
+
+		glm::mat4 mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
+
+		shader->SetMVP(&mvp[0][0]);
+		shader->SetRenderColor(color);
+
+		glEnablei(GL_BLEND, VAO->GetBuffer(Vbo::VERTICES)->Id);
+		glPointSize(2);
+		glDrawArrays(GL_LINE_LOOP, 0, vertices.size());
+		glPointSize(1);
 		glDisablei(GL_BLEND, VAO->GetBuffer(Vbo::VERTICES)->Id);
 
 		VAO->Leave();

@@ -42,8 +42,7 @@ namespace se {
     }
 
     void Object::Destroy(Object* obj, float t) {
-        // TODO:
-        // GameData::UnRegisterObject(this.InstanceID);
+        // TODO: GameData::UnRegisterObject(this.InstanceID);
 
         // TODO: eliminazione ritardata con t
 
@@ -73,27 +72,27 @@ namespace se {
         */
 
     Object* Object::Instantiate(Object* original) {
-        // TODO
+        // TODO Object::Instantiate
         return nullptr;
     }
 
     Object* Object::Instantiate(Object* original, Transform* parent) {
-        // TODO
+        // TODO Object::Instantiate
         return nullptr;
     }
 
     Object* Object::Instantiate(Object* original, Transform* parent, bool instantiateInWorldSpace) {
-        // TODO
+        // TODO Object::Instantiate
         return nullptr;
     }
 
     Object* Object::Instantiate(Object* original, vec3 position, quat rotation) {
-        // TODO
+        // TODO Object::Instantiate
         return nullptr;
     }
 
     Object* Object::Instantiate(Object* original, vec3 position, quat rotation, Transform* parent) {
-        // TODO
+        // TODO Object::Instantiate
         return nullptr;
     }
 

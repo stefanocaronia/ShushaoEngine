@@ -2,11 +2,6 @@
 
 namespace se {
 
-	Renderer::Renderer()
-	{
-		//ctor
-	}
-
 	void Renderer::OnBecameInvisible() {
 		//ctor
 	}

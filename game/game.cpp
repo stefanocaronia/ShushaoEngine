@@ -60,7 +60,7 @@ void Game::Awake() {
 
 	SceneManager::LoadScene<Level>("Level 1");
 
-	bool perspectiveTest = true;
+	bool perspectiveTest = false;
 
 	Camera* camera = SceneManager::activeScene->activeCamera;
 	camera->backgroundColor = {0.05f, 0.05f, 0.2f, 1.0f};

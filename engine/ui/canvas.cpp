@@ -4,7 +4,7 @@
 namespace ui {
 
     Canvas::Canvas() {
-        transform->rectTransform = true;
+        transform->isRectTransform = true;
         canvas = AddComponent<se::Canvas>();
     }
 }

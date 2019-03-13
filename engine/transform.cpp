@@ -12,7 +12,12 @@
 namespace se {
 
 	void Transform::setup() {
-		//
+		rectTransform = new RectTransform(this);
+	}
+
+	Transform::~Transform() {
+		delete(rectTransform);
+		rectTransform = nullptr;
 	}
 
 	//{ #region parenting
@@ -34,7 +39,7 @@ namespace se {
 		parent = newpa;
 		if (parent->entity->canvas != nullptr) {
 			entity->canvas = parent->entity->canvas;
-		} else {
+		} else if (entity->GetComponent<Canvas>() == nullptr) {
 			entity->canvas = nullptr;
 		}
 
@@ -113,6 +118,7 @@ namespace se {
 		localPosition = position_;
 		Invalidate();
 		_position = GetWorldPosition();
+		rectTransform->SetPosition({localPosition.x, localPosition.y});
 		setupDirections();
 	}
 
@@ -174,6 +180,7 @@ namespace se {
 	void Transform::SetPivot(glm::vec2 pivot_) {
 		if (isRoot) return;
 		_pivot = {pivot_.x, pivot_.y, 0.0f};
+		rectTransform->SetPivot({pivot.x, pivot.y});
 	}
 
 	//}
@@ -197,7 +204,8 @@ namespace se {
 	void Transform::Awake() {
 		buildMVP();
 		Invalidate();
-		updateRectTransforms();
+		rectTransform->SetPosition(localPosition);
+		rectTransform->update();
 	}
 
 	void Transform::Update() {
@@ -207,26 +215,18 @@ namespace se {
 			_rotation = GetWorldOrientation();
 		}
 
-		if (rectTransform) {
-			updateRectTransforms();
+		if (isRectTransform) {
+			rectTransform->SetPosition(localPosition);
+			rectTransform->update();
 
 			if (Debug::enabled && Debug::drawRectTransforms) {
-				Design::DrawRect(position, rect, {0.1, 0.1, 0.6, 0.3}, DrawMode::FULL);
+				Design::DrawRect(position, rectTransform->rect, {0.1, 0.5, 0.1, 0.3}, DrawMode::HOLLOW);
 			}
 		}
 
 		setupDirections();
 
 		buildMVP();
-	}
-
-	void Transform::ForceUpdateRectTransforms() {
-		updateRectTransforms();
-	}
-
-	void Transform::updateRectTransforms() { // private
-		_rect.SetX(-(_rect.width * pivot.x));
-		_rect.SetY(-(_rect.height * pivot.y));
 	}
 
 	void Transform::Render() {

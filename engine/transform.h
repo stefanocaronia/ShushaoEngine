@@ -11,7 +11,9 @@
 
 #include "component.h"
 #include "constants.h"
+#include "types.h"
 #include "rect.h"
+#include "recttransform.h"
 
 namespace se {
 
@@ -22,21 +24,11 @@ namespace se {
 		WORLD
 	};
 
-	namespace PivotPosition {
-		const glm::vec2 CENTER 		= {0.5f, 0.5f};
-		const glm::vec2 LEFT 		= {0.0f, 0.5f};
-		const glm::vec2 RIGHT 		= {1.0f, 0.5f};
-		const glm::vec2 TOPLEFT 	= {0.0f, 1.0f};
-		const glm::vec2 TOPRIGHT 	= {1.0f, 1.0f};
-		const glm::vec2 TOP 		= {0.5f, 1.0f};
-		const glm::vec2 BOTTOM 		= {0.5f, 0.0f};
-		const glm::vec2 BOTTOMLEFT 	= {0.0f, 0.0f};
-		const glm::vec2 BOTTOMRIGHT = {1.0f, 0.0f};
-	};
-
 	class Transform : public Component {
 
 		public:
+
+			~Transform();
 
 			virtual void setup();
 
@@ -125,30 +117,8 @@ namespace se {
 
 			void Invalidate();
 
-
-			//{ #region rect transform
-
-			bool rectTransform = false;
-
-			const glm::vec2& anchoredPosition = _anchoredPosition; //The position of the pivot of this RectTransform relative to the anchor reference point.
-			const glm::vec3& anchoredPosition3D = _anchoredPosition3D; // The 3D position of the pivot of this RectTransform relative to the anchor reference point.
-			const glm::vec2& anchorMax = _anchorMax; // The normalized position in the parent RectTransform that the upper right corner is anchored to.
-			const glm::vec2& anchorMin = _anchorMin; // The normalized position in the parent RectTransform that the lower left corner is anchored to.
-			const glm::vec2& offsetMax = _offsetMax; // The offset of the upper right corner of the rectangle relative to the upper right anchor.
-			const glm::vec2& offsetMin = _offsetMin; //	The offset of the lower left corner of the rectangle relative to the lower left anchor.
-			const Rect& rect = _rect; // The calculated rectangle in the local space of the Transform.
-			const glm::vec2& sizeDelta = _sizeDelta; //	The size of this RectTransform relative to the distances between the anchors.
-
-			void ForceUpdateRectTransforms(); // Force the recalculation of RectTransforms internal data.
-			void GetLocalCorners(); // Get the corners of the calculated rectangle in the local space of its Transform.
-			void GetWorldCorners(); // Get the corners of the calculated rectangle in world space.
-			void SetInsetAndSizeFromParentEdge(); // Set the distance of this rectangle relative to a specified edge of the parent rectangle, while also setting its size.
-			void SetSizeWithCurrentAnchors(); // Makes the RectTransform calculated rect be a given size on the specified axis.
-
-			void SetRect(Rect rect_) {_rect = rect_;}
-			void SetRectSize(glm::vec2 size_) {_rect.SetSize(size_);}
-
-			//}
+			RectTransform* rectTransform = nullptr;
+			bool isRectTransform = false;
 
 		private:
 
@@ -172,20 +142,8 @@ namespace se {
 			void setupDirections();
 			void buildMVP();
 
-			//{ #region rect transform
-
-			Rect _rect;
-			glm::vec2 _anchoredPosition;
-			glm::vec3 _anchoredPosition3D;
-			glm::vec2 _anchorMax = {0.5f, 0.5f};
-			glm::vec2 _anchorMin = {0.5f, 0.5f};
-			glm::vec2 _offsetMax = {0.0f, 0.0f};
-			glm::vec2 _offsetMin = {0.0f, 0.0f};
-			glm::vec2 _sizeDelta;
-
 			void updateRectTransforms();
 
-			//}
 	};
 
 }

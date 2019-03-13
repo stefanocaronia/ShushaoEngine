@@ -53,8 +53,7 @@ namespace se {
 			T* AddComponent(std::string _name = "") { // Adds a component class named className to the game object.
 				T* component = new T();
 
-				component->name = (_name == "" ? component->getTitle() : _name);
-				// component->name = (_name == "" ? util::classtitle<T>() : _name);
+				component->name = (_name == "" ? util::classtitle<T>() : _name);
 				component->transform = transform;
 				component->entity = this;
 				component->setup(); // va sempre chiamato

@@ -39,7 +39,7 @@ Level::Level() {
 	mah->transform->SetLocalRotation({10, 10, 0}); */
 	//return;
 
-	//Font* f = Resources::Get<Font>("Pixel Perfect");
+	//Font* pixel = Resources::Get<Font>("Pixel Perfect");
 	Font* f = Resources::Get<Font>("Modenine");
 
 	Entity* label = AddEntity("Label");
@@ -47,20 +47,28 @@ Level::Level() {
 	text->sortingLayerID = Config::SortingLayers["UI"];
 	text->SetFont(f)->SetText("Hello game engine!")->SetColor(Color::blue)->SetSize(0.5f);
 	text->transform->SetPivot(PivotPosition::TOPLEFT);
-	text->transform->SetRectSize({8,3});
-	text->transform->SetLocalScale({2,2,0});
+	text->transform->rectTransform->SetRectSize({8,3});
+	//text->transform->SetLocalScale({2,2,0});
 	text->SetAlign(Align::TOPLEFT);
 
 	Entity* canvas = AddEntity<ui::Canvas>("Canvas");
 	canvas->GetComponent<Canvas>()->SetRenderMode(RenderMode::SCREEN);
-	canvas->transform->SetLocalPosition({-3.0f, -1.0f, 0.0f});
-	canvas->transform->SetRectSize({4,2});
-	canvas->transform->SetPivot(PivotPosition::CENTER);
 
+	// Componente text direttamente agganciato alla canvas
 	Text* text1 = canvas->AddComponent<Text>();
 	text1->sortingLayerID = Config::SortingLayers["Background"];
 	text1->SetFont(f)->SetText("CANVAS")->SetColor(Color::red)->SetSize(0.5f);
-	text1->SetAlign(Align::BOTTOMRIGHT);
+	text1->SetAlign(Align::TOPLEFT);
+
+	// compoenente text in una child entity
+	ui::Text* uiText = AddEntity<ui::Text>("Label su canvas");
+	uiText->setParent(canvas);
+	uiText->transform->SetPivot(PivotPosition::BOTTOMLEFT);
+	uiText->transform->rectTransform->SetRectSize({3,1});
+	//uiText->transform->SetLocalPosition({4, 4, 0});
+	uiText->transform->SetLocalPosition({1, 1, 0});
+	auto tComp = uiText->GetComponent<Text>();
+	tComp->SetFont(f)->SetText("Label su canvas")->SetColor(Color::green)->SetSize(0.5f)->SetAlign(Align::BOTTOMLEFT);
 
 	/*Text* text2 = canvasObject->AddComponent<Text>();
 	text2->SetFont(f)->SetText("prova 123")->SetColor(Color::red)->SetSize(0.4f);

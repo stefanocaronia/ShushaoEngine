@@ -52,4 +52,5 @@
 
 // UI
 #include "ui/canvas.h"
+#include "ui/text.h"
 

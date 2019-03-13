@@ -11,7 +11,7 @@ namespace se {
 	Canvas::~Canvas() {}
 
 	void Canvas::setup() {
-		entity->transform->rectTransform = true;
+		entity->transform->isRectTransform = true;
 		entity->canvas = this;
 		processRenderMode();
 	}
@@ -28,7 +28,7 @@ namespace se {
 				//transform->SetPosition({-GLManager::VIEWPORT.x/2, -GLManager::VIEWPORT.y/2, 0.0f});
 				transform->SetPosition({0.0f, 0.0f, 0.0f});
 				transform->SetPivot(PivotPosition::BOTTOMLEFT);
-				transform->SetRectSize({GLManager::VIEWPORT.x, GLManager::VIEWPORT.y});
+				transform->rectTransform->SetRectSize({GLManager::VIEWPORT.x, GLManager::VIEWPORT.y});
 				break;
 			case RenderMode::WORLD:
 			case RenderMode::CAMERA:

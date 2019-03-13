@@ -14,7 +14,7 @@ namespace se {
     using namespace glm;
 
 	void Text::setup() {
-		entity->transform->rectTransform = true;
+		entity->transform->isRectTransform = true;
 		shader = new FontShader();
 		VAO = new Vao();
 		VAO->AddBuffer(Vbo::VERTICES, VBO_CONFIG_FONT);
@@ -82,43 +82,43 @@ namespace se {
 
 		Rect textBox {0, 0, width, height};
 
-		pos += (transform->rect.topleft * (float)Config::pixelPerUnit);
+		pos += (transform->rectTransform->rect.topleft * (float)Config::pixelPerUnit);
 
 		switch (align) {// si parte da bottomleft
 			case Align::TOPLEFT:
-				pos.y += (transform->rect.height - textBox.height) * (float)Config::pixelPerUnit;
+				pos.y += (transform->rectTransform->rect.height - textBox.height) * (float)Config::pixelPerUnit;
 				break;
 			case Align::TOPRIGHT:
-				pos.y += (transform->rect.height - textBox.height) * (float)Config::pixelPerUnit;
-				pos.x += (transform->rect.width - textBox.width) * (float)Config::pixelPerUnit;
+				pos.y += (transform->rectTransform->rect.height - textBox.height) * (float)Config::pixelPerUnit;
+				pos.x += (transform->rectTransform->rect.width - textBox.width) * (float)Config::pixelPerUnit;
 				break;
 			case Align::BOTTOMLEFT:
 				// rimane uguale
 				break;
 			case Align::BOTTOMRIGHT:
-				pos.x += (transform->rect.width - textBox.width) * (float)Config::pixelPerUnit;
+				pos.x += (transform->rectTransform->rect.width - textBox.width) * (float)Config::pixelPerUnit;
 				break;
 			case Align::LEFT:
-				pos.y += ((transform->rect.height / 2) - (textBox.height / 2)) * (float)Config::pixelPerUnit;
+				pos.y += ((transform->rectTransform->rect.height / 2) - (textBox.height / 2)) * (float)Config::pixelPerUnit;
 				break;
 			case Align::RIGHT:
-				pos.y += ((transform->rect.height / 2) - (textBox.height / 2)) * (float)Config::pixelPerUnit;
-				pos.x += (transform->rect.width - textBox.width) * (float)Config::pixelPerUnit;
+				pos.y += ((transform->rectTransform->rect.height / 2) - (textBox.height / 2)) * (float)Config::pixelPerUnit;
+				pos.x += (transform->rectTransform->rect.width - textBox.width) * (float)Config::pixelPerUnit;
 				break;
 			case Align::TOP:
-				pos.x += ((transform->rect.width / 2) - (textBox.width / 2)) * (float)Config::pixelPerUnit;
-				pos.y += (transform->rect.height - textBox.height) * (float)Config::pixelPerUnit;
+				pos.x += ((transform->rectTransform->rect.width / 2) - (textBox.width / 2)) * (float)Config::pixelPerUnit;
+				pos.y += (transform->rectTransform->rect.height - textBox.height) * (float)Config::pixelPerUnit;
 				break;
 			case Align::BOTTOM:
-				pos.x += ((transform->rect.width / 2) - (textBox.width / 2)) * (float)Config::pixelPerUnit;
+				pos.x += ((transform->rectTransform->rect.width / 2) - (textBox.width / 2)) * (float)Config::pixelPerUnit;
 				break;
 			case Align::CENTER:
-				pos.x += ((transform->rect.width / 2) - (textBox.width / 2)) * (float)Config::pixelPerUnit;
-				pos.y += ((transform->rect.height / 2) - (textBox.height / 2)) * (float)Config::pixelPerUnit;
+				pos.x += ((transform->rectTransform->rect.width / 2) - (textBox.width / 2)) * (float)Config::pixelPerUnit;
+				pos.y += ((transform->rectTransform->rect.height / 2) - (textBox.height / 2)) * (float)Config::pixelPerUnit;
 				break;
 			case Align::CUSTOM:
 			default:
-				pos.y += (transform->rect.height - textBox.height) * (float)Config::pixelPerUnit;
+				pos.y += (transform->rectTransform->rect.height - textBox.height) * (float)Config::pixelPerUnit;
 
 		}
 
@@ -130,8 +130,6 @@ namespace se {
 		for (p = text_.c_str(); *p; p++) {
 			if (FT_Load_Char(font->face, *p, FT_LOAD_RENDER))
 				continue;
-
-			// TODO: controllare se la scale impostata dal transform non raddoppia tutto
 
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, g->bitmap.width, g->bitmap.rows, 0, GL_RED, GL_UNSIGNED_BYTE, g->bitmap.buffer);
 

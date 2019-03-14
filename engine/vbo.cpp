@@ -2,7 +2,7 @@
 
 #include "debug.h"
 #include "vbo.h"
-#include "shader.h"
+#include "shaders/shader.h"
 
 namespace se {
 

@@ -5,7 +5,7 @@
 #include "object.h"
 #include "color.h"
 #include "texture.h"
-#include "shader.h"
+#include "shaders/shader.h"
 
 namespace se {
 

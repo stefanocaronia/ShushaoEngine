@@ -5,7 +5,7 @@
 #include "spriterenderer.h"
 #include "glmanager.h"
 #include "transform.h"
-#include "standardshader.h"
+#include "shaders/standardshader.h"
 
 namespace se {
 

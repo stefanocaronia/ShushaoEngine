@@ -6,6 +6,7 @@
 #include "debug.h"
 #include "gllibs.h"
 #include "transform.h"
+#include "glmanager.h"
 
 namespace se {
 
@@ -13,25 +14,38 @@ namespace se {
 	using namespace glm;
 
 	void Camera::setup() {
-		aspect = (float)Config::displayWidth / (float)Config::displayHeight;
 		Projection = getProjectionMatrix();
 	}
 
 	glm::mat4 Camera::getProjectionMatrix() {
 
-		aspect = (float)Config::displayWidth / (float)Config::displayHeight;
-		if (orthographic) {
-			return ortho(
-				-orthographicSize * aspect,
-				orthographicSize * aspect,
-				-orthographicSize,
-				orthographicSize,
-				nearClipPlane,
-				farClipPlane
-			);
-		} else {
-			return perspective(fieldOfView, aspect, nearClipPlane, farClipPlane);
+		if (aspect != GLManager::ASPECT ||
+			orthographicSize != last_orthographicSize ||
+			nearClipPlane != last_nearClipPlane ||
+			farClipPlane != last_farClipPlane ||
+			fieldOfView != last_fieldOfView) {
+
+			aspect = GLManager::ASPECT;
+			last_orthographicSize = orthographicSize;
+			last_nearClipPlane = nearClipPlane;
+			last_farClipPlane = farClipPlane;
+			last_fieldOfView = fieldOfView;
+
+			if (orthographic) {
+				Projection = ortho(
+					-orthographicSize * aspect,
+					orthographicSize * aspect,
+					-orthographicSize,
+					orthographicSize,
+					nearClipPlane,
+					farClipPlane
+				);
+			} else {
+				Projection = perspective(fieldOfView, aspect, nearClipPlane, farClipPlane);
+			}
 		}
+
+		return Projection;
 	}
 
 	glm::mat4 Camera::getViewMatrix() {

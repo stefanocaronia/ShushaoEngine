@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-#include "shader.h"
+#include "shaders/shader.h"
 #include "debug.h"
 #include "sprite.h"
 #include "rect.h"

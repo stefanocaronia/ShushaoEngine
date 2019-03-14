@@ -28,6 +28,7 @@ namespace se {
 			static unsigned int DESKTOP_HEIGHT;
 			static unsigned int WIDTH;
 			static unsigned int HEIGHT;
+			static float ASPECT;
 			static glm::vec2 VIEWPORT;
 
 			static bool Init(std::string, bool);
@@ -38,6 +39,7 @@ namespace se {
 			static void ToggleFullscreen();
 			static void Swap();
 			static void Reset();
+			static void Update();
 
 			/* static Shader* AddShader(Shader* shader) {
 				shaders.push_back(shader);

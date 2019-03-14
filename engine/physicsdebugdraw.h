@@ -4,7 +4,7 @@
 #include <GL/glew.h>
 #include <Box2D/Box2D.h>
 #include "vao.h"
-#include "shader.h"
+#include "shaders/shader.h"
 
 namespace se {
 

@@ -3,6 +3,7 @@
 #include "color.h"
 #include "debug.h"
 #include "linerenderer.h"
+#include "glmanager.h"
 
 namespace se {
 
@@ -58,6 +59,20 @@ namespace se {
 		if (Debug::debugGridMode == GridMode::PERSPECTIVE) {
 			LR->AddLine({0.0f, 0.0f, gizmoMagnitude}, {arrowWidth, 0.0f, gizmoMagnitude - arrowWidth}, zcol);
 			LR->AddLine({0.0f, 0.0f, gizmoMagnitude}, {-arrowWidth, 0.0f, gizmoMagnitude - arrowWidth}, zcol);
+		}
+
+		// Screen canvas
+		LineRenderer* scr = AddComponent<LineRenderer>();
+		scr->renderMode = RenderMode::SCREEN;
+
+		for (float i = 0.0f; i < gridSize; i++) {
+
+			int p = i;//  * Config::pixelPerUnit;
+			scr->AddLine({p, 0.0f, 0.0f}, {p, 0.1f, 0.0f}, ycol);
+			scr->AddLine({0.0f, p, 0.0f}, {0.1f, p, 0.0f}, xcol);
+
+			scr->AddLine({p, GLManager::VIEWPORT.y, 0.0f}, {p, GLManager::VIEWPORT.y - 0.1f, 0.0f}, ycol);
+			scr->AddLine({GLManager::VIEWPORT.x, p, 0.0f}, {GLManager::VIEWPORT.x - 0.1f, i, 0.0f}, xcol);
 		}
 
 	}

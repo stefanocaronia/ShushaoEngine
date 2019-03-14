@@ -89,6 +89,16 @@ namespace se {
 					GAME->stop();
 					break;
 
+				case SDL_WINDOWEVENT:
+					if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
+						GLManager::WIDTH = event.window.data1;
+						GLManager::HEIGHT = event.window.data2;
+						glViewport(0, 0, GLManager::WIDTH, GLManager::HEIGHT);
+						GLManager::Update();
+						//Debug::Log << GLManager::WIDTH << "x" << GLManager::HEIGHT << endl;
+					}
+					break;
+
 				case SDL_KEYDOWN:
 					if (!keys[event.key.keysym.scancode]) {
 						keys[event.key.keysym.scancode] = true;

@@ -3,7 +3,7 @@
 #include <vector>
 #include "gllibs.h"
 #include "color.h"
-#include "shader.h"
+#include "shaders/shader.h"
 #include "debug.h"
 #include "vbo.h"
 

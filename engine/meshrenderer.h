@@ -7,7 +7,7 @@
 #include "color.h"
 #include "material.h"
 #include "mesh.h"
-#include "shader.h"
+#include "shaders/shader.h"
 
 namespace se {
 

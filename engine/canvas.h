@@ -3,14 +3,9 @@
 #include "config.h"
 #include "renderer.h"
 #include "rect.h"
+#include "types.h"
 
 namespace se {
-
-	enum class RenderMode {
-		WORLD,
-		SCREEN,
-		CAMERA
-	};
 
 	class Canvas : public Component {
 
@@ -22,8 +17,6 @@ namespace se {
 			const RenderMode& renderMode = _renderMode;
 
 			std::vector<Component*> ChildRenderers;
-
-			// void ScanChildRenderers();
 
 			Canvas* SetRenderMode(RenderMode value);
 

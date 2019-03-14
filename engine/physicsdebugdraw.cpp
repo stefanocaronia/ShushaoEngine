@@ -3,7 +3,7 @@
 #include "physicsdebugdraw.h"
 #include "design.h"
 #include "debug.h"
-#include "baseshader.h"
+#include "shaders/baseshader.h"
 
 #include <iostream>
 

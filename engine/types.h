@@ -27,5 +27,9 @@ namespace se {
 		const glm::vec2 BOTTOMRIGHT = {1.0f, 0.0f};
 	};
 
-
+	enum class RenderMode {
+		WORLD,
+		SCREEN,
+		CAMERA
+	};
 }

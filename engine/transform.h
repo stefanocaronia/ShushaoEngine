@@ -50,6 +50,9 @@ namespace se {
 			const glm::vec3& scale = _scale;
 			const glm::vec3& pivot = _pivot;
 			const glm::mat4& MVP = _MVP;
+			const glm::mat4& M = _M;
+			const glm::mat4& V = _V;
+			const glm::mat4& P = _P;
 			const glm::vec3& forward = _forward;
 			const glm::vec3& right = _right;
 			const glm::vec3& up = _up;
@@ -133,6 +136,9 @@ namespace se {
 			glm::vec3 _up = UP;
 			glm::vec3 _pivot = VEC3_ZERO;
 			glm::mat4 _MVP = glm::mat4();
+			glm::mat4 _M = glm::mat4();
+			glm::mat4 _V = glm::mat4();
+			glm::mat4 _P = glm::mat4();
 
 			glm::mat4 _localToWorldMatrix = glm::mat4();
 			glm::mat4 _localToParentMatrix = glm::mat4();

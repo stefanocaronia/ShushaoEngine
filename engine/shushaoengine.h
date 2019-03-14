@@ -28,7 +28,7 @@
 #include "scenemanager.h"
 #include "service.h"
 #include "setime.h"
-#include "shader.h"
+#include "shaders/shader.h"
 #include "sprite.h"
 #include "spriterenderer.h"
 #include "system.h"
@@ -47,7 +47,7 @@
 #include "font.h"
 #include "text.h"
 #include "meshrenderer.h"
-#include "phongshader.h"
+#include "shaders/phongshader.h"
 #include "canvas.h"
 
 // UI

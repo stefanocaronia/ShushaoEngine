@@ -8,7 +8,7 @@
 #include "color.h"
 #include "rect.h"
 #include "font.h"
-#include "shader.h"
+#include "shaders/shader.h"
 #include "vao.h"
 #include "config.h"
 #include "types.h"
@@ -39,6 +39,7 @@ namespace se {
 			const unsigned int& pixelPerUnit = _pixelPerUnit;
 			const Align& align = _align;
 			const BottomAlign& bottomAlign = _bottomAlign;
+			bool alignToGeometry = false;
 
 			Text* SetText(std::string value) 			{ _text = value; return this;}
 			Text* SetColor(Color value) 				{ _color = value; return this; }

@@ -52,6 +52,13 @@ namespace se {
 			float farClipPlane = 1000.0f;
 			float nearClipPlane = 3.0f;
 
+			bool last_orthographic = true;
+			float last_orthographicSize = 5.0f;
+			float last_depth = 3.0f;
+			float last_fieldOfView = 45.0f;
+			float last_farClipPlane = 1000.0f;
+			float last_nearClipPlane = 3.0f;
+
 			Rect rect;	// Where on the screen is the camera rendered in normalized coordinates.
 
 	};

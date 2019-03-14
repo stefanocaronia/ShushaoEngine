@@ -107,8 +107,9 @@ namespace se {
 		if (isRoot) return;
 		origin = Origin::WORLD;
 		Invalidate();
-		//localPosition = isAtRoot() ? position_ : parent->position - position_;
+		localPosition = isAtRoot() ? position_ : parent->position - position_;
 		_position = position_;
+		rectTransform->SetPosition({localPosition.x, localPosition.y});
 		setupDirections();
 	}
 
@@ -186,10 +187,10 @@ namespace se {
 	//}
 
 	void Transform::buildMVP() {
-		glm::mat4 M = GetLocalToWorldMatrix();
-		glm::mat4 P = SceneManager::activeScene->activeCamera->Projection;
-		glm::mat4 V = SceneManager::activeScene->activeCamera->getViewMatrix();
-		_MVP = P * V * M;
+		_M = GetLocalToWorldMatrix();
+		_P = SceneManager::activeScene->activeCamera->getProjectionMatrix();
+		_V = SceneManager::activeScene->activeCamera->getViewMatrix();
+		_MVP = _P * _V * _M;
 	}
 
 	GLfloat* Transform::uMVP() {
@@ -197,15 +198,17 @@ namespace se {
 	}
 
 	GLfloat* Transform::uM() {
-		glm::mat4 M = GetLocalToWorldMatrix();
-		return &M[0][0];
+		return &_M[0][0];
 	}
 
 	void Transform::Awake() {
 		buildMVP();
 		Invalidate();
-		rectTransform->SetPosition(localPosition);
-		rectTransform->update();
+		rectTransform->init();
+		if (isRectTransform) {
+			rectTransform->SetPosition(localPosition);
+			rectTransform->update();
+		}
 	}
 
 	void Transform::Update() {
@@ -216,12 +219,9 @@ namespace se {
 		}
 
 		if (isRectTransform) {
+			rectTransform->renderMode = entity->canvas != nullptr ? entity->canvas->renderMode : RenderMode::WORLD;
 			rectTransform->SetPosition(localPosition);
 			rectTransform->update();
-
-			if (Debug::enabled && Debug::drawRectTransforms) {
-				Design::DrawRect(position, rectTransform->rect, {0.1, 0.5, 0.1, 0.3}, DrawMode::HOLLOW);
-			}
 		}
 
 		setupDirections();
@@ -232,9 +232,13 @@ namespace se {
 	void Transform::Render() {
 
 		if (Debug::enabled && Debug::drawTransforms) {
-			Design::DrawVector(position, up / 3.0f, Color::green);
-			Design::DrawVector(position, right / 3.0f, Color::red);
-			Design::DrawVector(position, forward / 3.0f, Color::blue);
+			Design::DrawVector(position, up / 3.0f, Color::green, false, rectTransform->renderMode);
+			Design::DrawVector(position, right / 3.0f, Color::red, false, rectTransform->renderMode);
+			Design::DrawVector(position, forward / 3.0f, Color::blue, false, rectTransform->renderMode);
+		}
+
+		if (isRectTransform) {
+			rectTransform->render();
 		}
 	}
 

@@ -126,6 +126,7 @@ namespace se {
 
 	void Cycle::update() {
 		Time::realtimeSinceStartup = Time::GetTime();
+		GLManager::Update();
 		SceneManager::activeScene->run(Cycle::UPDATE);
 		Update();
 	}

@@ -25,9 +25,10 @@ Game::Game(string title) : Cycle(title) {
 		"UI"
 	};
 
-	Config::displayWidth = 1024;
-	Config::displayHeight = Config::displayWidth / (16.0f/9.0f);
+	Config::displayWidth = 1200;
+	Config::displayHeight = 1200 / (16.0f/9.0f);
 	Config::pixelPerUnit = 128;
+	Config::fullscreen = false;
 
 	Debug::level = DebugLevel::INFO;
 	Debug::enabled = true;

@@ -6,7 +6,7 @@
 #include <map>
 
 #include "object.h"
-#include "shader.h"
+#include "shaders/shader.h"
 #include "texture.h"
 #include "textureatlas.h"
 

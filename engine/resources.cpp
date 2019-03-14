@@ -5,7 +5,7 @@
 #include "debug.h"
 #include "object.h"
 #include "resources.h"
-#include "shader.h"
+#include "shaders/shader.h"
 #include "texture.h"
 #include "utility.h"
 

@@ -5,9 +5,10 @@
 #include <vector>
 
 #include "color.h"
-#include "shader.h"
+#include "shaders/shader.h"
 #include "vao.h"
 #include "rect.h"
+#include "types.h"
 
 namespace se {
 
@@ -22,7 +23,8 @@ namespace se {
 
 	enum class DrawMode {
 		HOLLOW,
-		FULL
+		FULL,
+		BORDERED
 	};
 
 	struct DrawCall {
@@ -39,6 +41,7 @@ namespace se {
 		float duration = 0.0f; // seconds
 		float expire = 0.0f;
 		bool normalized = false;
+		RenderMode renderMode = RenderMode::WORLD;
 
 		bool operator==(DrawCall other) {
 			return (color == other.color &&
@@ -50,6 +53,7 @@ namespace se {
 					vertices == other.vertices &&
 					normalized == other.normalized &&
 					mode == other.mode &&
+					renderMode == other.renderMode &&
 					element == other.element);
 		}
 	};
@@ -62,10 +66,10 @@ namespace se {
 			static void DrawPoint(glm::vec3 position, Color color, int tickness, float duration = 0.0f);
 			static void DrawLine(glm::vec3 start, glm::vec3 end, Color color, float duration = 0.0f);
 			static void DrawRay(glm::vec3 start, glm::vec3 dir, Color color, float duration = 0.0f);
-			static void DrawPolygon(std::vector<glm::vec3> vertices_, Color color, DrawMode mode = DrawMode::HOLLOW, float duration = 0.0f);
+			static void DrawPolygon(std::vector<glm::vec3> vertices_, Color color, DrawMode mode = DrawMode::HOLLOW, RenderMode renderMode = RenderMode::WORLD, float duration = 0.0f);
 			static void DrawCircle(glm::vec3 position, float radius, Color color, DrawMode mode = DrawMode::HOLLOW, float duration = 0.0f);
-			static void DrawRect(glm::vec3 position, Rect rect, Color color, DrawMode mode = DrawMode::HOLLOW, float duration = 0.0f);
-			static void DrawVector(glm::vec3 start, glm::vec3 end, Color color, bool normalized = false, float duration = 0.0f);
+			static void DrawRect(glm::vec3 position, Rect rect, Color color, DrawMode mode = DrawMode::HOLLOW, RenderMode renderMode = RenderMode::WORLD, float duration = 0.0f);
+			static void DrawVector(glm::vec3 start, glm::vec3 end, Color color, bool normalized = false, RenderMode renderMode = RenderMode::WORLD, float duration = 0.0f);
 
 			static void ProcessDrawCalls();
 
@@ -85,9 +89,9 @@ namespace se {
 			static void _drawPoint(glm::vec3 position, Color color, int tickness = 1);
 			static void _drawLine(glm::vec3 start, glm::vec3 end, Color color);
 			static void _drawRay(glm::vec3 start, glm::vec3 dir, Color color);
-			static void _drawPolygon(std::vector<glm::vec3> vertices_, Color color, DrawMode mode = DrawMode::HOLLOW);
+			static void _drawPolygon(std::vector<glm::vec3> vertices_, Color color, DrawMode mode = DrawMode::HOLLOW, RenderMode renderMode = RenderMode::WORLD);
 			static void _drawCircle(glm::vec3 position, float radius, Color color, DrawMode mode = DrawMode::HOLLOW);
-			static void _drawVector(glm::vec3 start, glm::vec3 end, Color color, bool normalized = false);
+			static void _drawVector(glm::vec3 start, glm::vec3 end, Color color, bool normalized = false, RenderMode renderMode = RenderMode::WORLD);
 
 			static std::vector<DrawCall> drawCalls;
 	};

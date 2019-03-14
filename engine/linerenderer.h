@@ -8,6 +8,7 @@
 #include "color.h"
 #include "design.h"
 #include "vao.h"
+#include "types.h"
 
 namespace se {
 
@@ -23,6 +24,8 @@ namespace se {
 
 			Vao* VAO;
 			Shader* shader;
+
+			RenderMode renderMode = RenderMode::WORLD;
 
             std::vector<glm::vec3> vertices;
             std::vector<glm::vec4> colors;

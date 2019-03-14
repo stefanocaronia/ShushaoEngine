@@ -8,11 +8,11 @@
 
 #include "debug.h"
 #include "glmanager.h"
-#include "standardshader.h"
-#include "wireframeshader.h"
-#include "baseshader.h"
-#include "fontshader.h"
-#include "phongshader.h"
+#include "shaders/standardshader.h"
+#include "shaders/wireframeshader.h"
+#include "shaders/baseshader.h"
+#include "shaders/fontshader.h"
+#include "shaders/phongshader.h"
 
 namespace se {
 
@@ -45,13 +45,14 @@ namespace se {
 		SDL_GetDesktopDisplayMode(0, &dm);
 		DESKTOP_WIDTH = dm.w;
 		DESKTOP_HEIGHT = dm.h;
-		VIEWPORT = {DESKTOP_WIDTH / Config::pixelPerUnit, DESKTOP_HEIGHT / Config::pixelPerUnit};
 
 		if (fullscreen) {
 			gWindow = SDL_CreateWindow(title.c_str(), 0, 0, DESKTOP_WIDTH, DESKTOP_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN_DESKTOP);
 		} else {
 			gWindow = SDL_CreateWindow(title.c_str(), DESKTOP_WIDTH / 2 - WIDTH / 2, DESKTOP_HEIGHT / 2 - HEIGHT / 2, WIDTH, HEIGHT, SDL_WINDOW_OPENGL);
 		}
+
+		SDL_SetWindowResizable(gWindow, SDL_TRUE);
 
 		//gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
 
@@ -78,8 +79,15 @@ namespace se {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+		Update();
+
 		ready = true;
 		return true;
+	}
+
+	void GLManager::Update() {
+		VIEWPORT = {(float)Config::displayWidth / (Config::pixelPerUnit / 2), (float)Config::displayHeight / (Config::pixelPerUnit / 2)};
+		ASPECT = (float)WIDTH / (float)HEIGHT;
 	}
 
 	void GLManager::Quit() {
@@ -119,6 +127,7 @@ namespace se {
 			glViewport(0, 0, DESKTOP_WIDTH, DESKTOP_HEIGHT);
 		} else {
 			SDL_SetWindowFullscreen(gWindow, SDL_FALSE);
+			SDL_GetWindowSize(gWindow, (int*)&WIDTH, (int*)&HEIGHT);
 			glViewport(0, 0, WIDTH, HEIGHT);
 		}
 	}
@@ -153,6 +162,7 @@ namespace se {
 	unsigned int GLManager::WIDTH;
 	unsigned int GLManager::HEIGHT;
 	vec2 GLManager::VIEWPORT;
+	float GLManager::ASPECT;
 }
 
 

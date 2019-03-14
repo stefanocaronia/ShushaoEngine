@@ -1,4 +1,4 @@
-#include "phongshader.h"
+#include "shaders/phongshader.h"
 #include "scenemanager.h"
 
 namespace se {
@@ -26,8 +26,10 @@ namespace se {
 				gl_Position = MVP * vec4(vertex_coord, 1.0);
 				FragPos = vec3(M * vec4(vertex_coord, 1.0));
 				UV = texture_coord;
-				// Normal = mat3(transpose(inverse(M))) * normal_value;
-				Normal = normal_value;
+				Normal = mat3(transpose(inverse(M))) * normal_value;
+				// Normal = normal_value;
+
+				// FIXME: verificare che l'uso di M sopra ora funzioni
 			}
 
 		)glsl";

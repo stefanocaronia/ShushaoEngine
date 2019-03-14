@@ -3,7 +3,7 @@
 #include "debug.h"
 #include "mesh.h"
 #include "meshrenderer.h"
-#include "phongshader.h"
+#include "shaders/phongshader.h"
 #include "transform.h"
 #include "glmanager.h"
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "shader.h"
+#include "shaders/shader.h"
 
 namespace se {
 
@@ -8,6 +8,8 @@ namespace se {
 
 		public:
 			BaseShader();
+
+			void Awake();
 	};
 
 }

@@ -25,10 +25,9 @@ namespace se {
 	void Canvas::processRenderMode() {
 		switch (renderMode) {
 			case RenderMode::SCREEN:
-				//transform->SetPosition({-GLManager::VIEWPORT.x/2, -GLManager::VIEWPORT.y/2, 0.0f});
 				transform->SetPosition({0.0f, 0.0f, 0.0f});
 				transform->SetPivot(PivotPosition::BOTTOMLEFT);
-				transform->rectTransform->SetRectSize({GLManager::VIEWPORT.x, GLManager::VIEWPORT.y});
+				transform->rectTransform->SetRectSize(GLManager::VIEWPORT);
 				break;
 			case RenderMode::WORLD:
 			case RenderMode::CAMERA:

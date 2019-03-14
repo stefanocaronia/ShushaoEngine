@@ -2,7 +2,7 @@
 #include "design.h"
 #include "glmanager.h"
 #include "scenemanager.h"
-#include "baseshader.h"
+#include "shaders/baseshader.h"
 
 namespace se {
 
@@ -55,10 +55,10 @@ namespace se {
 					_drawPoint(it->position, it->color, it->tickness);
 					break;
 				case DrawElement::POLYGON:
-					_drawPolygon(it->vertices, it->color, it->mode);
+					_drawPolygon(it->vertices, it->color, it->mode, it->renderMode);
 					break;
 				case DrawElement::VECTOR:
-					_drawVector(it->start, it->end, it->color, it->normalized);
+					_drawVector(it->start, it->end, it->color, it->normalized, it->renderMode);
 					break;
             }
 
@@ -82,7 +82,7 @@ namespace se {
 		AddDrawCall(call);
 	}
 
-	void Design::DrawVector(glm::vec3 start, glm::vec3 end, Color color, bool normalized, float duration) {
+	void Design::DrawVector(glm::vec3 start, glm::vec3 end, Color color, bool normalized, RenderMode renderMode, float duration) {
 		DrawCall call;
 		call.element = DrawElement::VECTOR;
 		call.start = start;
@@ -90,6 +90,7 @@ namespace se {
 		call.normalized = normalized;
 		call.color = color;
 		call.duration = duration;
+		call.renderMode = renderMode;
 
 		AddDrawCall(call);
 	}
@@ -129,13 +130,14 @@ namespace se {
 		AddDrawCall(call);
 	}
 
-	void Design::DrawPolygon(std::vector<glm::vec3> vertices, Color color, DrawMode mode, float duration) {
+	void Design::DrawPolygon(std::vector<glm::vec3> vertices, Color color, DrawMode mode, RenderMode renderMode, float duration) {
 		DrawCall call;
 		call.element = DrawElement::POLYGON;
 		call.mode = mode;
 		call.vertices = vertices;
 		call.color = color;
 		call.duration = duration;
+		call.renderMode = renderMode;
 
 		AddDrawCall(call);
 	}
@@ -152,7 +154,7 @@ namespace se {
 		AddDrawCall(call);
 	}
 
-	void Design::DrawRect(glm::vec3 position, Rect rect, Color color, DrawMode mode, float duration) {
+	void Design::DrawRect(glm::vec3 position, Rect rect, Color color, DrawMode mode, RenderMode renderMode, float duration) {
 
 		rect.SetX(rect.x + position.x);
 		rect.SetY(rect.y + position.y);
@@ -162,6 +164,7 @@ namespace se {
 		call.vertices = rect.GetVertices3D();
 		call.color = color;
 		call.duration = duration;
+		call.renderMode = renderMode;
 
 		AddDrawCall(call);
 	}
@@ -217,7 +220,7 @@ namespace se {
 		shader->Leave();
 	}
 
-	void Design::_drawVector(glm::vec3 start, glm::vec3 end, Color color, bool normalized) {
+	void Design::_drawVector(glm::vec3 start, glm::vec3 end, Color color, bool normalized, RenderMode renderMode) {
 		if (!Init()) return;
 
 		GLfloat bxs = 0.02f;
@@ -242,11 +245,20 @@ namespace se {
 		shader->SetMVP(&mvp[0][0]);
 		shader->SetRenderColor(color);
 
+		if (renderMode == RenderMode::SCREEN) {
+			shader->Enable("viewport");
+			shader->SetVector("viewport", GLManager::VIEWPORT);
+		}
+
 		glEnablei(GL_BLEND, VAO->GetBuffer(Vbo::VERTICES)->Id);
 		glPointSize(2);
 		glDrawArrays(GL_LINE_LOOP, 0, vertices.size());
 		glPointSize(1);
 		glDisablei(GL_BLEND, VAO->GetBuffer(Vbo::VERTICES)->Id);
+
+		if (renderMode == RenderMode::SCREEN) {
+			shader->Disable("viewport");
+		}
 
 		VAO->Leave();
 		shader->Leave();
@@ -274,7 +286,7 @@ namespace se {
 		shader->Leave();
 	}
 
-	void Design::_drawPolygon(std::vector<glm::vec3> vertices, Color color, DrawMode mode) {
+	void Design::_drawPolygon(std::vector<glm::vec3> vertices, Color color, DrawMode mode, RenderMode renderMode) {
 		if (!Init()) return;
 
 		shader->Use();
@@ -285,11 +297,37 @@ namespace se {
 		glm::mat4 mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 
 		shader->SetMVP(&mvp[0][0]);
-		shader->SetRenderColor(color);
 
+		if (renderMode == RenderMode::SCREEN) {
+			shader->Enable("viewport");
+			shader->SetVector("viewport", GLManager::VIEWPORT);
+		}
+
+		VAO->GetBuffer(Vbo::VERTICES)->Bind();
 		glEnablei(GL_BLEND, VAO->GetBuffer(Vbo::VERTICES)->Id);
-		glDrawArrays((mode == DrawMode::HOLLOW ? GL_LINE_LOOP : GL_TRIANGLE_FAN), 0, vertices.size());
+
+		if (mode == DrawMode::BORDERED)
+			shader->SetRenderColor({color.r, color.g, color.b, color.a / 2});
+		else
+			shader->SetRenderColor(color);
+		if (mode == DrawMode::HOLLOW) glLineWidth(4);
+		glDrawArrays((mode != DrawMode::HOLLOW ? GL_TRIANGLE_FAN : GL_LINE_LOOP), 0, vertices.size());
+
+
+		if (mode == DrawMode::BORDERED) {
+			glLineWidth(4);
+			shader->SetRenderColor(color);
+			glDrawArrays(GL_LINE_LOOP, 0, vertices.size());
+			glLineWidth(1);
+		}
+
 		glDisablei(GL_BLEND, VAO->GetBuffer(Vbo::VERTICES)->Id);
+		glLineWidth(1);
+		VAO->GetBuffer(Vbo::VERTICES)->Unbind();
+
+		if (renderMode == RenderMode::SCREEN) {
+			shader->Disable("viewport");
+		}
 
 		VAO->Leave();
 		shader->Leave();

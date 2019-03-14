@@ -15,6 +15,7 @@ namespace se {
             void* transform = nullptr;
             RectTransform* parentRectTransform = nullptr;
             bool isRectTransformChild = false;
+			RenderMode renderMode = RenderMode::WORLD;
 
 			const glm::vec2& anchoredPosition = _anchoredPosition; //The position of the pivot of this RectTransform relative to the anchor reference point.
 			const glm::vec2& anchorMax = _anchorMax; // The normalized position in the parent RectTransform that the upper right corner is anchored to.
@@ -43,7 +44,9 @@ namespace se {
             void SetAnchorMin(glm::vec2);
             void SetPosition(glm::vec2);
 
+            void init();
             void update();
+            void render();
 
 		private:
 

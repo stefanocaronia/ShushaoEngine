@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 
-#include "shader.h"
+#include "shaders/shader.h"
 #include "debug.h"
 #include "utility.h"
 #include "light.h"

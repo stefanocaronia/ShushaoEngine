@@ -4,8 +4,7 @@
 #include "glmanager.h"
 #include "transform.h"
 #include "debug.h"
-#include "fontshader.h"
-#include "design.h"
+#include "shaders/fontshader.h"
 #include "entity.h"
 
 namespace se {
@@ -126,14 +125,14 @@ namespace se {
 		if (bottomAlign == BottomAlign::HEIGHT && (align == Align::BOTTOMLEFT || align == Align::BOTTOM || align == Align::BOTTOMRIGHT)) {
 			baseline = false;
 		}
-
+		bool first = true;
 		for (p = text_.c_str(); *p; p++) {
 			if (FT_Load_Char(font->face, *p, FT_LOAD_RENDER))
 				continue;
 
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, g->bitmap.width, g->bitmap.rows, 0, GL_RED, GL_UNSIGNED_BYTE, g->bitmap.buffer);
 
-			float x2 = (pos.x + g->bitmap_left * scale.x) / Config::pixelPerUnit;
+			float x2 = (pos.x + (first && alignToGeometry? 0 : g->bitmap_left) * scale.x) / Config::pixelPerUnit;
 			float y2 = (-pos.y - (g->bitmap_top + (baseline ? 0 : baselineGap)) * scale.y) / Config::pixelPerUnit;
 			float w = (g->bitmap.width * scale.x) / Config::pixelPerUnit;
 			float h = (g->bitmap.rows * scale.y) / Config::pixelPerUnit;
@@ -151,6 +150,8 @@ namespace se {
 
 			pos.x += ((g->advance.x) / 64) * scale.x;
 			pos.y += ((g->advance.y) / 64) * scale.y;
+
+			first = false;
 		}
 
 		glDeleteTextures(1, &tex);

@@ -55,10 +55,10 @@ namespace se {
 					_drawPoint(it->position, it->color, it->tickness);
 					break;
 				case DrawElement::POLYGON:
-					_drawPolygon(it->vertices, it->color, it->mode, it->renderMode);
+					_drawPolygon(it->vertices, it->color, it->mode, it->renderMode, it->MVP);
 					break;
 				case DrawElement::VECTOR:
-					_drawVector(it->start, it->end, it->color, it->normalized, it->renderMode);
+					_drawVector(it->start, it->end, it->color, it->normalized, it->renderMode, it->MVP);
 					break;
             }
 
@@ -82,7 +82,7 @@ namespace se {
 		AddDrawCall(call);
 	}
 
-	void Design::DrawVector(glm::vec3 start, glm::vec3 end, Color color, bool normalized, RenderMode renderMode, float duration) {
+	void Design::DrawVector(glm::vec3 start, glm::vec3 end, Color color, bool normalized, RenderMode renderMode, glm::mat4 mvp, float duration) {
 		DrawCall call;
 		call.element = DrawElement::VECTOR;
 		call.start = start;
@@ -91,6 +91,7 @@ namespace se {
 		call.color = color;
 		call.duration = duration;
 		call.renderMode = renderMode;
+		call.MVP = mvp;
 
 		AddDrawCall(call);
 	}
@@ -130,7 +131,7 @@ namespace se {
 		AddDrawCall(call);
 	}
 
-	void Design::DrawPolygon(std::vector<glm::vec3> vertices, Color color, DrawMode mode, RenderMode renderMode, float duration) {
+	void Design::DrawPolygon(std::vector<glm::vec3> vertices, Color color, DrawMode mode, RenderMode renderMode, glm::mat4 mvp, float duration) {
 		DrawCall call;
 		call.element = DrawElement::POLYGON;
 		call.mode = mode;
@@ -138,6 +139,7 @@ namespace se {
 		call.color = color;
 		call.duration = duration;
 		call.renderMode = renderMode;
+		call.MVP = mvp;
 
 		AddDrawCall(call);
 	}
@@ -154,7 +156,7 @@ namespace se {
 		AddDrawCall(call);
 	}
 
-	void Design::DrawRect(glm::vec3 position, Rect rect, Color color, DrawMode mode, RenderMode renderMode, float duration) {
+	void Design::DrawRect(glm::vec3 position, Rect rect, Color color, DrawMode mode, RenderMode renderMode, glm::mat4 mvp, float duration) {
 
 		rect.SetX(rect.x + position.x);
 		rect.SetY(rect.y + position.y);
@@ -165,6 +167,7 @@ namespace se {
 		call.color = color;
 		call.duration = duration;
 		call.renderMode = renderMode;
+		call.MVP = mvp;
 
 		AddDrawCall(call);
 	}
@@ -220,7 +223,7 @@ namespace se {
 		shader->Leave();
 	}
 
-	void Design::_drawVector(glm::vec3 start, glm::vec3 end, Color color, bool normalized, RenderMode renderMode) {
+	void Design::_drawVector(glm::vec3 start, glm::vec3 end, Color color, bool normalized, RenderMode renderMode, glm::mat4 mvp) {
 		if (!Init()) return;
 
 		GLfloat bxs = 0.02f;
@@ -240,7 +243,8 @@ namespace se {
 		VAO->Use();
 		VAO->Load<vec3>(Vbo::VERTICES, vertices);
 
-		glm::mat4 mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
+		if (mvp == Transform::MAT4_IDENTITY)
+			mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 
 		shader->SetMVP(&mvp[0][0]);
 		shader->SetRenderColor(color);
@@ -286,7 +290,7 @@ namespace se {
 		shader->Leave();
 	}
 
-	void Design::_drawPolygon(std::vector<glm::vec3> vertices, Color color, DrawMode mode, RenderMode renderMode) {
+	void Design::_drawPolygon(std::vector<glm::vec3> vertices, Color color, DrawMode mode, RenderMode renderMode, glm::mat4 mvp) {
 		if (!Init()) return;
 
 		shader->Use();
@@ -294,7 +298,8 @@ namespace se {
 
 		VAO->Load<vec3>(Vbo::VERTICES, vertices);
 
-		glm::mat4 mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
+		if (mvp == Transform::MAT4_IDENTITY)
+			mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 
 		shader->SetMVP(&mvp[0][0]);
 

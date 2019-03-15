@@ -230,4 +230,33 @@ void Game::GetInput() {
 		});
 	}
 
+	if (Input::getKey(SDL_SCANCODE_Y)) {
+		Entity* canvas = SceneManager::activeScene->GetEntity("Canvas");
+		canvas->transform->rectTransform->SetRectSize({
+			canvas->transform->rectTransform->rect.width + 1.0f * Time::deltaTime,
+			canvas->transform->rectTransform->rect.height
+		});
+
+	} else if (Input::getKey(SDL_SCANCODE_U)) {
+		Entity* canvas = SceneManager::activeScene->GetEntity("Canvas");
+		canvas->transform->rectTransform->SetRectSize({
+			canvas->transform->rectTransform->rect.width - 1.0f * Time::deltaTime,
+			canvas->transform->rectTransform->rect.height
+		});
+	}
+	if (Input::getKey(SDL_SCANCODE_I)) {
+		Entity* canvas = SceneManager::activeScene->GetEntity("Canvas");
+		canvas->transform->rectTransform->SetRectSize({
+			canvas->transform->rectTransform->rect.width,
+			canvas->transform->rectTransform->rect.height + 1.0f * Time::deltaTime
+		});
+
+	} else if (Input::getKey(SDL_SCANCODE_O)) {
+		Entity* canvas = SceneManager::activeScene->GetEntity("Canvas");
+		canvas->transform->rectTransform->SetRectSize({
+			canvas->transform->rectTransform->rect.width,
+			canvas->transform->rectTransform->rect.height - 1.0f * Time::deltaTime
+		});
+	}
+
 }

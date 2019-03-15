@@ -17,8 +17,6 @@
 
 namespace se {
 
-	class Transform;
-
 	enum class Origin {
 		LOCAL,
 		WORLD
@@ -104,6 +102,7 @@ namespace se {
 
 			//}
 
+			static const glm::mat4 MAT4_IDENTITY;
 			static const glm::vec3 VEC3_ZERO;
 			static const glm::vec3 VEC3_IDENTITY;
 			static const glm::vec3 VEC3_IDENTITY2D;
@@ -153,3 +152,4 @@ namespace se {
 	};
 
 }
+

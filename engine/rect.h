@@ -50,7 +50,13 @@ namespace se {
 
 			std::string ToString();
 
-			// TODO operator ==
+			bool operator==(Rect other) {
+				return (GetVertices() == other.GetVertices());
+			}
+
+			bool operator!=(Rect other) {
+				return (GetVertices() != other.GetVertices());
+			}
 
 			void SetX(float);
 			void SetY(float);

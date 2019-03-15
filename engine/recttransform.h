@@ -3,16 +3,19 @@
 #include "glm/glm.hpp"
 #include "rect.h"
 #include "types.h"
+#include "transform.h"
 
 namespace se {
+
+	class Transform;
 
     class RectTransform {
 
 		public:
 
-            RectTransform(void* transform_);
+            RectTransform(Transform* transform_);
 
-            void* transform = nullptr;
+            Transform* transform = nullptr;
             RectTransform* parentRectTransform = nullptr;
             bool isRectTransformChild = false;
 			RenderMode renderMode = RenderMode::WORLD;
@@ -30,6 +33,8 @@ namespace se {
 			const float& right = _right;
 			const float& bottom = _bottom;
 
+			glm::mat4 GetLocalToParentMatrix();
+
 			void ForceUpdateRectTransforms(); // Force the recalculation of RectTransforms internal data.
 			void GetLocalCorners(); // Get the corners of the calculated rectangle in the local space of its Transform.
 			void GetWorldCorners(); // Get the corners of the calculated rectangle in world space.
@@ -42,11 +47,18 @@ namespace se {
             void SetPivot(glm::vec2);
             void SetAnchorMax(glm::vec2);
             void SetAnchorMin(glm::vec2);
-            void SetPosition(glm::vec2);
+            void SetAnchoredPosition(glm::vec2);
+
+			Rect GetAnchorsParentRect();
+			void CalculateSizeDelta();
 
             void init();
             void update();
             void render();
+
+			void Invalidate();
+			void InvalidateChildren();
+			bool rectInvalid = false;
 
 		private:
 

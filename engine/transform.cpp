@@ -43,6 +43,8 @@ namespace se {
 			entity->canvas = nullptr;
 		}
 
+		rectTransform->init();
+
 		if (worldPositionStays) {
 			localPosition = _position - parent->position;
 		} else {
@@ -109,7 +111,7 @@ namespace se {
 		Invalidate();
 		localPosition = isAtRoot() ? position_ : parent->position - position_;
 		_position = position_;
-		rectTransform->SetPosition({localPosition.x, localPosition.y});
+		rectTransform->SetAnchoredPosition({localPosition.x, localPosition.y});
 		setupDirections();
 	}
 
@@ -119,7 +121,7 @@ namespace se {
 		localPosition = position_;
 		Invalidate();
 		_position = GetWorldPosition();
-		rectTransform->SetPosition({localPosition.x, localPosition.y});
+		rectTransform->SetAnchoredPosition({localPosition.x, localPosition.y});
 		setupDirections();
 	}
 
@@ -206,7 +208,7 @@ namespace se {
 		Invalidate();
 		rectTransform->init();
 		if (isRectTransform) {
-			rectTransform->SetPosition(localPosition);
+			rectTransform->SetAnchoredPosition(localPosition);
 			rectTransform->update();
 		}
 	}
@@ -220,7 +222,7 @@ namespace se {
 
 		if (isRectTransform) {
 			rectTransform->renderMode = entity->canvas != nullptr ? entity->canvas->renderMode : RenderMode::WORLD;
-			rectTransform->SetPosition(localPosition);
+			rectTransform->SetAnchoredPosition(localPosition);
 			rectTransform->update();
 		}
 
@@ -231,19 +233,26 @@ namespace se {
 
 	void Transform::Render() {
 
-		if (Debug::enabled && Debug::drawTransforms) {
-			Design::DrawVector(position, up / 3.0f, Color::green, false, rectTransform->renderMode);
-			Design::DrawVector(position, right / 3.0f, Color::red, false, rectTransform->renderMode);
-			Design::DrawVector(position, forward / 3.0f, Color::blue, false, rectTransform->renderMode);
-		}
+
 
 		if (isRectTransform) {
 			rectTransform->render();
+		} else {
+			if (Debug::enabled && Debug::drawTransforms) {
+				Design::DrawVector(VEC3_ZERO, up / 3.0f, Color::green, false, RenderMode::WORLD, MVP);
+				Design::DrawVector(VEC3_ZERO, right / 3.0f, Color::red, false, RenderMode::WORLD, MVP);
+				Design::DrawVector(VEC3_ZERO, forward / 3.0f, Color::blue, false, RenderMode::WORLD, MVP);
+			}
 		}
 	}
 
 	glm::mat4 Transform::GetLocalToParentMatrix() {
-		return _localToParentMatrix = glm::translate(glm::mat4(), localPosition) * glm::toMat4(localRotation) * glm::scale(glm::mat4(), localScale);
+		if (isRectTransform && parent->isRectTransform) {
+			_localToParentMatrix = rectTransform->GetLocalToParentMatrix();
+		} else {
+			_localToParentMatrix = glm::translate(glm::mat4(), localPosition) * glm::toMat4(localRotation) * glm::scale(glm::mat4(), localScale);
+		}
+		return _localToParentMatrix;
 	}
 
 	glm::mat4 Transform::GetRootMatrix() {
@@ -310,6 +319,7 @@ namespace se {
 		return glm::quat();
 	}
 
+	const glm::mat4 Transform::MAT4_IDENTITY = glm::mat4();
 	const glm::vec3 Transform::VEC3_ZERO = {0.0f, 0.0f, 0.0f};
 	const glm::vec3 Transform::VEC3_IDENTITY = {1.0f, 1.0f, 1.0f};
 	const glm::vec3 Transform::VEC3_IDENTITY2D = {1.0f, 1.0f, 0.0f};

@@ -55,48 +55,56 @@ Level::Level() {
 
 	Entity* canvas = AddEntity<ui::Canvas>("Canvas");
 	canvas->GetComponent<Canvas>()->SetRenderMode(RenderMode::WORLD);
-	canvas->transform->rectTransform->SetRectSize({10,5});
-	canvas->transform->SetLocalPosition({-1,-1, 0});
+	canvas->transform->rectTransform->SetRectSize({10,4});
+	canvas->transform->SetLocalPosition({-1, 0, 0});
 	canvas->transform->SetPivot(PivotPosition::CENTER);
 	// Componente text direttamente agganciato alla canvas
 	Text* text1 = canvas->AddComponent<Text>();
 	text1->alignToGeometry = true;
 	text1->sortingLayerID = Config::SortingLayers["Background"];
-	text1->SetFont(f)->SetText("TOPLEFT")->SetColor(Color::red)->SetSize(0.5f);
+	text1->SetFont(f)->SetText("TL")->SetColor(Color::red)->SetSize(0.5f);
 	text1->SetAlign(Align::TOPLEFT);
-
 	Text* text2 = canvas->AddComponent<Text>();
 	text2->alignToGeometry = true;
 	text2->sortingLayerID = Config::SortingLayers["Background"];
-	text2->SetFont(f)->SetText("TOPRIGHT")->SetColor(Color::red)->SetSize(0.5f);
+	text2->SetFont(f)->SetText("TR")->SetColor(Color::red)->SetSize(0.5f);
 	text2->SetAlign(Align::TOPRIGHT);
-
 	Text* text3 = canvas->AddComponent<Text>();
 	text3->alignToGeometry = true;
 	text3->sortingLayerID = Config::SortingLayers["Background"];
-	text3->SetFont(f)->SetText("BOTTOMRIGHT")->SetColor(Color::red)->SetSize(0.5f);
+	text3->SetFont(f)->SetText("BR")->SetColor(Color::red)->SetSize(0.5f);
 	text3->SetAlign(Align::BOTTOMRIGHT);
-
 	Text* text4 = canvas->AddComponent<Text>();
 	text4->alignToGeometry = true;
 	text4->sortingLayerID = Config::SortingLayers["Background"];
-	text4->SetFont(f)->SetText("BOTTOMLEFT")->SetColor(Color::red)->SetSize(0.5f);
+	text4->SetFont(f)->SetText("BL")->SetColor(Color::red)->SetSize(0.5f);
 	text4->SetAlign(Align::BOTTOMLEFT);
-
 	Text* text5 = canvas->AddComponent<Text>();
 	text5->alignToGeometry = true;
 	text5->sortingLayerID = Config::SortingLayers["Background"];
-	text5->SetFont(f)->SetText("CENTER")->SetColor(Color::red)->SetSize(0.5f);
+	text5->SetFont(f)->SetText("CE")->SetColor(Color::red)->SetSize(0.5f);
 	text5->SetAlign(Align::CENTER);
 
 	// compoenente text in una child entity
 	ui::Text* uiText = AddEntity<ui::Text>("Label su canvas");
 	uiText->setParent(canvas);
 	uiText->transform->SetPivot(PivotPosition::BOTTOMLEFT);
-	uiText->transform->rectTransform->SetRectSize({3,1});
-	uiText->transform->SetLocalPosition({1, 1, 0});
+	uiText->transform->rectTransform->SetRectSize({4, 1});
+	uiText->transform->SetLocalPosition({-1, -1, 0});
 	auto tComp = uiText->GetComponent<Text>();
 	tComp->SetFont(f)->SetText("Label su canvas")->SetColor(Color::green)->SetSize(0.5f)->SetAlign(Align::BOTTOMLEFT);
+
+	// compoenente text in una child entity - ancorata diversamente
+	ui::Text* anchoredText = AddEntity<ui::Text>("Label 2");
+	anchoredText->setParent(canvas);
+	anchoredText->transform->SetPivot(PivotPosition::CENTER);
+	anchoredText->transform->SetLocalPosition({0, 1, 0});
+	anchoredText->transform->rectTransform->SetRectSize({4, 1});
+	anchoredText->transform->rectTransform->SetAnchorMax({1, 1});
+	anchoredText->transform->rectTransform->SetAnchorMin({0, 1});
+	anchoredText->transform->rectTransform->SetSizeWithCurrentAnchors();
+	auto t = anchoredText->GetComponent<Text>();
+	t->SetFont(f)->SetText("Con punti ancoraggio")->SetColor(Color::yellow)->SetSize(0.3f)->SetAlign(Align::CENTER);
 
 	return;
 

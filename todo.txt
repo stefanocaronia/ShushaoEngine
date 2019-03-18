@@ -1,3 +1,8 @@
+
+BUG:
+
+le proporzioni sulla canvas screen non sembrano a posto
+
 Componenti UI:
 
 Canvas

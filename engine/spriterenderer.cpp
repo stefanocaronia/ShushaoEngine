@@ -40,7 +40,6 @@ namespace se {
 
 		transform->SetPivot(sprite->pivot);
 		material->SetMainTexture(sprite->texture);
-		//material->SetTexture("diffuse_map", sprite->texture);
 	}
 
 	void SpriteRenderer::Update() {
@@ -56,9 +55,6 @@ namespace se {
 		material->shader->SetRenderColor(material->color);
 		material->shader->SetMVP(transform->uMVP());
 		material->update();
-
-		/* glActiveTexture(material->shader->GetTextureIndex("diffuse_map"));
-		glBindTexture(GL_TEXTURE_2D, material->mainTexture->TextureID); */
 
 		sprite->VAO->GetBuffer(Vbo::INDEXES)->Bind();
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);

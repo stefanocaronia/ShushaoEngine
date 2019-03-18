@@ -259,4 +259,20 @@ void Game::GetInput() {
 		});
 	}
 
+	if (Input::getKey(SDL_SCANCODE_I)) {
+		Entity* canvas = SceneManager::activeScene->GetEntity("Canvas");
+		canvas->transform->rectTransform->SetRectSize({
+			canvas->transform->rectTransform->rect.width,
+			canvas->transform->rectTransform->rect.height + 1.0f * Time::deltaTime
+		});
+
+	} else if (Input::getKey(SDL_SCANCODE_Q)) {
+		Entity* canvas = SceneManager::activeScene->GetEntity("Canvas");
+		canvas->transform->SetLocalPosition({
+			canvas->transform->localPosition.x - 1.0f * Time::deltaTime,
+			canvas->transform->localPosition.y,
+			0.0f
+		});
+	}
+
 }

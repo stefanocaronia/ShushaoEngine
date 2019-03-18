@@ -49,12 +49,12 @@ Level::Level() {
 	text->SetFont(f)->SetText("Hello game engine!")->SetColor(Color::blue)->SetSize(0.5f);
 	text->transform->SetPivot(PivotPosition::TOPLEFT);
 	text->transform->rectTransform->SetRectSize({8,3});
-	text->transform->SetLocalPosition({1, -1, 0});
+	text->transform->SetLocalPosition({5, -1, 0});
 	//text->transform->SetLocalScale({2,2,0});
 	text->SetAlign(Align::TOPLEFT);
 
 	Entity* canvas = AddEntity<ui::Canvas>("Canvas");
-	canvas->GetComponent<Canvas>()->SetRenderMode(RenderMode::WORLD);
+	canvas->GetComponent<Canvas>()->SetRenderMode(RenderMode::SCREEN);
 	canvas->transform->rectTransform->SetRectSize({10,4});
 	canvas->transform->SetLocalPosition({-1, 0, 0});
 	canvas->transform->SetPivot(PivotPosition::CENTER);
@@ -89,22 +89,46 @@ Level::Level() {
 	ui::Text* uiText = AddEntity<ui::Text>("Label su canvas");
 	uiText->setParent(canvas);
 	uiText->transform->SetPivot(PivotPosition::BOTTOMLEFT);
+	uiText->transform->rectTransform->SetAnchor({0.5f, 0.5f});
 	uiText->transform->rectTransform->SetRectSize({4, 1});
-	uiText->transform->SetLocalPosition({-1, -1, 0});
+	uiText->transform->SetLocalPosition({-2, -2, 0});
+	uiText->transform->SetPivot(PivotPosition::BOTTOMRIGHT);
 	auto tComp = uiText->GetComponent<Text>();
-	tComp->SetFont(f)->SetText("Label su canvas")->SetColor(Color::green)->SetSize(0.5f)->SetAlign(Align::BOTTOMLEFT);
+	tComp->SetFont(f)->SetText("Label su canvas")->SetColor(Color::green)->SetSize(0.5f)->SetAlign(Align::CENTER);
 
 	// compoenente text in una child entity - ancorata diversamente
 	ui::Text* anchoredText = AddEntity<ui::Text>("Label 2");
 	anchoredText->setParent(canvas);
 	anchoredText->transform->SetPivot(PivotPosition::CENTER);
-	anchoredText->transform->SetLocalPosition({0, 1, 0});
-	anchoredText->transform->rectTransform->SetRectSize({4, 1});
+
 	anchoredText->transform->rectTransform->SetAnchorMax({1, 1});
 	anchoredText->transform->rectTransform->SetAnchorMin({0, 1});
-	anchoredText->transform->rectTransform->SetSizeWithCurrentAnchors();
+	anchoredText->transform->rectTransform->RegisterPositionLRYH(1.0f, 1.0f, -1.0f, 1.0f);
+
+
+	/* anchoredText->transform->rectTransform->SetAnchorMax({1, 1});
+	anchoredText->transform->rectTransform->SetAnchorMin({0, 0});
+	anchoredText->transform->rectTransform->RegisterPositionLRTB(1.0f, 1.0f, 1.0f, 1.0f); */
+
+	/* anchoredText->transform->rectTransform->SetAnchorMax({1, 1});
+	anchoredText->transform->rectTransform->SetAnchorMin({0, 0});
+	anchoredText->transform->rectTransform->RegisterPositionLRTH(1.0f, 1.0f, 1.0f, 4.0f); */
+
+	/* anchoredText->transform->rectTransform->SetAnchorMax({0, 1});
+	anchoredText->transform->rectTransform->SetAnchorMin({0, 0});
+	anchoredText->transform->rectTransform->RegisterPositionTBXW(1.0f, 1.0f, 2.0f, 3.0f); */
+
 	auto t = anchoredText->GetComponent<Text>();
 	t->SetFont(f)->SetText("Con punti ancoraggio")->SetColor(Color::yellow)->SetSize(0.3f)->SetAlign(Align::CENTER);
+
+	ui::Image* uiImage = AddEntity<ui::Image>("Immagine su canvas");
+	uiImage->setParent(canvas);
+
+	Image* image1 = canvas->GetComponent<Image>();
+	image1->SetTexture(Resources::Get<Texture>("night"));
+	image1->transform->rectTransform->SetAnchorMax({1, 1});
+	image1->transform->rectTransform->SetAnchorMin({0, 0});
+	image1->transform->rectTransform->RegisterPositionLRTB(1.0f, 1.0f, 1.0f, 1.0f);
 
 	return;
 

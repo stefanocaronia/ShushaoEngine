@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+#include <sstream>
 #include "glm/glm.hpp"
 #include "rect.h"
 #include "types.h"
@@ -8,6 +10,41 @@
 namespace se {
 
 	class Transform;
+
+	enum class RegisterMode {
+		LRYH,
+		TBXW,
+		LRTH,
+		LRTB
+	};
+
+	struct AnchorPoints {
+		float left;
+		float top;
+		float right;
+		float bottom;
+		float width;
+		float height;
+		float Y;
+		float X;
+
+		std::string toString() {
+			std::ostringstream stream;
+
+			stream << "\n*** Anchors Info Dump ***" << "\n\n";
+
+			stream << " - left \t= " << left << "\n";
+			stream << " - right \t= " << right << "\n";
+			stream << " - top \t\t= " << top << "\n";
+			stream << " - bottom \t= " << bottom << "\n";
+			stream << " - width \t= " << width << "\n";
+			stream << " - height \t= " << height << "\n";
+			stream << " - X \t\t= " << X << "\n";
+			stream << " - Y \t\t= " << Y << "\n";
+
+			return stream.str();
+		}
+	};
 
     class RectTransform {
 
@@ -19,6 +56,7 @@ namespace se {
             RectTransform* parentRectTransform = nullptr;
             bool isRectTransformChild = false;
 			RenderMode renderMode = RenderMode::WORLD;
+			RegisterMode registerMode;
 
 			const glm::vec2& anchoredPosition = _anchoredPosition; //The position of the pivot of this RectTransform relative to the anchor reference point.
 			const glm::vec2& anchorMax = _anchorMax; // The normalized position in the parent RectTransform that the upper right corner is anchored to.
@@ -28,10 +66,6 @@ namespace se {
 			const Rect& rect = _rect; // The calculated rectangle in the local space of the Transform.
 			const glm::vec2& sizeDelta = _sizeDelta; //	The size of this RectTransform relative to the distances between the anchors.
 			const glm::vec2& pivot = _pivot;
-			const float& left = _left;
-			const float& top = _top;
-			const float& right = _right;
-			const float& bottom = _bottom;
 
 			glm::mat4 GetLocalToParentMatrix();
 
@@ -41,16 +75,26 @@ namespace se {
 			void SetInsetAndSizeFromParentEdge(); // Set the distance of this rectangle relative to a specified edge of the parent rectangle, while also setting its size.
 			void SetSizeWithCurrentAnchors(); // Makes the RectTransform calculated rect be a given size on the specified axis.
 
+			bool hasSingleAnchorPoint() { return anchorMin == anchorMax; }
+
+			void RegisterPositionLRYH(float left, float right, float Y, float height);
+			void RegisterPositionTBXW(float top, float bottom, float X, float width);
+			void RegisterPositionLRTH(float left, float right, float top, float height);
+			void RegisterPositionLRTB(float left, float right, float top, float bottom);
+
 			void SetRect(Rect rect_);
 			void SetRectSize(glm::vec2 size_);
 
             void SetPivot(glm::vec2);
+            void SetAnchor(glm::vec2);
             void SetAnchorMax(glm::vec2);
             void SetAnchorMin(glm::vec2);
-            void SetAnchoredPosition(glm::vec2);
 
 			Rect GetAnchorsParentRect();
 			void CalculateSizeDelta();
+
+			glm::vec2 rectCoordToLocal(glm::vec2 pcoord);
+			glm::vec2 localPivot(bool flipY = false);
 
             void init();
             void update();
@@ -72,11 +116,7 @@ namespace se {
 
 			glm::vec2 _pivot = {0.5f, 0.5f};
 
-			float _left;
-			float _top;
-			float _right;
-			float _bottom;
-
+			AnchorPoints deltas;
 	};
 
 }

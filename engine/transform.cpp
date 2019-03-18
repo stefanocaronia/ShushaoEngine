@@ -111,7 +111,11 @@ namespace se {
 		Invalidate();
 		localPosition = isAtRoot() ? position_ : parent->position - position_;
 		_position = position_;
-		rectTransform->SetAnchoredPosition({localPosition.x, localPosition.y});
+
+		if (isRectTransform) {
+			rectTransform->update();
+		}
+
 		setupDirections();
 	}
 
@@ -121,7 +125,11 @@ namespace se {
 		localPosition = position_;
 		Invalidate();
 		_position = GetWorldPosition();
-		rectTransform->SetAnchoredPosition({localPosition.x, localPosition.y});
+
+		if (isRectTransform) {
+			rectTransform->update();
+		}
+
 		setupDirections();
 	}
 
@@ -207,10 +215,6 @@ namespace se {
 		buildMVP();
 		Invalidate();
 		rectTransform->init();
-		if (isRectTransform) {
-			rectTransform->SetAnchoredPosition(localPosition);
-			rectTransform->update();
-		}
 	}
 
 	void Transform::Update() {
@@ -221,8 +225,6 @@ namespace se {
 		}
 
 		if (isRectTransform) {
-			rectTransform->renderMode = entity->canvas != nullptr ? entity->canvas->renderMode : RenderMode::WORLD;
-			rectTransform->SetAnchoredPosition(localPosition);
 			rectTransform->update();
 		}
 
@@ -285,7 +287,7 @@ namespace se {
 			if (isAtRoot()) {
 				_worldToLocalMatrix = glm::mat4();
 			} else {
-				_worldToLocalMatrix =  glm::toMat4(parent->rotation) * glm::translate(glm::mat4(), -parent->position);
+				_worldToLocalMatrix = glm::toMat4(parent->rotation) * glm::translate(glm::mat4(), -parent->position);
 			}
 			inverseMatrixInvalid = false;
 		}

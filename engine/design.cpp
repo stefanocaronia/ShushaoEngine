@@ -70,7 +70,7 @@ namespace se {
 		}), drawCalls.end());
 	}
 
-	void Design::DrawLine(glm::vec3 start, glm::vec3 end, Color color, float duration) {
+	void Design::DrawLine(glm::vec3 start, glm::vec3 end, Color color, glm::mat4 mvp, float duration) {
 		DrawCall call;
 		call.element = DrawElement::LINE;
 		call.mode = DrawMode::HOLLOW;
@@ -78,6 +78,7 @@ namespace se {
 		call.end = end;
 		call.color = color;
 		call.duration = duration;
+		call.MVP = mvp;
 
 		AddDrawCall(call);
 	}
@@ -96,18 +97,19 @@ namespace se {
 		AddDrawCall(call);
 	}
 
-	void Design::DrawPoint(glm::vec3 position, Color color, float duration) {
+	void Design::DrawPoint(glm::vec3 position, Color color, glm::mat4 mvp, float duration) {
 		DrawCall call;
 		call.element = DrawElement::POINT;
 		call.mode = DrawMode::HOLLOW;
 		call.position = position;
 		call.color = color;
 		call.duration = duration;
+		call.MVP = mvp;
 
 		AddDrawCall(call);
 	}
 
-	void Design::DrawPoint(glm::vec3 position, Color color, int tickness, float duration) {
+	void Design::DrawPoint(glm::vec3 position, Color color, int tickness, glm::mat4 mvp, float duration) {
 		DrawCall call;
 		call.element = DrawElement::POINT;
 		call.mode = DrawMode::HOLLOW;
@@ -115,11 +117,12 @@ namespace se {
 		call.color = color;
 		call.duration = duration;
 		call.tickness = tickness;
+		call.MVP = mvp;
 
 		AddDrawCall(call);
 	}
 
-	void Design::DrawRay(glm::vec3 start, glm::vec3 dir, Color color, float duration) {
+	void Design::DrawRay(glm::vec3 start, glm::vec3 dir, Color color, glm::mat4 mvp, float duration) {
 		DrawCall call;
 		call.element = DrawElement::RAY;
 		call.mode = DrawMode::HOLLOW;
@@ -127,6 +130,7 @@ namespace se {
 		call.dir = dir;
 		call.color = color;
 		call.duration = duration;
+		call.MVP = mvp;
 
 		AddDrawCall(call);
 	}
@@ -144,7 +148,7 @@ namespace se {
 		AddDrawCall(call);
 	}
 
-	void Design::DrawCircle(glm::vec3 position, float radius, Color color, DrawMode mode, float duration) {
+	void Design::DrawCircle(glm::vec3 position, float radius, Color color, DrawMode mode, glm::mat4 mvp, float duration) {
 		DrawCall call;
 		call.element = DrawElement::CIRCLE;
 		call.mode = mode;
@@ -152,6 +156,7 @@ namespace se {
 		call.radius = radius;
 		call.color = color;
 		call.duration = duration;
+		call.MVP = mvp;
 
 		AddDrawCall(call);
 	}
@@ -176,7 +181,7 @@ namespace se {
 
 	//{ #region draw methods
 
-	void Design::_drawPoint(glm::vec3 position, Color color, int tickness) {
+	void Design::_drawPoint(glm::vec3 position, Color color, int tickness, RenderMode renderMode, glm::mat4 mvp) {
 		if (!Init()) return;
 
 		vertices.clear();
@@ -186,10 +191,18 @@ namespace se {
 		VAO->Use();
 		VAO->Load<vec3>(Vbo::VERTICES, vertices);
 
-		glm::mat4 mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
+		if (mvp == Transform::MAT4_IDENTITY)
+			mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
+
+		if (renderMode == RenderMode::SCREEN) {
+			shader->Enable("viewport");
+			shader->SetVector("viewport", GLManager::VIEWPORT);
+		}
 
 		shader->SetMVP(&mvp[0][0]);
 		shader->SetRenderColor(color);
+
+		VAO->GetBuffer(Vbo::VERTICES)->Bind();
 
 		glEnablei(GL_BLEND, VAO->GetBuffer(Vbo::VERTICES)->Id);
 		glPointSize(tickness);
@@ -197,11 +210,17 @@ namespace se {
 		glPointSize(1);
 		glDisablei(GL_BLEND, VAO->GetBuffer(Vbo::VERTICES)->Id);
 
+		VAO->GetBuffer(Vbo::VERTICES)->Unbind();
+
+		if (renderMode == RenderMode::SCREEN) {
+			shader->Disable("viewport");
+		}
+
 		VAO->Leave();
 		shader->Leave();
 	}
 
-	void Design::_drawLine(glm::vec3 start, glm::vec3 end, Color color) {
+	void Design::_drawLine(glm::vec3 start, glm::vec3 end, Color color, RenderMode renderMode, glm::mat4 mvp) {
 		if (!Init()) return;
 
 		vector<glm::vec3> vertices = {start, end};
@@ -210,7 +229,13 @@ namespace se {
 		VAO->Use();
 		VAO->Load<vec3>(Vbo::VERTICES, vertices);
 
-		glm::mat4 mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
+		if (mvp == Transform::MAT4_IDENTITY)
+			mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
+
+		if (renderMode == RenderMode::SCREEN) {
+			shader->Enable("viewport");
+			shader->SetVector("viewport", GLManager::VIEWPORT);
+		}
 
 		shader->SetMVP(&mvp[0][0]);
 		shader->SetRenderColor(color);
@@ -218,6 +243,10 @@ namespace se {
 		glEnablei(GL_BLEND, VAO->GetBuffer(Vbo::VERTICES)->Id);
 		glDrawArrays(GL_LINES, 0, vertices.size());
 		glDisablei(GL_BLEND, VAO->GetBuffer(Vbo::VERTICES)->Id);
+
+		if (renderMode == RenderMode::SCREEN) {
+			shader->Disable("viewport");
+		}
 
 		VAO->Leave();
 		shader->Leave();
@@ -268,7 +297,7 @@ namespace se {
 		shader->Leave();
 	}
 
-	void Design::_drawRay(glm::vec3 start, glm::vec3 dir, Color color) {
+	void Design::_drawRay(glm::vec3 start, glm::vec3 dir, Color color, RenderMode renderMode, glm::mat4 mvp) {
 		if (!Init()) return;
 
 		vector<glm::vec3> vertices = {start, start + dir};
@@ -277,7 +306,13 @@ namespace se {
 		VAO->Use();
 		VAO->Load<vec3>(Vbo::VERTICES, vertices);
 
-		glm::mat4 mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
+		if (mvp == Transform::MAT4_IDENTITY)
+			mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
+
+		if (renderMode == RenderMode::SCREEN) {
+			shader->Enable("viewport");
+			shader->SetVector("viewport", GLManager::VIEWPORT);
+		}
 
 		shader->SetMVP(&mvp[0][0]);
 		shader->SetRenderColor(color);
@@ -285,6 +320,10 @@ namespace se {
 		glEnablei(GL_BLEND, VAO->GetBuffer(Vbo::VERTICES)->Id);
 		glDrawArrays(GL_LINES, 0, vertices.size());
 		glDisablei(GL_BLEND, VAO->GetBuffer(Vbo::VERTICES)->Id);
+
+		if (renderMode == RenderMode::SCREEN) {
+			shader->Disable("viewport");
+		}
 
 		VAO->Leave();
 		shader->Leave();
@@ -298,7 +337,7 @@ namespace se {
 
 		VAO->Load<vec3>(Vbo::VERTICES, vertices);
 
-		if (mvp == Transform::MAT4_IDENTITY)
+		if (mvp == Transform::MAT4_IDENTITY || renderMode != RenderMode::SCREEN)
 			mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 
 		shader->SetMVP(&mvp[0][0]);
@@ -338,7 +377,7 @@ namespace se {
 		shader->Leave();
 	}
 
-	void Design::_drawCircle(glm::vec3 position, float radius, Color color, DrawMode mode) {
+	void Design::_drawCircle(glm::vec3 position, float radius, Color color, DrawMode mode, RenderMode renderMode, glm::mat4 mvp) {
 		if (!Init()) return;
 
 		vector<glm::vec3> vertices;
@@ -354,14 +393,25 @@ namespace se {
 
 		VAO->Load<vec3>(Vbo::VERTICES, vertices);
 
-		glm::mat4 mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
+		if (mvp == Transform::MAT4_IDENTITY)
+			mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 
 		shader->SetMVP(&mvp[0][0]);
 		shader->SetRenderColor(color);
 
+		if (renderMode == RenderMode::SCREEN) {
+			shader->Enable("viewport");
+			shader->SetVector("viewport", GLManager::VIEWPORT);
+		}
+
 		glEnablei(GL_BLEND, VAO->GetBuffer(Vbo::VERTICES)->Id);
 		glDrawArrays((mode == DrawMode::FULL ? GL_TRIANGLE_STRIP : GL_LINE_LOOP), 0, vertices.size());
 		glDisablei(GL_BLEND, VAO->GetBuffer(Vbo::VERTICES)->Id);
+
+
+		if (renderMode == RenderMode::SCREEN) {
+			shader->Disable("viewport");
+		}
 
 		VAO->Leave();
 		shader->Leave();

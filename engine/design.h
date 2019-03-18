@@ -65,12 +65,12 @@ namespace se {
 
 		public:
 
-			static void DrawPoint(glm::vec3 position, Color color, float duration = 0.0f);
-			static void DrawPoint(glm::vec3 position, Color color, int tickness, float duration = 0.0f);
-			static void DrawLine(glm::vec3 start, glm::vec3 end, Color color, float duration = 0.0f);
-			static void DrawRay(glm::vec3 start, glm::vec3 dir, Color color, float duration = 0.0f);
+			static void DrawPoint(glm::vec3 position, Color color, glm::mat4 mvp = Transform::MAT4_IDENTITY, float duration = 0.0f);
+			static void DrawPoint(glm::vec3 position, Color color, int tickness, glm::mat4 mvp = Transform::MAT4_IDENTITY, float duration = 0.0f);
+			static void DrawLine(glm::vec3 start, glm::vec3 end, Color color, glm::mat4 mvp = Transform::MAT4_IDENTITY, float duration = 0.0f);
+			static void DrawRay(glm::vec3 start, glm::vec3 dir, Color color, glm::mat4 mvp = Transform::MAT4_IDENTITY, float duration = 0.0f);
 			static void DrawPolygon(std::vector<glm::vec3> vertices_, Color color, DrawMode mode = DrawMode::HOLLOW, RenderMode renderMode = RenderMode::WORLD, glm::mat4 mvp = Transform::MAT4_IDENTITY, float duration = 0.0f);
-			static void DrawCircle(glm::vec3 position, float radius, Color color, DrawMode mode = DrawMode::HOLLOW, float duration = 0.0f);
+			static void DrawCircle(glm::vec3 position, float radius, Color color, DrawMode mode = DrawMode::HOLLOW, glm::mat4 mvp = Transform::MAT4_IDENTITY, float duration = 0.0f);
 			static void DrawRect(glm::vec3 position, Rect rect, Color color, DrawMode mode = DrawMode::HOLLOW, RenderMode renderMode = RenderMode::WORLD, glm::mat4 mvp = Transform::MAT4_IDENTITY, float duration = 0.0f);
 			static void DrawVector(glm::vec3 start, glm::vec3 end, Color color, bool normalized = false, RenderMode renderMode = RenderMode::WORLD, glm::mat4 mvp = Transform::MAT4_IDENTITY, float duration = 0.0f);
 
@@ -89,11 +89,11 @@ namespace se {
 
 			static void AddDrawCall(DrawCall);
 
-			static void _drawPoint(glm::vec3 position, Color color, int tickness = 1);
-			static void _drawLine(glm::vec3 start, glm::vec3 end, Color color);
-			static void _drawRay(glm::vec3 start, glm::vec3 dir, Color color);
+			static void _drawPoint(glm::vec3 position, Color color, int tickness = 1, RenderMode renderMode = RenderMode::WORLD, glm::mat4 mvp = Transform::MAT4_IDENTITY);
+			static void _drawLine(glm::vec3 start, glm::vec3 end, Color color, RenderMode renderMode = RenderMode::WORLD, glm::mat4 mvp = Transform::MAT4_IDENTITY);
+			static void _drawRay(glm::vec3 start, glm::vec3 dir, Color color, RenderMode renderMode = RenderMode::WORLD, glm::mat4 mvp = Transform::MAT4_IDENTITY);
 			static void _drawPolygon(std::vector<glm::vec3> vertices_, Color color, DrawMode mode = DrawMode::HOLLOW, RenderMode renderMode = RenderMode::WORLD, glm::mat4 mvp = Transform::MAT4_IDENTITY);
-			static void _drawCircle(glm::vec3 position, float radius, Color color, DrawMode mode = DrawMode::HOLLOW);
+			static void _drawCircle(glm::vec3 position, float radius, Color color, DrawMode mode = DrawMode::HOLLOW, RenderMode renderMode = RenderMode::WORLD, glm::mat4 mvp = Transform::MAT4_IDENTITY);
 			static void _drawVector(glm::vec3 start, glm::vec3 end, Color color, bool normalized = false, RenderMode renderMode = RenderMode::WORLD, glm::mat4 mvp = Transform::MAT4_IDENTITY);
 
 			static std::vector<DrawCall> drawCalls;

@@ -46,6 +46,7 @@
 #include "collision2d.h"
 #include "font.h"
 #include "text.h"
+#include "image.h"
 #include "meshrenderer.h"
 #include "shaders/phongshader.h"
 #include "canvas.h"
@@ -53,4 +54,5 @@
 // UI
 #include "ui/canvas.h"
 #include "ui/text.h"
+#include "ui/image.h"
 

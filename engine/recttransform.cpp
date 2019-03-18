@@ -11,60 +11,174 @@ namespace se {
         transform = transform_;
         init();
         update();
+        _rect.YUP = true;
+        _rect.name = transform->entity->name;
     }
 
     glm::mat4 RectTransform::GetLocalToParentMatrix() {
-        vec2 parentAnchorCoord = anchorMin * parentRectTransform->rect.size;
-        return glm::translate(glm::mat4(), vec3(anchoredPosition - parentAnchorCoord, 0.0f)) * glm::toMat4(transform->localRotation) * glm::scale(glm::mat4(), transform->localScale);
+        glm::mat4 matrix;
+        if (hasSingleAnchorPoint()) {
+            vec2 parentAnchorCoord = parentRectTransform->rectCoordToLocal(anchorMin * parentRectTransform->rect.size);
+            matrix = glm::translate(glm::mat4(), vec3(parentAnchorCoord, 0.0f))
+                    * glm::translate(glm::mat4(), transform->localPosition)
+                    * glm::toMat4(transform->localRotation) * glm::scale(glm::mat4(), transform->localScale);
+        } else {
+            if (rectInvalid) SetSizeWithCurrentAnchors();
+            matrix = glm::translate(glm::mat4(), vec3(anchoredPosition, 0.0f))
+                     /* glm::translate(glm::mat4(), transform->localPosition) */
+                    * glm::toMat4(transform->localRotation) * glm::scale(glm::mat4(), transform->localScale);
+        }
+
+        return matrix;
+    }
+
+    void RectTransform::update() {
+        if (isRectTransformChild && !hasSingleAnchorPoint()) {
+            // if (rectInvalid) SetSizeWithCurrentAnchors();
+        } else {
+            _rect.SetPosition(vec2(0, rect.height) -localPivot());
+        }
+    }
+
+	vec2 RectTransform::rectCoordToLocal(vec2 pcoord) {
+        return pcoord - localPivot();
+	}
+
+    vec2 RectTransform::localPivot(bool flipY) {
+        if (flipY) {
+            return rect.size * pivot * vec2(1, -1);
+        }
+        return rect.size * pivot;
     }
 
     Rect RectTransform::GetAnchorsParentRect() {
         Rect ar;
-        ar.SetPosition({
+        ar.YUP = true;
+        ar.Set(
             anchorMin.x * parentRectTransform->rect.width,
-            anchorMax.y * parentRectTransform->rect.height
-        });
-        ar.SetSize({
-            (anchorMax.x - anchorMin.x) * parentRectTransform->rect.width,
-            (anchorMax.y - anchorMin.y) * parentRectTransform->rect.height
-        });
+            anchorMax.y * parentRectTransform->rect.height,
+            anchorMax.x * parentRectTransform->rect.width - anchorMin.x * parentRectTransform->rect.width,
+            anchorMax.y * parentRectTransform->rect.height - anchorMin.y * parentRectTransform->rect.height
+        );
+
         return ar;
     }
 
     void RectTransform::SetSizeWithCurrentAnchors() {
         if (!isRectTransformChild) return;
-        Rect ar = GetAnchorsParentRect();
+        Rect apr = GetAnchorsParentRect();
+        vec2 piv = pivot * vec2(deltas.width, deltas.height);
 
-        if (ar.height = 0 && ar.width > 0) {
-            _rect.SetX(ar.xMin + _left);
-            _rect.SetXMax(ar.xMax - _right);
-        } else if (ar.width = 0 && ar. height > 0) {
-            _rect.SetY(ar.yMax - _top);
-            _rect.SetYMin(ar.yMin + _bottom);
-        } else if (anchorMin != anchorMax) {
-            _rect.SetPosition({ar.xMin + _left, ar.yMax - _top});
-            _rect.SetSize({_right - ar.xMin, ar.yMin + _bottom});
+        Rect tempRect;
+        tempRect.YUP = true;
+
+        switch (registerMode) {
+            case RegisterMode::LRYH: // OK
+                deltas.width = parentRectTransform->rect.width - deltas.left - deltas.right;
+
+                tempRect.Set(
+                    apr.xMin + deltas.left,
+                    apr.yMax + deltas.Y + pivot.y,
+                    deltas.width,
+                    deltas.height
+                );
+
+                break;
+
+            case RegisterMode::TBXW: // OK
+                deltas.left = deltas.X - piv.x;
+                deltas.right = parentRectTransform->rect.width - deltas.width - deltas.left;
+                deltas.height = parentRectTransform->rect.height - deltas.top - deltas.bottom;
+
+                tempRect.Set(
+                    apr.xMin + deltas.left,
+                    apr.yMax - deltas.top,
+                    deltas.width,
+                    deltas.height
+                );
+
+                break;
+
+            case RegisterMode::LRTH: // OK
+                deltas.width = parentRectTransform->rect.width - deltas.left - deltas.right;
+
+                tempRect.Set(
+                    apr.xMin + deltas.left,
+                    apr.yMax - deltas.top,
+                    deltas.width,
+                    deltas.height
+                );
+
+                break;
+
+            case RegisterMode::LRTB: // OK
+                deltas.width = parentRectTransform->rect.width - deltas.left - deltas.right;
+                deltas.height = parentRectTransform->rect.height - deltas.top - deltas.bottom;
+
+                tempRect.Set(
+                    apr.xMin + deltas.left,
+                    apr.yMax - deltas.top,
+                    deltas.width,
+                    deltas.height
+                );
+
+                break;
         }
+
+        vec2 localPosition = tempRect.position - parentRectTransform->localPivot();
+
+        _rect.SetSize(tempRect.size);
+        _rect.SetPosition(vec2(0,0) - localPivot(true));
+        _anchoredPosition = localPosition + localPivot(true);
+
+        /* Debug::Log << "AnchorsParentRect" << endl;
+        Debug::Log << apr.ToString() << endl;
+        Debug::Log << "Rect" << endl;
+        Debug::Log << tempRect.ToString() << endl;
+        Debug::Log << "Anchored Position: " <<_anchoredPosition.x << ", " << _anchoredPosition.y << endl;
+        Debug::Log(WARNING) << deltas.toString() << endl; */
 
         rectInvalid = false;
     }
 
-    void RectTransform::CalculateSizeDelta() {
-        if (!isRectTransformChild) return;
-        Rect apr = GetAnchorsParentRect();
-        _top = apr.yMax - rect.yMax; // anchoredPosition.y + (rect.height * (1.0f - pivot.y));
-        _right = apr.xMax - rect.xMax; // anchoredPosition.x + (rect.width * (1.0f - pivot.x));
-        _left = rect.xMin - apr.xMin; // apr.xMin - anchorMin.x * parentRectTransform->rect.width - (rect.width * pivot.x);
-        _bottom = rect.yMin - apr.yMin; //apr.yMin - anchorMin.y * parentRectTransform->rect.height - (rect.height * pivot.y);
+    void RectTransform::RegisterPositionLRYH(float left_, float right_, float Y_, float height_) { // OK
+        deltas.left = left_;
+        deltas.right = right_;
+        deltas.Y = Y_;
+        deltas.height = height_;
+
+        registerMode = RegisterMode::LRYH;
+        SetSizeWithCurrentAnchors();
     }
 
-    void RectTransform::SetAnchorMax(glm::vec2 value) {
-        if (value != _anchorMax) {
-            _anchorMax = value;
-            Invalidate();
-            CalculateSizeDelta();
-            update();
-        }
+    void RectTransform::RegisterPositionTBXW(float top_, float bottom_, float X_, float width_) {
+        deltas.top = top_;
+        deltas.bottom = bottom_;
+        deltas.X = X_;
+        deltas.width = width_;
+
+        registerMode = RegisterMode::TBXW;
+        SetSizeWithCurrentAnchors();
+    }
+
+    void RectTransform::RegisterPositionLRTH(float left_, float right_, float top_, float height_) {
+        deltas.left = left_;
+        deltas.right = right_;
+        deltas.top = top_;
+        deltas.height = height_;
+
+        registerMode = RegisterMode::LRTH;
+        SetSizeWithCurrentAnchors();
+    }
+
+    void RectTransform::RegisterPositionLRTB(float left_, float right_, float top_, float bottom_) {
+        deltas.left = left_;
+        deltas.right = right_;
+        deltas.top = top_;
+        deltas.bottom = bottom_;
+
+        registerMode = RegisterMode::LRTB;
+        SetSizeWithCurrentAnchors();
     }
 
     void RectTransform::SetPivot(glm::vec2 value) {
@@ -75,23 +189,20 @@ namespace se {
         }
     }
 
-    void RectTransform::SetAnchorMin(glm::vec2 value) {
-        if (value != _anchorMin) {
-            _anchorMin = value;
-            Invalidate();
-            CalculateSizeDelta();
-            update();
-        }
+    void RectTransform::SetAnchor(glm::vec2 value) {
+        _anchorMax = value;
+        _anchorMin = value;
+        update();
     }
 
-    void RectTransform::SetAnchoredPosition(glm::vec2 value) {
-        if (value != _anchoredPosition) {
-            InvalidateChildren();
-            _anchoredPosition = value;
-            transform->Invalidate();
-            CalculateSizeDelta();
-            update();
-        }
+    void RectTransform::SetAnchorMax(glm::vec2 value) {
+        _anchorMax = value;
+        update();
+    }
+
+    void RectTransform::SetAnchorMin(glm::vec2 value) {
+        _anchorMin = value;
+        update();
     }
 
     void RectTransform::SetRect(Rect value) {
@@ -99,7 +210,6 @@ namespace se {
             InvalidateChildren();
             _rect = value;
             transform->Invalidate();
-            CalculateSizeDelta();
             update();
         }
     }
@@ -109,7 +219,6 @@ namespace se {
             InvalidateChildren();
              _rect.SetSize(size_);
             transform->Invalidate();
-            CalculateSizeDelta();
             update();
         }
 
@@ -120,23 +229,7 @@ namespace se {
             parentRectTransform = transform->parent->rectTransform;
             isRectTransformChild = transform->parent->isRectTransform;
         }
-    }
-
-    void RectTransform::update() {
-
-        if (isRectTransformChild) {
-            if (anchorMax == anchorMin) {
-                vec2 parentAnchorCoord = anchorMin * parentRectTransform->rect.size;
-                _rect.SetPosition(parentAnchorCoord - rect.size * pivot);
-            } else {
-               if (rectInvalid) SetSizeWithCurrentAnchors();
-            }
-
-        } else {
-
-            _rect.SetPosition(-rect.size * pivot);
-        }
-
+        renderMode = transform->entity->canvas != nullptr ? transform->entity->canvas->renderMode : RenderMode::WORLD;
     }
 
     void RectTransform::Invalidate() {
@@ -158,15 +251,18 @@ namespace se {
 
         if (Debug::enabled) {
             Color color;
-            if (renderMode == RenderMode::WORLD)        color = {0.1f, 0.1f, 0.5f, 0.6f};
-            else if (renderMode == RenderMode::SCREEN)  color = {0.5f, 0.0f, 0.1f, 0.2f};
-            Design::DrawRect(Transform::VEC3_ZERO, rect, color, DrawMode::HOLLOW, renderMode, transform->MVP);
+            vec3 position = Transform::VEC3_ZERO;
+            if (renderMode == RenderMode::WORLD) {
+                color = {0.1f, 0.1f, 0.5f, 0.6f};
+            } else if (renderMode == RenderMode::SCREEN) {
+                color = {0.5f, 0.0f, 0.1f, 0.2f};
+                position = transform->position;
+            }
+            Design::DrawRect(position, rect, color, DrawMode::HOLLOW, renderMode, transform->MVP);
 
-            vec3 boxTransformPoint = vec3(rect.position + rect.size * pivot, 0.0f);
-
-            Design::DrawVector(boxTransformPoint, transform->up / 3.0f, Color::green, false, renderMode, transform->MVP);
-			Design::DrawVector(boxTransformPoint, transform->right / 3.0f, Color::red, false, renderMode, transform->MVP);
-			Design::DrawVector(boxTransformPoint, transform->forward / 3.0f, Color::blue, false, renderMode, transform->MVP);
+            Design::DrawVector(position, transform->up / 3.0f, Color::green, false, renderMode, transform->MVP);
+			Design::DrawVector(position, transform->right / 3.0f, Color::red, false, renderMode, transform->MVP);
+			Design::DrawVector(position, transform->forward / 3.0f, Color::blue, false, renderMode, transform->MVP);
         }
 
     }

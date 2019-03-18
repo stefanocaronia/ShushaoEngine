@@ -18,6 +18,11 @@ namespace se {
 		Set(_x, _y, _w, _h);
 	}
 
+	Rect Rect::Copy() {
+		Rect c {x, y, width, height};
+		return c;
+	}
+
 	string Rect::ToString() {
 
 		std::ostringstream stream;
@@ -50,29 +55,46 @@ namespace se {
 		position = {_x, _y};
 		size = {_w, _h};
 
-
 		height = _h;
 		width = _w;
-
-		center = {x + (width / 2), y + (height / 2)};
 
 		xMax = x + width;
 		xMin = x;
 
-		yMax = y + height;
-		yMin = y;
+		if (YUP) {
+
+			yMax = y;
+			yMin = y - height;
+
+			topleft = {x, y};
+			topright = {xMax, y};
+			bottomleft = {x, yMin};
+			bottomright = {xMax, yMin};
+			top = {center.x, yMax};
+			bottom = {center.x, yMin};
+
+			center = {x + (width / 2), y - (height / 2)};
+
+		} else {
+
+			yMax = y + height;
+			yMin = y;
+
+			topleft = {x, y};
+			topright = {xMax, yMin};
+			bottomleft = {xMin, yMax};
+			bottomright = {xMax, yMax};
+			top = {center.x, yMin};
+			bottom = {center.x, yMax};
+
+			center = {x + (width / 2), y + (height / 2)};
+		}
 
 		max = {xMax, yMax};
 		min = {xMin, yMin};
 
-		topleft = min;
-		topright = {xMax, yMin};
-		bottomleft = {xMin, yMax};
-		bottomright = max;
-		left = {xMin, y + (height /2)};
-		right = {xMax, y + (height /2)};
-		top = {x + (width / 2), yMin};
-		bottom = {x + (width / 2), yMax};
+		left = {xMin, center.y};
+		right = {xMax, center.y};
 	}
 
 	void Rect::SetX(float _x) {
@@ -128,17 +150,15 @@ namespace se {
 	}
 
 	vector<vec2> Rect::GetVertices() {
-		return {
-			topleft, topright, bottomright, bottomleft
-		};
+		return {topleft, topright, bottomright, bottomleft};
 	}
 
 	vector<vec3> Rect::GetVertices3D() {
 		return {
-			{topleft.x, topleft.y, 0.0f},
-			{topright.x, topright.y, 0.0f},
-			{bottomright.x, bottomright.y, 0.0f},
-			{bottomleft.x, bottomleft.y, 0.0f}
+			vec3(topleft, 0),
+			vec3(topright, 0),
+			vec3(bottomright, 0),
+			vec3(bottomleft, 0)
 		};
 	}
 

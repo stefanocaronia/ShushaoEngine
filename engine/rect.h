@@ -13,6 +13,9 @@ namespace se {
 			Rect();
 			Rect(float, float, float, float);
 
+			std::string name = "";
+			bool YUP = false;
+
 			static Rect zero;
 
 			static Rect MinMaxRect(float, float, float, float);	// Creates a rectangle from min/max coordinate values.
@@ -47,6 +50,8 @@ namespace se {
 
 			bool Overlaps(Rect);	// Returns true if the other rectangle overlaps this one. If allowInverse is present and true, the widths and heights of the Rects are allowed to take negative values (ie, the min value is greater than the max), and the test will still work.
 			void Set(float, float, float, float); 	 // Set components of an existing Rect.
+
+			Rect Copy();
 
 			std::string ToString();
 

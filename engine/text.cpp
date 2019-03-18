@@ -59,10 +59,7 @@ namespace se {
 
 		float width = 0;
 		float height = 0;
-		unsigned int pixelHeight = 0;
 		unsigned int baselineGap = 0;
-
-		vec2 lpos;
 
 		for (p = text_.c_str(); *p; p++) {
 			if (FT_Load_Char(font->face, *p, FT_LOAD_RENDER))
@@ -70,54 +67,55 @@ namespace se {
 
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, g->bitmap.width, g->bitmap.rows, 0, GL_RED, GL_UNSIGNED_BYTE, g->bitmap.buffer);
 
-			pixelHeight = std::max(pixelHeight, g->bitmap.rows);
-			width += (((g->advance.x) / 64) * scale.x) / Config::pixelPerUnit;
-			height = std::max(height, (g->bitmap.rows * scale.y) / Config::pixelPerUnit);
+			width += (((g->advance.x) / 64) * scale.x); // / Config::pixelPerUnit;
+			height = std::max(height, (g->bitmap.rows * scale.y)); // / Config::pixelPerUnit);
 
 			if (g->bitmap.rows > (unsigned int)g->bitmap_top) {
 				baselineGap = std::max(baselineGap, (unsigned int)(g->bitmap.rows - g->bitmap_top));
 			}
 		}
 
-		Rect textBox {0, 0, width, height};
+		pos += (transform->rectTransform->rect.bottomleft * (float)pixelPerUnit);
 
-		pos += (transform->rectTransform->rect.topleft * (float)Config::pixelPerUnit);
+		vec2 rectPixelSize = transform->rectTransform->rect.size * (float)pixelPerUnit;
+		vec2 textPixelSize = {width, height};
+		vec2 sizeDelta = rectPixelSize - textPixelSize;
 
 		switch (align) {// si parte da bottomleft
 			case Align::TOPLEFT:
-				pos.y += (transform->rectTransform->rect.height - textBox.height) * (float)Config::pixelPerUnit;
+				pos.y += sizeDelta.y;
 				break;
 			case Align::TOPRIGHT:
-				pos.y += (transform->rectTransform->rect.height - textBox.height) * (float)Config::pixelPerUnit;
-				pos.x += (transform->rectTransform->rect.width - textBox.width) * (float)Config::pixelPerUnit;
+				pos.y += sizeDelta.y;
+				pos.x += sizeDelta.x;
 				break;
 			case Align::BOTTOMLEFT:
 				// rimane uguale
 				break;
 			case Align::BOTTOMRIGHT:
-				pos.x += (transform->rectTransform->rect.width - textBox.width) * (float)Config::pixelPerUnit;
+				pos.x += sizeDelta.x;
 				break;
 			case Align::LEFT:
-				pos.y += ((transform->rectTransform->rect.height / 2) - (textBox.height / 2)) * (float)Config::pixelPerUnit;
+				pos.y += sizeDelta.y / 2;
 				break;
 			case Align::RIGHT:
-				pos.y += ((transform->rectTransform->rect.height / 2) - (textBox.height / 2)) * (float)Config::pixelPerUnit;
-				pos.x += (transform->rectTransform->rect.width - textBox.width) * (float)Config::pixelPerUnit;
+				pos.y += sizeDelta.y / 2;
+				pos.x += sizeDelta.x;
 				break;
 			case Align::TOP:
-				pos.x += ((transform->rectTransform->rect.width / 2) - (textBox.width / 2)) * (float)Config::pixelPerUnit;
-				pos.y += (transform->rectTransform->rect.height - textBox.height) * (float)Config::pixelPerUnit;
+				pos.x += sizeDelta.x / 2;
+				pos.y += sizeDelta.y;
 				break;
 			case Align::BOTTOM:
-				pos.x += ((transform->rectTransform->rect.width / 2) - (textBox.width / 2)) * (float)Config::pixelPerUnit;
+				pos.x += sizeDelta.x / 2;
 				break;
 			case Align::CENTER:
-				pos.x += ((transform->rectTransform->rect.width / 2) - (textBox.width / 2)) * (float)Config::pixelPerUnit;
-				pos.y += ((transform->rectTransform->rect.height / 2) - (textBox.height / 2)) * (float)Config::pixelPerUnit;
+				pos.x += sizeDelta.x / 2;
+				pos.y += sizeDelta.y / 2;
 				break;
 			case Align::CUSTOM:
 			default:
-				pos.y += (transform->rectTransform->rect.height - textBox.height) * (float)Config::pixelPerUnit;
+				break;
 
 		}
 

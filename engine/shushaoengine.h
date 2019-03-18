@@ -47,6 +47,7 @@
 #include "font.h"
 #include "text.h"
 #include "image.h"
+#include "rawimage.h"
 #include "meshrenderer.h"
 #include "shaders/phongshader.h"
 #include "canvas.h"
@@ -55,4 +56,5 @@
 #include "ui/canvas.h"
 #include "ui/text.h"
 #include "ui/image.h"
+#include "ui/rawimage.h"
 

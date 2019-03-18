@@ -54,7 +54,7 @@ Level::Level() {
 	text->SetAlign(Align::TOPLEFT);
 
 	Entity* canvas = AddEntity<ui::Canvas>("Canvas");
-	canvas->GetComponent<Canvas>()->SetRenderMode(RenderMode::SCREEN);
+	canvas->GetComponent<Canvas>()->SetRenderMode(RenderMode::WORLD);
 	canvas->transform->rectTransform->SetRectSize({10,4});
 	canvas->transform->SetLocalPosition({-1, 0, 0});
 	canvas->transform->SetPivot(PivotPosition::CENTER);
@@ -105,7 +105,6 @@ Level::Level() {
 	anchoredText->transform->rectTransform->SetAnchorMin({0, 1});
 	anchoredText->transform->rectTransform->RegisterPositionLRYH(1.0f, 1.0f, -1.0f, 1.0f);
 
-
 	/* anchoredText->transform->rectTransform->SetAnchorMax({1, 1});
 	anchoredText->transform->rectTransform->SetAnchorMin({0, 0});
 	anchoredText->transform->rectTransform->RegisterPositionLRTB(1.0f, 1.0f, 1.0f, 1.0f); */
@@ -121,14 +120,15 @@ Level::Level() {
 	auto t = anchoredText->GetComponent<Text>();
 	t->SetFont(f)->SetText("Con punti ancoraggio")->SetColor(Color::yellow)->SetSize(0.3f)->SetAlign(Align::CENTER);
 
-	ui::Image* uiImage = AddEntity<ui::Image>("Immagine su canvas");
+	ui::RawImage* uiImage = AddEntity<ui::RawImage>("Immagine su canvas");
 	uiImage->setParent(canvas);
 
-	Image* image1 = canvas->GetComponent<Image>();
-	image1->SetTexture(Resources::Get<Texture>("night"));
+	RawImage* image1 = uiImage->GetComponent<RawImage>();
+	image1->SetTexture(Resources::Get<Texture>("eye"));
 	image1->transform->rectTransform->SetAnchorMax({1, 1});
 	image1->transform->rectTransform->SetAnchorMin({0, 0});
 	image1->transform->rectTransform->RegisterPositionLRTB(1.0f, 1.0f, 1.0f, 1.0f);
+	image1->SetUvRect({0.5f, 0.5f, 1.0f, 1.0f})->SetColor({"#D80B64"});
 
 	return;
 

@@ -40,6 +40,7 @@ void Game::Awake() {
 
 	Resources::Load<Texture>("assets/pancrazio.png");
 	Resources::Load<Texture>("assets/night.jpg");
+	Resources::Load<Texture>("assets/eye.jpg");
 	Resources::Load<Texture>("assets/pancsmile.png");
 	Resources::Load<TextureAtlas>("assets/walking.png")->AddGrid(vec2(16, 16), Align::BOTTOM);
 	Resources::Add<Sprite>("pancrazio_sprite")->SetTexture(Resources::Get<Texture>("pancrazio"))->SetPixelPerUnit(16)->Build();

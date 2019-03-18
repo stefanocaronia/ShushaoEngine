@@ -337,7 +337,7 @@ namespace se {
 
 		VAO->Load<vec3>(Vbo::VERTICES, vertices);
 
-		if (mvp == Transform::MAT4_IDENTITY || renderMode != RenderMode::SCREEN)
+		if (mvp == Transform::MAT4_IDENTITY && renderMode != RenderMode::SCREEN)
 			mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 
 		shader->SetMVP(&mvp[0][0]);

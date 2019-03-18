@@ -12,6 +12,7 @@ namespace se {
 		public:
 
 			Color();
+			Color(std::string);
 			Color(float, float, float, float a = 1.0f);
 
 			float r; //	Red component of the color.
@@ -47,6 +48,8 @@ namespace se {
 						b == other.b &&
 						a == other.a);
 			}
+
+			static glm::vec3 hex2rgb(std::string hexcode);
 
 	};
 

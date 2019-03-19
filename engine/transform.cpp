@@ -198,8 +198,14 @@ namespace se {
 
 	void Transform::buildMVP() {
 		_M = GetLocalToWorldMatrix();
-		_P = SceneManager::activeScene->activeCamera->getProjectionMatrix();
-		_V = SceneManager::activeScene->activeCamera->getViewMatrix();
+
+		if (entity->canvas->renderMode == RenderMode::SCREEN) {
+			_P = SceneManager::activeScene->screenSpaceCamera->getProjectionMatrix();
+			_V = SceneManager::activeScene->screenSpaceCamera->getViewMatrix();
+		} else {
+			_P = SceneManager::activeScene->activeCamera->getProjectionMatrix();
+			_V = SceneManager::activeScene->activeCamera->getViewMatrix();
+		}
 		_MVP = _P * _V * _M;
 	}
 

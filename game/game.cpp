@@ -38,6 +38,7 @@ Game::Game(string title) : Cycle(title) {
 
 void Game::Awake() {
 
+	Resources::Load<Texture>("avatar", IMG_AVATAR);
 	Resources::Load<Texture>("assets/pancrazio.png");
 	Resources::Load<Texture>("assets/night.jpg");
 	Resources::Load<Texture>("assets/eye.jpg");
@@ -62,7 +63,7 @@ void Game::Awake() {
 
 	SceneManager::LoadScene<Level>("Level 1");
 
-	bool perspectiveTest = false;
+	bool perspectiveTest = true;
 
 	Camera* camera = SceneManager::activeScene->activeCamera;
 	camera->backgroundColor = {0.05f, 0.05f, 0.2f, 1.0f};

@@ -40,6 +40,8 @@ namespace se {
 					nearClipPlane,
 					farClipPlane
 				);
+
+				rect = {-orthographicSize * aspect, orthographicSize, orthographicSize * 2, orthographicSize * aspect * 2 };
 			} else {
 				Projection = perspective(fieldOfView, aspect, nearClipPlane, farClipPlane);
 			}

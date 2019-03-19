@@ -45,7 +45,7 @@ debug: all
 #Link
 $(TARGET): compilation
 	@echo -e $(CEND)$(CBLUE)$(BULLET)Linking $(TARGET) $(CEND)
-	@$(CC) $(LNKFLAGS) -o $(TARGETDIR)/$(TARGET) $(OBJECTS) $(LIBDIRS) $(LIB)
+	@$(CC) $(LNKFLAGS) -o $(TARGETDIR)/$(TARGET) $(OBJECTS) $(RCFILES) $(LIBDIRS) $(LIB)
 
 #Non-File Targets
 .PHONY: all prebuild release rebuild clean resources directories run debug

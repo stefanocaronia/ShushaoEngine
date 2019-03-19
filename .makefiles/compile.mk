@@ -3,13 +3,19 @@
 include .makefiles/settings.mk
 
 #Defauilt
-all: $(OBJECTS)
+all: $(OBJECTS) $(RCFILES)
 
 #Compile
 $(BUILDDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
 	@echo -e $(TAB)$(BULLET2)$<
 	@$(MD) -p $(dir $@)
 	@$(CC) $(COMFLAGS) $(INCDIRS) -c $< -o $@
+
+#Compile rc files
+$(BUILDDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(RCEXT)
+	@echo -e $(TAB)$(BULLET2)$<
+	@$(MD) -p $(dir $@)
+	@$(RC) $< -o $@
 
 #Non-File Targets
 .PHONY: all

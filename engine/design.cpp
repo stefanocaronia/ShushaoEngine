@@ -337,15 +337,18 @@ namespace se {
 
 		VAO->Load<vec3>(Vbo::VERTICES, vertices);
 
-		if (mvp == Transform::MAT4_IDENTITY && renderMode != RenderMode::SCREEN)
+		if (renderMode == RenderMode::SCREEN && false) {
+			mvp = SceneManager::activeScene->screenSpaceCamera->Projection * SceneManager::activeScene->screenSpaceCamera->getViewMatrix() * glm::mat4();
+		} else if (mvp == Transform::MAT4_IDENTITY) {
 			mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
+		}
 
 		shader->SetMVP(&mvp[0][0]);
 
-		if (renderMode == RenderMode::SCREEN) {
+		/* if (renderMode == RenderMode::SCREEN) {
 			shader->Enable("viewport");
 			shader->SetVector("viewport", GLManager::VIEWPORT);
-		}
+		} */
 
 		VAO->GetBuffer(Vbo::VERTICES)->Bind();
 		glEnablei(GL_BLEND, VAO->GetBuffer(Vbo::VERTICES)->Id);
@@ -354,12 +357,12 @@ namespace se {
 			shader->SetRenderColor({color.r, color.g, color.b, color.a / 2});
 		else
 			shader->SetRenderColor(color);
-		if (mode == DrawMode::HOLLOW) glLineWidth(4);
+		if (mode == DrawMode::HOLLOW) glLineWidth(2);
 		glDrawArrays((mode != DrawMode::HOLLOW ? GL_TRIANGLE_FAN : GL_LINE_LOOP), 0, vertices.size());
 
 
 		if (mode == DrawMode::BORDERED) {
-			glLineWidth(4);
+			glLineWidth(2);
 			shader->SetRenderColor(color);
 			glDrawArrays(GL_LINE_LOOP, 0, vertices.size());
 			glLineWidth(1);

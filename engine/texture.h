@@ -2,12 +2,15 @@
 
 #include <GL/glew.h>
 #include <SDL.h>
+#include <vector>
+#include <string>
 
 #include "object.h"
+#include "resource.h"
 
 namespace se {
 
-	class Texture : public Object {
+	class Texture : public Object, public Resource {
 
 		public:
 
@@ -19,6 +22,9 @@ namespace se {
 			int width;
 
 			bool Load(std::string);
+			bool LoadEmbedded(int IDRES);
+			bool LoadBytes(std::vector<char> data);
+			bool Bind(SDL_Surface* surface);
 
 			GLuint GetTextureID();
 			SDL_Surface* GetSurface();

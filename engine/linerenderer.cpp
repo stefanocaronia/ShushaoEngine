@@ -85,11 +85,11 @@ namespace se {
 		shader->SetMVP(transform->uMVP());
 		shader->update();
 
-		if (renderMode == RenderMode::SCREEN) {
+		/* if (renderMode == RenderMode::SCREEN) {
 			shader->SetM(transform->uM());
 			shader->Enable("viewport");
 			shader->SetVector("viewport", GLManager::VIEWPORT);
-		}
+		} */
 
 		glEnablei(GL_BLEND, VAO->GetBuffer(Vbo::VERTICES)->Id);
 		glDrawArrays(GL_LINES, 0, vertices.size());

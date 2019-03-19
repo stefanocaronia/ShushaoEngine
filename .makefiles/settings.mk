@@ -7,6 +7,7 @@ DB = gdb
 RM = rm
 MD = mkdir
 CP = cp
+RC = windres
 MAKE = mingw32-make
 BUILD = Debug
 DEBUG = true
@@ -64,10 +65,12 @@ BASE_LIBS	= ../../mingw-dev-libs
 BUILDDIR = obj/$(BUILD)
 TARGETDIR = bin/$(BUILD)
 
+RESFILE		=
 SRCDIR		= .
 RESDIR		= res
 SRCEXT		= cpp
 OBJEXT		= o
+RCEXT		= rc
 
 #Flags, Libraries and Includes
 COMFLAGS =  -MMD -MP -std=c++11 -fexceptions -DGLEW_STATIC -g -DDEBUG=$(DEBUG)
@@ -85,6 +88,8 @@ else
 endif
 
 SOURCES = $(wildcard $(SRCDIR)/**/*.$(SRCEXT)) $(wildcard $(SRCDIR)/*/*/*.$(SRCEXT))
+RCSOURCES = $(wildcard $(SRCDIR)/**/*.$(RCEXT)) $(wildcard $(SRCDIR)/*/*/*.$(RCEXT))
 OBJECTS = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT)))
+RCFILES = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(RCSOURCES:.$(RCEXT)=.$(OBJEXT)))
 DEPENDS = $(OBJECTS:.o=.d)
 

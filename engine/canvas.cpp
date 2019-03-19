@@ -2,6 +2,7 @@
 #include "entity.h"
 #include "transform.h"
 #include "glmanager.h"
+#include "scenemanager.h"
 
 namespace se {
 
@@ -13,7 +14,6 @@ namespace se {
 	void Canvas::setup() {
 		entity->transform->isRectTransform = true;
 		entity->canvas = this;
-		processRenderMode();
 	}
 
 	Canvas* Canvas::SetRenderMode(RenderMode value)	{
@@ -27,7 +27,8 @@ namespace se {
 			case RenderMode::SCREEN:
 				transform->SetPosition({0.0f, 0.0f, 0.0f});
 				transform->SetPivot(PivotPosition::BOTTOMLEFT);
-				transform->rectTransform->SetRectSize(GLManager::VIEWPORT);
+				//transform->rectTransform->SetRectSize(GLManager::VIEWPORT);
+				transform->rectTransform->SetRect(transform->camera->getRect());
 				break;
 			case RenderMode::WORLD:
 			case RenderMode::CAMERA:
@@ -36,6 +37,7 @@ namespace se {
 	}
 
 	void Canvas::Awake() {
+		processRenderMode();
 	}
 
 	void Canvas::Update() {

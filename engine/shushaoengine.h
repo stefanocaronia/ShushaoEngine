@@ -3,6 +3,7 @@
 /* include in derived projects */
 
 // ShushaoEngine Objects
+#include "res.h" // rc
 #include "design.h"
 #include "constants.h"
 #include "types.h"
@@ -23,6 +24,7 @@
 #include "object.h"
 #include "rect.h"
 #include "renderer.h"
+#include "resource.h"
 #include "resources.h"
 #include "scene.h"
 #include "scenemanager.h"

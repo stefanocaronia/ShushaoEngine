@@ -9,6 +9,8 @@
 #include "shaders/shader.h"
 #include "texture.h"
 #include "textureatlas.h"
+#include "resource.h"
+#include "res.h"
 
 namespace se {
 
@@ -17,9 +19,31 @@ namespace se {
 
 			static std::map<std::string, Object*> Assets;
 
+			static std::vector<char> GetEmbeddedData(int IDRES, LPCSTR type = RT_RCDATA);
+			static std::string GetEmbeddedText(int IDRES);
+
 			template <class T>
 			static T* Load(std::string filename, std::string name) {
 				T* resource = new T(filename, name);
+				auto it = Assets.find(resource->name);
+				if (it != Assets.end()) {
+					Debug::Log(WARNING) << "Resource " << resource->name << " already loaded" << endl;
+					delete(resource);
+					resource = nullptr;
+					return nullptr;
+				}
+				Assets[name] = resource;
+				return resource;
+			}
+
+			template <class T>
+			static T* Load(std::string name, int IDRES) {
+				T* resource = new T("", name);
+				bool loaded = (Resource*)resource->LoadEmbedded(IDRES);
+				if (!loaded) {
+					Debug::Log(WARNING) << "Resource " << resource->name << " not loaded" << endl;
+					return nullptr;
+				}
 				auto it = Assets.find(resource->name);
 				if (it != Assets.end()) {
 					Debug::Log(WARNING) << "Resource " << resource->name << " already loaded" << endl;

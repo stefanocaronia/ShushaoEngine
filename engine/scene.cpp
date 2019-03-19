@@ -21,6 +21,14 @@ namespace se {
 		activeCamera = mainCameraObj->camera;
 		GameData::activeCamera = activeCamera;
 
+		screenSpaceCamera = root->AddComponent<Camera>("Screen Space Camera");
+		screenSpaceCamera->setOrthographic(true);
+		screenSpaceCamera->setNearClipPlane(22.0f);
+		screenSpaceCamera->setFarClipPlane(1.0f);
+		screenSpaceCamera->setOrthographicSize(5.0f);
+		screenSpaceCamera->transform->localPosition = {0.0f, 0.0f, 20.0f};
+		screenSpaceCamera->transform->localRotation = Transform::QUATERNION_IDENTITY;
+
 		if (Debug::enabled) {
 			AddEntity<DebugGrid>("Debug Grid");
 		}

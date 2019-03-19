@@ -30,8 +30,9 @@ namespace se {
 			int BuildIndex;
 			bool isLoaded = false;
 
-			Entity* root;
-			Camera* activeCamera;
+			Entity* root = nullptr;
+			Camera* activeCamera = nullptr;
+			Camera* screenSpaceCamera = nullptr;
 
 			std::vector<Entity*> Entities;
 			std::vector<Component*> ActiveComponents;

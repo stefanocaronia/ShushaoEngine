@@ -54,7 +54,7 @@ Level::Level() {
 	text->SetAlign(Align::TOPLEFT);
 
 	Entity* canvas = AddEntity<ui::Canvas>("Canvas");
-	canvas->GetComponent<Canvas>()->SetRenderMode(RenderMode::WORLD);
+	canvas->GetComponent<Canvas>()->SetRenderMode(RenderMode::SCREEN);
 	canvas->transform->rectTransform->SetRectSize({10,4});
 	canvas->transform->SetLocalPosition({-1, 0, 0});
 	canvas->transform->SetPivot(PivotPosition::CENTER);
@@ -123,12 +123,13 @@ Level::Level() {
 	ui::RawImage* uiImage = AddEntity<ui::RawImage>("Immagine su canvas");
 	uiImage->setParent(canvas);
 
-	RawImage* image1 = uiImage->GetComponent<RawImage>();
-	image1->SetTexture(Resources::Get<Texture>("eye"));
+	/* RawImage* image1 = uiImage->GetComponent<RawImage>();
+	image1->SetTexture(Resources::Get<Texture>("avatar"));
 	image1->transform->rectTransform->SetAnchorMax({1, 1});
 	image1->transform->rectTransform->SetAnchorMin({0, 0});
 	image1->transform->rectTransform->RegisterPositionLRTB(1.0f, 1.0f, 1.0f, 1.0f);
-	image1->SetUvRect({0.5f, 0.5f, 1.0f, 1.0f})->SetColor({"#D80B64"});
+	image1->SetUvRect({0.0f, 0.0f, 1.0f, 1.0f})->SetColor({0.5f, 0.1f, 0.1f, 0.4f});
+	image1->sortingLayerID = Config::SortingLayers["UI"]; */
 
 	return;
 

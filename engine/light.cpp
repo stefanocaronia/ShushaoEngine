@@ -22,9 +22,9 @@ namespace se {
 		return {
 			entity->transform->position,
 			entity->transform->forward,
-			ambient.rgb,
-			diffuse.rgb,
-			specular.rgb,
+			ambient.rgb(),
+			diffuse.rgb(),
+			specular.rgb(),
 			attenuation.constant,
 			attenuation.linear,
 			attenuation.quadratic

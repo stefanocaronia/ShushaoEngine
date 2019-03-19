@@ -25,7 +25,6 @@ namespace se {
         } else {
             if (rectInvalid) SetSizeWithCurrentAnchors();
             matrix = glm::translate(glm::mat4(), vec3(anchoredPosition, 0.0f))
-                     /* glm::translate(glm::mat4(), transform->localPosition) */
                     * glm::toMat4(transform->localRotation) * glm::scale(glm::mat4(), transform->localScale);
         }
 
@@ -254,8 +253,10 @@ namespace se {
             vec3 position = Transform::VEC3_ZERO;
             if (renderMode == RenderMode::WORLD) {
                 color = {0.1f, 0.1f, 0.5f, 0.6f};
+            }else if (renderMode == RenderMode::CAMERA) {
+                color = {0.1f, 0.5f, 0.5f, 0.3f};
             } else if (renderMode == RenderMode::SCREEN) {
-                color = {0.5f, 0.0f, 0.1f, 0.2f};
+                color = {0.5f, 0.0f, 0.1f, 0.3f};
                 position = transform->position;
             }
             Design::DrawRect(position, rect, color, DrawMode::HOLLOW, renderMode, transform->MVP);

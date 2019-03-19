@@ -13,12 +13,14 @@ namespace se {
 
 			Color();
 			Color(std::string);
-			Color(float, float, float, float a = 1.0f);
+			Color(float r, float g, float b, float a = 1.0f);
 
 			float r; //	Red component of the color.
 			float g; //	Green component of the color.
 			float b; //	Blue component of the color.
 			float a; //	Alpha component of the color.
+
+			void Set(float r, float g, float b, float a = 1.0f);
 
 			// Color* gamma; //	A version of the color that has had the gamma curve applied.
 			// float grayscale; //	The grayscale value of the color. (Read Only)
@@ -27,8 +29,8 @@ namespace se {
 			float maxColorComponent(); //	Returns the maximum color component value: Max(r,g,b).
 			std::string ToString();
 
-			glm::vec4 rgba;
-			glm::vec3 rgb;
+			glm::vec4 rgba();
+			glm::vec3 rgb();
 
 			static Color black; // Solid black. RGBA is (0, 0, 0, 1).
 			static Color blue; // Solid blue. RGBA is (0, 0, 1, 1).
@@ -49,7 +51,15 @@ namespace se {
 						a == other.a);
 			}
 
+			void operator=(const Color& other) {
+				Set(other.r, other.g, other.b, other.a);
+			}
+
 			static glm::vec3 hex2rgb(std::string hexcode);
+
+		private:
+
+			void update();
 
 	};
 

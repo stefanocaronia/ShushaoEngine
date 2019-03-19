@@ -27,12 +27,12 @@ namespace se {
 		shader->awake();
 		VAO->Init();
 
-		/* if (entity->canvas != nullptr && entity->canvas->renderMode == RenderMode::SCREEN) {
+		if (entity->canvas != nullptr && entity->canvas->renderMode == RenderMode::SCREEN) {
 			shader->Use();
 			shader->SetVector("viewport", GLManager::VIEWPORT);
 			shader->Enable("viewport");
 			shader->Leave();
-		} */
+		}
 	}
 
 	void Text::Update() {}

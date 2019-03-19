@@ -7,34 +7,31 @@
 namespace se {
 
 	Color::Color() {
-		r = 0.0f;
-		g = 0.0f;
-		b = 0.0f;
-		a = 1.0f;
-
-		rgba = {r, g, b, a};
-		rgb = {r, g, b};
+		Set(0.0f, 0.0f, 0.0f, 1.0f);
 	}
 
 	Color::Color(float r_, float g_, float b_, float a_) {
-		r = r_;
-		g = g_;
-		b = b_;
-		a = a_;
-
-		rgba = {r, g, b, a};
-		rgb = {r, g, b};
+		Set(r_, g_, b_, a_);
 	}
 
 	Color::Color(std::string hexcode) {
 		glm::vec3 col = hex2rgb(hexcode);
-		r = col.r;
-		g = col.g;
-		b = col.b;
-		a = 1.0f;
+		Set(col.r, col.g, col.b, 1.0f);
+	}
 
-		rgba = {r, g, b, a};
-		rgb = col;
+	void Color::Set(float r_, float g_, float b_, float a_) {
+		r = r_;
+		g = g_;
+		b = b_;
+		a = a_;
+	}
+
+	glm::vec4 Color::rgba() {
+		return {r, g, b, a};
+	}
+
+	glm::vec3 Color::rgb() {
+		return {r, g, b};
 	}
 
 	float Color::maxColorComponent() {

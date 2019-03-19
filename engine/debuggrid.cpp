@@ -4,6 +4,7 @@
 #include "debug.h"
 #include "linerenderer.h"
 #include "glmanager.h"
+#include "scenemanager.h"
 
 namespace se {
 
@@ -15,15 +16,18 @@ namespace se {
 		Color xcol = {0.0f, 1.0f, 0.0f, 0.5f};
 		Color ycol = {1.0f, 0.0f, 0.0f, 0.5f};
 		Color zcol = {0.0f, 0.0f, 1.0f, 0.5f};
-		Color gcol = {0.5f, 0.5f, 0.5f, 0.1f};
+		Color gcol = {0.3f, 0.3f, 0.5f, 0.07f};
 
 		Color gco = gcol;
-		float alpha = 0.2f;
+		float alpha = 0.05f;
 		for (float i = 0.0f; i < gridSize; i++) {
 
 			alpha -= 0.005f;
+			gco.a = alpha;
 
-			if (fmod(i, 10.0f) == 0) gco.a = alpha * 3; else gco.a = alpha;
+			if (fmod(i, 4.0f) == 0 || i == 0.0f) {
+				gco.a *= 3.0f;
+			}
 
 			if (Debug::debugGridMode == GridMode::ORTHOGRAFIC) {
 				// parallele asse Y lungo X
@@ -56,13 +60,13 @@ namespace se {
 		LR->AddLine({gizmoMagnitude, 0.0f, 0.0f}, {gizmoMagnitude - arrowWidth, arrowWidth, 0.0f}, ycol);
 		LR->AddLine({gizmoMagnitude, 0.0f, 0.0f}, {gizmoMagnitude - arrowWidth, -arrowWidth, 0.0f}, ycol);
 
-		if (Debug::debugGridMode == GridMode::PERSPECTIVE) {
+		if (Debug::debugGridMode != GridMode::ORTHOGRAFIC) {
 			LR->AddLine({0.0f, 0.0f, gizmoMagnitude}, {arrowWidth, 0.0f, gizmoMagnitude - arrowWidth}, zcol);
 			LR->AddLine({0.0f, 0.0f, gizmoMagnitude}, {-arrowWidth, 0.0f, gizmoMagnitude - arrowWidth}, zcol);
 		}
 
 		// Screen canvas
-		LineRenderer* scr = AddComponent<LineRenderer>();
+		/* LineRenderer* scr = AddComponent<LineRenderer>();
 		scr->renderMode = RenderMode::SCREEN;
 
 		for (float i = 0.0f; i < gridSize; i++) {
@@ -73,7 +77,7 @@ namespace se {
 
 			scr->AddLine({p, GLManager::VIEWPORT.y, 0.0f}, {p, GLManager::VIEWPORT.y - 0.1f, 0.0f}, ycol);
 			scr->AddLine({GLManager::VIEWPORT.x, p, 0.0f}, {GLManager::VIEWPORT.x - 0.1f, i, 0.0f}, xcol);
-		}
+		} */
 
 	}
 

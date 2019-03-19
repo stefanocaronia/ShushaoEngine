@@ -53,8 +53,18 @@ Level::Level() {
 	//text->transform->SetLocalScale({2,2,0});
 	text->SetAlign(Align::TOPLEFT);
 
+
+	Camera* screenSpaceCamera = root->AddComponent<Camera>("Screen Space Camera");
+	screenSpaceCamera->setOrthographic(true);
+	screenSpaceCamera->setNearClipPlane(12.0f);
+	screenSpaceCamera->setFarClipPlane(-1.0f);
+	screenSpaceCamera->setOrthographicSize(5.0f);
+	screenSpaceCamera->transform->localPosition = {0.0f, 0.0f, 10.0f};
+	screenSpaceCamera->transform->localRotation = Transform::QUATERNION_IDENTITY;
+
 	Entity* canvas = AddEntity<ui::Canvas>("Canvas");
-	canvas->GetComponent<Canvas>()->SetRenderMode(RenderMode::SCREEN);
+
+	canvas->GetComponent<Canvas>()->SetCamera(screenSpaceCamera)->SetRenderMode(RenderMode::SCREEN);
 	canvas->transform->rectTransform->SetRectSize({10,4});
 	canvas->transform->SetLocalPosition({-1, 0, 0});
 	canvas->transform->SetPivot(PivotPosition::CENTER);

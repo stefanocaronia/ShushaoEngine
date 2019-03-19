@@ -18,20 +18,28 @@ namespace se {
 
 	Canvas* Canvas::SetRenderMode(RenderMode value)	{
 		_renderMode = value;
+		_lastRenderMode = value;
 		processRenderMode();
+		return this;
+	}
+
+	Canvas* Canvas::SetCamera(Camera* camera_) {
+		camera = camera_;
 		return this;
 	}
 
 	void Canvas::processRenderMode() {
 		switch (renderMode) {
 			case RenderMode::SCREEN:
-				transform->SetPosition({0.0f, 0.0f, 0.0f});
+				transform->SetLocalPosition({0.0f, 0.0f, 0.0f});
 				transform->SetPivot(PivotPosition::BOTTOMLEFT);
-				//transform->rectTransform->SetRectSize(GLManager::VIEWPORT);
-				transform->rectTransform->SetRect(transform->camera->getRect());
+				transform->rectTransform->SetRectSize(GLManager::VIEWPORT);
 				break;
-			case RenderMode::WORLD:
 			case RenderMode::CAMERA:
+				transform->SetLocalPosition({0.0f, 0.0f, 1.0f});
+				transform->SetPivot(PivotPosition::CENTER);
+				transform->rectTransform->SetRectSize(camera->getViewportSize());
+			case RenderMode::WORLD:
 				break;
 		}
 	}

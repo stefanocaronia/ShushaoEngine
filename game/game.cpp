@@ -32,7 +32,7 @@ Game::Game(string title) : Cycle(title) {
 
 	Debug::level = DebugLevel::INFO;
 	Debug::enabled = true;
-	Debug::debugGridMode = GridMode::ORTHOGRAFIC;
+	Debug::debugGridMode = GridMode::PERSPECTIVE;
 	Config::Physics::debug = true;
 }
 
@@ -73,6 +73,7 @@ void Game::Awake() {
 		camera->setFarClipPlane(20.0f);
 		camera->transform->localPosition = {1.0f, 3.0f, 6.0f};
 		camera->transform->localRotation = Transform::QUATERNION_IDENTITY;
+		Debug::debugGridMode = GridMode::PERSPECTIVE;
 	} else {
 		camera->setOrthographic(true);
 		camera->setNearClipPlane(12.0f);

@@ -4,6 +4,7 @@
 #include "renderer.h"
 #include "rect.h"
 #include "types.h"
+#include "camera.h"
 
 namespace se {
 
@@ -15,10 +16,12 @@ namespace se {
 			~Canvas();
 
 			const RenderMode& renderMode = _renderMode;
+			Camera* camera = nullptr;
 
 			std::vector<Component*> ChildRenderers;
 
 			Canvas* SetRenderMode(RenderMode value);
+			Canvas* SetCamera(Camera* camera_);
 
 			void Awake();
 			void Update();
@@ -28,6 +31,7 @@ namespace se {
         private:
 
 			RenderMode _renderMode = RenderMode::WORLD;
+			RenderMode _lastRenderMode;
 			void processRenderMode();
 
 	};

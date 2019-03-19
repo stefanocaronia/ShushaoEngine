@@ -39,6 +39,7 @@ namespace se {
 			float getFarClipPlane();
 			float getNearClipPlane();
 			Rect getRect();
+			glm::vec2 getViewportSize() { return viewportSize; }
 
 			void print();
 
@@ -58,6 +59,8 @@ namespace se {
 			float last_fieldOfView = 45.0f;
 			float last_farClipPlane = 1000.0f;
 			float last_nearClipPlane = 3.0f;
+
+			glm::vec2 viewportSize = {0.0f, 0.0f};
 
 			Rect rect;	// Where on the screen is the camera rendered in normalized coordinates.
 

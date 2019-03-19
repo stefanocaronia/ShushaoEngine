@@ -32,7 +32,6 @@ namespace se {
 
 			Entity* root = nullptr;
 			Camera* activeCamera = nullptr;
-			Camera* screenSpaceCamera = nullptr;
 
 			std::vector<Entity*> Entities;
 			std::vector<Component*> ActiveComponents;

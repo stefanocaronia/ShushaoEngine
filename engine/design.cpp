@@ -191,7 +191,7 @@ namespace se {
 		VAO->Use();
 		VAO->Load<vec3>(Vbo::VERTICES, vertices);
 
-		if (mvp == Transform::MAT4_IDENTITY)
+		if (mvp == Transform::MAT4_IDENTITY || renderMode == RenderMode::SCREEN)
 			mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 
 		if (renderMode == RenderMode::SCREEN) {
@@ -229,7 +229,7 @@ namespace se {
 		VAO->Use();
 		VAO->Load<vec3>(Vbo::VERTICES, vertices);
 
-		if (mvp == Transform::MAT4_IDENTITY)
+		if (mvp == Transform::MAT4_IDENTITY || renderMode == RenderMode::SCREEN)
 			mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 
 		if (renderMode == RenderMode::SCREEN) {
@@ -272,7 +272,7 @@ namespace se {
 		VAO->Use();
 		VAO->Load<vec3>(Vbo::VERTICES, vertices);
 
-		if (mvp == Transform::MAT4_IDENTITY)
+		if (mvp == Transform::MAT4_IDENTITY || renderMode == RenderMode::SCREEN)
 			mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 
 		shader->SetMVP(&mvp[0][0]);
@@ -306,7 +306,7 @@ namespace se {
 		VAO->Use();
 		VAO->Load<vec3>(Vbo::VERTICES, vertices);
 
-		if (mvp == Transform::MAT4_IDENTITY)
+		if (mvp == Transform::MAT4_IDENTITY || renderMode == RenderMode::SCREEN)
 			mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 
 		if (renderMode == RenderMode::SCREEN) {
@@ -337,18 +337,16 @@ namespace se {
 
 		VAO->Load<vec3>(Vbo::VERTICES, vertices);
 
-		if (renderMode == RenderMode::SCREEN && false) {
-			mvp = SceneManager::activeScene->screenSpaceCamera->Projection * SceneManager::activeScene->screenSpaceCamera->getViewMatrix() * glm::mat4();
-		} else if (mvp == Transform::MAT4_IDENTITY) {
+		if (mvp == Transform::MAT4_IDENTITY || renderMode == RenderMode::SCREEN) {
 			mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 		}
 
 		shader->SetMVP(&mvp[0][0]);
 
-		/* if (renderMode == RenderMode::SCREEN) {
+		if (renderMode == RenderMode::SCREEN) {
 			shader->Enable("viewport");
 			shader->SetVector("viewport", GLManager::VIEWPORT);
-		} */
+		}
 
 		VAO->GetBuffer(Vbo::VERTICES)->Bind();
 		glEnablei(GL_BLEND, VAO->GetBuffer(Vbo::VERTICES)->Id);
@@ -396,8 +394,9 @@ namespace se {
 
 		VAO->Load<vec3>(Vbo::VERTICES, vertices);
 
-		if (mvp == Transform::MAT4_IDENTITY)
+		if (mvp == Transform::MAT4_IDENTITY || renderMode == RenderMode::SCREEN) {
 			mvp = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
+		}
 
 		shader->SetMVP(&mvp[0][0]);
 		shader->SetRenderColor(color);

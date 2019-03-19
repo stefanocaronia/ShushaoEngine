@@ -40,8 +40,8 @@ namespace se {
 					nearClipPlane,
 					farClipPlane
 				);
-
-				rect = {-orthographicSize * aspect, orthographicSize, orthographicSize * 2, orthographicSize * aspect * 2 };
+				viewportSize = {orthographicSize * aspect * 2, orthographicSize * 2};
+				// rect = {-orthographicSize * aspect, orthographicSize, orthographicSize * 2 * aspect, orthographicSize * 2};
 			} else {
 				Projection = perspective(fieldOfView, aspect, nearClipPlane, farClipPlane);
 			}

@@ -10,13 +10,13 @@
 #include "texture.h"
 #include "textureatlas.h"
 #include "resource.h"
-#include "res.h"
+#include "resources/resources.h"
 
 namespace se {
 
 	class Resources {
 		public:
-
+			vector<float> aci;
 			static std::map<std::string, Object*> Assets;
 
 			static std::vector<char> GetEmbeddedData(int IDRES, LPCSTR type = RT_RCDATA);

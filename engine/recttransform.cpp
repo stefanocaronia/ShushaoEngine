@@ -259,7 +259,7 @@ namespace se {
                 color = {0.5f, 0.0f, 0.1f, 0.3f};
                 position = transform->position;
             }
-            Design::DrawRect(position, rect, color, 1, DrawMode::HOLLOW, renderMode, transform->MVP);
+            Design::DrawRect(position, rect, color, 3, DrawMode::HOLLOW, renderMode, transform->MVP);
 
             Design::DrawVector(position, transform->up / 3.0f, Color::green, 2, false, renderMode, transform->MVP);
 			Design::DrawVector(position, transform->right / 3.0f, Color::red, 2, false, renderMode, transform->MVP);

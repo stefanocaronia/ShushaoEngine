@@ -65,7 +65,7 @@ Level::Level() {
 	Entity* canvas = AddEntity<ui::Canvas>("Canvas");
 
 	canvas->GetComponent<Canvas>()->SetCamera(screenSpaceCamera)->SetRenderMode(RenderMode::WORLD);
-	canvas->transform->rectTransform->SetRectSize({10,4});
+	canvas->transform->rectTransform->SetRectSize({10, 4});
 	canvas->transform->SetLocalPosition({-1, 0, 0});
 	canvas->transform->SetPivot(PivotPosition::CENTER);
 	// Componente text direttamente agganciato alla canvas
@@ -131,16 +131,31 @@ Level::Level() {
 	auto t = anchoredText->GetComponent<Text>();
 	t->SetFont(f)->SetText("Con punti ancoraggio")->SetColor(Color::yellow)->SetSize(0.3f)->SetAlign(Align::CENTER);
 
-	ui::RawImage* uiImage = AddEntity<ui::RawImage>("Immagine su canvas");
+	/* ui::RawImage* uiImage = AddEntity<ui::RawImage>("Immagine su canvas");
 	uiImage->setParent(canvas);
 
-	/* RawImage* image1 = uiImage->GetComponent<RawImage>();
+	RawImage* image1 = uiImage->GetComponent<RawImage>();
 	image1->SetTexture(Resources::Get<Texture>("avatar"));
 	image1->transform->rectTransform->SetAnchorMax({1, 1});
 	image1->transform->rectTransform->SetAnchorMin({0, 0});
 	image1->transform->rectTransform->RegisterPositionLRTB(1.0f, 1.0f, 1.0f, 1.0f);
 	image1->SetUvRect({0.0f, 0.0f, 1.0f, 1.0f})->SetColor({0.5f, 0.1f, 0.1f, 0.4f});
 	image1->sortingLayerID = Config::SortingLayers["UI"]; */
+
+	ui::Image* uiImage2 = AddEntity<ui::Image>("Immagine su canvas");
+	uiImage2->setParent(canvas);
+
+	Image* image2 = uiImage2->GetComponent<Image>();
+	image2->SetSprite(Resources::Get<Sprite>("eye_sprite"));
+	/* image2->transform->rectTransform->SetAnchor({0.5f, 0.5f});
+	image2->transform->rectTransform->SetRectSize({6, 3});
+	image2->transform->SetLocalPosition({3, 1, 0});*/
+	image2->transform->rectTransform->SetAnchorMax({1, 1});
+	image2->transform->rectTransform->SetAnchorMin({0, 0});
+	image2->transform->rectTransform->RegisterPositionLRTB(1.0f, 1.0f, 1.0f, 1.0f);
+	image2->sortingLayerID = Config::SortingLayers["UI"];
+	image2->SetPreserveAspect(false);
+
 
 	return;
 

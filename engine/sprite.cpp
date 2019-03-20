@@ -44,8 +44,9 @@ namespace se {
 	}
 
 	Sprite* Sprite::SetRect(Rect rect_) {
-        rect = rect_;
-        pixel_pivot = CalculatePivot(Align::CENTER, rect_);
+        rect.Set(rect_.x, rect_.y, rect_.width, rect_.height);
+		rect.YUP = rect_.YUP;
+        pixel_pivot = CalculatePivot(Align::CENTER, rect);
 		return this;
 	}
 
@@ -68,6 +69,11 @@ namespace se {
         texture = texture_;
         rect.Set(0.0f, 0.0f, (float)texture_->width, (float)texture_->height);
 		pixel_pivot = CalculatePivot(Align::CENTER, rect);
+		return this;
+	}
+
+	Sprite* Sprite::SetPreserveAspect(bool value) {
+		preserveAspect = value;
 		return this;
 	}
 
@@ -95,22 +101,26 @@ namespace se {
 			{-wX - pivot.x,  wY - pivot.y, 0.0f} // Top-left
 		};
 
-		if (rect.width < texture->width || rect.height < texture->height) {
+		if (preserveAspect) {
+			if (rect.width < texture->width || rect.height < texture->height) {
 
-			// rect in texture coord
-			Rect tsr(
-				rect.x / texture->width,
-				rect.y / texture->height,
-				rect.width / texture->width,
-				rect.height / texture->height
-			);
+				// TODO: riscrivere uv in caso di preserve axpect in varie casistiche
 
-			uv = { // The base texture coordinates of the sprite mesh.
-				{tsr.x, tsr.yMax}, // Bottom-left of texture
-				{tsr.xMax, tsr.yMax}, // Bottom-right of texture
-				{tsr.xMax, tsr.y}, // Top-Right of texture
-				{tsr.x, tsr.y} // Top-left of texture
-			};
+				// rect in texture coord
+				Rect tsr(
+					rect.x / texture->width,
+					rect.y / texture->height,
+					rect.width / texture->width,
+					rect.height / texture->height
+				);
+
+				uv = { // The base texture coordinates of the sprite mesh.
+					{tsr.x, tsr.yMax}, // Bottom-left of texture
+					{tsr.xMax, tsr.yMax}, // Bottom-right of texture
+					{tsr.xMax, tsr.y}, // Top-Right of texture
+					{tsr.x, tsr.y} // Top-left of texture
+				};
+			}
 		}
 
 		VAO->Use();

@@ -22,6 +22,7 @@ namespace se {
 			Texture* texture = nullptr;
 			Vao* VAO = nullptr;
 
+			bool preserveAspect = true;
 			bool ready = false;
 			glm::vec2 pivot; // Location of the Sprite's center point in the vertices coordinates
 			unsigned int pixelPerUnit = Config::pixelPerUnit; // The number of pixels in the sprite that correspond to one unit in world space. (Read Only)
@@ -56,6 +57,7 @@ namespace se {
 			Rect GetRect();
 			glm::vec2 GetPivot();
 
+			Sprite* SetPreserveAspect(bool);
 			Sprite* SetRect(Rect);
 			Sprite* SetTexture(Texture*);
 			Sprite* SetPivot(Align);

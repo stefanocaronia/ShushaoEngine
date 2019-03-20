@@ -3,7 +3,7 @@
 /* include in derived projects */
 
 // ShushaoEngine Objects
-#include "res.h" // rc
+#include "resources/resources.h" // rc
 #include "design.h"
 #include "constants.h"
 #include "types.h"

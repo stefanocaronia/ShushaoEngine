@@ -45,6 +45,7 @@ void Game::Awake() {
 	Resources::Load<Texture>("assets/pancsmile.png");
 	Resources::Load<TextureAtlas>("assets/walking.png")->AddGrid(vec2(16, 16), Align::BOTTOM);
 	Resources::Add<Sprite>("pancrazio_sprite")->SetTexture(Resources::Get<Texture>("pancrazio"))->SetPixelPerUnit(16)->Build();
+	Resources::Add<Sprite>("eye_sprite")->SetTexture(Resources::Get<Texture>("eye"))->SetPixelPerUnit(200)->Build();
 
 	Resources::Load<Mesh>("assets/cube.obj");
 	Resources::Load<Texture>("assets/cube_diffuse.png");

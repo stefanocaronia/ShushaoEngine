@@ -162,5 +162,9 @@ namespace se {
 		};
 	}
 
+	float Rect::GetAspect() {
+		return width / height;
+	}
+
 	Rect Rect::zero = {0.0f, 0.0f, 0.0f, 0.0f};
 }

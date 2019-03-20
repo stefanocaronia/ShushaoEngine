@@ -63,6 +63,11 @@ namespace se {
 				return (GetVertices() != other.GetVertices());
 			}
 
+			/* Rect operator*(const float value) {
+				Rect result(x * value, y * value, width * value, height * value);
+				return result;
+			} */
+
 			void SetX(float);
 			void SetY(float);
 			void SetWidth(float);
@@ -79,6 +84,7 @@ namespace se {
 
 			std::vector<glm::vec2> GetVertices();
 			std::vector<glm::vec3> GetVertices3D();
+			float GetAspect();
 
 		protected:
 

@@ -37,7 +37,7 @@ namespace se {
 
 	void Light::Render() {
 		if (Debug::enabled) {
-			Design::DrawVector(transform->position, direction, Color::red, true);
+			Design::DrawVector(transform->position, direction, Color::red, 1, true);
 		}
 
 	}

@@ -1,5 +1,5 @@
 #include "rigidbody2d.h"
-#include "physics.h"
+#include "physics/physics.h"
 #include "transform.h"
 #include "entity.h"
 

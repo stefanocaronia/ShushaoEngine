@@ -2,7 +2,7 @@
 #include <glm/glm.hpp>
 
 #include "glmanager.h"
-#include "linerenderer.h"
+#include "geometryrenderer.h"
 #include "transform.h"
 #include "color.h"
 #include "shaders/wireframeshader.h"
@@ -11,22 +11,22 @@ namespace se {
 
 	using namespace glm;
 
-	void LineRenderer::setup() {
+	void GeometryRenderer::setup() {
 		shader = new WireframeShader();
 	}
 
-	LineRenderer::~LineRenderer() {
+	GeometryRenderer::~GeometryRenderer() {
 		if (VAO != nullptr) { delete(VAO); VAO = nullptr; }
 	}
 
-	void LineRenderer::AddLine(const glm::vec3 start_point, const glm::vec3 end_point, Color col) {
+	void GeometryRenderer::AddLine(const glm::vec3 start_point, const glm::vec3 end_point, Color col) {
 		vertices.push_back(start_point);
 		vertices.push_back(end_point);
 		colors.push_back(col.rgba());
 		colors.push_back(col.rgba());
 	}
 
-	void LineRenderer::AddPolyline(const std::vector<glm::vec3> points, Color col) {
+	void GeometryRenderer::AddPolyline(const std::vector<glm::vec3> points, Color col) {
 		bool isFirst = true;
 		glm::vec3 lastpoint;
 		for (glm::vec3 point : points) {
@@ -41,7 +41,7 @@ namespace se {
 		}
 	}
 
-    void LineRenderer::AddCircle(glm::vec3 position, float radius, Color color, DrawMode mode) {
+    void GeometryRenderer::AddCircle(glm::vec3 position, float radius, Color color, DrawMode mode) {
 
         // TODO: non funziona molto
 
@@ -57,7 +57,7 @@ namespace se {
 		}
 	}
 
-	void LineRenderer::Awake() {
+	void GeometryRenderer::Awake() {
 
 		shader->awake();
 		shader->Use();
@@ -75,9 +75,9 @@ namespace se {
 		shader->Leave();
 	}
 
-	void LineRenderer::Update() {}
+	void GeometryRenderer::Update() {}
 
-	void LineRenderer::Render() {
+	void GeometryRenderer::Render() {
 
 		shader->Use();
 		VAO->Use();
@@ -103,7 +103,7 @@ namespace se {
 		shader->Use();
 	}
 
-	void LineRenderer::OnDestroy() {
+	void GeometryRenderer::OnDestroy() {
 
 		shader->Leave();
 		VAO->Leave();

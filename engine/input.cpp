@@ -1,8 +1,9 @@
 #include <string>
 #include <iostream>
+#include <SDL.h>
+#include <GL/glew.h>
 
 #include "input.h"
-#include "gllibs.h"
 #include "cycle.h"
 #include "setime.h"
 #include "glmanager.h"
@@ -255,8 +256,8 @@ namespace se {
 		double normalizedValue;
 		AxisMap am;
 
-		if (keys[input->positiveButton] || keys[input->altPositiveButton]) return 1.0d;
-		else if (keys[input->negativeButton] || keys[input->altNegativeButton]) return -1.0d;
+		if (keys[input->positiveButton] || keys[input->altPositiveButton]) return 1.0;
+		else if (keys[input->negativeButton] || keys[input->altNegativeButton]) return -1.0;
 
 
 		if (input->controllerInstance > -1) {

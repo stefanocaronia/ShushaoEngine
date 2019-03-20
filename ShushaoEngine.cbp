@@ -191,9 +191,6 @@
 		<Unit filename="engine/gamedata.h">
 			<Option virtualFolder="engine/base/" />
 		</Unit>
-		<Unit filename="engine/gllibs.h">
-			<Option virtualFolder="engine/globals/" />
-		</Unit>
 		<Unit filename="engine/glmanager.cpp">
 			<Option virtualFolder="engine/base/" />
 		</Unit>
@@ -211,7 +208,7 @@
 		<Unit filename="engine/linerenderer.cpp">
 			<Option virtualFolder="engine/render/" />
 		</Unit>
-		<Unit filename="engine/linerenderer.h">
+		<Unit filename="engine/geometryrenderer.h">
 			<Option virtualFolder="engine/render/" />
 		</Unit>
 		<Unit filename="engine/logger.cpp">

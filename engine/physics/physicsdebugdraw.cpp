@@ -1,6 +1,6 @@
 #include "scenemanager.h"
 #include "glmanager.h"
-#include "physicsdebugdraw.h"
+#include "physics/physicsdebugdraw.h"
 #include "design.h"
 #include "debug.h"
 #include "shaders/baseshader.h"

@@ -64,7 +64,7 @@ Level::Level() {
 
 	Entity* canvas = AddEntity<ui::Canvas>("Canvas");
 
-	canvas->GetComponent<Canvas>()->SetCamera(screenSpaceCamera)->SetRenderMode(RenderMode::SCREEN);
+	canvas->GetComponent<Canvas>()->SetCamera(screenSpaceCamera)->SetRenderMode(RenderMode::WORLD);
 	canvas->transform->rectTransform->SetRectSize({10,4});
 	canvas->transform->SetLocalPosition({-1, 0, 0});
 	canvas->transform->SetPivot(PivotPosition::CENTER);
@@ -100,11 +100,12 @@ Level::Level() {
 	uiText->setParent(canvas);
 	uiText->transform->SetPivot(PivotPosition::BOTTOMLEFT);
 	uiText->transform->rectTransform->SetAnchor({0.5f, 0.5f});
-	uiText->transform->rectTransform->SetRectSize({4, 1});
+	uiText->transform->rectTransform->SetRectSize({2, 1});
 	uiText->transform->SetLocalPosition({-2, -2, 0});
 	uiText->transform->SetPivot(PivotPosition::BOTTOMRIGHT);
 	auto tComp = uiText->GetComponent<Text>();
-	tComp->SetFont(f)->SetText("Label su canvas")->SetColor(Color::green)->SetSize(0.5f)->SetAlign(Align::CENTER);
+	tComp->wordWrap = false;
+	tComp->SetFont(f)->SetText("Label su canvas")->SetColor(Color::green)->SetSize(0.5f)->SetAlign(Align::BOTTOMRIGHT);
 
 	// compoenente text in una child entity - ancorata diversamente
 	ui::Text* anchoredText = AddEntity<ui::Text>("Label 2");

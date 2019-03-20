@@ -14,13 +14,13 @@ namespace se {
 
 	class Shader;
 
-	class LineRenderer : public Renderer {
+	class GeometryRenderer : public Renderer {
 
 		public:
 
 			virtual void setup();
 
-			~LineRenderer();
+			~GeometryRenderer();
 
 			Vao* VAO;
 			Shader* shader;

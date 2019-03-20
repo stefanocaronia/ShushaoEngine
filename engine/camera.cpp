@@ -1,10 +1,10 @@
 #include <iostream>
+#include <glm/glm.hpp>
 
 #include "camera.h"
 
 #include "config.h"
 #include "debug.h"
-#include "gllibs.h"
 #include "transform.h"
 #include "glmanager.h"
 
@@ -41,7 +41,6 @@ namespace se {
 					farClipPlane
 				);
 				viewportSize = {orthographicSize * aspect * 2, orthographicSize * 2};
-				// rect = {-orthographicSize * aspect, orthographicSize, orthographicSize * 2 * aspect, orthographicSize * 2};
 			} else {
 				Projection = perspective(fieldOfView, aspect, nearClipPlane, farClipPlane);
 			}

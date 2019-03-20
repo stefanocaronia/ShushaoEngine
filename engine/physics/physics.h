@@ -4,9 +4,9 @@
 #include <glm/glm.hpp>
 #include <vector>
 
-#include "physicscontactlistener.h"
-#include "physicscontactfilter.h"
-#include "physicsdebugdraw.h"
+#include "physics/physicscontactlistener.h"
+#include "physics/physicscontactfilter.h"
+#include "physics/physicsdebugdraw.h"
 
 namespace se {
 

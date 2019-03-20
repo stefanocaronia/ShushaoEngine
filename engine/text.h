@@ -40,6 +40,9 @@ namespace se {
 			const Align& align = _align;
 			const BottomAlign& bottomAlign = _bottomAlign;
 			bool alignToGeometry = false;
+			bool wordWrap = false;
+
+			float lineSpace = 0.3f; // %
 
 			Text* SetText(std::string value) 			{ _text = value; return this;}
 			Text* SetColor(Color value) 				{ _color = value; return this; }
@@ -57,6 +60,8 @@ namespace se {
 			void Render();
 			void OnDestroy();
 
+			int getWidth(std::string text);
+
         private:
 
             SDL_Surface* surface = nullptr;
@@ -72,6 +77,8 @@ namespace se {
             std::string _text = "";
 			Align _align = Align::TOPLEFT;
             std::string filename;
+
+			Rect textRect;
 
             GLuint vbo;
             Vao* VAO;

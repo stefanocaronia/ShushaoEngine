@@ -5,7 +5,6 @@ in vec2 UV;
 layout(location=6) uniform vec4 render_color;
 
 uniform sampler2D diffuse_map;
-uniform bool enabled_viewport;
 
 out vec4 frag_color;
 

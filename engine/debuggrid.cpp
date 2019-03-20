@@ -2,7 +2,7 @@
 
 #include "color.h"
 #include "debug.h"
-#include "linerenderer.h"
+#include "geometryrenderer.h"
 #include "glmanager.h"
 #include "scenemanager.h"
 
@@ -10,7 +10,7 @@ namespace se {
 
 	DebugGrid::DebugGrid() {
 
-		LineRenderer* LR = AddComponent<LineRenderer>();
+		GeometryRenderer* LR = AddComponent<GeometryRenderer>();
 		LR->sortingLayerID = Config::SortingLayers.over();
 
 		Color xcol = {0.0f, 1.0f, 0.0f, 0.5f};
@@ -66,7 +66,7 @@ namespace se {
 		}
 
 		// Screen canvas
-		/* LineRenderer* scr = AddComponent<LineRenderer>();
+		/* GeometryRenderer* scr = AddComponent<GeometryRenderer>();
 		scr->renderMode = RenderMode::SCREEN;
 
 		for (float i = 0.0f; i < gridSize; i++) {

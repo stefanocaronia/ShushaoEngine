@@ -32,7 +32,14 @@
             "args": ["-q"],
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}/bin/Debug/",
-            "externalConsole": true　
+            "externalConsole": true,
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],　
         }
     ]
  }

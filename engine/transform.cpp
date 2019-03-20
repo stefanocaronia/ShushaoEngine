@@ -246,9 +246,9 @@ namespace se {
 			rectTransform->render();
 		} else {
 			if (Debug::enabled && Debug::drawTransforms) {
-				Design::DrawVector(VEC3_ZERO, up / 3.0f, Color::green, false, RenderMode::WORLD, MVP);
-				Design::DrawVector(VEC3_ZERO, right / 3.0f, Color::red, false, RenderMode::WORLD, MVP);
-				Design::DrawVector(VEC3_ZERO, forward / 3.0f, Color::blue, false, RenderMode::WORLD, MVP);
+				Design::DrawVector(VEC3_ZERO, up / 3.0f, Color::green, 2, false, RenderMode::WORLD, MVP);
+				Design::DrawVector(VEC3_ZERO, right / 3.0f, Color::red, 2, false, RenderMode::WORLD, MVP);
+				Design::DrawVector(VEC3_ZERO, forward / 3.0f, Color::blue, 2, false, RenderMode::WORLD, MVP);
 			}
 		}
 	}

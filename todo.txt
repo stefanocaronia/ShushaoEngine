@@ -5,12 +5,10 @@ le proporzioni sulla canvas screen non sembrano a posto
 
 Componenti UI:
 
-Canvas
-Text
 Image
 Panel
+Layout?
 
-- Canvas system e rendering overlay
 - Coroutines
 - funzioni rotate 2D in transform
 - aggiungere contatti in contact listener
@@ -22,7 +20,7 @@ Panel
 3D
 
 - caricare mesh con assimp
-- draw per index
-- load material da classe material
+- draw per index?
+- load material text file da classe material
 - classe model (più mesh)?
 - importatore assimp di model?

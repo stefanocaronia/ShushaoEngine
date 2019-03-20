@@ -253,17 +253,17 @@ namespace se {
             vec3 position = Transform::VEC3_ZERO;
             if (renderMode == RenderMode::WORLD) {
                 color = {0.1f, 0.1f, 0.5f, 0.6f};
-            }else if (renderMode == RenderMode::CAMERA) {
+            } else if (renderMode == RenderMode::CAMERA) {
                 color = {0.1f, 0.5f, 0.5f, 0.3f};
             } else if (renderMode == RenderMode::SCREEN) {
                 color = {0.5f, 0.0f, 0.1f, 0.3f};
                 position = transform->position;
             }
-            Design::DrawRect(position, rect, color, DrawMode::HOLLOW, renderMode, transform->MVP);
+            Design::DrawRect(position, rect, color, 1, DrawMode::HOLLOW, renderMode, transform->MVP);
 
-            Design::DrawVector(position, transform->up / 3.0f, Color::green, false, renderMode, transform->MVP);
-			Design::DrawVector(position, transform->right / 3.0f, Color::red, false, renderMode, transform->MVP);
-			Design::DrawVector(position, transform->forward / 3.0f, Color::blue, false, renderMode, transform->MVP);
+            Design::DrawVector(position, transform->up / 3.0f, Color::green, 2, false, renderMode, transform->MVP);
+			Design::DrawVector(position, transform->right / 3.0f, Color::red, 2, false, renderMode, transform->MVP);
+			Design::DrawVector(position, transform->forward / 3.0f, Color::blue, 2, false, renderMode, transform->MVP);
         }
 
     }

@@ -16,4 +16,4 @@ WIREFRAMESHADER_FRAG RCDATA "engine/shaders/glsl/wireframeshader.frag"
 PHONGSHADER_VERT RCDATA "engine/shaders/glsl/phongshader.vert"
 PHONGSHADER_FRAG RCDATA "engine/shaders/glsl/phongshader.frag"
 
-IMG_AVATAR RCDATA "engine/res/avatar.png"
+IMG_AVATAR RCDATA "engine/resources/avatar.png"

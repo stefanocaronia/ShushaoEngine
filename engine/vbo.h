@@ -2,7 +2,8 @@
 
 #include <string>
 #include <vector>
-#include "gllibs.h"
+#include <GL/glew.h>
+
 #include "object.h"
 #include "debug.h"
 

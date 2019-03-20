@@ -11,7 +11,7 @@
 #include "resources.h"
 #include "config.h"
 #include "debug.h"
-#include "physics.h"
+#include "physics/physics.h"
 #include "design.h"
 
 se::Cycle* GAME;
@@ -118,7 +118,6 @@ namespace se {
 		SceneManager::activeScene->run(Cycle::RENDER);
 		Render();
 		if (Physics::enabled && Physics::debug) Physics::world->DrawDebugData();
-		Design::ProcessDrawCalls();
 		SceneManager::activeScene->renderOverlay();
 		Time::frameCount++;
 		GLManager::Swap();

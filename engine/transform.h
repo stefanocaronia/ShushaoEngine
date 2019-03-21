@@ -10,8 +10,8 @@
 #include <glm/gtc/quaternion.hpp>
 
 #include "component.h"
-#include "constants.h"
-#include "types.h"
+#include "globals.h"
+#include "globals.h"
 #include "rect.h"
 #include "recttransform.h"
 

@@ -4,7 +4,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 
-#include "object.h"
+#include "../object.h"
 
 namespace se {
 

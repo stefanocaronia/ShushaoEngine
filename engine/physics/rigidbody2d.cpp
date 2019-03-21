@@ -1,7 +1,7 @@
 #include "rigidbody2d.h"
-#include "physics/physics.h"
-#include "transform.h"
-#include "entity.h"
+#include "physics.h"
+#include "../transform.h"
+#include "../entity.h"
 
 namespace se {
 

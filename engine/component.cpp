@@ -4,12 +4,12 @@
 #include "debug.h"
 #include "utility.h"
 #include "cycle.h"
-#include "setime.h"
+#include "base/time.h"
 #include "transform.h"
 #include "renderer.h"
 #include "gamedata.h"
-#include "collision2d.h"
-#include "collider2d.h"
+#include "physics/collision2d.h"
+#include "physics/collider2d.h"
 #include "entity.h"
 
 namespace se {

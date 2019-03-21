@@ -4,7 +4,7 @@
 #include <sstream>
 #include "glm/glm.hpp"
 #include "rect.h"
-#include "types.h"
+#include "globals.h"
 #include "transform.h"
 
 namespace se {
@@ -18,7 +18,7 @@ namespace se {
 		LRTB
 	};
 
-	struct AnchorPoints {
+	struct AnchorDeltas {
 		float left;
 		float top;
 		float right;
@@ -86,6 +86,7 @@ namespace se {
 			void SetRectSize(glm::vec2 size_);
 
             void SetPivot(glm::vec2);
+            void SetAnchor(AnchorPoints);
             void SetAnchor(glm::vec2);
             void SetAnchorMax(glm::vec2);
             void SetAnchorMin(glm::vec2);
@@ -116,7 +117,7 @@ namespace se {
 
 			glm::vec2 _pivot = {0.5f, 0.5f};
 
-			AnchorPoints deltas;
+			AnchorDeltas deltas;
 	};
 
 }

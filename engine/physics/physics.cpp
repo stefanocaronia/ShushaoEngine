@@ -1,9 +1,9 @@
-#include "physics/physics.h"
-#include "scenemanager.h"
+#include "physics.h"
+#include "physicscontactlistener.h"
+#include "physicsdebugdraw.h"
 
-#include "config.h"
-#include "physics/physicscontactlistener.h"
-#include "physics/physicsdebugdraw.h"
+#include "../scenemanager.h"
+#include "../config.h"
 
 namespace se {
 

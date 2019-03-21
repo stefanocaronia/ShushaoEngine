@@ -1,6 +1,7 @@
 #pragma once
 
 #include <GL/glew.h>
+#include <glm/glm.hpp>
 #include <SDL.h>
 #include <vector>
 #include <string>
@@ -20,6 +21,7 @@ namespace se {
 
 			int height;
 			int width;
+			glm::vec2 size;
 
 			bool Load(std::string);
 			bool LoadEmbedded(int IDRES);

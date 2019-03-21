@@ -55,6 +55,7 @@ namespace se {
 		if (Surface == nullptr) return false;
 		width = surface->w;
 		height = surface->h;
+		size = {width, height};
 
 		int Mode = (surface->format->BytesPerPixel == 4 ? GL_RGBA : GL_RGB);
 

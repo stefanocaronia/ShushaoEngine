@@ -2,11 +2,7 @@
 
 #include <glm/glm.hpp>
 
-#include "utility.h"
-
-namespace se {
-    class VectorMap;
-}
+#include "levelmap.h"
 
 namespace Config {
 
@@ -37,6 +33,6 @@ namespace Config {
 		extern int positionIterations;
 	}
 
-	extern se::VectorMap Layers;
-	extern se::VectorMap SortingLayers;
+	extern se::LevelMap Layers;
+	extern se::LevelMap SortingLayers;
 }

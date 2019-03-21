@@ -3,7 +3,7 @@
 #include "config.h"
 #include "renderer.h"
 #include "rect.h"
-#include "types.h"
+#include "globals.h"
 #include "camera.h"
 
 namespace se {

@@ -5,7 +5,7 @@
 #include "debug.h"
 #include "sprite.h"
 #include "rect.h"
-#include "types.h"
+#include "globals.h"
 
 namespace se {
 
@@ -47,6 +47,11 @@ namespace se {
         rect.Set(rect_.x, rect_.y, rect_.width, rect_.height);
 		rect.YUP = rect_.YUP;
         pixel_pivot = CalculatePivot(Align::CENTER, rect);
+		return this;
+	}
+
+	Sprite* Sprite::SetBorder(glm::vec4 border_) {
+		border = border_;
 		return this;
 	}
 

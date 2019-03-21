@@ -8,7 +8,7 @@
 #include "color.h"
 #include "design.h"
 #include "vao.h"
-#include "types.h"
+#include "globals.h"
 
 namespace se {
 

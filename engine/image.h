@@ -11,6 +11,13 @@
 
 namespace se {
 
+    enum class ImageType {
+        SIMPLE, // Displays the full Image
+        SLICED, // Displays the Image as a 9-sliced graphic.
+        TILED,  // Displays a sliced Sprite with its resizable sections tiled instead of stretched
+        FILLED // Displays only a portion of the Image
+    };
+
 	class Image : public Renderer {
 
 		public:
@@ -24,10 +31,17 @@ namespace se {
 			Material* material = nullptr;
 			Vao* VAO = nullptr;
 
+			ImageType type = ImageType::SIMPLE;
+
 			bool preserveAspect = false;
 
 			Image* SetSprite(Sprite* sprite_) {
 				sprite = sprite_;
+				return this;
+			}
+
+			Image* SetImageType(ImageType type_) {
+				type = type_;
 				return this;
 			}
 

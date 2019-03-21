@@ -36,8 +36,9 @@ Level::Level() {
 	AddEntity<Starship>("Cassa");
 	Entity* mah = AddEntity<Starship>("mah");
 	mah->transform->SetLocalPosition({4.0f, 2.0f, -1.0f});
-	mah->transform->SetLocalRotation({10, 10, 0}); */
-	//return;
+	mah->transform->SetLocalRotation({10, 10, 0});
+
+	return; */
 
 	//Font* pixel = Resources::Get<Font>("Pixel Perfect");
 	Font* f = Resources::Get<Font>("Modenine");
@@ -52,7 +53,6 @@ Level::Level() {
 	text->transform->SetLocalPosition({5, -1, 0});
 	//text->transform->SetLocalScale({2,2,0});
 	text->SetAlign(Align::TOPLEFT);
-
 
 	Camera* screenSpaceCamera = root->AddComponent<Camera>("Screen Space Camera");
 	screenSpaceCamera->setOrthographic(true);
@@ -99,7 +99,7 @@ Level::Level() {
 	ui::Text* uiText = AddEntity<ui::Text>("Label su canvas");
 	uiText->setParent(canvas);
 	uiText->transform->SetPivot(PivotPosition::BOTTOMLEFT);
-	uiText->transform->rectTransform->SetAnchor({0.5f, 0.5f});
+	uiText->transform->rectTransform->SetAnchor(AnchorPreset::CENTER);
 	uiText->transform->rectTransform->SetRectSize({2, 1});
 	uiText->transform->SetLocalPosition({-2, -2, 0});
 	uiText->transform->SetPivot(PivotPosition::BOTTOMRIGHT);
@@ -112,12 +112,10 @@ Level::Level() {
 	anchoredText->setParent(canvas);
 	anchoredText->transform->SetPivot(PivotPosition::CENTER);
 
-	anchoredText->transform->rectTransform->SetAnchorMax({1, 1});
-	anchoredText->transform->rectTransform->SetAnchorMin({0, 1});
+	anchoredText->transform->rectTransform->SetAnchor(AnchorPreset::TOPSTRETCH);
 	anchoredText->transform->rectTransform->RegisterPositionLRYH(1.0f, 1.0f, -1.0f, 1.0f);
 
-	/* anchoredText->transform->rectTransform->SetAnchorMax({1, 1});
-	anchoredText->transform->rectTransform->SetAnchorMin({0, 0});
+	/* anchoredText->transform->rectTransform->SetAnchor(AnchorPreset::STRETCH);
 	anchoredText->transform->rectTransform->RegisterPositionLRTB(1.0f, 1.0f, 1.0f, 1.0f); */
 
 	/* anchoredText->transform->rectTransform->SetAnchorMax({1, 1});
@@ -142,20 +140,29 @@ Level::Level() {
 	image1->SetUvRect({0.0f, 0.0f, 1.0f, 1.0f})->SetColor({0.5f, 0.1f, 0.1f, 0.4f});
 	image1->sortingLayerID = Config::SortingLayers["UI"]; */
 
-	ui::Image* uiImage2 = AddEntity<ui::Image>("Immagine su canvas");
-	uiImage2->setParent(canvas);
+	//ui::Image* uiImage2 = AddEntity<ui::Image>("Immagine su canvas");
+	//uiImage2->setParent(canvas);
+//
+	//Image* image2 = uiImage2->GetComponent<Image>();
+	//image2->SetSprite(Resources::Get<Sprite>("eye_sprite"));
+	///* image2->transform->rectTransform->SetAnchor({0.5f, 0.5f});
+	//image2->transform->rectTransform->SetRectSize({6, 3});
+	//image2->transform->SetLocalPosition({3, 1, 0});*/
+	//image2->transform->rectTransform->SetAnchorMax({1, 1});
+	//image2->transform->rectTransform->SetAnchorMin({0, 0});
+	//image2->transform->rectTransform->RegisterPositionLRTB(1.0f, 1.0f, 1.0f, 1.0f);
+	//image2->sortingLayerID = Config::SortingLayers["UI"];
+	// image2->SetPreserveAspect(false);
 
-	Image* image2 = uiImage2->GetComponent<Image>();
-	image2->SetSprite(Resources::Get<Sprite>("eye_sprite"));
-	/* image2->transform->rectTransform->SetAnchor({0.5f, 0.5f});
-	image2->transform->rectTransform->SetRectSize({6, 3});
-	image2->transform->SetLocalPosition({3, 1, 0});*/
-	image2->transform->rectTransform->SetAnchorMax({1, 1});
-	image2->transform->rectTransform->SetAnchorMin({0, 0});
-	image2->transform->rectTransform->RegisterPositionLRTB(1.0f, 1.0f, 1.0f, 1.0f);
-	image2->sortingLayerID = Config::SortingLayers["UI"];
-	image2->SetPreserveAspect(false);
+	ui::Image* sliced = AddEntity<ui::Image>("Immagine sliced");
+	sliced->setParent(canvas);
 
+	Image* imagesl = sliced->GetComponent<Image>();
+	imagesl->SetSprite(Resources::Get<Sprite>("cube_sprite"));
+	imagesl->transform->rectTransform->SetAnchor(AnchorPreset::STRETCH);
+	imagesl->transform->rectTransform->RegisterPositionLRTB(1.0f, 1.0f, 1.0f, 1.0f);
+	imagesl->sortingLayerID = Config::SortingLayers["UI"];
+	imagesl->SetPreserveAspect(false)->SetImageType(ImageType::SLICED);
 
 	return;
 

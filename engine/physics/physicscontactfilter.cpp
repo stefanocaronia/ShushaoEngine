@@ -1,8 +1,8 @@
-#include "physics/physicscontactfilter.h"
-
+#include "physicscontactfilter.h"
 #include "collider2d.h"
-#include "entity.h"
-#include "transform.h"
+
+#include "../entity.h"
+#include "../transform.h"
 
 namespace se {
 

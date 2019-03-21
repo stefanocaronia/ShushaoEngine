@@ -194,6 +194,12 @@ namespace se {
         update();
     }
 
+    void RectTransform::SetAnchor(AnchorPoints points) {
+         _anchorMin = points.min;
+         _anchorMax = points.max;
+        update();
+    }
+
     void RectTransform::SetAnchorMax(glm::vec2 value) {
         _anchorMax = value;
         update();

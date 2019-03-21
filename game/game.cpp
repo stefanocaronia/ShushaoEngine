@@ -13,6 +13,9 @@ Game::Game(string title) : Cycle(title) {
   	Time::setFrameRateLimit(120.0f);
 	Time::setFixedRateLimit(60.0f);
 
+
+	perspectiveTest = false;
+
 	Config::Layers = {
 		"Background",
 		"Items"
@@ -32,7 +35,7 @@ Game::Game(string title) : Cycle(title) {
 
 	Debug::level = DebugLevel::INFO;
 	Debug::enabled = true;
-	Debug::debugGridMode = GridMode::ORTHOGRAFIC;
+	Debug::debugGridMode = perspectiveTest ? GridMode::PERSPECTIVE : GridMode::ORTHOGRAFIC;
 	Config::Physics::debug = true;
 }
 
@@ -53,6 +56,8 @@ void Game::Awake() {
 	Resources::Load<Texture>("assets/cube_specular.png");
 	Resources::Load<Texture>("assets/tap.jpg");
 
+	Resources::Add<Sprite>("cube_sprite")->SetTexture(Resources::Get<Texture>("cube_diffuse_brutto"))->SetPixelPerUnit(200)->SetBorder({40,40,40,40})->Build();
+
 	Resources::Load<Music>("assets/fizz.mp3");
 	Resources::Load<Effect>("assets/hit.wav");
 	Resources::Load<Effect>("assets/shoot.wav")->setVolume(40);
@@ -63,8 +68,6 @@ void Game::Awake() {
 	Resources::Load<Font>("assets/pixelperfect.ttf", "Pixel Perfect");
 
 	SceneManager::LoadScene<Level>("Level 1");
-
-	bool perspectiveTest = false;
 
 	Camera* camera = SceneManager::activeScene->activeCamera;
 	camera->backgroundColor = {0.05f, 0.05f, 0.2f, 1.0f};
@@ -112,7 +115,6 @@ void Game::Awake() {
 }
 
 void Game::Start() {
-
 
 }
 

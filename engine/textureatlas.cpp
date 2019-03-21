@@ -2,7 +2,7 @@
 
 #include "textureatlas.h"
 #include "debug.h"
-#include "types.h"
+#include "globals.h"
 
 namespace se {
 

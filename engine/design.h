@@ -8,7 +8,7 @@
 #include "shaders/shader.h"
 #include "vao.h"
 #include "rect.h"
-#include "types.h"
+#include "globals.h"
 #include "transform.h"
 
 namespace se {

@@ -46,9 +46,15 @@ namespace se {
 		refreshSprite();
 
 		material->SetMainTexture(sprite->texture);
+
+		if (type == ImageType::SLICED) {
+			material->shader->Use();
+			material->shader->Enable("sliced");
+			material->shader->SetVector("border", sprite->border);
+			material->shader->SetVector("size", sprite->texture->size);
+			material->shader->Leave();
+		}
 	}
-
-
 
 	void Image::Update() {
 		if (!isReady()) return;

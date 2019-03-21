@@ -11,7 +11,7 @@
 #include "shaders/shader.h"
 #include "vao.h"
 #include "config.h"
-#include "types.h"
+#include "globals.h"
 
 // TODO: deve renderizzare più righe? controllare com'è in unity
 

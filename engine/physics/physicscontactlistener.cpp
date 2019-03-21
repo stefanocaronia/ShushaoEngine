@@ -1,8 +1,8 @@
-#include "physics/physicscontactlistener.h"
-
+#include "physicscontactlistener.h"
 #include "collision2d.h"
 #include "collider2d.h"
-#include "entity.h"
+
+#include "../entity.h"
 
 namespace se {
 

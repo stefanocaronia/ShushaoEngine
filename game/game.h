@@ -9,6 +9,8 @@ class Game : public se::Cycle {
 		Game(string);
 		string name;
 
+		bool perspectiveTest = false;
+
 	protected:
 
 		void Awake();

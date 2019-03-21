@@ -1,4 +1,5 @@
 #include "config.h"
+#include "levelmap.h"
 
 namespace Config {
 
@@ -31,7 +32,7 @@ namespace Config {
 
 	}
 
-	se::VectorMap Layers;
-	se::VectorMap SortingLayers;
+	se::LevelMap Layers;
+	se::LevelMap SortingLayers;
 
 }

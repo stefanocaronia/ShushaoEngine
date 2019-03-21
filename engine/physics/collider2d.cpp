@@ -2,10 +2,10 @@
 
 #include "collider2d.h"
 #include "rigidbody2d.h"
-#include "transform.h"
-#include "entity.h"
-#include "sprite.h"
-#include "spriterenderer.h"
+#include "../transform.h"
+#include "../entity.h"
+#include "../sprite.h"
+#include "../spriterenderer.h"
 
 namespace se {
 

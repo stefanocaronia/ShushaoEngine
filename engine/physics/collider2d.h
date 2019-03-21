@@ -2,7 +2,7 @@
 
 #include <Box2D/Box2D.h>
 
-#include "component.h"
+#include "../component.h"
 
 namespace se {
 

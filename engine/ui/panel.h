@@ -1,15 +1,15 @@
 #pragma once
 
-#include "../entity.h"
+#include "image.h"
 #include "../transform.h"
 
 namespace ui {
 
-    class Image : public se::Entity {
+    class Panel : public Image {
 
         public:
 
-            Image();
+            Panel();
 
     };
 

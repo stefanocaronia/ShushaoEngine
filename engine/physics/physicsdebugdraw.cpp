@@ -1,9 +1,9 @@
-#include "scenemanager.h"
-#include "glmanager.h"
-#include "physics/physicsdebugdraw.h"
-#include "design.h"
-#include "debug.h"
-#include "shaders/baseshader.h"
+#include "../scenemanager.h"
+#include "../glmanager.h"
+#include "physicsdebugdraw.h"
+#include "../design.h"
+#include "../debug.h"
+#include "../shaders/baseshader.h"
 
 #include <iostream>
 

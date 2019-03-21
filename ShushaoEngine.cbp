@@ -294,7 +294,7 @@
 		<Unit filename="engine/rigidbody2d.cpp">
 			<Option virtualFolder="engine/physics/" />
 		</Unit>
-		<Unit filename="engine/rigidbody2d.h">
+		<Unit filename="engine/physics/rigidbody2d.h">
 			<Option virtualFolder="engine/physics/" />
 		</Unit>
 		<Unit filename="engine/scene.cpp">
@@ -318,7 +318,7 @@
 		<Unit filename="engine/setime.cpp">
 			<Option virtualFolder="engine/base/" />
 		</Unit>
-		<Unit filename="engine/setime.h">
+		<Unit filename="engine/base/time.h">
 			<Option virtualFolder="engine/base/" />
 		</Unit>
 		<Unit filename="engine/shader.cpp">

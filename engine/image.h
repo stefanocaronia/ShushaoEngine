@@ -32,8 +32,20 @@ namespace se {
 			Vao* VAO = nullptr;
 
 			ImageType type = ImageType::SIMPLE;
+			glm::vec4 border; // pixel borders for 9-slicing - X=left, Y=bottom, Z=right, W=top
 
+			bool fillCenter = true;
 			bool preserveAspect = false;
+
+			Image* SetBorder(glm::vec4 border_) {
+				border = border_;
+				return this;
+			}
+
+			Image* SetFillCenter(bool value_) {
+				fillCenter = value_;
+				return this;
+			}
 
 			Image* SetSprite(Sprite* sprite_) {
 				sprite = sprite_;

@@ -43,6 +43,7 @@ void Game::Awake() {
 
 	Resources::Load<Texture>("avatar", IMG_AVATAR);
 	Resources::Load<Texture>("assets/pancrazio.png");
+	Resources::Load<Texture>("assets/dialog.png");
 	Resources::Load<Texture>("assets/night.jpg");
 	Resources::Load<Texture>("assets/eye.jpg");
 	Resources::Load<Texture>("assets/pancsmile.png");
@@ -56,7 +57,7 @@ void Game::Awake() {
 	Resources::Load<Texture>("assets/cube_specular.png");
 	Resources::Load<Texture>("assets/tap.jpg");
 
-	Resources::Add<Sprite>("cube_sprite")->SetTexture(Resources::Get<Texture>("cube_diffuse_brutto"))->SetPixelPerUnit(200)->SetBorder({40,40,40,40})->Build();
+	Resources::Add<Sprite>("dialog_sprite")->SetTexture(Resources::Get<Texture>("dialog"))->SetPixelPerUnit(200)->SetBorder({10,10,10,10})->Build();
 
 	Resources::Load<Music>("assets/fizz.mp3");
 	Resources::Load<Effect>("assets/hit.wav");

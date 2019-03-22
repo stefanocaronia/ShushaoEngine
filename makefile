@@ -23,6 +23,7 @@ directories:
 	@echo -e $(CBLUE)$(BULLET)Checking build directories $(CEND)
 	@$(MD) -p $(TARGETDIR)
 	@$(MD) -p $(BUILDDIR)
+	@$(RM) -f obj/$(BUILD)/engine/resources/resources.o
 
 #Clean only Objecst
 clean:

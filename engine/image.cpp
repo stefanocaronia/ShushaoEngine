@@ -47,13 +47,26 @@ namespace se {
 
 		material->SetMainTexture(sprite->texture);
 
-		if (type == ImageType::SLICED) {
+		if (type == ImageType::SLICED || type == ImageType::TILED) {
 			material->shader->Use();
-			material->shader->Enable("sliced");
-			material->shader->SetVector("border", sprite->border);
-			material->shader->SetVector("size", sprite->texture->size);
+
+			material->shader->SetVector("sprite_border", sprite->border); // in pixels
+			material->shader->SetVector("image_border", border); // in pixels
+			material->shader->SetVector("texture_size", sprite->texture->size); // in pixels
+			material->shader->SetVector("image_size", transform->rectTransform->rect.size * (float)sprite->pixelPerUnit); // in pixels
+			material->shader->SetInteger("sliced_fill", fillCenter); // bool
+
+			if (type == ImageType::SLICED) {
+				material->shader->Enable("sliced");
+				material->shader->Disable("tiled");
+			} else if (type == ImageType::TILED) {
+				material->shader->Enable("tiled");
+				material->shader->Disable("sliced");
+			}
+
 			material->shader->Leave();
 		}
+
 	}
 
 	void Image::Update() {
@@ -96,6 +109,12 @@ namespace se {
 		}
 
 		last_rectSize = transform->rectTransform->rect.size;
+
+		if (type == ImageType::SLICED || type == ImageType::TILED) {
+			material->shader->Use();
+			material->shader->SetVector("image_size", transform->rectTransform->rect.size * (float)sprite->pixelPerUnit); // in pixels
+			material->shader->Leave();
+		}
 
 		sprite->Build();
 	}

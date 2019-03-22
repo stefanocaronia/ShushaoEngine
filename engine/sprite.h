@@ -24,7 +24,7 @@ namespace se {
 
 			bool preserveAspect = true;
 			bool ready = false;
-			glm::vec4 border; // borders for 9-slicing - X=left, Y=bottom, Z=right, W=top
+			glm::vec4 border; // pixel borders for 9-slicing - X=left, Y=bottom, Z=right, W=top
 			glm::vec2 pivot; // Location of the Sprite's center point in the vertices coordinates
 			unsigned int pixelPerUnit = Config::pixelPerUnit; // The number of pixels in the sprite that correspond to one unit in world space. (Read Only)
 			glm::vec2 textureRectOffset; // Gets the offset of the rectangle this sprite uses on its texture to the original sprite bounds. If sprite mesh type is FullRect, offset is zero.

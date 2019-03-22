@@ -158,11 +158,11 @@ Level::Level() {
 	sliced->setParent(canvas);
 
 	Image* imagesl = sliced->GetComponent<Image>();
-	imagesl->SetSprite(Resources::Get<Sprite>("cube_sprite"));
+	imagesl->SetSprite(Resources::Get<Sprite>("dialog_sprite"));
 	imagesl->transform->rectTransform->SetAnchor(AnchorPreset::STRETCH);
 	imagesl->transform->rectTransform->RegisterPositionLRTB(1.0f, 1.0f, 1.0f, 1.0f);
 	imagesl->sortingLayerID = Config::SortingLayers["UI"];
-	imagesl->SetPreserveAspect(false)->SetImageType(ImageType::SLICED);
+	imagesl->SetPreserveAspect(false)->SetImageType(ImageType::TILED)->SetBorder({40,40,40,40})->SetFillCenter(true);
 
 	return;
 

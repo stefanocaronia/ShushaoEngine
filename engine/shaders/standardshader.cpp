@@ -16,10 +16,13 @@ namespace se {
 		AddUniform("Diffuse Map", "diffuse_map", UniformType::TEXTURE);
 		AddUniform("Render Color", "render_color", UniformType::TEXTURE, ShaderLocation::LOCATION_RENDER_COLOR);
 
-		AddShaderUniform("border", UniformType::VECTOR);
-		AddShaderUniform("size", UniformType::VECTOR);
+		AddShaderUniform("image_border", UniformType::VECTOR);
+		AddShaderUniform("sprite_border", UniformType::VECTOR);
+		AddShaderUniform("image_size", UniformType::VECTOR);
+		AddShaderUniform("texture_size", UniformType::VECTOR);
 		AddShaderUniform("enabled_sliced", UniformType::INTEGER);
 		AddShaderUniform("enabled_tiled", UniformType::INTEGER);
+		AddShaderUniform("sliced_fill", UniformType::INTEGER);
 
 		// valorizzazione
 		SetTextureIndex("diffuse_map", 0);

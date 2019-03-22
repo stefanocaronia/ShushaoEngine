@@ -162,7 +162,7 @@ Level::Level() {
 	imagesl->transform->rectTransform->SetAnchor(AnchorPreset::STRETCH);
 	imagesl->transform->rectTransform->RegisterPositionLRTB(1.0f, 1.0f, 1.0f, 1.0f);
 	imagesl->sortingLayerID = Config::SortingLayers["UI"];
-	imagesl->SetPreserveAspect(false)->SetImageType(ImageType::TILED)->SetBorder({40,40,40,40})->SetFillCenter(true);
+	imagesl->SetPreserveAspect(false)->SetImageType(ImageType::TILED)->SetBorder({40,40,40,40})->SetFillCenter(false);
 
 	return;
 

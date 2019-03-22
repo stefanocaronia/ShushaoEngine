@@ -1,13 +1,16 @@
 
+https://github.com/stefanocaronia/ShushaoEngine/projects/1
+
 BUG:
 
 le proporzioni sulla canvas screen non sembrano a posto
 
 Componenti UI:
 
-Image
-Panel
-Layout?
+Layout Element
+Vertical Layout
+Horizontal Layout
+Grid Layout
 
 - Coroutines
 - funzioni rotate 2D in transform

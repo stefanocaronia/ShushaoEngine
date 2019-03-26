@@ -1,4 +1,13 @@
 {
+    "files.exclude": {
+        "**/bin": true,
+        "**/obj": true,
+        "**/.makefiles": true,
+        "**/.vscode": true,
+        ".gitignore": true,
+        "makefile": true,
+        "*.bat": true
+    },
     "files.associations": {
         "*.rc": "ini",
         "*.inc": "php",

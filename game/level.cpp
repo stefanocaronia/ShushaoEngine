@@ -8,6 +8,19 @@ Level::Level() {
 
 	using namespace se;
 
+
+	/* Particle System */
+
+	Entity* particleObj = AddEntity("Particle Object");
+	ParticleSystem* ps = particleObj->AddComponent<ParticleSystem>();
+	ps->texture = Resources::Get<Texture>("avatar");
+
+	ps->SetMaxParticles(100);
+	ps->playOnAwake = true;
+	ps->emission.rateOverTime = 10;
+
+	return;
+
 	/* Entity* directional = AddEntity("Directional");
 	directional->transform->SetLocalRotation({20, 10, 0});
 	Light* light = directional->AddComponent<Light>();

@@ -45,6 +45,7 @@ namespace se {
 
 		return this;
 	}
+
 	RawImage* RawImage::SetColor(Color color_) {
 		color = color_;
 		material->color = color;

@@ -56,6 +56,9 @@
 // SHADERS
 #include "shaders/shader.h"
 
+// PARTICLE SYSTEM
+#include "particles/particlesystem.h"
+
 // UI
 #include "ui/canvas.h"
 #include "ui/text.h"

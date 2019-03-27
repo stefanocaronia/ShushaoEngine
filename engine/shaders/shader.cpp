@@ -8,6 +8,8 @@
 
 namespace se {
 
+	using namespace std;
+
 	//{ #region uniform
 
 	void Uniform::SetFloat(GLfloat& value) {
@@ -198,11 +200,12 @@ namespace se {
 		}
 
 		if (!Shader::compile()) {
-			Debug::Log(ERROR, SOURCE) << "Error Compiling Shader" << endl;
+			Debug::Log(ERROR) << "Error Compiling Shader" << endl;
 			return false;
 		}
+
 		if (!Shader::link()) {
-			Debug::Log(ERROR, SOURCE) << "Error Linking Shader" << endl;
+			Debug::Log(ERROR) << "Error Linking Shader" << endl;
 			return false;
 		}
 
@@ -311,11 +314,9 @@ namespace se {
 
 	bool Shader::compile() {
 
-		VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
-		FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
-
 		// Compile Vertex Shader
-		char const * VertexSourcePointer = VertexShaderCode.c_str();
+		VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
+		char const* VertexSourcePointer = VertexShaderCode.c_str();
 		glShaderSource(VertexShaderID, 1, &VertexSourcePointer , NULL);
 		glCompileShader(VertexShaderID);
 
@@ -324,13 +325,27 @@ namespace se {
 			return false;
 
 		// Compile Fragment Shader
-		char const * FragmentSourcePointer = FragmentShaderCode.c_str();
+		FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
+		char const* FragmentSourcePointer = FragmentShaderCode.c_str();
 		glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer , NULL);
 		glCompileShader(FragmentShaderID);
 
 		// Check Vertex Shader
 		if (!shaderCompilationLog(FragmentShaderID))
 			return false;
+
+		if (GeometryShaderCode != "") {
+
+			// Compile Geometry Shader
+			GeometryShaderID = glCreateShader(GL_GEOMETRY_SHADER);
+			char const* GeometrySourcePointer = GeometryShaderCode.c_str();
+			glShaderSource(GeometryShaderID, 1, &GeometrySourcePointer , NULL);
+			glCompileShader(GeometryShaderID);
+
+			// Check Geometry Shader
+			if (!shaderCompilationLog(GeometryShaderID))
+				return false;
+		}
 
 		return true;
 	}
@@ -341,24 +356,30 @@ namespace se {
 		programID = glCreateProgram();
 		glAttachShader(programID, VertexShaderID);
 		glAttachShader(programID, FragmentShaderID);
+		if (GeometryShaderID > 0 ) glAttachShader(programID, GeometryShaderID);
 		glLinkProgram(programID);
 
 		// Check the program
 		if (!programCompilationLog(programID))
 			return false;
 
-		glDeleteShader(VertexShaderID);
-		glDeleteShader(FragmentShaderID);
+		// free resources
+		if (VertexShaderID > 0) glDeleteShader(VertexShaderID);
+		if (FragmentShaderID > 0) glDeleteShader(FragmentShaderID);
+		if (GeometryShaderID > 0) glDeleteShader(GeometryShaderID);
 
 		return true;
 	}
 
-	void Shader::LoadFromString(std::string vsc, std::string fsc) {
+	void Shader::LoadFromString(std::string vsc, std::string fsc, std::string gsc) {
 		VertexShaderCode = vsc;
 		FragmentShaderCode = fsc;
+		GeometryShaderCode = gsc;
 	}
 
 	bool Shader::Load(std::string shaderfile) {
+
+		// TODO: Load Geometry Shader code
 
 		std::string vert = shaderfile + ".vert";
 		std::string frag = shaderfile + ".frag";
@@ -391,11 +412,16 @@ namespace se {
 
 	bool Shader::shaderCompilationLog(const GLuint &shader) {
 		GLint status;
+		string script;
+		if (shader == VertexShaderID) script = "Vertex";
+		else if (shader == FragmentShaderID) script = "Fragment";
+		else if (shader == GeometryShaderID) script = "Geometry";
+
 		glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
 		if (status == GL_FALSE) {
 			char infoLog[512];
 			glGetShaderInfoLog(shader, 512, NULL, infoLog);
-			Debug::Log << "- Shader " << name << " Compilation log:\n" << infoLog;
+			if (Debug::enabled) Debug::Log(ERROR) << name << " " << script << " script Compilation failed:\n" << infoLog << endl;
 			return false;
 		}
 		return true;
@@ -406,10 +432,10 @@ namespace se {
 		glGetProgramiv(program, GL_LINK_STATUS, &status);
 		if (status == GL_FALSE) {
 			GLint infoLogLength;
-			glGetProgramiv (program, GL_INFO_LOG_LENGTH, &infoLogLength);
+			glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLogLength);
 			GLchar *infoLog= new GLchar[infoLogLength];
-			glGetProgramInfoLog (program, infoLogLength, NULL, infoLog);
-			Debug::Log << "- Program " << name << " Compilation log:\n" << infoLog;
+			glGetProgramInfoLog(program, infoLogLength, NULL, infoLog);
+			if (Debug::enabled) Debug::Log(ERROR) << "Program " << name << " Compilation failed:\n" << infoLog << endl;
 			delete [] infoLog;
 			return false;
 		}

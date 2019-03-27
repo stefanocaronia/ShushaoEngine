@@ -85,6 +85,7 @@ namespace se {
 	Vbo* Vbo::Bind() {
 		if (!config.target) {
 			Debug::Log(ERROR) << "Can't bind Vbo " << name << ", no target array set" << endl;
+			exit(1);
 			return this;
 		}
 		glBindBuffer(config.target, Id);
@@ -92,6 +93,7 @@ namespace se {
 	}
 
 	Vbo* Vbo::Unbind() {
+
 		if (!config.target) {
 			Debug::Log(WARNING) << "Can't unbind " << name << ", no target array set" << endl;
 			return this;

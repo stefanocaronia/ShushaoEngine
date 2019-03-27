@@ -76,7 +76,7 @@ namespace se {
 			void Use();
 			void Leave();
 			bool Load(std::string);
-			void LoadFromString(std::string vsc, std::string fsc);
+			void LoadFromString(std::string vsc, std::string fsc, std::string gsc = "");
 
 			void awake();
 			void update();

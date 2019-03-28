@@ -9,8 +9,8 @@ namespace se {
 	}
 
 	void BaseShader::Awake() {
-		AddShaderUniform("M", UniformType::MATRIX);
-		AddShaderUniform("viewport", UniformType::VECTOR);
-		AddShaderUniform("enabled_viewport", UniformType::INTEGER);
+		AddShaderUniform("M", Uniform::Type::MATRIX);
+		AddShaderUniform("viewport", Uniform::Type::VECTOR);
+		AddShaderUniform("enabled_viewport", Uniform::Type::INTEGER);
 	}
 }

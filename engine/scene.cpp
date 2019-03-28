@@ -125,9 +125,9 @@ namespace se {
 		Logger::setColor(ConsoleColor::LIGHTGREY);
 	}
 
-	void Scene::run(string cycle) {
+	void Scene::run(Cycle::Stage cycle) {
 		for (Component* component : ActiveComponents) {
-			if (cycle == Cycle::RENDER) {
+			if (cycle == Cycle::Stage::RENDER) {
 				Renderer* renderer = dynamic_cast<Renderer*>(component);
 				if (renderer != nullptr && renderer->overlay) // non eseguo il rendering degli overlay in questo ciclo
 					continue;
@@ -138,7 +138,7 @@ namespace se {
 
 	void Scene::renderOverlay() {
 		for (Component* component : ActiveOverlayRenderers) {
-			component->run(Cycle::RENDER);
+			component->run(Cycle::Stage::RENDER);
         }
 	}
 

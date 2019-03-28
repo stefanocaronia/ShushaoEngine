@@ -10,15 +10,6 @@
 
 namespace se {
 
-	enum class UniformType {
-		FLOAT,
-		INTEGER,
-		MATRIX,
-		VECTOR,
-		TEXTURE,
-		COLOR,
-		LIGHT
-	};
 
 	enum ShaderLocation {
 		LOCATION_POSITION = 1,
@@ -34,15 +25,25 @@ namespace se {
 
 		public:
 
+			enum class Type {
+				FLOAT,
+				INTEGER,
+				MATRIX,
+				VECTOR,
+				TEXTURE,
+				COLOR,
+				LIGHT
+			};
+
 			Uniform(std::string name_,
 				std::string var_,
-				UniformType type_,
+				Uniform::Type type_,
 				GLuint location_,
 				bool locked_ = false) : name(name_), var(var_), type(type_), location(location_), locked(locked_) {}
 
 			std::string name;
 			std::string var;
-			UniformType type;
+			Uniform::Type type;
 			GLuint location = 0;
 			bool locked = false;
 
@@ -85,10 +86,10 @@ namespace se {
 
 			GLuint GetProgram();
 
-            void AddUniform(std::string name_, std::string var_, UniformType type_, GLuint location_ = 0);
-            void AddUniform(std::string var_, UniformType type_, GLuint location_ = 0);
-			void AddShaderUniform(std::string var_, UniformType type_, GLuint location_ = 0);
-			void AddShaderUniform(std::string name_, std::string var_, UniformType type_, GLuint location_ = 0);
+            void AddUniform(std::string name_, std::string var_, Uniform::Type type_, GLuint location_ = 0);
+            void AddUniform(std::string var_, Uniform::Type type_, GLuint location_ = 0);
+			void AddShaderUniform(std::string var_, Uniform::Type type_, GLuint location_ = 0);
+			void AddShaderUniform(std::string name_, std::string var_, Uniform::Type type_, GLuint location_ = 0);
 
             void SetFloat(std::string, GLfloat);
 			void SetInteger(std::string, GLint);

@@ -9,6 +9,7 @@
 #include "component.h"
 #include "renderer.h"
 #include "canvas.h"
+#include "cycle.h"
 
 namespace se {
 
@@ -38,7 +39,7 @@ namespace se {
 			bool activeSelf;	// 	The local active state of this Entity. (Read Only)
 			bool isStatic;	// 	Editor only API that specifies if a game object is static.
 
-			void run(std::string);
+			void run(Cycle::Stage);
 			std::vector<Component*> GetActiveComponentsInChildren();
 			void PrintHierarchy(int);
 			bool isActiveInHierarchy();

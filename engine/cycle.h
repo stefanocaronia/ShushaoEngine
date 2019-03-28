@@ -4,9 +4,19 @@
 
 namespace se {
 
+
+
 	class Cycle {
 
 		public:
+
+			enum class Stage {
+				INIT,
+				UPDATE,
+				FIXED,
+				RENDER,
+				EXIT
+			};
 
 			Cycle(std::string);
 			~Cycle();
@@ -16,12 +26,6 @@ namespace se {
 			bool init();
 			void run();
 			void stop();
-
-			static std::string INIT;
-			static std::string UPDATE;
-			static std::string FIXED;
-			static std::string RENDER;
-			static std::string EXIT;
 
 		protected:
 

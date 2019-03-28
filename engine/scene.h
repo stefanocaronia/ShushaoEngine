@@ -14,6 +14,7 @@
 #include "debuggrid.h"
 #include "renderer.h"
 #include "light.h"
+#include "cycle.h"
 
 namespace se {
 
@@ -39,7 +40,7 @@ namespace se {
 			//std::vector<Renderer*> ActiveRenderers;
 			std::vector<Component*> ActiveOverlayRenderers;
 
-			void run(std::string);
+			void run(Cycle::Stage stage);
 			void renderOverlay();
 
 			std::vector<Entity*> GetRootEntitys();

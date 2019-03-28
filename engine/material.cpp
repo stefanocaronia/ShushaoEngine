@@ -111,22 +111,22 @@ namespace se {
 			}
 
 			switch (parameter.uniform->type) {
-				case UniformType::INTEGER:
+				case Uniform::Type::INTEGER:
 					parameter.uniform->SetInteger(parameter.value.i);
 					break;
-				case UniformType::FLOAT:
+				case Uniform::Type::FLOAT:
 					parameter.uniform->SetFloat(parameter.value.f);
 					break;
-				case UniformType::MATRIX:
+				case Uniform::Type::MATRIX:
 					parameter.uniform->SetMatrix(&parameter.value.mat[0][0]);
 					break;
-				case UniformType::VECTOR:
+				case Uniform::Type::VECTOR:
 					parameter.uniform->SetVector(parameter.value.vec);
 					break;
-				case UniformType::COLOR:
+				case Uniform::Type::COLOR:
 					parameter.uniform->SetColor(parameter.value.col);
 					break;
-				case UniformType::TEXTURE:
+				case Uniform::Type::TEXTURE:
 					if (parameter.value.tex != nullptr) {
 						shader->Enable(parameter.var);
 						GLint textureIndex = textureUnit - GL_TEXTURE0;
@@ -135,7 +135,7 @@ namespace se {
 						glBindTexture(GL_TEXTURE_2D, parameter.value.tex->TextureID);
 						textureUnit++;
 					}
-				case UniformType::LIGHT:
+				case Uniform::Type::LIGHT:
 					break;
 			}
 		}

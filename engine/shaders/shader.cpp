@@ -222,13 +222,13 @@ namespace se {
 		}
 
 		// base uniforms
-		AddShaderUniform("Model View Projection", "MVP", UniformType::MATRIX, ShaderLocation::LOCATION_MVP);
-		AddShaderUniform("Render Color", "render_color", UniformType::COLOR, ShaderLocation::LOCATION_RENDER_COLOR);
+		AddShaderUniform("Model View Projection", "MVP", Uniform::Type::MATRIX, ShaderLocation::LOCATION_MVP);
+		AddShaderUniform("Render Color", "render_color", Uniform::Type::COLOR, ShaderLocation::LOCATION_RENDER_COLOR);
 
 		return true;
 	}
 
-	void Shader::AddUniform(std::string name_, std::string var_, UniformType type_, GLuint location_) {
+	void Shader::AddUniform(std::string name_, std::string var_, Uniform::Type type_, GLuint location_) {
 		uniforms.insert(pair<string, Uniform>(var_, {
 			name_,
 			var_,
@@ -238,7 +238,7 @@ namespace se {
 		}));
 	}
 
-	void Shader::AddUniform(std::string var_, UniformType type_, GLuint location_) {
+	void Shader::AddUniform(std::string var_, Uniform::Type type_, GLuint location_) {
 		uniforms.insert(pair<string, Uniform>(var_, {
 			var_,
 			var_,
@@ -248,7 +248,7 @@ namespace se {
 		}));
 	}
 
-	void Shader::AddShaderUniform(std::string var_, UniformType type_, GLuint location_) {
+	void Shader::AddShaderUniform(std::string var_, Uniform::Type type_, GLuint location_) {
 		uniforms.insert(pair<string, Uniform>(var_, {
 			var_,
 			var_,
@@ -258,7 +258,7 @@ namespace se {
 		}));
 	}
 
-	void Shader::AddShaderUniform(std::string name_, std::string var_, UniformType type_, GLuint location_) {
+	void Shader::AddShaderUniform(std::string name_, std::string var_, Uniform::Type type_, GLuint location_) {
 		uniforms.insert(pair<string, Uniform>(var_, {
 			name_,
 			var_,

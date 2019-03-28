@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "object.h"
+#include "cycle.h"
 
 namespace se {
 
@@ -37,9 +38,8 @@ namespace se {
 			void SendMessage(std::string methodName); // Calls the method named methodName on every MonoBehaviour in this game object.
 			void SendMessageUpwards(std::string methodName);	// Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour.
 
-			//void run(BaseCycle);
-			void run(std::string);
-			virtual void call(std::string);
+			void run(Cycle::Stage stage);
+			virtual void call(std::string method);
 
 			virtual void ReceiveMessage(std::string methodName, Object& parameter);
 			virtual void ReceiveMessage(std::string methodName);
@@ -89,13 +89,12 @@ namespace se {
 			bool currentEnable;
 			bool started;
 
+			// questi metodi sono chiamati dal metodo run
 			void init();
 			void update();
 			void fixed();
 			void render();
 			void exit();
-
-
 
 	};
 

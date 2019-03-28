@@ -58,22 +58,18 @@ namespace se {
 
 	}
 
-	void Entity::run(std::string cycle) {
-		//cout << "Entity " << name << ": run " << to_string(cycle) << endl;
+	void Entity::run(Cycle::Stage cycle) {
 		if (!isActiveInHierarchy()) {
-			//cout << "Entity " << name << ": non attivo " << endl;
 			return;
 		}
 
         for (Component* c : Components) {
             if (c->enabled) {
-				//cout << "Component " << c->name << ": run " << to_string(cycle) << endl;
 				c->run(cycle);
             }
         }
 
         for (Transform* t : transform->children) {
-			//cout << "In trasnform di " <<  t->entity->name << endl;
             t->entity->run(cycle);
         }
 	}

@@ -13,26 +13,33 @@ Level::Level() {
 
 	Entity* particleObj = AddEntity("Particle Object");
 	ParticleSystem* ps = particleObj->AddComponent<ParticleSystem>();
-	ps->texture = Resources::Get<Texture>("particlestar");
+	ps->SetTexture(Resources::Get<Texture>("particlestar"));
 
-	ps->SetMaxParticles(130000);
+	ps->SetMaxParticles(1000);
 	ps->SetPlayOnAwake(true);
-	ps->SetDuration(10.0f);
+	ps->SetDuration(5.0f);
 	ps->SetStartSize({0.5, 0.5});
 	ps->SetStartLifetime(10.0f);
-	ps->SetLoop(true);
+	ps->SetLoop(false);
 	//ps->SetStartDelay(3.0f);
-	ps->SetStartColor(Color::yellow);
-	ps->SetStartSpeed(2.5f);
+	ps->SetStartColor(Color::green);
+	ps->SetStartSpeed(1.5f);
 
-	ps->emission.rateOverTime = 1000;
+	ps->emitter.Enable();
+	ps->emitter.shape = EmitterModule::Shape::SPHERE;
+	ps->emitter.radius = 2.0f;
+	ps->emitter.arc = 360;
+	ps->emitter.is2D = true;
+
+	ps->emission.Enable();
+	ps->emission.rateOverTime = 60;
 
 	return;
 
 	/* Entity* directional = AddEntity("Directional");
 	directional->transform->SetLocalRotation({20, 10, 0});
 	Light* light = directional->AddComponent<Light>();
-	light->type = LightType::DIRECTIONAL;
+	light->type = Light::Type::DIRECTIONAL;
 	light->ambient  = {0.2f, 0.2f, 0.2f};
 	light->diffuse  = {1.0f, 0.5f, 0.5f};
 	light->specular = {1.0f, 1.0f, 1.0f};
@@ -40,7 +47,7 @@ Level::Level() {
 	Entity* point = AddEntity("Point 1");
 	point->transform->SetLocalPosition({3.0f, 1.7f, 4.0f});
 	Light* plight =point->AddComponent<Light>();
-	plight->type = LightType::POINT;
+	plight->type = Light::Type::POINT;
 	plight->ambient  = {0.3f, 0.3f, 0.3f};
 	plight->diffuse  = {0.7f, 0.7f, 0.7f};
 	plight->specular = {1.0f, 1.0f, 1.0f};
@@ -183,7 +190,7 @@ Level::Level() {
 	imagesl->transform->rectTransform->SetAnchor(AnchorPreset::STRETCH);
 	imagesl->transform->rectTransform->RegisterPositionLRTB(1.0f, 1.0f, 1.0f, 1.0f);
 	imagesl->sortingLayerID = Config::SortingLayers["UI"];
-	imagesl->SetPreserveAspect(false)->SetImageType(ImageType::TILED)->SetBorder({40,40,40,40})->SetFillCenter(false);
+	imagesl->SetPreserveAspect(false)->SetImageType(Image::Type::TILED)->SetBorder({40,40,40,40})->SetFillCenter(false);
 
 	return;
 

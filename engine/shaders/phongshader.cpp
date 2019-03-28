@@ -16,24 +16,24 @@ namespace se {
 
 	void PhongShader::Awake() {
 		// material controlled uniforms
-		AddUniform("Ambient reflection", "ambient_color", UniformType::COLOR);
-		AddUniform("Diffuse reflection", "diffuse_color", UniformType::COLOR);
-		AddUniform("Specular reflection", "specular_color", UniformType::COLOR);
-		AddUniform("Shininess", "shininess", UniformType::FLOAT);
+		AddUniform("Ambient reflection", "ambient_color", Uniform::Type::COLOR);
+		AddUniform("Diffuse reflection", "diffuse_color", Uniform::Type::COLOR);
+		AddUniform("Specular reflection", "specular_color", Uniform::Type::COLOR);
+		AddUniform("Shininess", "shininess", Uniform::Type::FLOAT);
 
-		AddUniform("Diffuse Map", "diffuse_map", UniformType::TEXTURE);
-		AddUniform("Specular Map", "specular_map", UniformType::TEXTURE);
-		AddUniform("Normal Map", "normal_map", UniformType::TEXTURE);
+		AddUniform("Diffuse Map", "diffuse_map", Uniform::Type::TEXTURE);
+		AddUniform("Specular Map", "specular_map", Uniform::Type::TEXTURE);
+		AddUniform("Normal Map", "normal_map", Uniform::Type::TEXTURE);
 
 		// shader controlled uniforms (locked)
-		AddShaderUniform("view_position", UniformType::VECTOR);
-		AddShaderUniform("M", UniformType::MATRIX);
-		AddShaderUniform("point_lights_number", UniformType::INTEGER);
-		AddShaderUniform("spot_lights_number", UniformType::INTEGER);
-		// AddShaderUniform("directional_light", UniformType::LIGHT);
-		AddShaderUniform("enabled_diffuse_map", UniformType::INTEGER);
-		AddShaderUniform("enabled_normal_map", UniformType::INTEGER);
-		AddShaderUniform("enabled_specular_map", UniformType::INTEGER);
+		AddShaderUniform("view_position", Uniform::Type::VECTOR);
+		AddShaderUniform("M", Uniform::Type::MATRIX);
+		AddShaderUniform("point_lights_number", Uniform::Type::INTEGER);
+		AddShaderUniform("spot_lights_number", Uniform::Type::INTEGER);
+		// AddShaderUniform("directional_light", Uniform::Type::LIGHT);
+		AddShaderUniform("enabled_diffuse_map", Uniform::Type::INTEGER);
+		AddShaderUniform("enabled_normal_map", Uniform::Type::INTEGER);
+		AddShaderUniform("enabled_specular_map", Uniform::Type::INTEGER);
 	}
 
 	void PhongShader::Update() {
@@ -44,20 +44,20 @@ namespace se {
 		for (Light* light : SceneManager::activeScene->ActiveLights) {
 			UniformLight ul = light->GetUniform();
 			switch (light->type) {
-				case LightType::DIRECTIONAL:
+				case Light::Type::DIRECTIONAL:
 					SetLight("directional_light", ul);
 					break;
 
-				case LightType::POINT:
+				case Light::Type::POINT:
 					SetLight("point_lights[" + ts(pointLightCount++) + "]", ul);
 					break;
 
-				case LightType::SPOT:
+				case Light::Type::SPOT:
 					SetLight("spot_lights[" + ts(spotLightCount++) + "]", ul);
 					break;
 
-				case LightType::DISC:
-				case LightType::RECTANGLE:
+				case Light::Type::DISC:
+				case Light::Type::RECTANGLE:
 					break;
 			}
 		}

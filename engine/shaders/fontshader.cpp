@@ -13,11 +13,11 @@ namespace se {
 
 	void FontShader::Awake() {
 
-		AddUniform("Diffuse Map", "diffuse_map", UniformType::TEXTURE);
+		AddUniform("Diffuse Map", "diffuse_map", Uniform::Type::TEXTURE);
 
-		AddShaderUniform("M", UniformType::MATRIX);
-		AddShaderUniform("viewport", UniformType::VECTOR);
-		AddShaderUniform("enabled_viewport", UniformType::INTEGER);
+		AddShaderUniform("M", Uniform::Type::MATRIX);
+		AddShaderUniform("viewport", Uniform::Type::VECTOR);
+		AddShaderUniform("enabled_viewport", Uniform::Type::INTEGER);
 
 		SetTextureIndex("diffuse_map", 0);
 	}

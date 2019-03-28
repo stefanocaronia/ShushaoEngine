@@ -24,6 +24,36 @@ namespace se {
 		if (material != nullptr) delete(material);
 	}
 
+	Image* Image::SetBorder(glm::vec4 border_) {
+		border = border_;
+		return this;
+	}
+
+	Image* Image::SetFillCenter(bool value_) {
+		fillCenter = value_;
+		return this;
+	}
+
+	Image* Image::SetSprite(Sprite* sprite_) {
+		sprite = sprite_;
+		return this;
+	}
+
+	Image* Image::SetImageType(Image::Type type_) {
+		type = type_;
+		return this;
+	}
+
+	Image* Image::SetPreserveAspect(bool value_) {
+		preserveAspect = value_;
+		return this;
+	}
+
+	Image* Image::SetMaterial(Material* material_) {
+		material = material_;
+		return this;
+	}
+
 	bool Image::isReady() {
 		return (
 			sprite != nullptr &&
@@ -47,7 +77,7 @@ namespace se {
 
 		material->SetMainTexture(sprite->texture);
 
-		if (type == ImageType::SLICED || type == ImageType::TILED) {
+		if (type == Image::Type::SLICED || type == Image::Type::TILED) {
 			material->shader->Use();
 
 			material->shader->SetVector("sprite_border", sprite->border); // in pixels
@@ -56,10 +86,10 @@ namespace se {
 			material->shader->SetVector("image_size", transform->rectTransform->rect.size * (float)sprite->pixelPerUnit); // in pixels
 			material->shader->SetInteger("sliced_fill", fillCenter); // bool
 
-			if (type == ImageType::SLICED) {
+			if (type == Image::Type::SLICED) {
 				material->shader->Enable("sliced");
 				material->shader->Disable("tiled");
-			} else if (type == ImageType::TILED) {
+			} else if (type == Image::Type::TILED) {
 				material->shader->Enable("tiled");
 				material->shader->Disable("sliced");
 			}
@@ -110,7 +140,7 @@ namespace se {
 
 		last_rectSize = transform->rectTransform->rect.size;
 
-		if (type == ImageType::SLICED || type == ImageType::TILED) {
+		if (type == Image::Type::SLICED || type == Image::Type::TILED) {
 			material->shader->Use();
 			material->shader->SetVector("image_size", transform->rectTransform->rect.size * (float)sprite->pixelPerUnit); // in pixels
 			material->shader->Leave();

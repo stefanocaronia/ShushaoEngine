@@ -17,14 +17,16 @@
 
 namespace se {
 
-	enum class BottomAlign {
-		BASELINE,
-		HEIGHT
-	};
+
 
 	class Text : public Renderer {
 
 		public:
+
+			enum class BottomAlign {
+				BASELINE,
+				HEIGHT
+			};
 
 			virtual void setup();
 

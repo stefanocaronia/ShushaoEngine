@@ -9,9 +9,9 @@
         "*.bat": true
     },
     "files.associations": {
-        "*.rc": "ini",
         "*.inc": "php",
         "*.php.old": "php",
+        "*.rc": "ini",
         "string": "cpp",
         "atomic": "cpp",
         "*.tcc": "cpp",
@@ -58,6 +58,7 @@
         "stdexcept": "cpp",
         "string_view": "cpp",
         "tuple": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "numeric": "cpp"
     }
 }

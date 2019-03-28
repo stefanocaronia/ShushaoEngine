@@ -63,12 +63,15 @@ namespace se {
 	}
 
 	// usato solo con i metodi di cycle della base class
-	void Component::run(string cycle) {
-		if (cycle == Cycle::INIT) init();
-		else if (cycle == Cycle::UPDATE) update();
-		else if (cycle == Cycle::RENDER) render();
-		else if (cycle == Cycle::FIXED) fixed();
-		else if (cycle == Cycle::EXIT) exit();
+	void Component::run(Cycle::Stage cycle) {
+
+		switch (cycle) {
+			case Cycle::Stage::INIT: init(); break;
+			case Cycle::Stage::UPDATE: update(); break;
+			case Cycle::Stage::RENDER: render(); break;
+			case Cycle::Stage::FIXED: fixed(); break;
+			case Cycle::Stage::EXIT: exit(); break;
+		}
 	}
 
 	// usato per i metodi custom delle classi derivate (riceve i messages)
@@ -127,7 +130,7 @@ namespace se {
 		if (!currentEnable) return;
 
 		Render();
-		OnPostRender(); // FIXME: probabilmente questa va eseguita alla fine del cycle di rendering della scene
+		OnPostRender();
 	}
 
 	void Component::exit() {
@@ -138,11 +141,11 @@ namespace se {
 	void Component::OnCollisionEnter2D(Collision2D& collision) {}
 	void Component::OnCollisionExit2D(Collision2D& collision) {}
 	void Component::OnCollisionStay2D(Collision2D& collision) {}
-
 	void Component::OnTriggerEnter2D(Collider2D& collider) {}
 	void Component::OnTriggerExit2D(Collider2D& collider) {}
 	void Component::OnTriggerStay2D(Collider2D& collider) {}
 
+	// callback overloadabili
 	void Component::Awake() {}
 	void Component::Start() {}
 	void Component::Update() {}

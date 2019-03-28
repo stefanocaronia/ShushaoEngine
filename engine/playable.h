@@ -2,56 +2,54 @@
 
 namespace se {
 
-    enum class PlayableState {
-		STOP,
-		PLAY,
-		PAUSE
+class Playable {
+public:
+
+    enum class State {
+        STOP,
+        PLAY,
+        PAUSE
     };
 
-    class Playable {
-        public:
+    virtual void Play() = 0;
+    virtual void Stop() = 0;
+    virtual void Pause() = 0;
 
-            PlayableState state = PlayableState::STOP;
-			PlayableState startState = PlayableState::STOP;
+    float GetDuration() {
+        return duration;
+    }
 
-            float duration;
-            bool loop;
+    Playable::State GetState() {
+        return state;
+    }
 
-            virtual void Play() = 0;
-            virtual void Stop() = 0;
-            virtual void Pause() = 0;
+    bool GetLoop() {
+        return loop;
+    }
 
-            float GetDuration() {
-                return duration;
-            }
+    void SetState(State value) {
+        state = value;
+    }
 
-            PlayableState GetState() {
-                return state;
-            }
+    void SetStartState(State value) {
+        startState = value;
+    }
 
-            bool GetLoop() {
-                return loop;
-            }
+    void SetLoop(bool value) {
+        loop = value;
+    }
 
-            void SetState(PlayableState _state) {
-                state = _state;
-            }
+    void SetDuration(float value) {
+        duration = value;
+    }
 
-            void SetStartState(PlayableState _state) {
-                startState = _state;
-            }
+protected:
+    double elapsed = 0.0;
 
-            void SetLoop(bool _loop) {
-                loop = _loop;
-            }
+    State state = State::STOP;
+    State startState = State::STOP;
 
-            void SetDuration(float _duration) {
-                duration = _duration;
-            }
-
-        protected:
-
-            double elapsed = 0.0;
-
-    };
-}
+    float duration;
+    bool loop;
+};
+}  // namespace se

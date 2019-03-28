@@ -7,14 +7,6 @@
 
 namespace se {
 
-	enum class LightType {
-		SPOT,
-		DIRECTIONAL,
-		POINT,
-		RECTANGLE,
-		DISC
-	};
-
 	struct Attenuation {
 		GLfloat constant;
 		GLfloat linear;
@@ -37,11 +29,19 @@ namespace se {
 
 		public:
 
+			enum class Type {
+				SPOT,
+				DIRECTIONAL,
+				POINT,
+				RECTANGLE,
+				DISC
+			};
+
 			virtual void setup() { name = "Light"; }
 
 			bool enabled;
 
-			LightType type = LightType::POINT;
+			Light::Type type = Light::Type::POINT;
 
 			glm::vec3 direction;
 			Color ambient = Color::white;

@@ -11,16 +11,16 @@
 
 namespace se {
 
-    enum class ImageType {
-        SIMPLE, // Displays the full Image
-        SLICED, // Displays the Image as a 9-sliced graphic.
-        TILED,  // Displays a sliced Sprite with its resizable sections tiled instead of stretched
-        FILLED // Displays only a portion of the Image
-    };
-
 	class Image : public Renderer {
 
 		public:
+
+			enum class Type {
+				SIMPLE, // Displays the full Image
+				SLICED, // Displays the Image as a 9-sliced graphic.
+				TILED,  // Displays a sliced Sprite with its resizable sections tiled instead of stretched
+				FILLED // Displays only a portion of the Image
+			};
 
 			virtual void setup();
 			~Image();
@@ -31,41 +31,18 @@ namespace se {
 			Material* material = nullptr;
 			Vao* VAO = nullptr;
 
-			ImageType type = ImageType::SIMPLE;
+			Image::Type type = Image::Type::SIMPLE;
 			glm::vec4 border; // pixel borders for 9-slicing - X=left, Y=bottom, Z=right, W=top
 
 			bool fillCenter = true;
 			bool preserveAspect = false;
 
-			Image* SetBorder(glm::vec4 border_) {
-				border = border_;
-				return this;
-			}
-
-			Image* SetFillCenter(bool value_) {
-				fillCenter = value_;
-				return this;
-			}
-
-			Image* SetSprite(Sprite* sprite_) {
-				sprite = sprite_;
-				return this;
-			}
-
-			Image* SetImageType(ImageType type_) {
-				type = type_;
-				return this;
-			}
-
-			Image* SetPreserveAspect(bool value_) {
-				preserveAspect = value_;
-				return this;
-			}
-
-			Image* SetMaterial(Material* material_) {
-				material = material_;
-				return this;
-			}
+			Image* SetBorder(glm::vec4 border_);
+			Image* SetFillCenter(bool value_);
+			Image* SetSprite(Sprite* sprite_);
+			Image* SetImageType(Image::Type type_);
+			Image* SetPreserveAspect(bool value_);
+			Image* SetMaterial(Material* material_);
 
 			Color color = {1.0f, 1.0f, 1.0f, 1.0f}; //	Rendering color for the Sprite graphic.
 			bool flipX;//	Flips the sprite on the X axis.

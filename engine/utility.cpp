@@ -15,9 +15,12 @@ namespace util {
 	mt19937 eng(rd()); // seed the generator
 
 	int randomInRange(int min, int max) {
+		uniform_int_distribution<> distr(min, max);
+		return distr(eng);
+	}
 
-		uniform_int_distribution<> distr(min, max); // define the range
-
+	float randomInRange(float min, float max) {
+		uniform_real_distribution<> distr(min, max);
 		return distr(eng);
 	}
 

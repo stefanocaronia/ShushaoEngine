@@ -3,18 +3,13 @@
 #include <vector>
 
 #include "component.h"
+#include "playable.h"
 
 namespace se {
 
 	class Timeline;
 
-	enum class AnimationState {
-		STOP,
-		PLAY,
-		PAUSE
-	};
-
-	class Animation : public Component {
+	class Animation : public Component, public Playable {
 
 
 		public:
@@ -26,20 +21,13 @@ namespace se {
 			Timeline* getLayer(string);
 
 			void setFPS(int);
-			void setDuration(float);
-			void setState(AnimationState);
-			void setStartState(AnimationState);
-			void setLoop(bool);
 
 			int getFPS();
-			float getDuration();
 			int getFrameCount();
-			AnimationState getState();
-			bool getLoop();
 
-			void play();
-			void stop();
-			void pause();
+			void Play();
+			void Stop();
+			void Pause();
 
 		protected:
 
@@ -53,8 +41,8 @@ namespace se {
 
 		private:
 
-			AnimationState state = AnimationState::STOP;
-			AnimationState startState = AnimationState::STOP;
+			Playable::State state = Playable::State::STOP;
+			Playable::State startState = Playable::State::STOP;
 
 			bool loop = true;
 			bool ready = false;

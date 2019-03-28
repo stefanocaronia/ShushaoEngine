@@ -59,7 +59,7 @@ namespace se {
 
 		SceneManager::activeScene->ScanActiveComponents();
 		SceneManager::activeScene->ScanActiveLights();
-		SceneManager::activeScene->run(Cycle::INIT); // vengono chiamati qui gli Awake di tutti gli oggetti attivi
+		SceneManager::activeScene->run(Cycle::Stage::INIT); // vengono chiamati qui gli Awake di tutti gli oggetti attivi
 
 		if (Debug::enabled) {
 			SceneManager::activeScene->PrintHierarchy();
@@ -115,7 +115,7 @@ namespace se {
 	void Cycle::render() {
 		Time::renderTime = Time::GetTime();
 		GLManager::Reset();
-		SceneManager::activeScene->run(Cycle::RENDER);
+		SceneManager::activeScene->run(Cycle::Stage::RENDER);
 		Render();
 		if (Physics::enabled && Physics::debug) Physics::world->DrawDebugData();
 		SceneManager::activeScene->renderOverlay();
@@ -126,7 +126,7 @@ namespace se {
 	void Cycle::update() {
 		Time::realtimeSinceStartup = Time::GetTime();
 		GLManager::Update();
-		SceneManager::activeScene->run(Cycle::UPDATE);
+		SceneManager::activeScene->run(Cycle::Stage::UPDATE);
 		Update();
 	}
 
@@ -134,14 +134,14 @@ namespace se {
 		Time::fixedTime = Time::GetTime();
 		Time::inFixedTimeStep = true;
 		if (Physics::enabled) Physics::update();
-		SceneManager::activeScene->run(Cycle::FIXED);
+		SceneManager::activeScene->run(Cycle::Stage::FIXED);
 		FixedUpdate();
 		Time::inFixedTimeStep = false;
 	}
 
 	void Cycle::exit() {
 		End();
-		SceneManager::activeScene->run(Cycle::EXIT);
+		SceneManager::activeScene->run(Cycle::Stage::EXIT);
 		Input::exit();
 		System::exit();
 		Physics::exit();
@@ -150,10 +150,4 @@ namespace se {
 		System::Clear();
 		GLManager::Quit();
 	}
-
-	string Cycle::INIT = "init";
-	string Cycle::UPDATE = "update";
-	string Cycle::FIXED = "fixed";
-	string Cycle::RENDER = "render";
-	string Cycle::EXIT = "exit";
 }

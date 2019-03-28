@@ -10,7 +10,7 @@ namespace se {
 	using namespace std;
 
 	Animation::~Animation() {
-		stop();
+		Stop();
 		for (Timeline* layer : layers) {
             if (layer != nullptr) delete(layer);
 		}
@@ -21,37 +21,9 @@ namespace se {
 		return fps;
 	}
 
-	float Animation::getDuration() {
-		return duration;
-	}
-
-	AnimationState Animation::getState() {
-		return state;
-	}
-
-	bool Animation::getLoop() {
-		return loop;
-	}
-
 	void Animation::setFPS(int _fps) {
 		fps = _fps;
 		initialize();
-	}
-
-	void Animation::setState(AnimationState _state) {
-		state = _state;
-	}
-
-	void Animation::setStartState(AnimationState _state) {
-		startState = _state;
-	}
-
-	void Animation::setLoop(bool _loop) {
-		loop = _loop;
-	}
-
-	void Animation::setDuration(float _duration) {
-		duration = _duration;
 	}
 
 	Timeline* Animation::addLayer(string _name) {
@@ -92,38 +64,38 @@ namespace se {
 		return maxCount;
 	}
 
-	void Animation::play() {
+	void Animation::Play() {
 		if (!ready || layers.empty()) return;
 		//Debug::Log(INFO, "PLAY");
 		for (Timeline* layer : layers) {
 			layer->backup();
 		}
-		state = AnimationState::PLAY;
+		state = Playable::State::PLAY;
 		animationTime = 0.0f;
 		startTime = Time::GetTime();
 	}
 
-	void Animation::stop() {
+	void Animation::Stop() {
 		if (!ready || layers.empty()) return;
 		//Debug::Log(INFO, "STOP");
 		reset();
-		state = AnimationState::STOP;
+		state = Playable::State::STOP;
 		animationTime = 0.0f;
 		startTime = 0.0f;
 		cursor = 0;
 	}
 
-	void Animation::pause() {
+	void Animation::Pause() {
 		if (!ready || layers.empty()) return;
-		state = AnimationState::PAUSE;
+		state = Playable::State::PAUSE;
 	}
 
 	void Animation::Awake() {
 		if (layers.empty()) return;
 		initialize();
 		ready = true;
-		state = AnimationState::STOP;
-		if (startState == AnimationState::PLAY) play();
+		state = Playable::State::STOP;
+		if (startState == Playable::State::PLAY) Play();
 	}
 
 	void Animation::initialize() {
@@ -140,7 +112,7 @@ namespace se {
 	void Animation::Update() {
 
 		if (!ready || layers.empty()) return;
-		if (state != AnimationState::PLAY) return;
+		if (state != Playable::State::PLAY) return;
 
 		animationTime = Time::GetTime() - startTime;
 
@@ -150,7 +122,7 @@ namespace se {
 
 			if (++cursor >= frames || animationTime >= duration) {
 				cursor = 0;
-				if (!loop) stop();
+				if (!loop) Stop();
 			}
 
 			lastFrameTime = Time::GetTime();

@@ -113,6 +113,7 @@ private:
 
     void EmitParticle();
     void UpdateParticles();
+    void ProcessBursts();
     void LoadBuffers();
 
     vector<Particle*> particles;

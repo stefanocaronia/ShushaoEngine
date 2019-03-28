@@ -11,17 +11,27 @@ using namespace std;
 
 namespace util {
 
-	random_device rd; // obtain a random number from hardware
-	mt19937 eng(rd()); // seed the generator
+	uint64_t timeSeed = chrono::high_resolution_clock::now().time_since_epoch().count();
+    seed_seq ss{uint32_t(timeSeed & 0xffffffff), uint32_t(timeSeed>>32)};
+	//random_device rd; // obtain a random number from hardware
+	//mt19937 mt(rd()); // seed the generator
+	mt19937_64 mt(ss);
 
-	int randomInRange(int min, int max) {
-		uniform_int_distribution<> distr(min, max);
-		return distr(eng);
+	int random(int min, int max) {
+		uniform_int_distribution<int> distr(min, max);
+		return distr(mt);
 	}
 
-	float randomInRange(float min, float max) {
-		uniform_real_distribution<> distr(min, max);
-		return distr(eng);
+	float random(float min, float max) {
+		uniform_real_distribution<float> distr(min, max);
+		return distr(mt);
+	}
+
+	bool happens(float probability) {
+		if (probability == 1.0f) return true;
+		float tr = random(0.0f, 1.0f);
+		//Debug::Log << "tr: " << tr << " probability: " << probability << endl;
+		return tr <= probability;
 	}
 
 	string basename(string filename) {

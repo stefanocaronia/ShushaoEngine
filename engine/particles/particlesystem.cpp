@@ -101,8 +101,8 @@ void ParticleSystem::EmitParticle() {
     switch (emitter.shape) {
         case EmitterModule::Shape::SPHERE:
 
-            float inclination = glm::radians((float)util::randomInRange(0, emitter.arc));
-            float azimuth = glm::radians((float)util::randomInRange(0, emitter.arc));
+            float inclination = glm::radians((float)util::random(0, emitter.arc));
+            float azimuth = glm::radians((float)util::random(0, emitter.arc));
 
             float sInclination = sinf(inclination);
 
@@ -173,6 +173,10 @@ void ParticleSystem::Update() {
             toEmit -= toEmitInt;
         }
 
+        // TODO: rateOverDistance con i delta del movimento del transform
+
+        ProcessBursts();
+
         isEmitting = true;
     } else {
         isEmitting = false;
@@ -194,6 +198,31 @@ void ParticleSystem::Update() {
             isLoopEnded = true;
         }
         elapsed = 0.0f;
+    }
+}
+
+void ParticleSystem::ProcessBursts() {
+    if (emission.bursts.size() > 0) {
+        for (auto& b : emission.bursts) {
+            if (b.cycle == 0) {
+                if (elapsed >= b.time) {
+                    if (b.probability >= 1.0f || util::happens(b.probability)) {
+                        Emit(b.count);
+                    }
+                    b.cycle++;
+                    b.cycleTime = Time::GetTime();
+                }
+            } else {
+                if (b.cycles > 0 && b.cycle >= b.cycles) continue;
+                if (Time::GetTime() - b.cycleTime >= b.interval) {
+                    if (b.probability >= 1.0f || util::happens(b.probability)) {
+                        Emit(b.count);
+                    }
+                    b.cycle++;
+                    b.cycleTime = Time::GetTime();
+                }
+            }
+        }
     }
 }
 

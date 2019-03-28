@@ -21,8 +21,9 @@ namespace se {
 		std::string basename(std::string);
 		std::string zerofill(int, int);
 
-		int randomInRange(int min, int max);
-		float randomInRange(float min, float max);
+		int random(int min, int max);
+		float random(float min, float max);
+		bool happens(float probability);
 
 		template < typename T >
 		std::string toString( const T& n ) {

@@ -17,7 +17,7 @@ Level::Level() {
 
 	ps->SetMaxParticles(1000);
 	ps->SetPlayOnAwake(true);
-	ps->SetDuration(5.0f);
+	ps->SetDuration(20.0f);
 	ps->SetStartSize({0.5, 0.5});
 	ps->SetStartLifetime(10.0f);
 	ps->SetLoop(false);
@@ -27,12 +27,13 @@ Level::Level() {
 
 	ps->emitter.Enable();
 	ps->emitter.shape = EmitterModule::Shape::SPHERE;
-	ps->emitter.radius = 2.0f;
+	ps->emitter.radius = 1.0f;
 	ps->emitter.arc = 360;
-	ps->emitter.is2D = true;
+	ps->emitter.is2D = false;
 
 	ps->emission.Enable();
-	ps->emission.rateOverTime = 60;
+	ps->emission.rateOverTime = 20;
+	ps->emission.AddBurst(2.0, 100, 0, 1.0, 0.6f);
 
 	return;
 

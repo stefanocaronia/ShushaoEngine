@@ -21,6 +21,8 @@ namespace se {
 		std::string basename(std::string);
 		std::string zerofill(int, int);
 
+		int randomInRange(int min, int max);
+
 		template < typename T >
 		std::string toString( const T& n ) {
 			std::ostringstream stm ;

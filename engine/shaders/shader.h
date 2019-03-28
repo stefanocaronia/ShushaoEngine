@@ -26,7 +26,8 @@ namespace se {
 		LOCATION_COLOR = 3,
 		LOCATION_NORMAL = 4,
 		LOCATION_MVP = 5,
-		LOCATION_RENDER_COLOR = 6
+		LOCATION_RENDER_COLOR = 6,
+		LOCATION_SIZE = 7
 	};
 
 	class Uniform {
@@ -102,6 +103,9 @@ namespace se {
 			GLenum GetTextureIndex(std::string);
 
 			void SetMVP(GLfloat*);
+			void SetMV(GLfloat*);
+			void SetVP(GLfloat*);
+			void SetP(GLfloat*);
 			void SetM(GLfloat*);
 			void SetRenderColor(Color);
 

@@ -68,7 +68,7 @@ namespace se {
 		//glShadeModel(GL_SMOOTH);
 		glClearDepth(1.0f);
 		glEnable(GL_DEPTH_TEST);
-		glDepthFunc(GL_LEQUAL);
+		glDepthFunc(GL_ALWAYS);
 		/* glEnable(GL_MULTISAMPLE);
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 		glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);

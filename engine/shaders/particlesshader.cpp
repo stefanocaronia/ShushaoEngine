@@ -17,6 +17,8 @@ namespace se {
 		AddUniform("Diffuse Map", "diffuse_map", UniformType::TEXTURE);
 		AddUniform("Render Color", "render_color", UniformType::TEXTURE, ShaderLocation::LOCATION_RENDER_COLOR);
 
+		// shader controlled uniforms (locked)
+		AddShaderUniform("P", UniformType::MATRIX);
 
 		// valorizzazione
 		SetTextureIndex("diffuse_map", 0);

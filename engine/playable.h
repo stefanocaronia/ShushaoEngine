@@ -1,4 +1,4 @@
-#pragma once;
+#pragma once
 
 namespace se {
 
@@ -13,6 +13,7 @@ namespace se {
 
             PlayableState state = PlayableState::STOP;
 			PlayableState startState = PlayableState::STOP;
+
             float duration;
             bool loop;
 
@@ -20,34 +21,37 @@ namespace se {
             virtual void Stop() = 0;
             virtual void Pause() = 0;
 
-            float getDuration() {
+            float GetDuration() {
                 return duration;
             }
 
-            PlayableState getState() {
+            PlayableState GetState() {
                 return state;
             }
 
-            bool getLoop() {
+            bool GetLoop() {
                 return loop;
             }
 
-            void setState(PlayableState _state) {
+            void SetState(PlayableState _state) {
                 state = _state;
             }
 
-            void setStartState(PlayableState _state) {
+            void SetStartState(PlayableState _state) {
                 startState = _state;
             }
 
-            void setLoop(bool _loop) {
+            void SetLoop(bool _loop) {
                 loop = _loop;
             }
 
-            void setDuration(float _duration) {
+            void SetDuration(float _duration) {
                 duration = _duration;
             }
 
+        protected:
+
+            double elapsed = 0.0;
 
     };
 }

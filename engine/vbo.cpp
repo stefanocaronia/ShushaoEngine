@@ -12,6 +12,8 @@ namespace se {
 	const std::string Vbo::VERTICES = "vertices";
 	const std::string Vbo::NORMALS = "normals";
 	const std::string Vbo::INDEXES = "indexes";
+	const std::string Vbo::COLORS = "colors";
+	const std::string Vbo::SIZES = "sizes";
 	const std::string Vbo::UV = "uv";
 
 	VboConfiguration VBO_CONFIG_VERTEX = {

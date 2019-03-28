@@ -55,6 +55,8 @@ namespace se {
 			static const std::string VERTICES;
 			static const std::string NORMALS;
 			static const std::string INDEXES;
+			static const std::string COLORS;
+			static const std::string SIZES;
 			static const std::string UV;
 
 			Vbo(VboConfiguration config_) : config(config_) {}

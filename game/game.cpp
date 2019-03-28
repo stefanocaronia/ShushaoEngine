@@ -42,6 +42,7 @@ Game::Game(string title) : Cycle(title) {
 void Game::Awake() {
 
 	Resources::Load<Texture>("avatar", IMG_AVATAR);
+	Resources::Load<Texture>("assets/particlestar.png");
 	Resources::Load<Texture>("assets/pancrazio.png");
 	Resources::Load<Texture>("assets/dialog.png");
 	Resources::Load<Texture>("assets/night.jpg");

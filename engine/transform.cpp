@@ -206,6 +206,8 @@ namespace se {
 			_V = SceneManager::activeScene->activeCamera->getViewMatrix();
 		}
 		_MVP = _P * _V * _M;
+		_MV = _V * _M;
+		_VP = _P * _V;
 	}
 
 	GLfloat* Transform::uMVP() {
@@ -214,6 +216,18 @@ namespace se {
 
 	GLfloat* Transform::uM() {
 		return &_M[0][0];
+	}
+
+	GLfloat* Transform::uP() {
+		return &_P[0][0];
+	}
+
+	GLfloat* Transform::uMV() {
+		return &_MV[0][0];
+	}
+
+	GLfloat* Transform::uVP() {
+		return &_VP[0][0];
 	}
 
 	void Transform::Awake() {

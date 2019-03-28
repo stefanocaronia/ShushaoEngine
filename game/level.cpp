@@ -13,11 +13,19 @@ Level::Level() {
 
 	Entity* particleObj = AddEntity("Particle Object");
 	ParticleSystem* ps = particleObj->AddComponent<ParticleSystem>();
-	ps->texture = Resources::Get<Texture>("avatar");
+	ps->texture = Resources::Get<Texture>("particlestar");
 
-	ps->SetMaxParticles(100);
-	ps->playOnAwake = true;
-	ps->emission.rateOverTime = 10;
+	ps->SetMaxParticles(130000);
+	ps->SetPlayOnAwake(true);
+	ps->SetDuration(10.0f);
+	ps->SetStartSize({0.5, 0.5});
+	ps->SetStartLifetime(10.0f);
+	ps->SetLoop(true);
+	//ps->SetStartDelay(3.0f);
+	ps->SetStartColor(Color::yellow);
+	ps->SetStartSpeed(2.5f);
+
+	ps->emission.rateOverTime = 1000;
 
 	return;
 

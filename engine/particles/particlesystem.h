@@ -15,15 +15,6 @@ namespace se {
 
 	struct Particle {
 
-			Particle()
-				: position(0)
-				, velocity(0)
-				, color(0)
-				, rotation(0)
-				, age(0)
-				, lifetime(0)
-			{}
-
 			glm::vec3 position;
 			glm::vec3 velocity;
 			Color color;
@@ -52,19 +43,10 @@ namespace se {
 			~ParticleSystem();
 			bool isReady();
 
-			float startDelay; // Start delay in seconds.
-			float startLifetime; // The total lifetime in seconds that each new particle will have.
-			float startSpeed; // The initial speed of particles when emitted.
-			glm::vec2 startSize; // The initial size of particles when emitted.
-			float startRotation; // The initial rotation of particles when emitted.
-			Color startColor; // The initial color of particles when emitted.
 
-			unsigned int maxParticles; // The maximum number of particles to emit.
-			bool playOnAwake; // If set to true, the Particle System will automatically start playing on startup.
-			float simulationSpeed; // Override the default playback speed of the Particle System.
 
 			//void* stopAction;	Select whether to Disable or Destroy the GameObject, or to call the OnParticleSystemStopped script Callback, when the Particle System is stopped and all particles have died.
-			bool useUnscaledTime; // When true, use the unscaled delta time to simulate the Particle System. Otherwise, use the scaled delta time.
+			//bool useUnscaledTime; // When true, use the unscaled delta time to simulate the Particle System. Otherwise, use the scaled delta time.
 
 			Texture* texture = nullptr;
 			Material* material = nullptr;
@@ -92,17 +74,23 @@ namespace se {
 			void Pause(); // Pauses the system so no new particles are emitted and the existing particles are not updated.
 			void Play(); // Starts the Particle System.
 			void Stop(); // Stops playing the Particle System using the supplied stop behaviour.
-			void Simulate(); // Fast-forwards the Particle System by simulating particles over the given period of time, then pauses it.
+			// void Simulate(); // Fast-forwards the Particle System by simulating particles over the given period of time, then pauses it.
 
-			void Clear(); // Remove all particles in the Particle System.
-			void Emit(); // Emit count particles immediately.
-			bool IsAlive(); // Does the Particle System contain any live particles, or will it produce more?
+			void Emit(unsigned int count); // Emit count particles immediately.
+			void Clear();
 
 			vector<Particle> GetParticles(); // Gets the particles of this Particle System.
 			void SetParticles(vector<Particle>); // Sets the particles of this Particle System.
 
 			void SetMaxParticles(unsigned int max);
-			bool EmitParticle(Particle particle_);
+			bool AddParticle(Particle* particle_);
+			void SetPlayOnAwake(bool value_);
+			void SetStartDelay(float value_);
+			void SetStartLifetime(float value_);
+			void SetStartSpeed(float value_);
+			void SetStartSize(glm::vec2 value_);
+			void SetStartColor(Color value_);
+			void SetStartRotation(float value_);
 
 		protected:
 
@@ -114,7 +102,37 @@ namespace se {
 
 		private:
 
-			vector<Particle> particles;
+			void EmitParticle();
+			void UpdateParticles();
+			void LoadBuffers();
+
+			vector<Particle*> particles;
+
+			unsigned int maxParticles; // The maximum number of particles to emit.
+			bool playOnAwake; // If set to true, the Particle System will automatically start playing on startup.
+			// float simulationSpeed; // Override the default playback speed of the Particle System.
+
+			float startDelay; // Start delay in seconds.
+			float startLifetime; // The total lifetime in seconds that each new particle will have.
+			float startSpeed; // The initial speed of particles when emitted.
+			glm::vec2 startSize; // The initial size of particles when emitted.
+			float startRotation; // The initial rotation of particles when emitted.
+			Color startColor; // The initial color of particles when emitted.
+
+			double timeInterval = 0.0;
+			double emissionTime = 0.0;
+			double stopTime = 0.0;
+			double startTime = 0.0;
+
+			bool end = false;
+
+			std::vector<glm::vec3> positions;
+			std::vector<glm::vec4> colors;
+			std::vector<glm::vec2> sizes;
+
+			std::vector<glm::vec3> last_positions;
+			std::vector<glm::vec4> last_colors;
+			std::vector<glm::vec2> last_sizes;
 
 	};
 

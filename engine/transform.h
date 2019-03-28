@@ -70,7 +70,10 @@ namespace se {
 			void AddChild(Transform* t);
 
 			GLfloat* uMVP(); // MVP Matrix for uniforms
+			GLfloat* uMV(); // Model-View Matrix for uniforms
+			GLfloat* uVP(); // Model-View Matrix for uniforms
 			GLfloat* uM(); // Model Matrix for uniforms
+			GLfloat* uP(); // Model Matrix for uniforms
 
 			glm::mat4 GetLocalToParentMatrix();
 			glm::mat4 GetLocalToWorldMatrix();
@@ -135,6 +138,8 @@ namespace se {
 			glm::vec3 _up = UP;
 			glm::vec3 _pivot = VEC3_ZERO;
 			glm::mat4 _MVP = glm::mat4();
+			glm::mat4 _MV = glm::mat4();
+			glm::mat4 _VP = glm::mat4();
 			glm::mat4 _M = glm::mat4();
 			glm::mat4 _V = glm::mat4();
 			glm::mat4 _P = glm::mat4();

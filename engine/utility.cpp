@@ -1,3 +1,6 @@
+
+#include <random>
+
 #include "utility.h"
 #include "globals.h"
 #include "debug.h"
@@ -7,6 +10,16 @@ namespace se {
 using namespace std;
 
 namespace util {
+
+	random_device rd; // obtain a random number from hardware
+	mt19937 eng(rd()); // seed the generator
+
+	int randomInRange(int min, int max) {
+
+		uniform_int_distribution<> distr(min, max); // define the range
+
+		return distr(eng);
+	}
 
 	string basename(string filename) {
 		string n = filename.substr(filename.find_last_of("/\\") + 1);

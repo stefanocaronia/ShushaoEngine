@@ -7,9 +7,7 @@
 namespace se {
 
     enum class EmitterShape {
-        CIRCLE,
-        EDGE,
-        BOX
+        POINT
     };
 
     struct EmissionModule {

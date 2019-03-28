@@ -142,8 +142,20 @@ namespace se {
 		SetMatrix("MVP", value);
 	}
 
+	void Shader::SetMV(GLfloat* value) {
+		SetMatrix("MV", value);
+	}
+
+	void Shader::SetVP(GLfloat* value) {
+		SetMatrix("VP", value);
+	}
+
 	void Shader::SetM(GLfloat* value) {
 		SetMatrix("M", value);
+	}
+
+	void Shader::SetP(GLfloat* value) {
+		SetMatrix("P", value);
 	}
 
 	void Shader::SetRenderColor(Color value) {

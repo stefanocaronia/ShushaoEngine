@@ -46,10 +46,10 @@ struct EmissionModule : public ParticleSystemModule {
 
     unsigned int burstCount;  //	The current number of bursts.
 
-    //float rateOverDistance;            // The rate at which new particles are spawned, over distance.
-    //float rateOverDistanceMultiplier;  // Change the rate over distance multiplier.
+    float rateOverDistance;            // The rate at which new particles are spawned, over distance.
+    float rateOverDistanceMultiplier = 1.0f;  // Change the rate over distance multiplier.
     float rateOverTime;                // The rate at which new particles are spawned, over time.
-    //float rateOverTimeMultiplier;      // Change the rate over time multiplier.
+    float rateOverTimeMultiplier = 1.0f;      // Change the rate over time multiplier.
 
     // void GetBurst(); // Get a single burst from the array of bursts.
     // void GetBursts(); // Get the burst array.
@@ -97,6 +97,8 @@ struct SizeBySpeedModule : public ParticleSystemModule {
 
 };
 struct SizeOverLifetimeModule : public ParticleSystemModule {
+
+
 
 };
 struct VelocityOverLifetimeModule : public ParticleSystemModule {

@@ -17,14 +17,16 @@
 
 namespace se {
 
-	enum class Origin {
-		LOCAL,
-		WORLD
-	};
+
 
 	class Transform : public Component {
 
 		public:
+
+			enum class Origin {
+				LOCAL,
+				WORLD
+			};
 
 			~Transform();
 
@@ -54,6 +56,7 @@ namespace se {
 			const glm::vec3& forward = _forward;
 			const glm::vec3& right = _right;
 			const glm::vec3& up = _up;
+			const glm::vec3& velocity = _velocity;
 
 			const glm::mat4& localToWorldMatrix = _localToWorldMatrix;
 			const glm::mat4& localToParentMatrix = _localToParentMatrix;
@@ -73,7 +76,8 @@ namespace se {
 			GLfloat* uMV(); // Model-View Matrix for uniforms
 			GLfloat* uVP(); // Model-View Matrix for uniforms
 			GLfloat* uM(); // Model Matrix for uniforms
-			GLfloat* uP(); // Model Matrix for uniforms
+			GLfloat* uP(); // Projection Matrix for uniforms
+			GLfloat* uV(); // View Matrix for uniforms
 
 			glm::mat4 GetLocalToParentMatrix();
 			glm::mat4 GetLocalToWorldMatrix();
@@ -133,6 +137,7 @@ namespace se {
 			glm::vec3 _position = VEC3_ZERO;
 			glm::quat _rotation = QUATERNION_IDENTITY;
 			glm::vec3 _scale = VEC3_IDENTITY2D;
+			glm::vec3 _velocity = VEC3_ZERO;
 			glm::vec3 _forward = FORWARD;
 			glm::vec3 _right = RIGHT;
 			glm::vec3 _up = UP;
@@ -148,6 +153,8 @@ namespace se {
 			glm::mat4 _localToParentMatrix = glm::mat4();
 			glm::mat4 _worldToLocalMatrix = glm::mat4();
 			glm::mat4 _rootMatrix = glm::mat4();
+
+			glm::vec3 lastPosition = VEC3_ZERO;
 
 			void setupDirections();
 			void buildMVP();

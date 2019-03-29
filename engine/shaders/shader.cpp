@@ -158,6 +158,10 @@ namespace se {
 		SetMatrix("P", value);
 	}
 
+	void Shader::SetV(GLfloat* value) {
+		SetMatrix("V", value);
+	}
+
 	void Shader::SetRenderColor(Color value) {
 		SetColor("render_color", value);
 	}

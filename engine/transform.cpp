@@ -222,6 +222,10 @@ namespace se {
 		return &_P[0][0];
 	}
 
+	GLfloat* Transform::uV() {
+		return &_V[0][0];
+	}
+
 	GLfloat* Transform::uMV() {
 		return &_MV[0][0];
 	}
@@ -238,6 +242,7 @@ namespace se {
 
 	void Transform::Update() {
 
+
 		if (origin == Origin::LOCAL) {
 			_position = GetWorldPosition();
 			_rotation = GetWorldOrientation();
@@ -248,13 +253,13 @@ namespace se {
 		}
 
 		setupDirections();
-
 		buildMVP();
+
+		_velocity = (1 / Time::deltaTime) * (position - lastPosition);
+		lastPosition = position;
 	}
 
 	void Transform::Render() {
-
-
 
 		if (isRectTransform) {
 			rectTransform->render();

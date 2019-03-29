@@ -2,10 +2,13 @@
 #include <glm/glm.hpp>
 #include <vector>
 
+#include "particlesystem.h"
+
+#include "../entity.h"
+#include "../physics/rigidbody2d.h"
 #include "../shaders/particlesshader.h"
 #include "../transform.h"
 #include "../utility.h"
-#include "particlesystem.h"
 
 namespace se {
 
@@ -29,17 +32,19 @@ ParticleSystem::~ParticleSystem() {
     VAO = nullptr;
 }
 
-void ParticleSystem::SetTexture(Texture* value_) {
+ParticleSystem* ParticleSystem::SetTexture(Texture* value_) {
     texture = value_;
+    return this;
 }
 
-void ParticleSystem::SetMaxParticles(unsigned int max) {
+ParticleSystem* ParticleSystem::SetMaxParticles(unsigned int max) {
     maxParticles = max;
     particles.clear();
     particles.reserve(max);
     positions.reserve(max);
     colors.reserve(max);
     sizes.reserve(max);
+    return this;
 }
 
 bool ParticleSystem::isReady() {
@@ -53,6 +58,14 @@ void ParticleSystem::Awake() {
     if (texture != nullptr) {
         material->SetMainTexture(texture);
     }
+
+    material->shader->Use();
+    if (simulationSpace == Transform::Origin::LOCAL) {
+        material->shader->Disable("worldspace");
+    } else {
+        material->shader->Enable("worldspace");
+    }
+    material->shader->Leave();
 
     if (startState == Playable::State::PLAY) {
         Play();
@@ -95,8 +108,16 @@ void ParticleSystem::EmitParticle() {
     float rotation = startRotation;
     vec2 size = startSize;
     float lifetime = startLifetime;
-    vec3 position = transform->localPosition;
+    vec3 position = (simulationSpace == Transform::Origin::LOCAL ? Transform::VEC3_ZERO : transform->position);
     vec3 direction = transform->forward;
+    vec3 velocity;
+    if (emitterVelocityMode == EmitterVelocityMode::RIGIDBODY && entity->GetComponent<Rigidbody2D>() != nullptr) {
+        velocity = vec3(entity->GetComponent<Rigidbody2D>()->velocity, 0.0f);
+    } else if (emitterVelocityMode == EmitterVelocityMode::TRANSFORM) {
+        velocity = transform->velocity;
+    } else {
+        velocity = Transform::VEC3_ZERO;
+    }
 
     switch (emitter.shape) {
         case EmitterModule::Shape::SPHERE:
@@ -118,7 +139,7 @@ void ParticleSystem::EmitParticle() {
 
             AddParticle(
                 (direction * emitter.radius) + position,  // position
-                direction * startSpeed,                   // velocity
+                direction * startSpeed + velocity,        // velocity
                 color,                                    // color
                 rotation,                                 // rotation
                 size,                                     // size
@@ -165,18 +186,8 @@ void ParticleSystem::Update() {
     }
 
     if (isPlaying && emission.enabled && !isLoopEnded) {
-        // generate particles
-        toEmit += emission.rateOverTime * Time::deltaTime;
-        if (toEmit >= 1.0) {
-            int toEmitInt = floor(toEmit);
-            Emit(toEmitInt);
-            toEmit -= toEmitInt;
-        }
-
-        // TODO: rateOverDistance con i delta del movimento del transform
-
+        ProcessEmission();
         ProcessBursts();
-
         isEmitting = true;
     } else {
         isEmitting = false;
@@ -198,6 +209,27 @@ void ParticleSystem::Update() {
             isLoopEnded = true;
         }
         elapsed = 0.0f;
+    }
+}
+
+void ParticleSystem::ProcessEmission() {
+    if (emission.rateOverTime > 0.0f) {
+        toEmit += emission.rateOverTime * emission.rateOverTimeMultiplier * Time::deltaTime;
+        if (toEmit >= 1.0) {
+            int toEmitInt = floor(toEmit);
+            Emit(toEmitInt);
+            toEmit -= toEmitInt;
+        }
+    }
+
+    if (emission.rateOverDistance > 0.0f) {
+        toEmitDistance += emission.rateOverDistance * emission.rateOverDistanceMultiplier * distance(transform->position, lastPosition);
+        if (toEmitDistance >= 1.0) {
+            int toEmitInt = floor(toEmitDistance);
+            Emit(toEmitInt);
+            toEmitDistance -= toEmitInt;
+        }
+        lastPosition = transform->position;
     }
 }
 
@@ -300,7 +332,8 @@ void ParticleSystem::Render() {
     VAO->Use();
     material->shader->Use();
     material->shader->SetRenderColor(material->color);
-    material->shader->SetMVP(transform->uMVP());
+    material->shader->SetM(transform->uM());
+    material->shader->SetV(transform->uV());
     material->shader->SetP(transform->uP());
     material->update();
 
@@ -323,35 +356,52 @@ void ParticleSystem::OnDestroy() {
     material = nullptr;
 }
 
-void ParticleSystem::SetPlayOnAwake(bool value_) {
+ParticleSystem* ParticleSystem::SetPlayOnAwake(bool value_) {
     playOnAwake = value_;
     if (playOnAwake) {
         startState = Playable::State::PLAY;
     }
+    return this;
 }
 
-void ParticleSystem::SetStartDelay(float value_) {
+ParticleSystem* ParticleSystem::SetStartDelay(float value_) {
     startDelay = value_;
+    return this;
 }
 
-void ParticleSystem::SetStartLifetime(float value_) {
+ParticleSystem* ParticleSystem::SetStartLifetime(float value_) {
     startLifetime = value_;
+    return this;
 }
 
-void ParticleSystem::SetStartSpeed(float value_) {
+ParticleSystem* ParticleSystem::SetStartSpeed(float value_) {
     startSpeed = value_;
+    return this;
 }
 
-void ParticleSystem::SetStartSize(glm::vec2 value_) {
+ParticleSystem* ParticleSystem::SetStartSize(glm::vec2 value_) {
     startSize = value_;
+    return this;
 }
 
-void ParticleSystem::SetStartColor(Color value_) {
+ParticleSystem* ParticleSystem::SetStartColor(Color value_) {
     startColor = value_;
+    return this;
 }
 
-void ParticleSystem::SetStartRotation(float value_) {
+ParticleSystem* ParticleSystem::SetStartRotation(float value_) {
     startRotation = value_;
+    return this;
+}
+
+ParticleSystem* ParticleSystem::SetSimulationSpace(Transform::Origin value_) {
+    simulationSpace = value_;
+    return this;
+}
+
+ParticleSystem* ParticleSystem::SetEmitterVelocityMode(EmitterVelocityMode value_) {
+    emitterVelocityMode = value_;
+    return this;
 }
 
 }  // namespace se

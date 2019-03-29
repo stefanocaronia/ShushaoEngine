@@ -18,7 +18,10 @@ namespace se {
 		AddUniform("Render Color", "render_color", Uniform::Type::TEXTURE, ShaderLocation::LOCATION_RENDER_COLOR);
 
 		// shader controlled uniforms (locked)
+		AddShaderUniform("M", Uniform::Type::MATRIX);
+		AddShaderUniform("V", Uniform::Type::MATRIX);
 		AddShaderUniform("P", Uniform::Type::MATRIX);
+		AddShaderUniform("enabled_worldspace", Uniform::Type::INTEGER);
 
 		// valorizzazione
 		SetTextureIndex("diffuse_map", 0);

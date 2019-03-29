@@ -8,6 +8,7 @@
 #include "../playable.h"
 #include "../renderer.h"
 #include "../texture.h"
+#include "../transform.h"
 #include "../vao.h"
 #include "particlemodules.h"
 
@@ -23,8 +24,8 @@ struct Particle {
     float age;
 
     Particle(glm::vec3 position_, glm::vec3 velocity_, Color color_, float rotation_, glm::vec2 size_, float lifetime_) {
-		reset(position_, velocity_, color_, rotation_, size_, lifetime_);
-	}
+        reset(position_, velocity_, color_, rotation_, size_, lifetime_);
+    }
 
     void reset(glm::vec3 position_, glm::vec3 velocity_, Color color_, float rotation_, glm::vec2 size_, float lifetime_) {
         position = position_;
@@ -49,14 +50,21 @@ struct Particle {
 
 class ParticleSystem : public Renderer, public Playable {
 public:
+
+    enum class EmitterVelocityMode {
+        NONE,
+        TRANSFORM,
+        RIGIDBODY
+    };
+
     virtual void setup();
     ~ParticleSystem();
     bool isReady();
 
-    //void* stopAction;										// Select whether to Disable or Destroy the GameObject, or to call the OnParticleSystemStopped script Callback, when the Particle System is stopped and all particles have died.
-    //bool useUnscaledTime; 								// When true, use the unscaled delta time to simulate the Particle System. Otherwise, use the scaled delta time.
+    //void* stopAction;					                // Select whether to Disable or Destroy the GameObject, or to call the OnParticleSystemStopped script Callback, when the Particle System is stopped and all particles have died.
+    //bool useUnscaledTime; 				            // When true, use the unscaled delta time to simulate the Particle System. Otherwise, use the scaled delta time.
     EmissionModule emission;                          // emission module.
-    EmitterModule emitter;                            // Shape module.
+    EmitterModule emitter;                            // in unity è Shape module ma il nome mi faceva schifo
     ColorOverLifetimeModule colorOverLifetime;        // color over lifetime module.
     ForceOverLifetimeModule forceOverLifetime;        // force over lifetime module.
     RotationBySpeedModule rotationBySpeed;            // Rotation by Speed module.
@@ -77,18 +85,21 @@ public:
     void Clear();
 
     vector<Particle> GetParticles();      // Gets the particles of this Particle System.
-    void SetParticles(vector<Particle>);  // Sets the particles of this Particle System.
-    void SetTexture(Texture* value_);
-    void SetMaxParticles(unsigned int max);
+    ParticleSystem* SetParticles(vector<Particle>);  // Sets the particles of this Particle System.
+    ParticleSystem* SetTexture(Texture* value_);
+    ParticleSystem* SetMaxParticles(unsigned int max);
+    ParticleSystem* SetPlayOnAwake(bool value_);
+    ParticleSystem* SetStartDelay(float value_);
+    ParticleSystem* SetStartLifetime(float value_);
+    ParticleSystem* SetStartSpeed(float value_);
+    ParticleSystem* SetStartSize(glm::vec2 value_);
+    ParticleSystem* SetStartColor(Color value_);
+    ParticleSystem* SetStartRotation(float value_);
+    ParticleSystem* SetSimulationSpace(Transform::Origin value_ );
+    ParticleSystem* SetEmitterVelocityMode(EmitterVelocityMode value_);
+
     bool AddParticle(Particle* particle_);
     bool AddParticle(glm::vec3 position_, glm::vec3 velocity_, Color color_, float rotation_, glm::vec2 size_, float lifetime_);
-    void SetPlayOnAwake(bool value_);
-    void SetStartDelay(float value_);
-    void SetStartLifetime(float value_);
-    void SetStartSpeed(float value_);
-    void SetStartSize(glm::vec2 value_);
-    void SetStartColor(Color value_);
-    void SetStartRotation(float value_);
 
     bool IsAlive();
 
@@ -111,15 +122,12 @@ private:
 
     unsigned int particleCount;
 
-    void EmitParticle();
-    void UpdateParticles();
-    void ProcessBursts();
-    void LoadBuffers();
-
     vector<Particle*> particles;
 
-    unsigned int maxParticles;  // The maximum number of particles to emit.
-    bool playOnAwake;           // If set to true, the Particle System will automatically start playing on startup.
+    Transform::Origin simulationSpace = Transform::Origin::WORLD;  // This selects the space in which to simulate particles. It can be either world or local space
+    EmitterVelocityMode emitterVelocityMode = EmitterVelocityMode::NONE;  // This selects the space in which to simulate particles. It can be either world or local space
+    unsigned int maxParticles;                                     // The maximum number of particles to emit.
+    bool playOnAwake;                                              // If set to true, the Particle System will automatically start playing on startup.
     // float simulationSpeed = 1.0f; // Override the default playback speed of the Particle System.
 
     float startDelay;     // Start delay in seconds.
@@ -129,10 +137,12 @@ private:
     float startRotation;  // The initial rotation of particles when emitted.
     Color startColor;     // The initial color of particles when emitted.
 
+    glm::vec3 lastPosition;
+
     double timeInterval = 0.0;
     double startTime = 0.0;
     double toEmit = 0.0;
-
+    double toEmitDistance = 0.0;
     bool isLoopEnded = false;
 
     std::vector<glm::vec3> positions;
@@ -142,6 +152,12 @@ private:
     std::vector<glm::vec3> last_positions;
     std::vector<glm::vec4> last_colors;
     std::vector<glm::vec2> last_sizes;
+
+    void EmitParticle();
+    void UpdateParticles();
+    void ProcessBursts();
+    void ProcessEmission();
+    void LoadBuffers();
 };
 
 }  // namespace se

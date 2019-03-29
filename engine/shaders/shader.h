@@ -107,6 +107,7 @@ namespace se {
 			void SetMV(GLfloat*);
 			void SetVP(GLfloat*);
 			void SetP(GLfloat*);
+			void SetV(GLfloat*);
 			void SetM(GLfloat*);
 			void SetRenderColor(Color);
 

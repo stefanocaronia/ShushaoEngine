@@ -27,20 +27,24 @@ public:
         return loop;
     }
 
-    void SetState(State value) {
+    Playable* SetState(State value) {
         state = value;
+        return this;
     }
 
-    void SetStartState(State value) {
+    Playable* SetStartState(State value) {
         startState = value;
+        return this;
     }
 
-    void SetLoop(bool value) {
+    Playable* SetLoop(bool value) {
         loop = value;
+        return this;
     }
 
-    void SetDuration(float value) {
+    Playable* SetDuration(float value) {
         duration = value;
+        return this;
     }
 
 protected:

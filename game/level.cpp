@@ -13,27 +13,28 @@ Level::Level() {
 
 	Entity* particleObj = AddEntity("Particle Object");
 	ParticleSystem* ps = particleObj->AddComponent<ParticleSystem>();
-	ps->SetTexture(Resources::Get<Texture>("particlestar"));
-
-	ps->SetMaxParticles(1000);
-	ps->SetPlayOnAwake(true);
-	ps->SetDuration(20.0f);
-	ps->SetStartSize({0.5, 0.5});
-	ps->SetStartLifetime(10.0f);
-	ps->SetLoop(false);
-	//ps->SetStartDelay(3.0f);
-	ps->SetStartColor(Color::green);
-	ps->SetStartSpeed(1.5f);
+	ps->SetDuration(20.0f)->SetLoop(true);
+	ps->SetTexture(Resources::Get<Texture>("particlestar"))
+		->SetMaxParticles(1000)
+	 	->SetPlayOnAwake(true)
+	 	->SetSimulationSpace(Transform::Origin::WORLD)
+	// ->SetEmitterVelocityMode(ParticleSystem::EmitterVelocityMode::IGNORE);
+	// ->SetStartDelay(3.0f)
+		->SetStartSize({0.3, 0.3})
+		->SetStartLifetime(5.0f)
+		->SetStartColor(Color::green)
+		->SetStartSpeed(1.5f);
 
 	ps->emitter.Enable();
 	ps->emitter.shape = EmitterModule::Shape::SPHERE;
-	ps->emitter.radius = 1.0f;
+	ps->emitter.radius = 0.0f;
 	ps->emitter.arc = 360;
 	ps->emitter.is2D = false;
 
 	ps->emission.Enable();
-	ps->emission.rateOverTime = 20;
-	ps->emission.AddBurst(2.0, 100, 0, 1.0, 0.6f);
+	ps->emission.rateOverTime = 0;
+	ps->emission.rateOverDistance = 20;
+	//ps->emission.AddBurst(2.0, 100, 0, 1.0, 0.6f);
 
 	return;
 

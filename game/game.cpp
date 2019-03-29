@@ -114,6 +114,16 @@ void Game::Awake() {
 	horizontal->altNegativeButton = SDL_SCANCODE_LEFT;
 	horizontal->controllerAxis = SDL_CONTROLLER_AXIS_LEFTX;
 	horizontal->deadZone = 0.2f;
+
+	InputMapping* vertical = Input::addMapping("vertical");
+
+	vertical->type = InputType::AXIS;
+	vertical->positiveButton = SDL_SCANCODE_W;
+	vertical->negativeButton = SDL_SCANCODE_S;
+	vertical->altPositiveButton = SDL_SCANCODE_UP;
+	vertical->altNegativeButton = SDL_SCANCODE_DOWN;
+	vertical->controllerAxis = SDL_CONTROLLER_AXIS_MAX;
+	vertical->deadZone = 0.2f;
 }
 
 void Game::Start() {
@@ -280,6 +290,24 @@ void Game::GetInput() {
 			canvas->transform->localPosition.x - 1.0f * Time::deltaTime,
 			canvas->transform->localPosition.y,
 			0.0f
+		});
+	}
+
+	if (Input::getAxis("horizontal") != 0) {
+		Entity* particleObj = SceneManager::activeScene->GetEntity("Particle Object");
+		particleObj->transform->SetLocalPosition({
+			particleObj->transform->localPosition.x + Input::getAxis("horizontal") * 2.0f * Time::deltaTime,
+			particleObj->transform->localPosition.y,
+			particleObj->transform->localPosition.z
+		});
+	}
+
+	if (Input::getAxis("vertical") != 0) {
+		Entity* particleObj = SceneManager::activeScene->GetEntity("Particle Object");
+		particleObj->transform->SetLocalPosition({
+			particleObj->transform->localPosition.x,
+			particleObj->transform->localPosition.y + Input::getAxis("vertical") * 2.0f * Time::deltaTime,
+			particleObj->transform->localPosition.z
 		});
 	}
 

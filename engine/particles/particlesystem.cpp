@@ -111,6 +111,7 @@ void ParticleSystem::EmitParticle() {
     vec3 position = (simulationSpace == Transform::Origin::LOCAL ? Transform::VEC3_ZERO : transform->position);
     vec3 direction = transform->forward;
     vec3 velocity;
+
     if (emitterVelocityMode == EmitterVelocityMode::RIGIDBODY && entity->GetComponent<Rigidbody2D>() != nullptr) {
         velocity = vec3(entity->GetComponent<Rigidbody2D>()->velocity, 0.0f);
     } else if (emitterVelocityMode == EmitterVelocityMode::TRANSFORM) {

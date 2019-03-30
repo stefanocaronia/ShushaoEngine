@@ -11,6 +11,7 @@
 #include "../transform.h"
 #include "../vao.h"
 #include "particlemodules.h"
+#include "../base/curve.h"
 
 namespace se {
 

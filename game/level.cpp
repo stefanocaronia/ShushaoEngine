@@ -36,6 +36,15 @@ Level::Level() {
 	ps->emission.rateOverDistance = 20;
 	//ps->emission.AddBurst(2.0, 100, 0, 1.0, 0.6f);
 
+	Curve curve = Curve::EaseInOut(0.0f, 0.0f, 1.0f, 1.0f);
+
+	for (auto key: curve.points) {
+		Debug::Log << "Time: " << key.time << "; Value: " << key.value << "; InTangent: " << key.inTangent << "; OutTangent: " << key.outTangent << endl;
+	}
+
+	float eval = curve.Evaluate(0.8f);
+	Debug::Log(WARNING) << "Eval: " << eval << endl;
+
 	return;
 
 	/* Entity* directional = AddEntity("Directional");

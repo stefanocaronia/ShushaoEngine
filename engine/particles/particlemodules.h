@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 
 #include "../color.h"
+#include "../base/variation.h"
 
 namespace se {
 
@@ -48,7 +49,7 @@ struct EmissionModule : public ParticleSystemModule {
 
     float rateOverDistance;            // The rate at which new particles are spawned, over distance.
     float rateOverDistanceMultiplier = 1.0f;  // Change the rate over distance multiplier.
-    float rateOverTime;                // The rate at which new particles are spawned, over time.
+    Variation rateOverTime;                // The rate at which new particles are spawned, over time.
     float rateOverTimeMultiplier = 1.0f;      // Change the rate over time multiplier.
 
     // void GetBurst(); // Get a single burst from the array of bursts.

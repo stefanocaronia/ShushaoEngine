@@ -214,8 +214,10 @@ void ParticleSystem::Update() {
 }
 
 void ParticleSystem::ProcessEmission() {
-    if (emission.rateOverTime > 0.0f) {
-        toEmit += emission.rateOverTime * emission.rateOverTimeMultiplier * Time::deltaTime;
+
+    float rate = emission.rateOverTime.Evaluate(elapsed / duration);
+    if (rate > 0.0f) {
+        toEmit += rate * emission.rateOverTimeMultiplier * Time::deltaTime;
         if (toEmit >= 1.0) {
             int toEmitInt = floor(toEmit);
             Emit(toEmitInt);

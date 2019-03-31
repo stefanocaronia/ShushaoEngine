@@ -38,6 +38,13 @@ public:
     Curve();
     Curve(std::vector<Curve::Point> points_);
 
+    Curve& operator=(const Curve& other) {
+        _points = other.points;
+        _length = other.length;
+        wrapMode = other.wrapMode;
+        return *this;
+    }
+
     std::vector<Curve::Point>& points = _points;  // All points defined in the animation curve.
     unsigned int& length = _length;               // The number of points in the curve.(Read Only)
     WrapMode wrapMode = WrapMode::DEFAULT;

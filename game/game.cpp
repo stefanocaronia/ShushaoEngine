@@ -14,7 +14,7 @@ Game::Game(string title) : Cycle(title) {
 	Time::setFixedRateLimit(60.0f);
 
 
-	perspectiveTest = true;
+	perspectiveTest = false;
 
 	Config::Layers = {
 		"Background",

@@ -14,7 +14,7 @@ Level::Level() {
 
 	Entity* particleObj = AddEntity("Particle Object");
 	ParticleSystem* ps = particleObj->AddComponent<ParticleSystem>();
-	ps->SetDuration(20.0f)->SetLoop(true);
+	ps->SetDuration(10.0f)->SetLoop(true);
 	ps->SetTexture(Resources::Get<Texture>("particlestar"))
 		->SetMaxParticles(1000)
 	 	->SetPlayOnAwake(true)
@@ -30,16 +30,18 @@ Level::Level() {
 	ps->emitter.shape = EmitterModule::Shape::SPHERE;
 	ps->emitter.radius = 0.0f;
 	ps->emitter.arc = 360;
-	ps->emitter.is2D = false;
+	ps->emitter.is2D = true;
 
 	ps->emission.Enable();
-	ps->emission.rateOverTime = 0;
+	//ps->emission.rateOverTime = Variation::Range({0, 400});
+	Curve curve = Curve::EaseInOut(0.0f, 0.0f, 1.0f, 1.0f);
+	ps->emission.rateOverTime = Variation::Path({400.0f, curve});
 	ps->emission.rateOverDistance = 20;
 	//ps->emission.AddBurst(2.0, 100, 0, 1.0, 0.6f);
 
-	// AddEntity<Hermite>();
+	AddEntity<Hermite>();
 
-	// return;
+	return;
 
 	Entity* directional = AddEntity("Directional");
 	directional->transform->SetLocalRotation({20, 10, 0});

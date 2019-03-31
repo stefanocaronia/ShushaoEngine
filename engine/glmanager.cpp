@@ -68,7 +68,7 @@ namespace se {
 		//glShadeModel(GL_SMOOTH);
 		glClearDepth(1.0f);
 		glEnable(GL_DEPTH_TEST);
-		//glDepthFunc(GL_LEQUAL); // per il 3d serve questo
+		//glDepthFunc(GL_LEQUAL); // senza questo il 3d non funziona
 		glDepthFunc(GL_ALWAYS); // questo per il 2d
 		/* glEnable(GL_MULTISAMPLE);
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);

@@ -3,6 +3,7 @@
 #include "pancrazio.h"
 #include "starship.h"
 #include "mover.h"
+#include "hermite.h"
 
 Level::Level() {
 
@@ -36,18 +37,11 @@ Level::Level() {
 	ps->emission.rateOverDistance = 20;
 	//ps->emission.AddBurst(2.0, 100, 0, 1.0, 0.6f);
 
-	Curve curve = Curve::EaseInOut(0.0f, 0.0f, 1.0f, 1.0f);
+	// AddEntity<Hermite>();
 
-	for (auto key: curve.points) {
-		Debug::Log << "Time: " << key.time << "; Value: " << key.value << "; InTangent: " << key.inTangent << "; OutTangent: " << key.outTangent << endl;
-	}
+	// return;
 
-	float eval = curve.Evaluate(0.8f);
-	Debug::Log(WARNING) << "Eval: " << eval << endl;
-
-	return;
-
-	/* Entity* directional = AddEntity("Directional");
+	Entity* directional = AddEntity("Directional");
 	directional->transform->SetLocalRotation({20, 10, 0});
 	Light* light = directional->AddComponent<Light>();
 	light->type = Light::Type::DIRECTIONAL;
@@ -77,7 +71,7 @@ Level::Level() {
 	mah->transform->SetLocalPosition({4.0f, 2.0f, -1.0f});
 	mah->transform->SetLocalRotation({10, 10, 0});
 
-	return; */
+	return;
 
 	//Font* pixel = Resources::Get<Font>("Pixel Perfect");
 	Font* f = Resources::Get<Font>("Modenine");

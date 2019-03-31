@@ -330,34 +330,34 @@ namespace se {
 
 	bool Shader::compile() {
 
-		// Compile Vertex Shader
-		VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
-		char const* VertexSourcePointer = VertexShaderCode.c_str();
-		glShaderSource(VertexShaderID, 1, &VertexSourcePointer , NULL);
-		glCompileShader(VertexShaderID);
+		if (FragmentShaderCode != "") {
+			// Compile Vertex Shader
+			VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
+			char const* VertexSourcePointer = VertexShaderCode.c_str();
+			glShaderSource(VertexShaderID, 1, &VertexSourcePointer , NULL);
+			glCompileShader(VertexShaderID);
+			// Check Vertex Shader
+			if (!shaderCompilationLog(VertexShaderID))
+				return false;
+		}
 
-		// Check Vertex Shader
-		if (!shaderCompilationLog(VertexShaderID))
-			return false;
-
-		// Compile Fragment Shader
-		FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
-		char const* FragmentSourcePointer = FragmentShaderCode.c_str();
-		glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer , NULL);
-		glCompileShader(FragmentShaderID);
-
-		// Check Vertex Shader
-		if (!shaderCompilationLog(FragmentShaderID))
-			return false;
+		if (FragmentShaderCode != "") {
+			// Compile Fragment Shader
+			FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
+			char const* FragmentSourcePointer = FragmentShaderCode.c_str();
+			glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer , NULL);
+			glCompileShader(FragmentShaderID);
+			// Check Vertex Shader
+			if (!shaderCompilationLog(FragmentShaderID))
+				return false;
+		}
 
 		if (GeometryShaderCode != "") {
-
 			// Compile Geometry Shader
 			GeometryShaderID = glCreateShader(GL_GEOMETRY_SHADER);
 			char const* GeometrySourcePointer = GeometryShaderCode.c_str();
 			glShaderSource(GeometryShaderID, 1, &GeometrySourcePointer , NULL);
 			glCompileShader(GeometryShaderID);
-
 			// Check Geometry Shader
 			if (!shaderCompilationLog(GeometryShaderID))
 				return false;

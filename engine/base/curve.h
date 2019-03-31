@@ -19,14 +19,19 @@ public:
     struct Point {
         float time, value, inTangent, outTangent;
 
-        Point(float time_ = 0.0f, float value_ = 0.0f, float inTangent_ = 0.0f, float outTangent_ = 0.0f) : time(time_), value(value_), inTangent(inTangent_), outTangent(outTangent_) {}
-
-        glm::vec2 xy() {
-            return glm::vec2(time, value);
+        Point(float time_ = 0.0f, float value_ = 0.0f, float inTangent_ = 0.0f, float outTangent_ = 0.0f){
+            time = glm::clamp(time_, 0.0f, 1.0f);
+            value = glm::clamp(value_, 0.0f, 1.0f);
+            inTangent = inTangent_;
+            outTangent = outTangent_;
         }
 
-        glm::vec4 xyxw() {
-            return glm::vec4(time, value, inTangent, outTangent);  // x = time, y = value, z = inTangent, w = outTangent
+        template<typename T>
+        T vertex() {
+            T v;
+            v.x = time;
+            v.y = value;
+            return v;
         }
     };
 
@@ -39,10 +44,11 @@ public:
 
     Point operator[](int index);
 
-    int AddKey(float time, float value);  // Add a new key to the curve.
-    int AddKey(float time, float value, float inTangent, float outTangent);
-    int MoveKey(int index, Point key);  // Removes the keyframe at index and inserts key.
-    void RemoveKey(int index);
+    int AddPoint(float time, float value);  // Add a new key to the curve.
+    int AddPoint(float time, float value, float tangent);
+    int AddPoint(float time, float value, float inTangent, float outTangent);
+    int MovePoint(int index, Point key);  // Removes the keyframe at index and inserts key.
+    void RemovePoint(int index);
     float Evaluate(float time);  // Evaluate the curve at time.
 
     // static methods
@@ -54,6 +60,8 @@ public:
 private:
     std::vector<Point> _points;  // All points defined in the animation curve.
     unsigned int _length = 0;    // The number of points in the curve.(Read Only)
+
+    void sortPoints();
 };
 
 }  // namespace se

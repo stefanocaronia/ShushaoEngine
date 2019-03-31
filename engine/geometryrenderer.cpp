@@ -30,12 +30,12 @@ namespace se {
 		bool isFirst = true;
 		glm::vec3 lastpoint;
 		for (glm::vec3 point : points) {
-			if (!isFirst) {
-				vertices.push_back(lastpoint);
-				colors.push_back(col.rgba());
-			}
 			vertices.push_back(point);
 			colors.push_back(col.rgba());
+			if (!isFirst) {
+				vertices.push_back(point);
+				colors.push_back(col.rgba());
+			}
 			isFirst = false;
 			lastpoint = point;
 		}
@@ -91,9 +91,11 @@ namespace se {
 			shader->SetVector("viewport", GLManager::VIEWPORT);
 		}
 
+		VAO->GetBuffer(Vbo::VERTICES)->Bind();
 		glEnablei(GL_BLEND, VAO->GetBuffer(Vbo::VERTICES)->Id);
 		glDrawArrays(GL_LINES, 0, vertices.size());
 		glDisablei(GL_BLEND, VAO->GetBuffer(Vbo::VERTICES)->Id);
+		VAO->GetBuffer(Vbo::VERTICES)->Unbind();
 
 		if (renderMode == RenderMode::SCREEN) {
 			shader->Disable("viewport");

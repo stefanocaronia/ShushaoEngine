@@ -1,9 +1,17 @@
+#include <glm/gtx/spline.hpp>
 #include "curve.h"
+#include "debug.h"
+#include <vector>
+#include <algorithm>
 
 namespace se {
 
 using namespace std;
 using namespace glm;
+
+Curve::Curve() {
+    // nada
+}
 
 Curve::Curve(std::vector<Curve::Point> points_) {
     _points = points_;
@@ -13,53 +21,78 @@ Curve::Point Curve::operator[](int index) {
     return points[index];
 }
 
-int Curve::AddKey(float time_, float value_) {
+int Curve::AddPoint(float time_, float value_) {
     Point key(time_, value_, 0.0f, 0.0f);
 
     // TODO: calcolo tangenti e weight automatico. è una parola
 
     _points.push_back(key);
     _length = points.size();
+    sortPoints();
     return _length - 1;
 }
 
-int Curve::AddKey(float time_, float value_, float inTangent_, float outTangent_) {
+int Curve::AddPoint(float time_, float value_, float tangent_) {
+    Point key(time_, value_, tangent_, tangent_);
+    _points.push_back(key);
+    _length = points.size();
+    sortPoints();
+    return _length - 1;
+}
+
+int Curve::AddPoint(float time_, float value_, float inTangent_, float outTangent_) {
     Point key(time_, value_, inTangent_, outTangent_);
     _points.push_back(key);
     _length = points.size();
+    sortPoints();
     return _length - 1;
 }
 
-int Curve::MoveKey(int index, Point key) {
+int Curve::MovePoint(int index, Point key) {
     if (index >= (int)_points.size()) return -1;
     _points[index] = key;
+    sortPoints();
     return index;
 }
 
-void Curve::RemoveKey(int index) {
+void Curve::RemovePoint(int index) {
     if (index >= (int)_points.size()) return;
     _points.erase(points.begin() + index);
     _length = points.size();
 }
 
-// NB: funziona solo con curve di 2 punti, ma mi basta per ora
+void Curve::sortPoints() {
+    sort(points.begin(), points.end(), [](const Point& l, const Point& r ) {
+        return l.time < r.time;
+    });
+}
+
 float Curve::Evaluate(float time) {
-    if (points.empty()) return 0.0f;
+    if (points.size() < 2) return 0.0f;
 
-    Point A = points[0];
-    Point B = points.back();
+    Point* A;
+    Point* B;
 
-    float result = hermite(time, A, B);
+    for (size_t i = 0; i < points.size(); ++i) {
+        if (points[i].time > time) {
+            A = &(points[i - 1]);
+            B = &(points[i]);
+            break;
+        }
+    }
+
+    float result = hermite((time - A->time) / (B->time - A->time), *A, *B);
     return result;
 }
 
 float Curve::hermite(const float& time, const Point& start, const Point& end) {
-    float h1 = 2 * glm::pow(time, 3) - 3 * glm::pow(time, 2) + 1;
-    float h2 = -2 * glm::pow(time, 3) + 3 * glm::pow(time, 2);
-    float h3 = glm::pow(time, 3) - 2 * glm::pow(time, 2) + time;
-    float h4 = glm::pow(time, 3) - glm::pow(time, 2);
-    float p = (start.value * h1) + (end.value * h2) + (start.outTangent * h3) + (end.inTangent * h4);
-    return p;
+    float s2 = pow2(time);
+    float s3 = pow3(time);
+    float f1 = float(2) * s3 - float(3) * s2 + float(1);
+    float f2 = float(-2) * s3 + float(3) * s2;
+    float f3 = s3 - float(2) * s2 + time;
+    float f4 = s3 - s2;
+    return f1 * start.value + f2 * end.value + f3 * start.outTangent + f4 * end.inTangent;
 }
 
 Curve Curve::Constant(float timeStart, float timeEnd, float value) {

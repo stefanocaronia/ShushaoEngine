@@ -13,7 +13,7 @@
 #include <fstream>
 #include <map>
 
-#include "base/time.h"
+#include "stime.h"
 #include "utility.h"
 
 #define SOURCE util::basename(__FILE__) + "::" + __FUNCTION__ + ":" + util::toString(__LINE__) + ""

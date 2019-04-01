@@ -267,9 +267,9 @@ namespace se {
             }
             Design::DrawRect(position, rect, color, 3, DrawMode::HOLLOW, renderMode, transform->MVP);
 
-            Design::DrawVector(position, transform->up / 3.0f, Color::green, 2, false, renderMode, transform->MVP);
-			Design::DrawVector(position, transform->right / 3.0f, Color::red, 2, false, renderMode, transform->MVP);
-			Design::DrawVector(position, transform->forward / 3.0f, Color::blue, 2, false, renderMode, transform->MVP);
+            Design::DrawVector(position, transform->up / 3.0f, color::green, 2, false, renderMode, transform->MVP);
+			Design::DrawVector(position, transform->right / 3.0f, color::red, 2, false, renderMode, transform->MVP);
+			Design::DrawVector(position, transform->forward / 3.0f, color::blue, 2, false, renderMode, transform->MVP);
         }
 
     }

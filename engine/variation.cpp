@@ -1,5 +1,5 @@
 #include "variation.h"
-#include "../debug.h"
+#include "debug.h"
 
 namespace se {
     using namespace std;
@@ -10,18 +10,30 @@ namespace se {
     }
 
     Variation::Variation(float constant_) {
+        Set(constant_);
+    }
+
+    Variation::Variation(float min_, float max_) {
+        Set(min_, max_);
+    }
+
+    Variation::Variation(float scale_, Curve& curve_) {
+       Set(scale_, curve_);
+    }
+
+    void Variation::Set(float constant_) {
         _constant = constant_;
         _mode = VariationMode::CONSTANT;
     }
 
-    Variation::Variation(float min_, float max_) {
+    void Variation::Set(float min_, float max_) {
         _min = min_;
         _max = max_;
         _mode = VariationMode::RANGE;
     }
 
-    Variation::Variation(float value_, Curve& curve_) {
-        _curveMultiplier = value_;
+    void Variation::Set(float scale_, Curve& curve_) {
+        _curveScale = scale_;
         _curve = curve_;
         _mode = VariationMode::CURVE;
     }
@@ -29,18 +41,6 @@ namespace se {
     void Variation::operator=(float constant_) {
         _constant = constant_;
         _mode = VariationMode::CONSTANT;
-    }
-
-    void Variation::operator=(Range range_) {
-        _min = range_.min;
-        _max = range_.max;
-        _mode = VariationMode::RANGE;
-    }
-
-    void Variation::operator=(Path curvescaled_) {
-        _curveMultiplier = curvescaled_.scale;
-        _curve = curvescaled_.curve;
-        _mode = VariationMode::CURVE;
     }
 
     float Variation::Evaluate(float x) {
@@ -53,7 +53,7 @@ namespace se {
                 result = x * (max - min);
                 break;
             case VariationMode::CURVE:
-                result = _curve.Evaluate(x) * curveMultiplier;
+                result = _curve.Evaluate(x) * curveScale;
                 break;
         }
         return result;

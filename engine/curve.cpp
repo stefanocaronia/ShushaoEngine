@@ -1,8 +1,8 @@
-#include <glm/gtx/spline.hpp>
 #include "curve.h"
-#include "debug.h"
-#include <vector>
 #include <algorithm>
+#include <glm/gtx/spline.hpp>
+#include <vector>
+#include "debug.h"
 
 namespace se {
 
@@ -62,7 +62,7 @@ void Curve::RemovePoint(int index) {
 }
 
 void Curve::sortPoints() {
-    sort(points.begin(), points.end(), [](const Point& l, const Point& r ) {
+    sort(points.begin(), points.end(), [](const Point& l, const Point& r) {
         return l.time < r.time;
     });
 }
@@ -70,15 +70,37 @@ void Curve::sortPoints() {
 float Curve::Evaluate(float time) {
     if (points.size() < 2) return 0.0f;
 
+    // se siamo fuori da 0-1
+    if (time > 1.0f || time < 0.0f) {
+        switch (wrapMode) {
+            case WrapMode::ONCE:
+                time = 0.0f;
+                break;
+            case WrapMode::LOOP:
+                time = fract(time);
+                break;
+            case WrapMode::PINGPONG:
+                time = 1.0f - fract(time);
+                break;
+            case WrapMode::CLAMP:
+                time = glm::clamp(time, 0.0f, 1.0f);
+                break;
+        }
+    }
+
     Point* A;
     Point* B;
 
     for (size_t i = 0; i < points.size(); ++i) {
-        if (points[i].time > time) {
+        if (points[i].time >= time) {
             A = &(points[i - 1]);
             B = &(points[i]);
             break;
         }
+    }
+
+    if (A == nullptr || B == nullptr) {
+        return 0.0f;
     }
 
     float result = hermite((time - A->time) / (B->time - A->time), *A, *B);

@@ -5,7 +5,7 @@
 
 #include "utility.h"
 #include "debug.h"
-#include "base/time.h"
+#include "stime.h"
 #include "config.h"
 
 namespace se {

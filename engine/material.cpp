@@ -185,7 +185,7 @@ namespace se {
 		const auto& it = parameters.find(var_);
 		if (it != parameters.end())
 			return it->second.value.col;
-		return Color::clear;
+		return color::clear;
 	}
 
 	void Material::SetFloat(std::string var_, GLfloat value_) {

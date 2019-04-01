@@ -4,7 +4,7 @@
 
 // ShushaoEngine Objects
 #include "resources/resources.h" // rc
-#include "base/time.h"
+#include "stime.h"
 #include "globals.h"
 #include "design.h"
 #include "camera.h"
@@ -46,6 +46,8 @@
 #include "rawimage.h"
 #include "meshrenderer.h"
 #include "canvas.h"
+#include "variation.h"
+#include "gradient.h"
 
 // PHYSICS
 #include "physics/physics.h"

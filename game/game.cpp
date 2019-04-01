@@ -4,15 +4,14 @@
 #include "game.h"
 #include "level.h"
 
-	using namespace std;
-	using namespace glm;
-	using namespace se;
+using namespace std;
+using namespace glm;
+using namespace se;
 
 Game::Game(string title) : Cycle(title) {
 
   	Time::setFrameRateLimit(120.0f);
 	Time::setFixedRateLimit(60.0f);
-
 
 	perspectiveTest = false;
 

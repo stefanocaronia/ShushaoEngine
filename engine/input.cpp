@@ -5,7 +5,7 @@
 
 #include "input.h"
 #include "cycle.h"
-#include "base/time.h"
+#include "stime.h"
 #include "glmanager.h"
 #include "system.h"
 #include "debug.h"

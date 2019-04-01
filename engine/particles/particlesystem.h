@@ -10,8 +10,9 @@
 #include "../texture.h"
 #include "../transform.h"
 #include "../vao.h"
+#include "../curve.h"
+
 #include "particlemodules.h"
-#include "../base/curve.h"
 
 namespace se {
 
@@ -156,9 +157,11 @@ private:
 
     void EmitParticle();
     void UpdateParticles();
-    void ProcessBursts();
-    void ProcessEmission();
     void LoadBuffers();
+
+    // process modules
+    void ProcessEmission();
+    void ProcessBursts();
 };
 
 }  // namespace se

@@ -4,7 +4,7 @@
 
 #include "cycle.h"
 #include "input.h"
-#include "base/time.h"
+#include "stime.h"
 #include "system.h"
 #include "glmanager.h"
 #include "scenemanager.h"

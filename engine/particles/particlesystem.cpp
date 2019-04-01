@@ -78,6 +78,7 @@ void ParticleSystem::Play() {
     startTime = Time::GetTime();
     isLoopEnded = false;
     elapsed = 0.0f;
+    ratio = 0.0f;
     isPlaying = true;
     isStopped = false;
     isPaused = false;
@@ -173,6 +174,34 @@ void ParticleSystem::UpdateParticles() {
         particle->position += particle->velocity * Time::deltaTime;
         particle->age += Time::deltaTime;
 
+        float moment = particle->age / particle->lifetime;
+
+        // process sizeOverLifetime
+        if (sizeOverLifetime.enabled && particle->lifetime > 0) {
+
+            glm::vec2 scale = vec2(
+                startSize.x * sizeOverLifetime.sizeScale.x,
+                startSize.y * sizeOverLifetime.sizeScale.y
+            );
+            if (!sizeOverLifetime.separateAxes) {
+                float sizevar = sizeOverLifetime.size.Evaluate(moment);
+                particle->size = vec2(
+                    sizevar * scale.x,
+                    sizevar * scale.y
+                );
+            } else {
+                particle->size = vec2(
+                    sizeOverLifetime.xSize.Evaluate(moment) * scale.x,
+                    sizeOverLifetime.ySize.Evaluate(moment) * scale.y
+                );
+            }
+        }
+
+        // process colorOverLifetime
+        if (colorOverLifetime.enabled) {
+            particle->color = colorOverLifetime.color.Evaluate(moment);
+        }
+
         positions.push_back(particle->position);
         colors.push_back(particle->color.rgba());
         sizes.push_back(particle->size);
@@ -205,6 +234,7 @@ void ParticleSystem::Update() {
     }
 
     elapsed += Time::deltaTime;
+    ratio = elapsed / duration;
     if (elapsed >= duration) {
         if (!loop) {
             isLoopEnded = true;
@@ -215,9 +245,9 @@ void ParticleSystem::Update() {
 
 void ParticleSystem::ProcessEmission() {
 
-    float rate = emission.rateOverTime.Evaluate(elapsed / duration);
+    float rate = emission.rateOverTime.Evaluate(ratio);
     if (rate > 0.0f) {
-        toEmit += rate * emission.rateOverTimeMultiplier * Time::deltaTime;
+        toEmit += rate * emission.rateOverTimeScale * Time::deltaTime;
         if (toEmit >= 1.0) {
             int toEmitInt = floor(toEmit);
             Emit(toEmitInt);
@@ -225,8 +255,9 @@ void ParticleSystem::ProcessEmission() {
         }
     }
 
-    if (emission.rateOverDistance > 0.0f) {
-        toEmitDistance += emission.rateOverDistance * emission.rateOverDistanceMultiplier * distance(transform->position, lastPosition);
+    float drate = emission.rateOverDistance.Evaluate(ratio);
+    if (drate > 0.0f) {
+        toEmitDistance += drate * emission.rateOverDistanceScale * distance(transform->position, lastPosition);
         if (toEmitDistance >= 1.0) {
             int toEmitInt = floor(toEmitDistance);
             Emit(toEmitInt);

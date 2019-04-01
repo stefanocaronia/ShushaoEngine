@@ -8,11 +8,9 @@ namespace se {
 class Curve {
 public:
     enum class WrapMode {
-        DEFAULT,
         ONCE,
         LOOP,
         PINGPONG,
-        CLAMPFOREVER,
         CLAMP
     };
 
@@ -47,7 +45,7 @@ public:
 
     std::vector<Curve::Point>& points = _points;  // All points defined in the animation curve.
     unsigned int& length = _length;               // The number of points in the curve.(Read Only)
-    WrapMode wrapMode = WrapMode::DEFAULT;
+    WrapMode wrapMode = WrapMode::ONCE;
 
     Point operator[](int index);
 

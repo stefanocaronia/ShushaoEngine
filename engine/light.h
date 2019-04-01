@@ -44,9 +44,9 @@ namespace se {
 			Light::Type type = Light::Type::POINT;
 
 			glm::vec3 direction;
-			Color ambient = Color::white;
-			Color diffuse = Color::white;
-			Color specular = Color::white;
+			Color ambient = color::white;
+			Color diffuse = color::white;
+			Color specular = color::white;
 			Attenuation attenuation {1.0f, 1.0f, 1.0f};
 			float cutoff;
 

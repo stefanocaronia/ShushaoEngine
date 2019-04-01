@@ -25,7 +25,7 @@ namespace se {
 			Vao* VAO = nullptr;
 
 			Rect uvRect = {0, 0, 1, 1};
-			Color color = Color::white;
+			Color color = color::white;
 
 			RawImage* SetTexture(Texture* texture_) {
 				texture = texture_;

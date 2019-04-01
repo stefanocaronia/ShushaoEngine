@@ -17,3 +17,6 @@
 
 // images
 #define IMG_AVATAR              2000
+
+// configuration
+#define CONFIG_ENGINE           5000

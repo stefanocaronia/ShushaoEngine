@@ -26,7 +26,7 @@ Entity* label = AddEntity("Label");
 Text* text = label->AddComponent<Text>();
 text->sortingLayerID = Config::SortingLayers["UI"];
 text->alignToGeometry = true;
-text->SetFont(f)->SetText("Hello game engine!")->SetColor(Color::blue)->SetSize(0.5f);
+text->SetFont(f)->SetText("Hello game engine!")->SetColor(color::blue)->SetSize(0.5f);
 text->transform->SetPivot(PivotPosition::TOPLEFT);
 text->transform->rectTransform->SetRectSize({8,3});
 text->transform->SetLocalPosition({5, -1, 0});
@@ -35,7 +35,7 @@ text->transform->SetLocalPosition({5, -1, 0});
 Text* text1 = canvas->AddComponent<Text>();
 text1->alignToGeometry = true;
 text1->sortingLayerID = Config::SortingLayers["Background"];
-text1->SetFont(f)->SetText("Hello game engine!")->SetColor(Color::red)->SetSize(0.5f);
+text1->SetFont(f)->SetText("Hello game engine!")->SetColor(color::red)->SetSize(0.5f);
 text1->SetAlign(Align::TOPLEFT);
 ```
 
@@ -66,7 +66,7 @@ uiText->transform->rectTransform->SetRectSize({4, 1});
 uiText->transform->SetLocalPosition({-2, -2, 0});
 uiText->transform->SetPivot(PivotPosition::BOTTOMRIGHT);
 auto tComp = uiText->GetComponent<Text>();
-tComp->SetFont(f)->SetText("Label su canvas")->SetColor(Color::green)->SetSize(0.5f)->SetAlign(Align::CENTER);
+tComp->SetFont(f)->SetText("Label su canvas")->SetColor(color::green)->SetSize(0.5f)->SetAlign(Align::CENTER);
 
 // Text label in una child entity - ancorata diversamente
 ui::Text* anchoredText = AddEntity<ui::Text>("Label 2");

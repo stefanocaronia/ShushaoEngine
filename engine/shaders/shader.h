@@ -10,7 +10,6 @@
 
 namespace se {
 
-
 	enum ShaderLocation {
 		LOCATION_POSITION = 1,
 		LOCATION_TEXCOORD = 2,
@@ -99,7 +98,7 @@ namespace se {
 			void SetVector(std::string, glm::vec3);
 			void SetVector(std::string, glm::vec4);
 			void SetColor(std::string, Color);
-			void SetLight(string, UniformLight&);
+			void SetLight(std::string, UniformLight&);
 
 			GLenum GetTextureIndex(std::string);
 

@@ -6,8 +6,8 @@ class Game : public se::Cycle {
 
 	public:
 
-		Game(string);
-		string name;
+		Game(std::string);
+		std::string name;
 
 		bool perspectiveTest = false;
 

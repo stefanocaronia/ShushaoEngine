@@ -1,66 +1,64 @@
 #pragma once
 
-#include <string>
 #include <glm/glm.hpp>
-
-using namespace std;
+#include <string>
 
 namespace se {
 
-	class Color {
+class Color {
+public:
+    Color();
+    Color(std::string);
+    Color(float r, float g, float b, float a = 1.0f);
+    Color(int r, int g, int b, float a = 1.0f);
 
-		public:
+    float r;  //	Red component of the color.
+    float g;  //	Green component of the color.
+    float b;  //	Blue component of the color.
+    float a;  //	Alpha component of the color.
 
-			Color();
-			Color(std::string);
-			Color(float r, float g, float b, float a = 1.0f);
+    void Set(float r, float g, float b, float a = 1.0f);
+    void Set(int r, int g, int b, float a = 1.0f);
 
-			float r; //	Red component of the color.
-			float g; //	Green component of the color.
-			float b; //	Blue component of the color.
-			float a; //	Alpha component of the color.
+    Color grayscale(); //	The grayscale value of the color. (Read Only)
 
-			void Set(float r, float g, float b, float a = 1.0f);
+    float maxColorComponent();  //	Returns the maximum color component value: Max(r,g,b).
+    std::string ToString();
 
-			// Color* gamma; //	A version of the color that has had the gamma curve applied.
-			// float grayscale; //	The grayscale value of the color. (Read Only)
-			// Color linear; //	A linear value of an sRGB color.
+    glm::vec4 rgba();
+    glm::vec3 rgb();
+	void Clamp();
 
-			float maxColorComponent(); //	Returns the maximum color component value: Max(r,g,b).
-			std::string ToString();
+    bool operator==(Color& other);
+    void operator=(const Color& other);
+    Color operator*(const Color& other);
+    Color operator*(const float value);
+    Color operator/(const Color& other);
+    Color operator/(const float value);
+    Color operator+(const Color& other);
+    Color operator+(const float value);
+    Color& operator+=(Color const& other) &;
 
-			glm::vec4 rgba();
-			glm::vec3 rgb();
+    Color operator-(const Color& other);
+    Color operator-(const float value);
+    Color& operator-=(Color const& other) &;
 
-			static Color black; // Solid black. RGBA is (0, 0, 0, 1).
-			static Color blue; // Solid blue. RGBA is (0, 0, 1, 1).
-			static Color clear; // Completely transparent. RGBA is (0, 0, 0, 0).
-			static Color cyan; // Cyan. RGBA is (0, 1, 1, 1).
-			static Color gray; // Gray. RGBA is (0.5, 0.5, 0.5, 1).
-			static Color green; // Solid green. RGBA is (0, 1, 0, 1).
-			static Color grey; // English spelling for gray. RGBA is the same (0.5, 0.5, 0.5, 1).
-			static Color magenta; // Magenta. RGBA is (1, 0, 1, 1).
-			static Color red; // Solid red. RGBA is (1, 0, 0, 1).
-			static Color white; // Solid white. RGBA is (1, 1, 1, 1).
-			static Color yellow; // Yellow. RGBA is (1, 0.92, 0.016, 1), but the color is nice to look at!
+    static glm::vec3 hex2rgb(std::string hexcode);
 
-			bool operator==(Color& other) {
-				return (r == other.r &&
-						g == other.g &&
-						b == other.b &&
-						a == other.a);
-			}
+};
 
-			void operator=(const Color& other) {
-				Set(other.r, other.g, other.b, other.a);
-			}
-
-			static glm::vec3 hex2rgb(std::string hexcode);
-
-		private:
-
-			void update();
-
-	};
-
+namespace color {
+	const Color black = {0.0f, 0.0f, 0.0f, 1.0f};
+	const Color blue = {0.0f, 0.0f, 1.0f, 1.0f};
+	const Color clear = {0.0f, 0.0f, 0.0f, 0.0f};
+	const Color cyan = {0.0f, 1.0f, 1.0f, 1.0f};
+	const Color gray = {0.5f, 0.5f, 0.5f, 1.0f};
+	const Color green = {0.0f, 1.0f, 0.0f, 1.0f};
+	const Color grey = {0.5f, 0.5f, 0.5f, 1.0f};
+	const Color magenta = {1.0f, 0.0f, 1.0f, 1.0f};
+	const Color red = {1.0f, 0.0f, 0.0f, 1.0f};
+	const Color white = {1.0f, 1.0f, 1.0f, 1.0f};
+	const Color yellow = {1.0f, 0.92f, 0.016f, 1.0f};
 }
+
+}  // namespace se

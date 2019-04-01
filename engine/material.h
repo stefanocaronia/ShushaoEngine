@@ -15,7 +15,7 @@ namespace se {
 		Texture* tex = nullptr;
 		glm::mat4 mat {0};
 		glm::vec4 vec {0};
-		Color col = Color::clear;
+		Color col = color::clear;
 	};
 
 	class Parameter {
@@ -54,7 +54,7 @@ namespace se {
 			Material();
 			~Material();
 
-			Color color = Color::white; // The main material's color.
+			Color color = color::white; // The main material's color.
 			Texture* mainTexture = nullptr; // The material's texture.
 			glm::vec2 mainTextureOffset; // The texture offset of the main texture.
 			glm::vec2 mainTextureScale; // The texture scale of the main texture.

@@ -12,27 +12,15 @@ class Variation {
         enum class VariationMode {
             CONSTANT,
             CURVE,
-            RANGE,
-            // CURVES,
-            // CONSTANTS
+            RANGE
         };
-
-        typedef struct {
-            float min;
-            float max;
-        } Range;
-
-        typedef struct {
-            float scale;
-            Curve& curve;
-        } Path;
 
         // readonly
         const VariationMode& mode = _mode;
         const float& constant = _constant;
         const float& min = _min;
         const float& max = _max;
-        const float& curveMultiplier = _curveMultiplier;
+        const float& curveScale = _curveScale;
         const Curve& curve = _curve;
 
         Variation();
@@ -40,9 +28,11 @@ class Variation {
         Variation(float min_, float max_);
         Variation(float value_, Curve& curve_);
 
+        void Set(float constant_);
+        void Set(float min_, float max_);
+        void Set(float scale_, Curve& curve_);
+
         void operator=(float constant_);
-        void operator=(Range range_);
-        void operator=(Path curvescaled_);
 
         float Evaluate(float x);
 
@@ -55,7 +45,7 @@ class Variation {
 
         //Curve _curveMin;
         //Curve _curveMax;
-        float _curveMultiplier;
+        float _curveScale;
         VariationMode _mode = VariationMode::CONSTANT;
 };
 

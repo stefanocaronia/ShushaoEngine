@@ -49,6 +49,7 @@ public:
 
 protected:
     double elapsed = 0.0;
+    double ratio = 0.0;
 
     State state = State::STOP;
     State startState = State::STOP;

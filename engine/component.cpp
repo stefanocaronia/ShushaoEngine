@@ -4,7 +4,7 @@
 #include "debug.h"
 #include "utility.h"
 #include "cycle.h"
-#include "base/time.h"
+#include "stime.h"
 #include "transform.h"
 #include "renderer.h"
 #include "gamedata.h"

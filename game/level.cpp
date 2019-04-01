@@ -21,9 +21,9 @@ Level::Level() {
 	 	->SetSimulationSpace(Transform::Origin::WORLD)
 	// ->SetEmitterVelocityMode(ParticleSystem::EmitterVelocityMode::IGNORE);
 	// ->SetStartDelay(3.0f)
-		->SetStartSize({0.3, 0.3})
+		->SetStartSize({0.6, 0.6})
 		->SetStartLifetime(5.0f)
-		->SetStartColor(Color::green)
+		->SetStartColor(color::green)
 		->SetStartSpeed(1.5f);
 
 	ps->emitter.Enable();
@@ -35,11 +35,19 @@ Level::Level() {
 	ps->emission.Enable();
 	//ps->emission.rateOverTime = Variation::Range({0, 400});
 	Curve curve = Curve::EaseInOut(0.0f, 0.0f, 1.0f, 1.0f);
-	ps->emission.rateOverTime = Variation::Path({400.0f, curve});
+	ps->emission.rateOverTime.Set(400.0f, curve);
 	ps->emission.rateOverDistance = 20;
 	//ps->emission.AddBurst(2.0, 100, 0, 1.0, 0.6f);
 
-	AddEntity<Hermite>();
+	ps->sizeOverLifetime.Enable();
+	ps->sizeOverLifetime.size = Curve::EaseInOut(0.0f, 0.2f, 1.0f, 1.0f);
+
+	ps->colorOverLifetime.Enable();
+	Gradient gradient(color::white, Color(1.0f, 0.0f, 0.0f, 0.0f));
+	Curve c = Curve::EaseInOut(0.0f, 0.0f, 1.0f, 1.0f);
+	ps->colorOverLifetime.color.Set(color::white, Color(1.0f, 0.0f, 0.0f, 0.0f), c);
+
+	// AddEntity<Hermite>();
 
 	return;
 
@@ -62,9 +70,9 @@ Level::Level() {
 
 	MeshRenderer* mr = point->AddComponent<MeshRenderer>();
 	mr->SetMesh(Resources::Get<Mesh>("cube"));
-	mr->material->SetColor("ambient_color", Color::white);
-	mr->material->SetColor("diffuse_color", Color::white);
-	mr->material->SetColor("specular_color", Color::white);
+	mr->material->SetColor("ambient_color", color::white);
+	mr->material->SetColor("diffuse_color", color::white);
+	mr->material->SetColor("specular_color", color::white);
 	mr->material->SetFloat("shininess", 20.0f);
 	mr->transform->SetLocalScale({0.1f, 0.1f, 0.1f});
 
@@ -82,7 +90,7 @@ Level::Level() {
 	Text* text = label->AddComponent<Text>();
 	text->sortingLayerID = Config::SortingLayers["UI"];
 	text->alignToGeometry = true;
-	text->SetFont(f)->SetText("Hello game engine!")->SetColor(Color::blue)->SetSize(0.5f);
+	text->SetFont(f)->SetText("Hello game engine!")->SetColor(color::blue)->SetSize(0.5f);
 	text->transform->SetPivot(PivotPosition::TOPLEFT);
 	text->transform->rectTransform->SetRectSize({8,3});
 	text->transform->SetLocalPosition({5, -1, 0});
@@ -107,27 +115,27 @@ Level::Level() {
 	Text* text1 = canvas->AddComponent<Text>();
 	text1->alignToGeometry = true;
 	text1->sortingLayerID = Config::SortingLayers["Background"];
-	text1->SetFont(f)->SetText("TL")->SetColor(Color::red)->SetSize(0.5f);
+	text1->SetFont(f)->SetText("TL")->SetColor(color::red)->SetSize(0.5f);
 	text1->SetAlign(Align::TOPLEFT);
 	Text* text2 = canvas->AddComponent<Text>();
 	text2->alignToGeometry = true;
 	text2->sortingLayerID = Config::SortingLayers["Background"];
-	text2->SetFont(f)->SetText("TR")->SetColor(Color::red)->SetSize(0.5f);
+	text2->SetFont(f)->SetText("TR")->SetColor(color::red)->SetSize(0.5f);
 	text2->SetAlign(Align::TOPRIGHT);
 	Text* text3 = canvas->AddComponent<Text>();
 	text3->alignToGeometry = true;
 	text3->sortingLayerID = Config::SortingLayers["Background"];
-	text3->SetFont(f)->SetText("BR")->SetColor(Color::red)->SetSize(0.5f);
+	text3->SetFont(f)->SetText("BR")->SetColor(color::red)->SetSize(0.5f);
 	text3->SetAlign(Align::BOTTOMRIGHT);
 	Text* text4 = canvas->AddComponent<Text>();
 	text4->alignToGeometry = true;
 	text4->sortingLayerID = Config::SortingLayers["Background"];
-	text4->SetFont(f)->SetText("BL")->SetColor(Color::red)->SetSize(0.5f);
+	text4->SetFont(f)->SetText("BL")->SetColor(color::red)->SetSize(0.5f);
 	text4->SetAlign(Align::BOTTOMLEFT);
 	Text* text5 = canvas->AddComponent<Text>();
 	text5->alignToGeometry = true;
 	text5->sortingLayerID = Config::SortingLayers["Background"];
-	text5->SetFont(f)->SetText("CE")->SetColor(Color::red)->SetSize(0.5f);
+	text5->SetFont(f)->SetText("CE")->SetColor(color::red)->SetSize(0.5f);
 	text5->SetAlign(Align::CENTER);
 
 	// compoenente text in una child entity
@@ -140,7 +148,7 @@ Level::Level() {
 	uiText->transform->SetPivot(PivotPosition::BOTTOMRIGHT);
 	auto tComp = uiText->GetComponent<Text>();
 	tComp->wordWrap = false;
-	tComp->SetFont(f)->SetText("Label su canvas")->SetColor(Color::green)->SetSize(0.5f)->SetAlign(Align::BOTTOMRIGHT);
+	tComp->SetFont(f)->SetText("Label su canvas")->SetColor(color::green)->SetSize(0.5f)->SetAlign(Align::BOTTOMRIGHT);
 
 	// compoenente text in una child entity - ancorata diversamente
 	ui::Text* anchoredText = AddEntity<ui::Text>("Label 2");
@@ -162,7 +170,7 @@ Level::Level() {
 	anchoredText->transform->rectTransform->RegisterPositionTBXW(1.0f, 1.0f, 2.0f, 3.0f); */
 
 	auto t = anchoredText->GetComponent<Text>();
-	t->SetFont(f)->SetText("Con punti ancoraggio")->SetColor(Color::yellow)->SetSize(0.3f)->SetAlign(Align::CENTER);
+	t->SetFont(f)->SetText("Con punti ancoraggio")->SetColor(color::yellow)->SetSize(0.3f)->SetAlign(Align::CENTER);
 
 	/* ui::RawImage* uiImage = AddEntity<ui::RawImage>("Immagine su canvas");
 	uiImage->setParent(canvas);
@@ -256,7 +264,7 @@ Level::Level() {
 		 {2.0f, 1.0f, 0.0f},
 		 {2.0f, -1.0f, 0.0f},
 		 {-1.0f, -1.0f, 0.0f}
-	}, Color::red, DrawMode::FULL);*/
+	}, color::red, DrawMode::FULL);*/
 
 }
 

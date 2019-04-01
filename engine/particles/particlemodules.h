@@ -3,7 +3,8 @@
 #include <glm/glm.hpp>
 
 #include "../color.h"
-#include "../base/variation.h"
+#include "../variation.h"
+#include "../gradient.h"
 
 namespace se {
 
@@ -47,15 +48,10 @@ struct EmissionModule : public ParticleSystemModule {
 
     unsigned int burstCount;  //	The current number of bursts.
 
-    float rateOverDistance;            // The rate at which new particles are spawned, over distance.
-    float rateOverDistanceMultiplier = 1.0f;  // Change the rate over distance multiplier.
+    Variation rateOverDistance;            // The rate at which new particles are spawned, over distance.
+    float rateOverDistanceScale = 1.0f;  // Change the rate over distance multiplier.
     Variation rateOverTime;                // The rate at which new particles are spawned, over time.
-    float rateOverTimeMultiplier = 1.0f;      // Change the rate over time multiplier.
-
-    // void GetBurst(); // Get a single burst from the array of bursts.
-    // void GetBursts(); // Get the burst array.
-    // void SetBurst(); // Set a single burst in the array of bursts.
-    // void SetBursts(); // Set the burst array.
+    float rateOverTimeScale = 1.0f;      // Change the rate over time multiplier.
 
     std::vector<Burst> bursts;
 
@@ -83,30 +79,42 @@ struct EmitterModule : public ParticleSystemModule {
 };
 
 struct ColorOverLifetimeModule : public ParticleSystemModule {
-
+    Gradient color;
 };
-struct ForceOverLifetimeModule : public ParticleSystemModule {
 
-};
-struct RotationBySpeedModule : public ParticleSystemModule {
-
-};
-struct RotationOverLifetimeModule : public ParticleSystemModule {
-
-};
-struct SizeBySpeedModule : public ParticleSystemModule {
-
-};
 struct SizeOverLifetimeModule : public ParticleSystemModule {
 
+    bool separateAxes = false;
+    Curve size;
+    glm::vec2 sizeScale = vec2(1.0f);
 
+    Curve xSize;
+    Curve ySize;
 
 };
+
+struct ForceOverLifetimeModule : public ParticleSystemModule {
+    // TODO
+};
+
+struct RotationBySpeedModule : public ParticleSystemModule {
+    // TODO
+};
+
+struct RotationOverLifetimeModule : public ParticleSystemModule {
+    // TODO
+};
+
+struct SizeBySpeedModule : public ParticleSystemModule {
+    // TODO
+};
+
 struct VelocityOverLifetimeModule : public ParticleSystemModule {
-
+    // TODO
 };
-struct CollisionModule : public ParticleSystemModule {
 
+struct CollisionModule : public ParticleSystemModule {
+    // TODO
 };
 
 }  // namespace se

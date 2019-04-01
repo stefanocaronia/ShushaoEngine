@@ -2,7 +2,7 @@
 
 #include "debug.h"
 #include "animation.h"
-#include "base/time.h"
+#include "stime.h"
 #include "timeline.h"
 
 namespace se {

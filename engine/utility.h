@@ -13,7 +13,6 @@
 
 #define ts(str) util::toString(str)
 
-
 namespace se {
 
 	namespace util {
@@ -57,6 +56,9 @@ namespace se {
 
 		std::string classtitle(std::string);
 		glm::vec3 toEulerAngles(const glm::quat&);
+
+		std::vector<std::string> split(std::string text, char delim);
+		std::vector<std::string> filesindir(std::string path);
 	};
 
 }

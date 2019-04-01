@@ -74,7 +74,7 @@ float Curve::Evaluate(float time) {
     if (time > 1.0f || time < 0.0f) {
         switch (wrapMode) {
             case WrapMode::ONCE:
-                time = 0.0f;
+                time = -0.999999f;
                 break;
             case WrapMode::LOOP:
                 time = fract(time);

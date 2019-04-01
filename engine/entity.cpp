@@ -1,5 +1,6 @@
 #include "entity.h"
 #include "transform.h"
+#include "scene.h"
 
 namespace se {
 
@@ -10,6 +11,15 @@ namespace se {
 		isStatic = false;
 
 		transform = AddComponent<Transform>();
+	}
+
+	void Entity::init() {
+		if (isInitialized) return;
+		if (!addedToScene) {
+			scene->Entities.push_back(this);
+		}
+		Init();
+		isInitialized = true;
 	}
 
 	Entity::~Entity() {
@@ -29,6 +39,19 @@ namespace se {
 		isStatic = false;
 
 		transform = AddComponent<Transform>();
+	}
+
+	Entity* Entity::AddChild(string _name = "Entity") {
+		Entity* entity = new Entity();
+		entity->transform->SetParent(transform);
+		entity->scene = scene;
+		entity->name = _name;
+		if (entity->scene != nullptr) {
+			scene->Entities.push_back(entity);
+			entity->addedToScene = true;
+			entity->init();
+		}
+		return entity;
 	}
 
 	vector<Component*> Entity::GetActiveComponentsInChildren() {

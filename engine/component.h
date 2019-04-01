@@ -32,6 +32,7 @@ namespace se {
 			void BroadcastMessage();	// Calls the method named methodName on every MonoBehaviour in this game object or any of its children.
 
 			std::vector<Component*> GetActiveComponentsInChildren();
+			std::vector<Entity*> GetEntitiesInChildren();
 			bool isActiveAndEnabled();
 
 			void BroadcastMessage(std::string methodName);	// Calls the method named methodName on every MonoBehaviour in this game object or any of its children.

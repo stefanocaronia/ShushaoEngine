@@ -35,10 +35,13 @@ namespace se {
             k = false;
 		}
 
+		Config::LoadEngineConfig();
+		Config::LoadUserConfig();
+
 		GLManager::WIDTH = Config::displayWidth;
 		GLManager::HEIGHT = Config::displayHeight;
 		GLManager::fullscreen = Config::fullscreen;
-		GLManager::Init(name, false);
+		GLManager::Init(Config::title, false);
 
 		if (Config::Physics::enabled) {
 			Physics::init();
@@ -48,6 +51,8 @@ namespace se {
 		System::init();
 
 		Awake();
+
+		SceneManager::activeScene->InitEntities();
 
 		return true;
 	}

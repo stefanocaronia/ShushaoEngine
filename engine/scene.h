@@ -46,6 +46,7 @@ namespace se {
 			std::vector<Entity*> GetRootEntitys();
 
 			// scan
+			void InitEntities();
 			void ScanActiveComponents();
 			void SortActiveComponents();
 			void ScanActiveLights();
@@ -71,6 +72,8 @@ namespace se {
 				entity->transform->SetParent(root->transform);
 
 				Entities.push_back(entity);
+				entity->addedToScene = true;
+				entity->init();
 				return entity;
 			}
 

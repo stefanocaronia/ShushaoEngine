@@ -62,6 +62,18 @@ namespace se {
 		return activeComponents;
 	}
 
+	std::vector<Entity*> Component::GetEntitiesInChildren() {
+		std::vector<Entity*> entities;
+		for (Transform* t : entity->transform->children) {
+			if (t == nullptr) continue;
+			entities.push_back(t->entity);
+            std::vector<Entity*> newEntities = t->GetEntitiesInChildren();
+            entities.insert(entities.end(), newEntities.begin(), newEntities.end());
+        }
+
+		return entities;
+	}
+
 	// usato solo con i metodi di cycle della base class
 	void Component::run(Cycle::Stage cycle) {
 

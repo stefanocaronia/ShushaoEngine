@@ -38,9 +38,12 @@ namespace se {
 
 		Entity* entity = new Entity();
 		entity->transform->SetParent(root->transform);
+		entity->scene = this;
 		entity->name = _name;
 
 		Entities.push_back(entity);
+		entity->addedToScene = true;
+		entity->init();
 		return entity;
 	}
 
@@ -72,6 +75,21 @@ namespace se {
 		Component::Sort(ActiveOverlayRenderers);
 
 		componentsScanned = true;
+	}
+
+	void Scene::InitEntities() {
+		// ottengo tutte le entities anche child
+        vector<Entity*> entities = root->transform->GetEntitiesInChildren();
+
+		for (auto& entity: entities) {
+			if (!entity->isInitialized) {
+				entity->init();
+			}
+			if (!entity->addedToScene) {
+				Entities.push_back(entity);
+				entity->addedToScene = true;
+			}
+		}
 	}
 
 	void Scene::ScanActiveLights() {

@@ -10,6 +10,8 @@ using namespace se;
 
 Game::Game(string title) : Cycle(title) {
 
+	/* QUI SI IMPOSTA LA CONFIGURAZIONE */
+
   	Time::setFrameRateLimit(120.0f);
 	Time::setFixedRateLimit(60.0f);
 
@@ -40,6 +42,8 @@ Game::Game(string title) : Cycle(title) {
 
 void Game::Awake() {
 
+	/* QUI SI CARICANO LE RISORSE */
+
 	Resources::Load<Texture>("avatar", IMG_AVATAR);
 	Resources::Load<Texture>("assets/particlestar.png");
 	Resources::Load<Texture>("assets/pancrazio.png");
@@ -68,25 +72,8 @@ void Game::Awake() {
 	Resources::Load<Font>("assets/modenine.ttf", "Modenine");
 	Resources::Load<Font>("assets/pixelperfect.ttf", "Pixel Perfect");
 
-	SceneManager::LoadScene<Level>("Level 1");
 
-	Camera* camera = SceneManager::activeScene->activeCamera;
-	camera->backgroundColor = {0.05f, 0.05f, 0.2f, 1.0f};
-
-	if (perspectiveTest) {
-		camera->setOrthographic(false);
-		camera->setFarClipPlane(20.0f);
-		camera->transform->localPosition = {1.0f, 3.0f, 6.0f};
-		camera->transform->localRotation = Transform::QUATERNION_IDENTITY;
-		Debug::debugGridMode = GridMode::PERSPECTIVE;
-	} else {
-		camera->setOrthographic(true);
-		camera->setNearClipPlane(12.0f);
-		camera->setFarClipPlane(1.0f);
-		camera->setOrthographicSize(5.0f);
-		camera->transform->localPosition = {0.0f, 0.0f, 10.0f};
-		camera->transform->localRotation = Transform::QUATERNION_IDENTITY;
-	}
+	/* INPUT MAPPINGS */
 
 	Input::printActiveControllers();
 
@@ -123,6 +110,29 @@ void Game::Awake() {
 	vertical->altNegativeButton = SDL_SCANCODE_DOWN;
 	vertical->controllerAxis = SDL_CONTROLLER_AXIS_MAX;
 	vertical->deadZone = 0.2f;
+
+
+	/* ALLA FINE DELL'AWAKE SI CARICA IL LIVELLO */
+
+	SceneManager::LoadScene<Level>("Level 1");
+
+	Camera* camera = SceneManager::activeScene->activeCamera;
+	camera->backgroundColor = {0.05f, 0.05f, 0.2f, 1.0f};
+
+	if (perspectiveTest) {
+		camera->setOrthographic(false);
+		camera->setFarClipPlane(20.0f);
+		camera->transform->localPosition = {1.0f, 3.0f, 6.0f};
+		camera->transform->localRotation = Transform::QUATERNION_IDENTITY;
+		Debug::debugGridMode = GridMode::PERSPECTIVE;
+	} else {
+		camera->setOrthographic(true);
+		camera->setNearClipPlane(12.0f);
+		camera->setFarClipPlane(1.0f);
+		camera->setOrthographicSize(5.0f);
+		camera->transform->localPosition = {0.0f, 0.0f, 10.0f};
+		camera->transform->localRotation = Transform::QUATERNION_IDENTITY;
+	}
 }
 
 void Game::Start() {

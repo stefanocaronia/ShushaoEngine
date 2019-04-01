@@ -1,18 +1,10 @@
 #include "game.h"
 
 int main(int argc, char *argv[]) {
+    Game Shushao("Shushao Game");
 
-	Game Shushao("Shushao Game!");
+    if (Shushao.init())
+        Shushao.run();
 
-	/* auto data = se::Resources::GetEmbeddedData(STANDARDSHADER_VERT);
-	auto txt = std::string(data.begin(), data.end());
-
-	std::cout << txt << endl;
-
-	return 0; */
-
-	if (Shushao.init())
-		Shushao.run();
-
-	return 0;
+    return 0;
 }

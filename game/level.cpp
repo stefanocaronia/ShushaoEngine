@@ -4,86 +4,19 @@
 #include "starship.h"
 #include "mover.h"
 #include "hermite.h"
+#include "part.h"
+#include "meshtest.h"
 
 Level::Level() {
 
 	using namespace se;
 
-
-	/* Particle System */
-
-	Entity* particleObj = AddEntity("Particle Object");
-	ParticleSystem* ps = particleObj->AddComponent<ParticleSystem>();
-	ps->SetDuration(10.0f)->SetLoop(true);
-	ps->SetTexture(Resources::Get<Texture>("particlestar"))
-		->SetMaxParticles(1000)
-	 	->SetPlayOnAwake(true)
-	 	->SetSimulationSpace(Transform::Origin::WORLD)
-	// ->SetEmitterVelocityMode(ParticleSystem::EmitterVelocityMode::IGNORE);
-	// ->SetStartDelay(3.0f)
-		->SetStartSize({0.6, 0.6})
-		->SetStartLifetime(5.0f)
-		->SetStartColor(color::green)
-		->SetStartSpeed(1.5f);
-
-	ps->emitter.Enable();
-	ps->emitter.shape = EmitterModule::Shape::SPHERE;
-	ps->emitter.radius = 0.0f;
-	ps->emitter.arc = 360;
-	ps->emitter.is2D = true;
-
-	ps->emission.Enable();
-	//ps->emission.rateOverTime = Variation::Range({0, 400});
-	Curve curve = Curve::EaseInOut(0.0f, 0.0f, 1.0f, 1.0f);
-	ps->emission.rateOverTime.Set(400.0f, curve);
-	ps->emission.rateOverDistance = 20;
-	//ps->emission.AddBurst(2.0, 100, 0, 1.0, 0.6f);
-
-	ps->sizeOverLifetime.Enable();
-	ps->sizeOverLifetime.size = Curve::EaseInOut(0.0f, 0.2f, 1.0f, 1.0f);
-
-	ps->colorOverLifetime.Enable();
-	Gradient gradient(color::white, Color(1.0f, 0.0f, 0.0f, 0.0f));
-	Curve c = Curve::EaseInOut(0.0f, 0.0f, 1.0f, 1.0f);
-	ps->colorOverLifetime.color.Set(color::white, Color(1.0f, 0.0f, 0.0f, 0.0f), c);
-
+	AddEntity<Part>("Particle Object");
 	// AddEntity<Hermite>();
+	AddEntity<Meshtest>();
 
 	return;
 
-	Entity* directional = AddEntity("Directional");
-	directional->transform->SetLocalRotation({20, 10, 0});
-	Light* light = directional->AddComponent<Light>();
-	light->type = Light::Type::DIRECTIONAL;
-	light->ambient  = {0.2f, 0.2f, 0.2f};
-	light->diffuse  = {1.0f, 0.5f, 0.5f};
-	light->specular = {1.0f, 1.0f, 1.0f};
-
-	Entity* point = AddEntity("Point 1");
-	point->transform->SetLocalPosition({3.0f, 1.7f, 4.0f});
-	Light* plight =point->AddComponent<Light>();
-	plight->type = Light::Type::POINT;
-	plight->ambient  = {0.3f, 0.3f, 0.3f};
-	plight->diffuse  = {0.7f, 0.7f, 0.7f};
-	plight->specular = {1.0f, 1.0f, 1.0f};
-	plight->attenuation = {0.6f, 0.09f, 0.012f};
-
-	MeshRenderer* mr = point->AddComponent<MeshRenderer>();
-	mr->SetMesh(Resources::Get<Mesh>("cube"));
-	mr->material->SetColor("ambient_color", color::white);
-	mr->material->SetColor("diffuse_color", color::white);
-	mr->material->SetColor("specular_color", color::white);
-	mr->material->SetFloat("shininess", 20.0f);
-	mr->transform->SetLocalScale({0.1f, 0.1f, 0.1f});
-
-	AddEntity<Starship>("Cassa");
-	Entity* mah = AddEntity<Starship>("mah");
-	mah->transform->SetLocalPosition({4.0f, 2.0f, -1.0f});
-	mah->transform->SetLocalRotation({10, 10, 0});
-
-	return;
-
-	//Font* pixel = Resources::Get<Font>("Pixel Perfect");
 	Font* f = Resources::Get<Font>("Modenine");
 
 	Entity* label = AddEntity("Label");

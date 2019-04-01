@@ -1,11 +1,22 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include <string>
+#include <map>
 
 #include "levelmap.h"
 
+
+#define USER_CONFIG_FILE "config/config.ini"
+
 namespace Config {
 
+	extern std::map<std::string, std::string> data;
+
+	extern void LoadUserConfig();
+	extern void LoadEngineConfig();
+
+	extern std::string title;
 	extern bool debug;
 
 	// textures
@@ -16,6 +27,7 @@ namespace Config {
 	extern int displayWidth;
 	extern int displayHeight;
 	extern bool fullscreen;
+	extern const std::map<std::string, std::pair<int, int>> DisplayModes;
 
 	// time
 	namespace Time {

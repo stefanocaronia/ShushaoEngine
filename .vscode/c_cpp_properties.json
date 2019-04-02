@@ -10,6 +10,7 @@
                 "C:/bin/mingw64/mingw64/**",
                 "${workspaceFolder}/engine/**",
                 "${workspaceFolder}/game/**",
+                "${workspaceFolder}/../../mingw-dev-libs/boost/**",
                 "${workspaceFolder}/../../mingw-dev-libs/glew/include/**",
                 "${workspaceFolder}/../../mingw-dev-libs/glm/**",
                 "${workspaceFolder}/../../mingw-dev-libs/SDL2/include/SDL2/**",

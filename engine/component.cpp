@@ -40,6 +40,17 @@ namespace se {
 		return classname + (enabled ? "+": "") + (name != "" && name != classname ? " '" + name +"'": "");
 	}
 
+	// FIXME: impossibile
+	template<class T>
+	T* Component::GetComponent(std::string _name) {
+		return entity->GetComponent<T>(_name);
+	}
+
+	template<class T>
+	T* Component::AddComponent(std::string _name) {
+		return entity->AddComponent<T>(_name);
+	}
+
 	std::vector<Component*> Component::GetActiveComponentsInChildren() {
 
 		if (!entity->activeSelf) return vector<Component*>();

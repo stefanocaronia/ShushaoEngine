@@ -48,6 +48,7 @@
 #include "canvas.h"
 #include "variation.h"
 #include "gradient.h"
+#include "coroutine.h"
 
 // PHYSICS
 #include "physics/physics.h"

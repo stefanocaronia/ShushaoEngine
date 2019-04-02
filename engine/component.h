@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "object.h"
+#include "coroutineholder.h"
 #include "cycle.h"
 
 namespace se {
@@ -13,7 +14,7 @@ namespace se {
 	class Collision2D;
 	class Collider2D;
 
-	class Component : public Object	{
+	class Component : public Object, public CoroutineHolder	{
 
 		public:
 
@@ -50,17 +51,11 @@ namespace se {
 
 			std::string getTitle();
 
-			/* TODO: impossibile per riferimenti circolari? Pare di sì.
+			template<class T>
+			T* GetComponent(std::string _name = ""); // Returns the component of Type type if the game object has one attached, null if it doesn't.
 
 			template<class T>
-			T* GetComponent(std::string _name = "") {	// Returns the component of Type type if the game object has one attached, null if it doesn't.
-				return entity->GetComponent<T>(_name);
-			}
-
-			template<class T>
-			T* AddComponent(std::string _name = "") { // Adds a component to the entity
-				return entity->AddComponent<T>(_name);
-			}*/
+			T* AddComponent(std::string _name = ""); // Adds a component to the entity
 
 			static void Sort(std::vector<Component*>&);
 

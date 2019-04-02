@@ -33,7 +33,7 @@ clean:
 
 compilation:
 	@echo -e $(CBLUE)$(BULLET)Compilation $(CEND)$(CLGREY)
-	@$(MAKE) -f .makefiles/compile.mk --silent -j -Oline -l 80.0
+	@$(MAKE) -f .makefiles/compile.mk --silent -j $(CORES) -Oline -l 80.0
 
 run: all
 	@echo -e $(CYELLOW)$(BULLET)Running $(TARGET) $(CEND)

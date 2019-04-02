@@ -7,16 +7,77 @@
 #include "part.h"
 #include "meshtest.h"
 
+
 Level::Level() {
 
 	using namespace se;
 
+	testParticles();
+	testSprites();
+}
+
+void Level::testParticles() {
 	AddEntity<Part>("Particle Object");
 	// AddEntity<Hermite>();
+}
+
+void Level::testMesh() {
 	// AddEntity<Meshtest>();
+}
 
-	return;
+void Level::testSprites() {
+	Entity* ground = AddEntity("Ground");
 
+	ground->transform->SetLocalPosition({0.0f, -4.0f, 0.0f});
+	Rigidbody2D* groundrb = ground->AddComponent<Rigidbody2D>();
+	groundrb->SetType(RigidbodyType::STATIC);
+	BoxCollider2D* ec = ground->AddComponent<BoxCollider2D>();
+	ec->SetShape({6,0.5f});
+
+	Entity* door = AddEntity("Door");
+	door->transform->SetLocalPosition({4.0f, -4.0f, 0.0f});
+	Rigidbody2D* doorrb = door->AddComponent<Rigidbody2D>();
+	doorrb->SetType(RigidbodyType::STATIC);
+	BoxCollider2D* dc = door->AddComponent<BoxCollider2D>();
+	dc->SetSensor(true);
+	dc->SetShape({0.1,4.0f});
+
+	//ground->transform->SetLocalRotation({0,0,20});
+
+	Pancrazio* pancrazio = AddEntity<Pancrazio>();
+	//pancrazio->transform->SetParent(container->transform);
+	pancrazio->transform->SetLocalScale({1.0f, 1.0f, 0.0f});
+	pancrazio->transform->SetLocalPosition({0.0f, 0.0f, 0.0f});
+	//pancrazio->GetComponent<Animation>()->Disable();
+	pancrazio->transform->SetLocalRotation({0,0,30});
+
+	pancrazio->AddProgram<Mover>();
+
+	Pancrazio* sonOfPancrazio = AddEntity<Pancrazio>("Son of Pancrazio");
+	sonOfPancrazio->setParent(pancrazio);
+	//sonOfPancrazio->transform->isFree = true;
+	//sonOfPancrazio->GetComponent<Animation>()->Disable();
+	//sonOfPancrazio->GetComponent<Mover>()->Disable();
+	sonOfPancrazio->transform->SetLocalPosition({-1.0f, 0.0f, 0.0f});
+	sonOfPancrazio->transform->SetLocalScale({0.5f, 0.5f, 0.0f});
+	sonOfPancrazio->GetComponent<Rigidbody2D>()->SetType(RigidbodyType::STATIC);
+	sonOfPancrazio->GetComponent<BoxCollider2D>("box")->ResetShape(); // <---- collegare al transform addirittura? fare dei callback transformChanged
+	sonOfPancrazio->GetComponent<BoxCollider2D>("trigger")->ResetShape(); // <---- collegare al transform addirittura? fare dei callback transformChanged
+	//sonOfPancrazio->GetComponent<CircleCollider2D>()->ResetShape(); // <---- collegare al transform addirittura? fare dei callback transformChanged
+	//sonOfPancrazio->transform->setLocalRotation({0,0,20});
+
+	Entity* bkg = AddEntity("Background");
+	//bkg->transform->SetLocalPosition({0.0f, 0.0f, -0.5f});
+	SpriteRenderer* backgroundRenderer = bkg->AddComponent<SpriteRenderer>();
+	// backgroundRenderer->shader = Resources::Get<Shader>("standard");
+	backgroundRenderer->name = "Background Renderer";
+	backgroundRenderer->sortingLayerID = Config::SortingLayers["Background"];
+	backgroundRenderer->sprite = new Sprite("Background", Resources::Get<Texture>("night"));
+	backgroundRenderer->sprite->SetPixelPerUnit(64);
+	backgroundRenderer->sprite->Build();
+}
+
+void Level::testCanvas() {
 	Font* f = Resources::Get<Font>("Modenine");
 
 	Entity* label = AddEntity("Label");
@@ -139,65 +200,6 @@ Level::Level() {
 	imagesl->transform->rectTransform->RegisterPositionLRTB(1.0f, 1.0f, 1.0f, 1.0f);
 	imagesl->sortingLayerID = Config::SortingLayers["UI"];
 	imagesl->SetPreserveAspect(false)->SetImageType(Image::Type::TILED)->SetBorder({40,40,40,40})->SetFillCenter(false);
-
-	return;
-
-	Entity* ground = AddEntity("Ground");
-
-	ground->transform->SetLocalPosition({0.0f, -4.0f, 0.0f});
-	Rigidbody2D* groundrb = ground->AddComponent<Rigidbody2D>();
-	groundrb->SetType(RigidbodyType::STATIC);
-	BoxCollider2D* ec = ground->AddComponent<BoxCollider2D>();
-	ec->SetShape({6,0.5f});
-
-	Entity* door = AddEntity("Door");
-	door->transform->SetLocalPosition({4.0f, -4.0f, 0.0f});
-	Rigidbody2D* doorrb = door->AddComponent<Rigidbody2D>();
-	doorrb->SetType(RigidbodyType::STATIC);
-	BoxCollider2D* dc = door->AddComponent<BoxCollider2D>();
-	dc->SetSensor(true);
-	dc->SetShape({0.1,4.0f});
-
-	//ground->transform->SetLocalRotation({0,0,20});
-
-	Pancrazio* pancrazio = AddEntity<Pancrazio>();
-	//pancrazio->transform->SetParent(container->transform);
-	pancrazio->transform->SetLocalScale({1.0f, 1.0f, 0.0f});
-	pancrazio->transform->SetLocalPosition({0.0f, 0.0f, 0.0f});
-	//pancrazio->GetComponent<Animation>()->Disable();
-	pancrazio->transform->SetLocalRotation({0,0,30});
-
-	pancrazio->AddProgram<Mover>();
-
-	Pancrazio* sonOfPancrazio = AddEntity<Pancrazio>("Son of Pancrazio");
-	sonOfPancrazio->setParent(pancrazio);
-	//sonOfPancrazio->transform->isFree = true;
-	//sonOfPancrazio->GetComponent<Animation>()->Disable();
-	//sonOfPancrazio->GetComponent<Mover>()->Disable();
-	sonOfPancrazio->transform->SetLocalPosition({-1.0f, 0.0f, 0.0f});
-	sonOfPancrazio->transform->SetLocalScale({0.5f, 0.5f, 0.0f});
-	sonOfPancrazio->GetComponent<Rigidbody2D>()->SetType(RigidbodyType::STATIC);
-	sonOfPancrazio->GetComponent<BoxCollider2D>("box")->ResetShape(); // <---- collegare al transform addirittura? fare dei callback transformChanged
-	sonOfPancrazio->GetComponent<BoxCollider2D>("trigger")->ResetShape(); // <---- collegare al transform addirittura? fare dei callback transformChanged
-	//sonOfPancrazio->GetComponent<CircleCollider2D>()->ResetShape(); // <---- collegare al transform addirittura? fare dei callback transformChanged
-	//sonOfPancrazio->transform->setLocalRotation({0,0,20});
-
-	Entity* bkg = AddEntity("Background");
-	//bkg->transform->SetLocalPosition({0.0f, 0.0f, -0.5f});
-	SpriteRenderer* backgroundRenderer = bkg->AddComponent<SpriteRenderer>();
-	// backgroundRenderer->shader = Resources::Get<Shader>("standard");
-	backgroundRenderer->name = "Background Renderer";
-	backgroundRenderer->sortingLayerID = Config::SortingLayers["Background"];
-	backgroundRenderer->sprite = new Sprite("Background", Resources::Get<Texture>("night"));
-	backgroundRenderer->sprite->SetPixelPerUnit(64);
-	backgroundRenderer->sprite->Build();
-
-	/*Design::DrawPolygon({
-		 {0.0f, 1.0f, 0.0f},
-		 {2.0f, 1.0f, 0.0f},
-		 {2.0f, -1.0f, 0.0f},
-		 {-1.0f, -1.0f, 0.0f}
-	}, color::red, DrawMode::FULL);*/
 
 }
 

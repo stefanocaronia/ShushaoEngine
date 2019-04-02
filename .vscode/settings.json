@@ -59,6 +59,14 @@
         "string_view": "cpp",
         "tuple": "cpp",
         "typeinfo": "cpp",
-        "numeric": "cpp"
+        "numeric": "cpp",
+        "functional": "cpp",
+        "*.ipp": "cpp",
+        "strstream": "cpp",
+        "complex": "cpp",
+        "condition_variable": "cpp",
+        "iomanip": "cpp",
+        "mutex": "cpp",
+        "thread": "cpp"
     }
 }

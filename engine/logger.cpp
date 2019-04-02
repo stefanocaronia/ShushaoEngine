@@ -25,7 +25,6 @@ namespace se {
 		return *this;
 	}
 
-
 	Logger& Logger::operator()(DebugLevel debugLevel_, string sender_) {
 		streamLevel = debugLevel_;
 		sender = sender_;

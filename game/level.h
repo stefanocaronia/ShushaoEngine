@@ -9,4 +9,9 @@ class Level : public se::Scene {
 	protected:
 
 	private:
+
+		void testParticles();
+		void testCanvas();
+		void testMesh();
+		void testSprites();
 };

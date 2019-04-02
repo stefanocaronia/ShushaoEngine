@@ -147,10 +147,10 @@ void Game::GetInput() {
         Resources::Get<Effect>("hit")->play();
     }
 
-    double horizontal = Input::getAxis("horizontal");
-    if (horizontal != 0) {
+    //double horizontal = Input::getAxis("horizontal");
+    /* if (horizontal != 0) {
         Debug::Log << horizontal << endl;
-    }
+    } */
 
     if (Input::getKeyDown(SDL_SCANCODE_D)) {
         Debug::enabled = !Debug::enabled;

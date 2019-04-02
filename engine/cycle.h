@@ -18,7 +18,7 @@ namespace se {
 				EXIT
 			};
 
-			Cycle(std::string);
+			Cycle();
 			~Cycle();
 
 			std::string name;
@@ -30,13 +30,18 @@ namespace se {
 		protected:
 
 			// pure virtual (devo implementare x forza)
-			virtual void Awake() = 0;
-			virtual void Start() = 0;
-			virtual void GetInput() = 0;
-			virtual void Update() = 0;
-			virtual void Render() = 0;
-			virtual void FixedUpdate() = 0;
-			virtual void End() = 0;
+			virtual void Awake() {};
+			virtual void Start() {};
+			virtual void GetInput() {};
+			virtual void Update() {};
+			virtual void FixedUpdate() {};
+			virtual void Render() {};
+			virtual void End() {};
+
+			virtual bool InitResources() = 0; // resources loading
+			virtual bool InitConfig() = 0; // config override
+			virtual bool InitMapping() = 0; // input mapping
+			virtual bool InitScene() = 0; // scene load
 
 			bool RUNNING = true;
 			bool READY = false;

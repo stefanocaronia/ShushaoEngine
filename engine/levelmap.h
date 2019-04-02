@@ -14,6 +14,7 @@ namespace se {
 
 			LevelMap();
 			LevelMap(std::initializer_list<std::string>);
+			LevelMap(vector<std::string> list);
 			void operator= (std::initializer_list<std::string>);
 			void operator+= (std::string);
 			void operator-= (std::string);

@@ -5,18 +5,15 @@
 #include <map>
 
 #include "levelmap.h"
+#include "utility.h"
 
 
 #define USER_CONFIG_FILE "config/config.ini"
 
 namespace Config {
 
-	extern std::map<std::string, std::string> data;
-
-	extern void LoadUserConfig();
-	extern void LoadEngineConfig();
-
 	extern std::string title;
+	extern std::string startScene;
 	extern bool debug;
 
 	// textures
@@ -47,4 +44,27 @@ namespace Config {
 
 	extern se::LevelMap Layers;
 	extern se::LevelMap SortingLayers;
+
+	extern std::map<std::string, std::string> data;
+	extern bool LoadUserConfig();
+	extern bool LoadEngineConfig();
+	extern bool parseUserConfig();
+	extern bool parseEngineConfig();
+
+	template <class T>
+	bool processConfigData(T& cstring) {
+		std::vector<std::string> parts;
+		std::string line, f;
+		while (getline(cstring, line)) {
+			if (line.size() == 0) continue;
+			f = line.substr(0, 1);
+			if (f == "#" || f == "/" || f == "[" || f == "*" || f == "[") continue;
+			std::vector<std::string> parts = se::util::split(line, '=');
+			if (parts.size() > 1) {
+				//data.insert({parts[0], parts[1]});
+				data[parts[0]] = parts[1];
+			}
+		}
+		return true;
+	}
 }

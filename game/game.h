@@ -6,19 +6,15 @@ class Game : public se::Cycle {
 
 	public:
 
-		Game(std::string);
-		std::string name;
-
 		bool perspectiveTest = false;
 
 	protected:
 
-		void Awake();
-		void Start();
+		bool InitResources();
+		bool InitConfig();
+		bool InitMapping();
+		bool InitScene();
+
 		void GetInput();
-		void FixedUpdate();
-		void Update();
-		void Render();
-		void End();
 };
 

@@ -20,6 +20,13 @@ LevelMap::LevelMap(initializer_list<string> ilist) {
     }
 }
 
+LevelMap::LevelMap(vector<std::string> list) {
+    for (string i : list) {
+        if (size() >= maxElements) return;
+        push_back(i);
+    }
+}
+
 void LevelMap::operator=(initializer_list<string> ilist) {
     clear();
     for (string i : defaults) {

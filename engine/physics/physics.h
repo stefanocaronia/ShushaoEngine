@@ -31,7 +31,7 @@ namespace se {
 
 			void setGravity(glm::vec3);
 
-			static void init();
+			static bool init();
 			static void update();
 			static void exit();
 

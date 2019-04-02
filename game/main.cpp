@@ -1,7 +1,7 @@
 #include "game.h"
 
 int main(int argc, char *argv[]) {
-    Game Shushao("Shushao Game");
+    Game Shushao;
 
     if (Shushao.init())
         Shushao.run();

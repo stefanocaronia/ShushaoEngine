@@ -73,7 +73,7 @@ OBJEXT		= o
 RCEXT		= rc
 
 #Flags, Libraries and Includes
-COMFLAGS =  -MMD -MP -std=c++11 -fexceptions -DGLEW_STATIC -g -DDEBUG=$(DEBUG)
+COMFLAGS =  -MMD -MP -std=c++17 -fexceptions -DGLEW_STATIC -g -DDEBUG=$(DEBUG)
 LNKFLAGS =
 LIBDIRS	 = -L$(BASE_LIBS)/glew/lib -L$(BASE_LIBS)/freetype/lib -L$(BASE_LIBS)/SDL2/lib -L$(BASE_LIBS)/SDL2_image/lib -L$(BASE_LIBS)/SDL2_ttf/lib -L$(BASE_LIBS)/SDL2_mixer/lib -L$(BASE_LIBS)/Box2D/lib
 LIB 	 = -lglew32 -lmingw32 -lopengl32 -lgdi32 -lglu32 -lfreetype -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lBox2D

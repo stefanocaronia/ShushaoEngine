@@ -13,7 +13,7 @@ Level::Level() {
 
 	AddEntity<Part>("Particle Object");
 	// AddEntity<Hermite>();
-	AddEntity<Meshtest>();
+	// AddEntity<Meshtest>();
 
 	return;
 

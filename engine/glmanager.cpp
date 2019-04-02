@@ -23,6 +23,9 @@ namespace se {
 
 		fullscreen = fs;
 
+		WIDTH = Config::displayWidth;
+		HEIGHT = Config::displayHeight;
+
 		SDL_Init(SDL_INIT_EVERYTHING); //  | SDL_INIT_JOYSTICK
 		IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
 		// TTF_Init();

@@ -7,7 +7,7 @@
 
 namespace se {
 
-	void Physics::init() {
+	bool Physics::init() {
 
 		enabled = Config::Physics::enabled;
 		debug = Config::Physics::debug;
@@ -33,6 +33,8 @@ namespace se {
 			 */
 			debugDraw.Init();
 		}
+
+		return true;
 	}
 
 	void Physics::setGravity(glm::vec3 gravity_) {

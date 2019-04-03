@@ -22,7 +22,4 @@ class Mover : public se::Program {
     float animTime;
     se::SpriteRenderer* sr = nullptr;
     se::Rigidbody2D* rb = nullptr;
-
-    Routine coroutineA();
-    Routine coroutineB();
 };

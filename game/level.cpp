@@ -6,23 +6,38 @@
 #include "hermite.h"
 #include "part.h"
 #include "meshtest.h"
-
+#include "coroutinetest.h"
 
 Level::Level() {
 
 	using namespace se;
 
 	testParticles();
-	testSprites();
+	//testSprites();
+	testCoroutines();
 }
 
 void Level::testParticles() {
-	AddEntity<Part>("Particle Object");
+	Part* po = AddEntity<Part>("Particle Object");
+	Part* po2 = AddEntity<Part>("Particle Object 2");
 	// AddEntity<Hermite>();
+	Part* po3 = (Part*)Factory::InstantiateEntity(po);
+
+	ParticleSystem* ps = (ParticleSystem*)Factory::InstantiateComponent<Part>(po->GetComponent<ParticleSystem>());
+	Entity* po4 =ps->entity;
+
+	po2->transform->SetLocalPosition(vec3(2,2,0));
+	//po3->transform->SetLocalPosition(vec3(-2,-2,0));
+	po4->transform->SetLocalPosition(vec3(-4,-4,0));
 }
 
 void Level::testMesh() {
 	// AddEntity<Meshtest>();
+}
+
+void Level::testCoroutines() {
+	Entity* test = AddEntity("Test Coroutines");
+	test->AddComponent<CoroutineTest>();
 }
 
 void Level::testSprites() {

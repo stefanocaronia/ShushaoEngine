@@ -14,4 +14,5 @@ class Level : public se::Scene {
 		void testCanvas();
 		void testMesh();
 		void testSprites();
+		void testCoroutines();
 };

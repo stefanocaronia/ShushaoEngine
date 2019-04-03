@@ -12,7 +12,7 @@ void Mover::Awake() {
 }
 
 void Mover::Start() {
-    StartCoroutine(coroutineA());
+    //
 }
 
 void Mover::Update() {
@@ -61,21 +61,4 @@ void Mover::OnTriggerExit2D(Collider2D& other) {
 
 void Mover::OnTriggerStay2D(Collider2D& other) {
     if (other.entity->name == "Door") Debug::Log << "TRIGGER STAY DOOR" << std::endl;
-}
-
-Routine Mover::coroutineA() {
-    return [=](RoutinePush& yield_return) {
-        Debug::Log(WARNING) << "coroutineA created" << endl;
-        yield_return(new WaitForSeconds(2.0f));
-        yield_return(StartCoroutine(coroutineB()));
-        Debug::Log(WARNING) << "coroutineA running again" << endl;
-    };
-}
-
-Routine Mover::coroutineB() {
-    return [=](RoutinePush& yield_return) {
-        Debug::Log(WARNING) << "coroutineB created" << endl;
-        yield_return(new WaitForSeconds(4.5f));
-        Debug::Log(WARNING) << "coroutineB enables coroutineA to run" << endl;
-    };
 }

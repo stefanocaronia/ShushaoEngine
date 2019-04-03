@@ -4,7 +4,9 @@
 #include "debug.h"
 #include "gamedata.h"
 #include "object.h"
+#include "scenemanager.h"
 #include "utility.h"
+#include "component.h"
 
 namespace se {
 
@@ -71,12 +73,7 @@ namespace se {
             The active status of a Entity at the time of cloning will be passed on, so if the original is inactive then the clone will be created in an inactive state too.
         */
 
-    Object* Object::Instantiate(Object* original) {
-        // TODO Object::Instantiate
-        return nullptr;
-    }
-
-    Object* Object::Instantiate(Object* original, Transform* parent) {
+    /* Object* Object::Instantiate(Object* original, Transform* parent) {
         // TODO Object::Instantiate
         return nullptr;
     }
@@ -94,6 +91,6 @@ namespace se {
     Object* Object::Instantiate(Object* original, vec3 position, quat rotation, Transform* parent) {
         // TODO Object::Instantiate
         return nullptr;
-    }
+    } */
 
 }  // namespace se

@@ -75,6 +75,7 @@ Coroutine* CoroutineHolder::PopCoroutine(Coroutine* CoroutinePtr) {
 }
 
 void CoroutineHolder::ResumeCoroutines() {
+    if (Coroutines.empty()) return;
     std::set<Coroutine*> CoroutinesCopy;
     CoroutinesCopy.swap(Coroutines);
 

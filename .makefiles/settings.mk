@@ -67,12 +67,12 @@ VCPKG_LIBS	= ../../vcpkg/installed/x64-windows
 BUILDDIR = obj/$(BUILD)
 TARGETDIR = bin/$(BUILD)
 
-RESFILE		=
-SRCDIR		= .
-RESDIR		= res
-SRCEXT		= cpp
-OBJEXT		= o
-RCEXT		= rc
+RESFILE	=
+SRCDIR	= .
+RESDIR	= res
+SRCEXT	= cpp
+OBJEXT	= o
+RCEXT	= rc
 
 #Flags, Libraries and Includes
 COMFLAGS =  -MMD -MP -std=c++17 -fexceptions -DGLEW_STATIC -g -DDEBUG=$(DEBUG)

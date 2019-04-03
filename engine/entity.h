@@ -115,6 +115,12 @@ public:
         return nullptr;
     }
 
+    Component* GetComponent(std::string _name) {  // Returns the component of name
+        for (Component* component : Components)
+            if (component->name == _name) return component;
+        return nullptr;
+    }
+
     template <class T>
     T* GetComponentInChildren();  // TODO: Returns the component of Type type in the GameObject or any of its children using depth first search.
 
@@ -130,7 +136,9 @@ public:
     template <class T>
     T* GetComponentsInParent();  // TODO: Returns all components of Type type in the Entity or any of its parents.
 
-    void SetActive(bool);  // Activates/Deactivates the Entity.
+    void SetActive(bool value_) {  // Activates/Deactivates the Entity.
+        activeSelf = value_;
+    }
 
     static Entity* Find(std::string);                // Finds a Entity by name and returns it.
     static Entity* FindEntitysWithTag(std::string);  // Returns a list of active Entitys tagged tag. Returns empty array if no Entity was found.

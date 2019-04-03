@@ -5,36 +5,40 @@
 
 namespace se {
 
-	class Transform;
+class Transform;
+class Component;
+class Entity;
 
-	class Object {
+class Object {
+public:
+    Object();
+    Object(std::string);
+    virtual ~Object();
 
-		public:
+    int InstanceID = 0;
 
-			Object();
-			Object(std::string);
-			virtual ~Object();
+    std::string name;
 
-			int InstanceID = 0;
+    std::string ToString();
 
-			std::string name;
+    static void Destroy(Object*, float);
+    static void Destroy(Object*);
 
-			std::string ToString();
+    int GetInstanceID();
 
-			static void Destroy(Object*, float);
-			static void Destroy(Object*);
+    bool operator==(const char*);
+    bool operator==(const Object&);
 
-			int GetInstanceID();
+    template <class T>
+    bool is() {
+        return dynamic_cast<T*>(this) != nullptr;
+    }
 
-			bool operator==(const char*);
-			bool operator==(const Object&);
+    virtual Object* Copy() {
+        return nullptr;
+    }
 
-			static Object* Instantiate(Object*);
-			static Object* Instantiate(Object*, Transform*);
-			static Object* Instantiate(Object*, Transform*, bool);
-			static Object* Instantiate(Object*, glm::vec3, glm::quat);
-			static Object* Instantiate(Object*, glm::vec3, glm::quat, Transform*);
 
-	};
+};
 
-}
+}  // namespace se

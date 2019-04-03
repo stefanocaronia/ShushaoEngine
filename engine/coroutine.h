@@ -10,7 +10,7 @@
 #include <ctime>
 #include <functional>
 
-//namespace se {
+namespace se {
 
 // typeid without rtti
 using TYPE_INFO = void*;
@@ -25,7 +25,7 @@ TYPE_INFO _TYPEID_() {
 class YieldInstruction {
     friend class Component;
 
-  public:
+public:
     YieldInstruction(TYPE_INFO InType) : Type(InType) {}
     virtual ~YieldInstruction() {}
     virtual void End() {}
@@ -36,17 +36,17 @@ class YieldInstruction {
 };
 
 class WaitForSeconds : public YieldInstruction {
-  private:
+private:
     float Time;
 
     float Now() {
         return std::clock() / static_cast<float>(CLOCKS_PER_SEC);
     }
 
-  public:
+public:
     WaitForSeconds(float Seconds) : YieldInstruction(TYPEID(WaitForSeconds)), Time(Now() + Seconds) {}
 
-  protected:
+protected:
     virtual void End() override {
         Time = Now();
     }
@@ -57,13 +57,13 @@ class WaitForSeconds : public YieldInstruction {
 };
 
 class WaitWhile : public YieldInstruction {
-  private:
+private:
     std::function<bool()> Condition;
 
-  public:
+public:
     WaitWhile(std::function<bool()> InCondition) : YieldInstruction(TYPEID(WaitWhile)), Condition(InCondition) {}
 
-  protected:
+protected:
     virtual void End() override {
         Condition = []() {
             return false;
@@ -76,13 +76,13 @@ class WaitWhile : public YieldInstruction {
 };
 
 class WaitUntil : public YieldInstruction {
-  private:
+private:
     std::function<bool()> Condition;
 
-  public:
+public:
     WaitUntil(std::function<bool()> InCondition) : YieldInstruction(TYPEID(WaitWhile)), Condition(InCondition) {}
 
-  protected:
+protected:
     virtual void End() override {
         Condition = []() {
             return true;
@@ -102,7 +102,7 @@ using Routine = std::function<void(RoutinePush&)>;
 class Coroutine : public YieldInstruction {
     friend class Component;
 
-  public:
+public:
     Coroutine(RoutinePull& InPull) : YieldInstruction(TYPEID(Coroutine)), Pull(std::move(InPull)), NextPtr(nullptr) {}
 
     RoutinePull Pull;
@@ -124,4 +124,4 @@ class Coroutine : public YieldInstruction {
     }
 };
 
-//}  // namespace se
+}  // namespace se

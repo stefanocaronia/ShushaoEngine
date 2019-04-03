@@ -1,64 +1,71 @@
 #pragma once
 
-#include <vector>
 #include <algorithm>
-#include <string>
-#include <sstream>
-#include <typeinfo>
-#include <regex>
 #include <cmath>
-#include <iostream>
 #include <glm/glm.hpp>
 #include <glm/gtx/quaternion.hpp>
+#include <iostream>
+#include <regex>
+#include <sstream>
+#include <string>
+#include <typeinfo>
+#include <vector>
 
 #define ts(str) util::toString(str)
 
 namespace se {
 
-	namespace util {
+namespace util {
 
-		std::string basename(std::string);
-		std::string zerofill(int, int);
+    std::string basename(std::string);
+    std::string zerofill(int, int);
 
-		int random(int min, int max);
-		float random(float min, float max);
-		bool happens(float probability);
+    int random(int min, int max);
+    float random(float min, float max);
+    bool happens(float probability);
 
-		template < typename T >
-		std::string toString( const T& n ) {
-			std::ostringstream stm ;
-			stm << n ;
-			return stm.str() ;
-		}
+    template <typename T>
+    std::string toString(const T& n) {
+        std::ostringstream stm;
+        stm << n;
+        return stm.str();
+    }
 
-		/// NB: modificare anche la versione nel cpp
-		template<class T>
-		std::string classtitle() {
-			std::string type = typeid(T).name();
-			std::regex pat("N2se|P6|P");
-			type = regex_replace(type, pat, "");
+    template <class T>
+    bool is(void* obj) {
+        return dynamic_cast<T>(obj) != nullptr;
+    }
 
-			pat = "E$";
-			type = regex_replace(type, pat, "");
+    const std::type_info& ty(void* obj);
 
-			std::string title;
-			bool inName = false;
-			char prevc;
-			for (char& c : type) {
-				if (isdigit(c) && !inName) continue;
-				if ((isupper(c) || isdigit(c)) && inName && !(c == 'D' && prevc == '2')) title += " ";
-				title += (inName?c:toupper(c));
-				inName = true;
-				prevc = c;
-			}
-			return title;
-		}
+    /// NB: modificare anche la versione nel cpp
+    template <class T>
+    std::string classtitle() {
+        std::string type = typeid(T).name();
+        std::regex pat("N2se|P6|P");
+        type = regex_replace(type, pat, "");
 
-		std::string classtitle(std::string);
-		glm::vec3 toEulerAngles(const glm::quat&);
+        pat = "E$";
+        type = regex_replace(type, pat, "");
 
-		std::vector<std::string> split(std::string text, char delim);
-		std::vector<std::string> filesindir(std::string path);
-	};
+        std::string title;
+        bool inName = false;
+        char prevc;
+        for (char& c : type) {
+            if (isdigit(c) && !inName) continue;
+            if ((isupper(c) || isdigit(c)) && inName && !(c == 'D' && prevc == '2')) title += " ";
+            title += (inName ? c : toupper(c));
+            inName = true;
+            prevc = c;
+        }
+        return title;
+    }
 
-}
+    std::string classtitle(std::string);
+    glm::vec3 toEulerAngles(const glm::quat&);
+
+    std::vector<std::string> split(std::string text, char delim);
+    std::vector<std::string> filesindir(std::string path);
+};  // namespace util
+
+}  // namespace se

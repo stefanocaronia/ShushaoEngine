@@ -4,6 +4,7 @@
 
 // ShushaoEngine Objects
 #include "resources/resources.h" // rc
+#include "factory.h"
 #include "stime.h"
 #include "globals.h"
 #include "design.h"

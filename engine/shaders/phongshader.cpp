@@ -10,8 +10,8 @@ namespace se {
 	PhongShader::PhongShader() {
 		name = "Phong Shader";
 
-		VertexShaderCode = Resources::GetEmbeddedText(PHONGSHADER_VERT);
-		FragmentShaderCode = Resources::GetEmbeddedText(PHONGSHADER_FRAG);
+		VertexShaderCode = Resources::GetEmbeddedText(PHONGSHADER_VERT, LIB_SHUSHAO);
+		FragmentShaderCode = Resources::GetEmbeddedText(PHONGSHADER_FRAG, LIB_SHUSHAO);
 	}
 
 	void PhongShader::Awake() {

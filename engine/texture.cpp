@@ -21,8 +21,8 @@ namespace se {
 		glDeleteTextures(1, textures);
 	}
 
-	bool Texture::LoadEmbedded(int IDRES) {
-		vector<char> data = Resources::GetEmbeddedData(IDRES, RT_RCDATA);
+	bool Texture::LoadEmbedded(int IDRES, std::string library) {
+		vector<char> data = Resources::GetEmbeddedData(IDRES, library, RT_BITMAP);
 		return LoadBytes(data);
 	}
 

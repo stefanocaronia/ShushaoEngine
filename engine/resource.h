@@ -12,7 +12,7 @@ namespace se {
 	class Resource {
         public:
             virtual bool Load(std::string) = 0;
-			virtual bool LoadEmbedded(int IDRES) = 0;
+			virtual bool LoadEmbedded(int IDRES, std::string library = "") = 0;
 			virtual bool LoadBytes(std::vector<char> data) = 0;
     };
 }

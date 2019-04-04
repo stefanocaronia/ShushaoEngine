@@ -15,21 +15,28 @@ rebuild: prebuild clean | directories resources $(TARGET)
 
 #Copy Resources from Resources Directory to Target Directory
 resources:
-	@echo -e $(CBLUE)$(BULLET)Copying resources $(CEND)
-	@rescopy $(BUILD)
+	@echo -e $(CBLUE)$(BULLET)Syncing resources $(CEND)
+#@rescopy $(BUILD)
+	@rsync $(RESDIR)/ $(TARGETDIR) -az --delete --prune-empty-dirs
 
 #Make the directories
 directories:
 	@echo -e $(CBLUE)$(BULLET)Checking build directories $(CEND)
 	@$(MD) -p $(TARGETDIR)
 	@$(MD) -p $(BUILDDIR)
-	@$(RM) -f obj/$(BUILD)/engine/resources/resources.o
+	@$(RM) -f obj/$(BUILD)/$(ENGINE_RESFILE)
 
 #Clean only Objecst
 clean:
 	@echo -e $(CBLUE)$(BULLET)Cleaning build $(CEND)
 	@$(RM) -rf obj/*
 	@$(RM) -rf bin/*
+
+test:
+	@echo "SOURCES: " $(SOURCES)
+	@echo "RCSOURCES: " $(RCSOURCES)
+	@echo "OBJECTS: " $(OBJECTS)
+	@echo "RCFILES: " $(RCFILES)
 
 compilation:
 	@echo -e $(CBLUE)$(BULLET)Compilation $(CEND)$(CLGREY)
@@ -45,11 +52,13 @@ debug: all
 
 #Link
 $(TARGET): compilation
+	@echo -e $(CEND)$(CBLUE)$(BULLET)Linking $(LIBTARGET) $(CEND)
+	@$(CC) $(SHAREDFLAGS) -o $(TARGETDIR)/$(LIBTARGET) obj/$(BUILD)/$(ENGINE_RESFILE)
 	@echo -e $(CEND)$(CBLUE)$(BULLET)Linking $(TARGET) $(CEND)
 	@$(CC) $(LNKFLAGS) -o $(TARGETDIR)/$(TARGET) $(OBJECTS) $(RCFILES) $(LIBDIRS) $(LIB)
 
 #Non-File Targets
-.PHONY: all prebuild release rebuild clean resources directories run debug
+.PHONY: all prebuild release rebuild clean resources directories run debug test
 
 .NOTPARALLEL: all
 

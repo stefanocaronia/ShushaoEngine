@@ -51,7 +51,7 @@
             "label": "Run",
             "type": "shell",
             "group": "test",
-            "command": "cd bin/Debug && ./ShushaoGame.exe",
+            "command": "cd bin/Debug && ./Game.exe",
             "presentation": {
                 "clear": true
             }

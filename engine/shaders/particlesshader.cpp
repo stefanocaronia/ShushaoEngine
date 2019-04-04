@@ -6,9 +6,9 @@ namespace se {
 	ParticlesShader::ParticlesShader() {
 		name = "Particles Shader";
 
-		VertexShaderCode = Resources::GetEmbeddedText(PARTICLESSHADER_VERT);
-		FragmentShaderCode = Resources::GetEmbeddedText(PARTICLESSHADER_FRAG);
-		GeometryShaderCode = Resources::GetEmbeddedText(PARTICLESSHADER_GEOM);
+		VertexShaderCode = Resources::GetEmbeddedText(PARTICLESSHADER_VERT, LIB_SHUSHAO);
+		FragmentShaderCode = Resources::GetEmbeddedText(PARTICLESSHADER_FRAG, LIB_SHUSHAO);
+		GeometryShaderCode = Resources::GetEmbeddedText(PARTICLESSHADER_GEOM, LIB_SHUSHAO);
 	}
 
 	void ParticlesShader::Awake() {

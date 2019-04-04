@@ -24,7 +24,7 @@ namespace se {
 			glm::vec2 size;
 
 			bool Load(std::string);
-			bool LoadEmbedded(int IDRES);
+			bool LoadEmbedded(int IDRES, std::string library = "");
 			bool LoadBytes(std::vector<char> data);
 			bool Bind(SDL_Surface* surface);
 

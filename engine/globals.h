@@ -2,8 +2,8 @@
 
 #include <glm/glm.hpp>
 #include <map>
-#include <string>
 #include <set>
+#include <string>
 
 #define _USE_MATH_DEFINES
 
@@ -13,6 +13,8 @@
 
 #define DEGTORAD 0.0174532925199432957f
 #define RADTODEG 57.295779513082320876f
+
+const std::string LIB_SHUSHAO = "___libshushao.dll";
 
 namespace se {
 

@@ -7,8 +7,8 @@ namespace se {
 
 		name = "Wireframe Shader";
 
-		VertexShaderCode = Resources::GetEmbeddedText(WIREFRAMESHADER_VERT);
-		FragmentShaderCode = Resources::GetEmbeddedText(WIREFRAMESHADER_FRAG);
+		VertexShaderCode = Resources::GetEmbeddedText(WIREFRAMESHADER_VERT, LIB_SHUSHAO);
+		FragmentShaderCode = Resources::GetEmbeddedText(WIREFRAMESHADER_FRAG, LIB_SHUSHAO);
 	}
 
 }

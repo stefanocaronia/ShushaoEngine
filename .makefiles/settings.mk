@@ -56,7 +56,8 @@ endif
 ROOT_DIR = "$(CURDIR)"
 THIS_DIR = "$(shell basename "$(CURDIR)")"
 #TARGET = $(THIS_DIR).exe
-TARGET = ShushaoGame.exe
+TARGET = Game.exe
+LIBTARGET = libshushao.dll
 CORES = 6
 
 #PATHS
@@ -69,6 +70,8 @@ TARGETDIR = bin/$(BUILD)
 
 RESFILE	=
 SRCDIR	= .
+ENGINE	= engine
+GAME	= game
 RESDIR	= res
 SRCEXT	= cpp
 OBJEXT	= o
@@ -77,6 +80,7 @@ RCEXT	= rc
 #Flags, Libraries and Includes
 COMFLAGS =  -MMD -MP -std=c++17 -fexceptions -DGLEW_STATIC -g -DDEBUG=$(DEBUG)
 LNKFLAGS =
+SHAREDFLAGS = -shared
 LIBDIRS	 = -L$(BASE_LIBS)/boost/stage/lib -L$(BASE_LIBS)/glew/lib -L$(BASE_LIBS)/freetype/lib -L$(BASE_LIBS)/SDL2/lib -L$(BASE_LIBS)/SDL2_image/lib -L$(BASE_LIBS)/SDL2_ttf/lib -L$(BASE_LIBS)/SDL2_mixer/lib -L$(BASE_LIBS)/Box2D/lib
 LIB 	 = -lboost_context -lboost_coroutine -lglew32 -lmingw32 -lopengl32 -lgdi32 -lglu32 -lfreetype -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lBox2D
 INCDIRS  = -I$(BASE_LIBS)/boost -I$(BASE_LIBS)/glew/include -I$(BASE_LIBS)/glew/include -I$(BASE_LIBS)/glm -I$(BASE_LIBS)/freetype/include -I$(BASE_LIBS)/SDL2/include/SDL2 -I$(BASE_LIBS)/SDL2_image/include/SDL2 -I$(BASE_LIBS)/SDL2_ttf/include/SDL2 -I$(BASE_LIBS)/SDL2_mixer/include/SDL2 -I$(BASE_LIBS)/Box2D/include -I$(ROOT_DIR)/engine -I$(ROOT_DIR)
@@ -89,9 +93,24 @@ else
 	LNKFLAGS += -s -mwindows
 endif
 
-SOURCES = $(wildcard $(SRCDIR)/**/*.$(SRCEXT)) $(wildcard $(SRCDIR)/*/*/*.$(SRCEXT))
-RCSOURCES = $(wildcard $(SRCDIR)/**/*.$(RCEXT)) $(wildcard $(SRCDIR)/*/*/*.$(RCEXT))
+#SOURCES = $(wildcard $(SRCDIR)/**/*.$(SRCEXT)) $(wildcard $(SRCDIR)/*/*/*.$(SRCEXT))
+#RCSOURCES = $(wildcard $(SRCDIR)/**/*.$(RCEXT)) $(wildcard $(SRCDIR)/*/*/*.$(RCEXT))
+#OBJECTS = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT)))
+#RCFILES = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(RCSOURCES:.$(RCEXT)=.$(OBJEXT)))
+#DEPENDS = $(OBJECTS:.o=.d)
+
+SUBDIRS  = $(wildcard */)
+SOURCES  = $(wildcard $(SRCDIR)/$(ENGINE)/*.$(SRCEXT)) $(wildcard $(SRCDIR)/$(ENGINE)/**/*.$(SRCEXT))
+SOURCES += $(wildcard $(SRCDIR)/$(GAME)/*.$(SRCEXT)) $(wildcard $(SRCDIR)/$(GAME)/**/*.$(SRCEXT))
+RCSOURCES = $(wildcard $(SRCDIR)/$(GAME)/*.$(RCEXT)) $(wildcard $(SRCDIR)/$(GAME)/**/*.$(RCEXT))
+
+#per compilare le risorse dell'engine nell'exe
+RCSOURCES += $(wildcard $(SRCDIR)/$(ENGINE)/*.$(RCEXT)) $(wildcard $(SRCDIR)/$(ENGINE)/**/*.$(RCEXT))
+
 OBJECTS = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT)))
 RCFILES = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(RCSOURCES:.$(RCEXT)=.$(OBJEXT)))
 DEPENDS = $(OBJECTS:.o=.d)
+
+ENGINE_RCFILE = engine/resources/resources.rc
+ENGINE_RESFILE = engine/resources/resources.o
 

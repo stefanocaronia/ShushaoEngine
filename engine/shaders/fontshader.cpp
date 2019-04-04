@@ -6,8 +6,8 @@ namespace se {
 	FontShader::FontShader() {
 		name = "Font Shader";
 
-		VertexShaderCode = Resources::GetEmbeddedText(FONTSHADER_VERT);
-		FragmentShaderCode = Resources::GetEmbeddedText(FONTSHADER_FRAG);
+		VertexShaderCode = Resources::GetEmbeddedText(FONTSHADER_VERT, LIB_SHUSHAO);
+		FragmentShaderCode = Resources::GetEmbeddedText(FONTSHADER_FRAG, LIB_SHUSHAO);
 
 	}
 

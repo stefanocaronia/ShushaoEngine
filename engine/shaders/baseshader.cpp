@@ -4,8 +4,8 @@
 namespace se {
 
 	BaseShader::BaseShader() {
-		VertexShaderCode = Resources::GetEmbeddedText(BASESHADER_VERT);
-		FragmentShaderCode = Resources::GetEmbeddedText(BASESHADER_FRAG);
+		VertexShaderCode = Resources::GetEmbeddedText(BASESHADER_VERT, LIB_SHUSHAO);
+		FragmentShaderCode = Resources::GetEmbeddedText(BASESHADER_FRAG, LIB_SHUSHAO);
 	}
 
 	void BaseShader::Awake() {

@@ -83,39 +83,31 @@ bool LoadUserConfig() {
 	caricamento configurazione engine
 */
 bool LoadEngineConfig() {
-    #ifndef CONFIG_ENGINE
 
-        se::Debug::Log(se::ERROR) << "Config engine file resource undefined" << endl;
+    string engine_config = se::Resources::GetEmbeddedText(CONFIG_ENGINE, LIB_SHUSHAO);
+
+    if (engine_config == "") {
+        se::Debug::Log(se::ERROR) << "Can't load engine config" << endl;
         return false;
+    }
 
-    #else
+    std::istringstream cstring(engine_config);
 
-        string engine_config = se::Resources::GetEmbeddedText(CONFIG_ENGINE);
+    if (!processConfigData<istringstream>(cstring)) {
+        return false;
+    }
 
-        if (engine_config == "") {
-            se::Debug::Log(se::ERROR) << "Can't load engine config" << endl;
-            return false;
-        }
+    if (!parseUserConfig()) {
+        se::Debug::Log(se::ERROR) << "Can't parse user config" << endl;
+        return false;
+    }
 
-        std::istringstream cstring(engine_config);
+    if (!parseEngineConfig()) {
+        se::Debug::Log(se::ERROR) << "Can't parse engine config" << endl;
+        return false;
+    }
 
-        if (!processConfigData<istringstream>(cstring)) {
-            return false;
-        }
-
-        if (!parseUserConfig()) {
-            se::Debug::Log(se::ERROR) << "Can't parse user config" << endl;
-            return false;
-        }
-
-        if (!parseEngineConfig()) {
-            se::Debug::Log(se::ERROR) << "Can't parse engine config" << endl;
-            return false;
-        }
-
-        return true;
-
-    #endif
+    return true;
 }
 
 bool parseUserConfig() {

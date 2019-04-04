@@ -1,6 +1,3 @@
-#pragma once
-
-// shaders
 #define BASESHADER_FRAG         1001
 #define BASESHADER_VERT         1002
 #define STANDARDSHADER_VERT     1004
@@ -15,8 +12,8 @@
 #define PARTICLESSHADER_FRAG    1017
 #define PARTICLESSHADER_GEOM    1018
 
-// images
 #define IMG_AVATAR              2000
 
-// configuration
-#define CONFIG_ENGINE           5000
+#ifndef CONFIG_ENGINE
+#define CONFIG_ENGINE 5000
+#endif

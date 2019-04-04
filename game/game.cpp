@@ -13,7 +13,7 @@ using namespace se;
 */
 bool Game::InitResources() {
 
-    Resources::Load<Texture>("avatar", IMG_AVATAR);
+    Resources::Load<Texture>("avatar", IMG_AVATAR, LIB_SHUSHAO);
     Resources::Load<Texture>("assets/particlestar.png");
     Resources::Load<Texture>("assets/pancrazio.png");
     Resources::Load<Texture>("assets/dialog.png");

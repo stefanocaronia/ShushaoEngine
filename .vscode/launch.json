@@ -7,7 +7,7 @@
             "request": "launch",
             "targetArchitecture": "x64",
             /* "program": "${workspaceRoot}/bin/Debug/${workspaceFolderBasename}.exe", */
-            "program": "${workspaceRoot}/bin/Debug/ShushaoGame.exe",
+            "program": "${workspaceRoot}/bin/Debug/Game.exe",
             "miDebuggerPath":"gdb.exe",
             "args": ["-q"],
             "stopAtEntry": false,
@@ -27,7 +27,7 @@
             "type": "cppdbg",
             "request": "launch",
             "targetArchitecture": "x64",
-            "program": "${workspaceRoot}/bin/Debug/ShushaoGame.exe",
+            "program": "${workspaceRoot}/bin/Debug/Game.exe",
             "miDebuggerPath":"gdb.exe",
             "args": ["-q"],
             "stopAtEntry": false,

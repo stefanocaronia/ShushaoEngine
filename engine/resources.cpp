@@ -13,21 +13,21 @@ namespace se {
 
 using namespace std;
 
-vector<char> Resources::GetEmbeddedData(int IDRES, LPCSTR type) {
+vector<char> Resources::GetEmbeddedData(int IDRES, string library, LPCSTR type) {
     std::vector<char> output;
 
-    // If you need to retrieve resources embedded in a binary that is not the current running program, modify this
-    // function to pass in a HMODULE value.
-    #ifdef ENGINE_LIBRARY
-    HMODULE module = LoadLibrary("libshushao");
-    #else
-    HMODULE module = GetModuleHandle(NULL);
-    #endif
+    HMODULE module;
 
-    auto resourceHandle = ::FindResource(module, MAKEINTRESOURCE(IDRES), type);
+    if (library != "") {
+        module = LoadLibrary(library.c_str());
+    } else {
+        module = GetModuleHandle(NULL);
+    }
+
+    auto resourceHandle = FindResource(module, MAKEINTRESOURCE(IDRES), RT_RCDATA);
 
     if (resourceHandle != nullptr) {
-        auto dataHandle = ::LoadResource(module, resourceHandle);
+        auto dataHandle = LoadResource(module, resourceHandle);
         if (dataHandle != nullptr) {
             auto resourceSize = ::SizeofResource(module, resourceHandle);
             if (resourceSize != 0) {
@@ -43,8 +43,8 @@ vector<char> Resources::GetEmbeddedData(int IDRES, LPCSTR type) {
     return output;
 }
 
-string Resources::GetEmbeddedText(int IDRES) {
-    auto data = se::Resources::GetEmbeddedData(IDRES);
+string Resources::GetEmbeddedText(int IDRES, std::string library) {
+    auto data = se::Resources::GetEmbeddedData(IDRES, library, RT_RCDATA);
 	return std::string(data.begin(), data.end());
 }
 

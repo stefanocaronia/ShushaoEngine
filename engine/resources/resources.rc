@@ -15,8 +15,4 @@ PARTICLESSHADER_VERT    RCDATA  "engine/shaders/glsl/particlesshader.vert"
 PARTICLESSHADER_FRAG    RCDATA  "engine/shaders/glsl/particlesshader.frag"
 PARTICLESSHADER_GEOM    RCDATA  "engine/shaders/glsl/particlesshader.geom"
 
-IMG_AVATAR              RCDATA  "engine/resources/avatar.png"
-
-#ifndef ENGINE_LIBRARY
-CONFIG_ENGINE           RCDATA  "game/resources/config-engine.ini"
-#endif
+IMG_AVATAR              BITMAP  "engine/resources/avatar.png"

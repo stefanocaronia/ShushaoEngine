@@ -6,8 +6,8 @@ namespace se {
 	StandardShader::StandardShader() {
 		name = "Standard Shader";
 
-		VertexShaderCode = Resources::GetEmbeddedText(STANDARDSHADER_VERT);
-		FragmentShaderCode = Resources::GetEmbeddedText(STANDARDSHADER_FRAG);
+		VertexShaderCode = Resources::GetEmbeddedText(STANDARDSHADER_VERT, LIB_SHUSHAO);
+		FragmentShaderCode = Resources::GetEmbeddedText(STANDARDSHADER_FRAG, LIB_SHUSHAO);
 	}
 
 	void StandardShader::Awake() {

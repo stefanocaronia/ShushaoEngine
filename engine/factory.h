@@ -16,23 +16,22 @@ public:
 
     template <class T, class P>
     static P* InstantiateComponent(P* originalComponent) {
-		Entity* ent = originalComponent->entity;
-		Entity* newEntity = ent->scene->AddEntity<T>(ent->name);
-		P* newComponent = newEntity->GetComponent<P>(originalComponent->name);
-		newEntity->SetActive(ent->activeSelf);
-		newEntity->setParent(ent);
-		return (P*)newComponent;
+        Entity* ent = originalComponent->entity;
+        Entity* newEntity = ent->scene->AddEntity<T>(ent->name);
+        P* newComponent = newEntity->GetComponent<P>(originalComponent->name);
+        newEntity->SetActive(ent->activeSelf);
+        newEntity->setParent(ent);
+        return (P*)newComponent;
         return nullptr;
     }
 
     template <class T>
-    static T* InstantiateEntity(T* original) {
-		T* newEntity = ((Entity*)original)->scene->AddEntity<T>(original->name);
-		newEntity->SetActive(original->activeSelf);
-		newEntity->setParent(original);
-		return newEntity;
+    static T* InstantiateEntity(T* originalEntity) {
+        T* newEntity = ((Entity*)originalEntity)->scene->AddEntity<T>(originalEntity->name);
+        newEntity->SetActive(originalEntity->activeSelf);
+        newEntity->setParent(originalEntity);
+        return newEntity;
     }
-
 };
 
 }  // namespace se

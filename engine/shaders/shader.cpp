@@ -1,10 +1,10 @@
 #include <iostream>
 #include <fstream>
 
-#include "shaders/shader.h"
-#include "debug.h"
-#include "utility.h"
-#include "light.h"
+#include "shader.h"
+#include "../debug.h"
+#include "../utility.h"
+#include "../light.h"
 
 namespace se {
 

@@ -21,7 +21,7 @@ void Level::testParticles() {
 	Part* po = AddEntity<Part>("Particle Object");
 	Part* po2 = AddEntity<Part>("Particle Object 2");
 	// AddEntity<Hermite>();
-	Part* po3 = (Part*)Factory::InstantiateEntity(po);
+	// Part* po3 = (Part*)Factory::InstantiateEntity(po);
 
 	ParticleSystem* ps = (ParticleSystem*)Factory::InstantiateComponent<Part>(po->GetComponent<ParticleSystem>());
 	Entity* po4 =ps->entity;

@@ -1,4 +1,4 @@
-#include "shaders/particlesshader.h"
+#include "particlesshader.h"
 #include "../resources.h"
 
 namespace se {

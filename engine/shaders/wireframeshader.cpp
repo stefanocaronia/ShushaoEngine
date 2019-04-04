@@ -1,4 +1,4 @@
-#include "shaders/wireframeshader.h"
+#include "wireframeshader.h"
 #include "../resources.h"
 
 namespace se {

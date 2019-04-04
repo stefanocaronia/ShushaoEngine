@@ -1,4 +1,4 @@
-#include "shaders/fontshader.h"
+#include "fontshader.h"
 #include "../resources.h"
 
 namespace se {

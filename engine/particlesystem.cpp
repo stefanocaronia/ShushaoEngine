@@ -4,11 +4,11 @@
 
 #include "particlesystem.h"
 
-#include "../entity.h"
-#include "../physics/rigidbody2d.h"
-#include "../shaders/particlesshader.h"
-#include "../transform.h"
-#include "../utility.h"
+#include "entity.h"
+#include "physics/rigidbody2d.h"
+#include "shaders/particlesshader.h"
+#include "transform.h"
+#include "utility.h"
 
 namespace se {
 

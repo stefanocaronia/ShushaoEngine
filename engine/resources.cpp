@@ -18,7 +18,11 @@ vector<char> Resources::GetEmbeddedData(int IDRES, LPCSTR type) {
 
     // If you need to retrieve resources embedded in a binary that is not the current running program, modify this
     // function to pass in a HMODULE value.
-    HMODULE module = nullptr;
+    #ifdef ENGINE_LIBRARY
+    HMODULE module = LoadLibrary("libshushao");
+    #else
+    HMODULE module = GetModuleHandle(NULL);
+    #endif
 
     auto resourceHandle = ::FindResource(module, MAKEINTRESOURCE(IDRES), type);
 

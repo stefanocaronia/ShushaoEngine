@@ -2,9 +2,9 @@
 
 #include <glm/glm.hpp>
 
-#include "../color.h"
-#include "../variation.h"
-#include "../gradient.h"
+#include "color.h"
+#include "variation.h"
+#include "gradient.h"
 
 namespace se {
 

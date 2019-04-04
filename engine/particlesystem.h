@@ -3,14 +3,14 @@
 #include <glm/glm.hpp>
 #include <vector>
 
-#include "../color.h"
-#include "../material.h"
-#include "../playable.h"
-#include "../renderer.h"
-#include "../texture.h"
-#include "../transform.h"
-#include "../vao.h"
-#include "../curve.h"
+#include "color.h"
+#include "material.h"
+#include "playable.h"
+#include "renderer.h"
+#include "texture.h"
+#include "transform.h"
+#include "vao.h"
+#include "curve.h"
 
 #include "particlemodules.h"
 

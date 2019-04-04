@@ -1,5 +1,5 @@
-#include "shaders/phongshader.h"
-#include "scenemanager.h"
+#include "phongshader.h"
+#include "../scenemanager.h"
 #include "../resources.h"
 
 namespace se {

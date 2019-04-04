@@ -4,9 +4,9 @@
 #include <map>
 #include <GL/glew.h>
 
-#include "object.h"
-#include "color.h"
-#include "light.h"
+#include "../object.h"
+#include "../color.h"
+#include "../light.h"
 
 namespace se {
 

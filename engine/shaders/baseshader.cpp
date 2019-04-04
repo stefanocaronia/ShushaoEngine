@@ -1,4 +1,4 @@
-#include "shaders/baseshader.h"
+#include "baseshader.h"
 #include "../resources.h"
 
 namespace se {

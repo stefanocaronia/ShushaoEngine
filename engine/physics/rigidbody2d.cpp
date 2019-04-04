@@ -25,13 +25,13 @@ namespace se {
 		bodyDef.angle = angle * DEGTORAD; // RADIANS
 		bodyDef.fixedRotation = fixedRotation;
 		bodyDef.userData = this;
-		bodyDef.active = enabled && entity->activeSelf;
+		bodyDef.active = enabled && entity->active;
 
 		body = Physics::world->CreateBody(&bodyDef);
 	}
 
 	void Rigidbody2D::OnEnable() {
-		body->SetActive(transform->isAtRoot() && entity->activeSelf);
+		body->SetActive(transform->isAtRoot() && entity->active);
 	}
 
 	void Rigidbody2D::OnDisable() {
@@ -40,7 +40,7 @@ namespace se {
 
 	void Rigidbody2D::Update() {
 		if (transform->isAtRoot()) {
-			body->SetActive(entity->activeSelf);
+			body->SetActive(entity->active);
 		}
 	}
 

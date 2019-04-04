@@ -42,7 +42,7 @@ namespace util {
     template <class T>
     std::string classtitle() {
         std::string type = typeid(T).name();
-        std::regex pat("N2se|P6|P");
+        std::regex pat("N2se|P6");
         type = regex_replace(type, pat, "");
 
         pat = "E$";

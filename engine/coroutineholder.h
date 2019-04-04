@@ -10,26 +10,20 @@
 namespace se {
 
 class CoroutineHolder {
-  public:
+public:
     virtual ~CoroutineHolder();
-
-  private:
-    std::set<Coroutine*> Coroutines;
-
-  public:
     Coroutine* StartCoroutine(Routine InRoutine);
     void StopCoroutine(Coroutine* CoroutinePtr);
     void StopAllCoroutines();
     bool HasCoroutines();
+    void ResumeCoroutines();
 
-  private:
+private:
+    std::set<Coroutine*> Coroutines;
     Coroutine* CastAsCoroutine(YieldInstruction* YieldInstructionPtr);
     bool YieldCoroutine(Coroutine* CoroutinePtr);
     Coroutine* PushCoroutine(Coroutine* CoroutinePtr);
     Coroutine* PopCoroutine(Coroutine* CoroutinePtr);
-
-  protected:
-    void ResumeCoroutines();
 };
 
 }  // namespace se

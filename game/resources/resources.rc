@@ -3,4 +3,6 @@
 
 MAINICON ICON "res/assets/sh.ico"
 
+#ifdef LIBRARY_ENGINE
 CONFIG_ENGINE RCDATA "game/resources/config-engine.ini"
+#endif

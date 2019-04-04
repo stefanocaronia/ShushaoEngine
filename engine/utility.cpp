@@ -59,7 +59,7 @@ namespace util {
 
     /// NB: modificare anche versione template in header
     string classtitle(string type) {
-        regex pat("N2se|P6|P");
+        regex pat("N2se|P6");
         type = regex_replace(type, pat, "");
 
         pat = "E$";

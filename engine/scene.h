@@ -1,11 +1,12 @@
 #pragma once
 
-#include <vector>
+#include <set>
 #include <string>
 
 #include "utility.h"
 #include "entity.h"
 #include "debug.h"
+#include "component.h"
 #include "transform.h"
 #include "entity.h"
 #include "utility.h"
@@ -18,7 +19,7 @@
 
 namespace se {
 
-	class Component;
+	// class Component;
 	class Camera;
 
 	class Scene {
@@ -34,16 +35,15 @@ namespace se {
 			Entity* root = nullptr;
 			Camera* activeCamera = nullptr;
 
-			std::vector<Entity*> Entities;
-			std::vector<Component*> ActiveComponents;
-			std::vector<Light*> ActiveLights;
-			//std::vector<Renderer*> ActiveRenderers;
-			std::vector<Component*> ActiveOverlayRenderers;
+			std::set<Entity*> Entities;
+			std::multiset<Component*, Component::Compare> ActiveComponents;
+			std::set<Light*> ActiveLights;
+			std::multiset<Component*, Component::Compare> ActiveOverlayRenderers;
 
 			void run(Cycle::Stage stage);
 			void renderOverlay();
 
-			std::vector<Entity*> GetRootEntitys();
+			std::set<Entity*> GetRootEntitys();
 
 			// scan
 			void InitEntities();
@@ -71,7 +71,7 @@ namespace se {
 				entity->scene = this;
 				entity->transform->SetParent(root->transform);
 
-				Entities.push_back(entity);
+				Entities.insert(entity);
 				entity->addedToScene = true;
 				entity->init();
 				return entity;

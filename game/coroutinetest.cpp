@@ -7,7 +7,7 @@ void CoroutineTest::Start() {
 }
 
 Routine CoroutineTest::coroutineA() {
-    return [=](RoutinePush& yield_return) {
+    return COROUTINE {
         Debug::Log(WARNING) << "coroutineA created" << endl;
         yield_return(new WaitForSeconds(2.0f));
         yield_return(StartCoroutine(coroutineB()));
@@ -16,7 +16,7 @@ Routine CoroutineTest::coroutineA() {
 }
 
 Routine CoroutineTest::coroutineB() {
-    return [=](RoutinePush& yield_return) {
+    return COROUTINE {
         Debug::Log(WARNING) << "coroutineB created" << endl;
         yield_return(new WaitForSeconds(4.5f));
         Debug::Log(WARNING) << "coroutineB enables coroutineA to run" << endl;

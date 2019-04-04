@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <vector>
+#include <set>
 
 #include "canvas.h"
 #include "component.h"
@@ -10,6 +10,7 @@
 #include "object.h"
 #include "renderer.h"
 #include "utility.h"
+#include "globals.h"
 
 namespace se {
 
@@ -25,30 +26,30 @@ public:
 
     ~Entity();
 
+    std::multiset<Component*, Component::Compare> Components;
+
     Transform* transform = nullptr;
     Canvas* canvas = nullptr;
     Scene* scene = nullptr;  // Scene that the Entity is part of.
-	bool addedToScene = false;
-	bool isInitialized = false;
+    bool addedToScene = false;
+    bool isInitialized = false;
 
-    std::vector<Component*> Components;
-
-    int layer;                      // The layer the game object is in. A layer is in the range [0...31].
-    std::string tag;                // The tag of this game object.
-    std::vector<std::string> tags;  // The tag of this game object.
+    int layer;  // The layer the game object is in. A layer is in the range [0...31].
+    std::string tag;  // The tag of this game object.
+    std::set<std::string> tags;  // The tag of this game object.
 
     bool activeInHierarchy;  // 	Is the Entity active in the scene?
-    bool activeSelf;         // 	The local active state of this Entity. (Read Only)
-    bool isStatic;           // 	Editor only API that specifies if a game object is static.
+    bool active;  // 	The local active state of this Entity. (Read Only)
+    bool isStatic;  // 	Editor only API that specifies if a game object is static.
 
     void run(Cycle::Stage);
-    std::vector<Component*> GetActiveComponentsInChildren();
+    std::multiset<Component*, Component::Compare> GetActiveComponentsInChildren();
     void PrintHierarchy(int);
     bool isActiveInHierarchy();
 
-    void BroadcastMessage(std::string methodName);                // Calls the method named methodName on every MonoBehaviour in this game object or any of its children.
+    void BroadcastMessage(std::string methodName);  // Calls the method named methodName on every MonoBehaviour in this game object or any of its children.
     void SendMessage(std::string methodName, Object& parameter);  // Calls the method named methodName on every MonoBehaviour in this game object.
-    void SendMessageUpwards(std::string methodName);              // Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour.
+    void SendMessageUpwards(std::string methodName);  // Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour.
 
     bool CompareTag(std::string t);  // Is this game object tagged with tag?
 
@@ -68,7 +69,7 @@ public:
             }
         }
 
-        Components.push_back(component);
+        Components.insert(component);
         return component;
     }
 
@@ -87,7 +88,7 @@ public:
             }
         }
 
-        Components.push_back(component);
+        Components.insert(component);
         return component;
     }
 
@@ -100,9 +101,9 @@ public:
         entity->scene = scene;
         entity->transform->SetParent(transform);
         //scene->Entities.push_back(entity);
-		if (entity->scene != nullptr) {
-			entity->init();
-		}
+        if (entity->scene != nullptr) {
+            entity->init();
+        }
         return entity;
     }
 
@@ -137,12 +138,12 @@ public:
     T* GetComponentsInParent();  // TODO: Returns all components of Type type in the Entity or any of its parents.
 
     void SetActive(bool value_) {  // Activates/Deactivates the Entity.
-        activeSelf = value_;
+        active = value_;
     }
 
-    static Entity* Find(std::string);                // Finds a Entity by name and returns it.
+    static Entity* Find(std::string);  // Finds a Entity by name and returns it.
     static Entity* FindEntitysWithTag(std::string);  // Returns a list of active Entitys tagged tag. Returns empty array if no Entity was found.
-    static Entity* FindWithTag(std::string);         //	Returns one active Entity tagged tag. Returns null if no Entity was found.
+    static Entity* FindWithTag(std::string);  //	Returns one active Entity tagged tag. Returns null if no Entity was found.
 
     void setParent(Entity*);
 

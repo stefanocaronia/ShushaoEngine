@@ -14,8 +14,6 @@ namespace se {
 			bool overlay = false;
 
 			bool isVisible; //Is this renderer visible in any camera? (Read Only)
-			int sortingLayerID = 0; //Unique ID of the Renderer's sorting layer.
-			int sortingOrder = 0; //Renderer's order within a sorting layer.
 
 		protected:
 

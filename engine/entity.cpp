@@ -7,7 +7,7 @@ namespace se {
 	Entity::Entity() {
 
 		name = "Entity";
-		activeSelf = true;
+		active = true;
 		isStatic = false;
 
 		transform = AddComponent<Transform>();
@@ -16,7 +16,7 @@ namespace se {
 	void Entity::init() {
 		if (isInitialized) return;
 		if (!addedToScene) {
-			scene->Entities.push_back(this);
+			scene->Entities.insert(this);
 		}
 		Init();
 		isInitialized = true;
@@ -35,7 +35,7 @@ namespace se {
 
 	Entity::Entity(string _name) {
 		name = _name;
-		activeSelf = true;
+		active = true;
 		isStatic = false;
 
 		transform = AddComponent<Transform>();
@@ -47,14 +47,14 @@ namespace se {
 		entity->scene = scene;
 		entity->name = _name;
 		if (entity->scene != nullptr) {
-			scene->Entities.push_back(entity);
+			scene->Entities.insert(entity);
 			entity->addedToScene = true;
 			entity->init();
 		}
 		return entity;
 	}
 
-	vector<Component*> Entity::GetActiveComponentsInChildren() {
+	std::multiset<Component*, Component::Compare> Entity::GetActiveComponentsInChildren() {
 		return transform->GetActiveComponentsInChildren();
 	}
 
@@ -103,7 +103,7 @@ namespace se {
 
 		for (int i = 0; i < level; i++) cout << "   ";
 		cout << " " << (char)192 << (char)196;
-		cout << " " << name << (activeSelf ? "+": "");
+		cout << " " << name << (active ? "+": "");
 
         for (Component* c : Components) cout << " [" << c->getTitle() << "]";
 
@@ -118,11 +118,11 @@ namespace se {
 	}
 
 	bool Entity::isActiveInHierarchy() {
-		if (!activeSelf) return false;
+		if (!active) return false;
 
 		/*Transform* p = transform->getParent();
 		while (p != nullptr) {
-			if (!p->entity->activeSelf)
+			if (!p->entity->active)
 				return activeInHierarchy = false;
 			p = p->getParent();
 		}*/

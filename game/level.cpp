@@ -13,7 +13,7 @@ Level::Level() {
 	using namespace se;
 
 	testParticles();
-	//testSprites();
+	testSprites();
 	testCoroutines();
 }
 
@@ -22,9 +22,12 @@ void Level::testParticles() {
 	Part* po2 = AddEntity<Part>("Particle Object 2");
 	// AddEntity<Hermite>();
 	// Part* po3 = (Part*)Factory::InstantiateEntity(po);
-
-	ParticleSystem* ps = (ParticleSystem*)Factory::InstantiateComponent<Part>(po->GetComponent<ParticleSystem>());
+	ParticleSystem* pops = po->GetComponent<ParticleSystem>();
+	ParticleSystem* ps = (ParticleSystem*)Factory::InstantiateComponent<Part>(pops);
 	Entity* po4 =ps->entity;
+
+	ps->sortingLayerID = 2;
+	po2->GetComponent<ParticleSystem>()->sortingLayerID = 1;
 
 	po2->transform->SetLocalPosition(vec3(2,2,0));
 	//po3->transform->SetLocalPosition(vec3(-2,-2,0));

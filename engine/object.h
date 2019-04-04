@@ -38,7 +38,6 @@ public:
         return nullptr;
     }
 
-
 };
 
 }  // namespace se

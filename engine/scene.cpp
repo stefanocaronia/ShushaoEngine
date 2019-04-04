@@ -41,7 +41,7 @@ namespace se {
 		entity->scene = this;
 		entity->name = _name;
 
-		Entities.push_back(entity);
+		Entities.insert(entity);
 		entity->addedToScene = true;
 		entity->init();
 		return entity;
@@ -67,26 +67,26 @@ namespace se {
 		for (Component* component : ActiveComponents) {
 			Renderer* renderer = dynamic_cast<Renderer*>(component);
 			if (renderer != nullptr && renderer->overlay)
-				ActiveOverlayRenderers.push_back(component);
+				ActiveOverlayRenderers.insert(component);
 		}
 
 		// ordino tutti gli oggetti in ordine di rendering
-		Component::Sort(ActiveComponents);
-		Component::Sort(ActiveOverlayRenderers);
+		// Component::Sort(ActiveComponents);
+		// Component::Sort(ActiveOverlayRenderers);
 
 		componentsScanned = true;
 	}
 
 	void Scene::InitEntities() {
 		// ottengo tutte le entities anche child
-        vector<Entity*> entities = root->transform->GetEntitiesInChildren();
+        set<Entity*> entities = root->transform->GetEntitiesInChildren();
 
 		for (auto& entity: entities) {
 			if (!entity->isInitialized) {
 				entity->init();
 			}
 			if (!entity->addedToScene) {
-				Entities.push_back(entity);
+				Entities.insert(entity);
 				entity->addedToScene = true;
 			}
 		}
@@ -97,7 +97,7 @@ namespace se {
 		ActiveLights.clear();
 		for (Component* component : ActiveComponents) {
 			if (dynamic_cast<Light*>(component)) {
-				ActiveLights.push_back((Light*)component);
+				ActiveLights.insert((Light*)component);
 			}
 		}
 	}
@@ -132,13 +132,13 @@ namespace se {
 		for (Component* component : ActiveComponents) {
 			if (!dynamic_cast<Renderer*>(component)) continue;
 			int layerID = ((Renderer*)component)->sortingLayerID;
-			std::cout << "  - " << "[" << Config::SortingLayers[layerID] << " (" << layerID << ")" << ", " << ((Renderer*)component)->sortingOrder << "] " << component->getTitle()<< " (" << component->entity->name << ")" << std::endl;
+			std::cout << "  - " << "[" << Config::SortingLayers[layerID] << " (" << layerID << ")" << ", " << component->sortingOrder << "] " << component->getTitle()<< " (" << component->entity->name << ")" << std::endl;
 		}
 		std::cout << " Scene " << name << " Active Overlay Renderers:" << std::endl;
 		for (Component* component : ActiveOverlayRenderers) {
 			if (!dynamic_cast<Renderer*>(component)) continue;
 			int layerID = ((Renderer*)component)->sortingLayerID;
-			std::cout << "  - " << "[" << Config::SortingLayers[layerID] << " (" << layerID << ")" << ", " << ((Renderer*)component)->sortingOrder << "] " << component->getTitle()<< " (" << component->entity->name << ")" << std::endl;
+			std::cout << "  - " << "[" << Config::SortingLayers[layerID] << " (" << layerID << ")" << ", " << component->sortingOrder << "] " << component->getTitle()<< " (" << component->entity->name << ")" << std::endl;
 		}
 		Logger::setColor(ConsoleColor::LIGHTGREY);
 	}
@@ -168,14 +168,14 @@ namespace se {
 		Logger::setColor(ConsoleColor::LIGHTGREY);
 	}
 
-	vector<Entity*> Scene::GetRootEntitys() {
+	set<Entity*> Scene::GetRootEntitys() {
 		// TODO: I GAMEOBJECT CON PARENT ROOT
 		return Entities;
 	}
 
 	Entity* Scene::AddEntity(Entity* pEntity) {
 		pEntity->transform->SetParent(root->transform);
-		Entities.push_back(pEntity);
+		Entities.insert(pEntity);
 		return pEntity;
 	}
 }

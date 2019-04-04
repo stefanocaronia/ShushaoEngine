@@ -1,46 +1,61 @@
 #pragma once
 
+#include <boost/variant.hpp>
+#include <map>
 #include <string>
 #include <vector>
-#include <map>
 
-#include "object.h"
-#include "component.h"
 #include "camera.h"
+#include "component.h"
+#include "object.h"
 #include "scene.h"
 
 namespace se {
 
-	class GameData {
-		public:
+using Multitype = boost::variant<int, float, double, std::string>;
 
-			static int GenerateObjectID();
-			static int RegisterObject(Object*);
+class GameData {
+public:
+    static Camera* activeCamera;
+    static Scene* activeScene;
+    static std::vector<Object*> Objects;
+    static std::vector<Component*> Components;
 
-			static void UnRegisterObject(int);
-			static void RegisterComponent(Component*);
+    static int GenerateObjectID();
+    static int RegisterObject(Object*);
 
-			static void PrintAllObjects();
-			static Object* GetObjectWithID(int);
+    static void UnRegisterObject(int);
+    static void RegisterComponent(Component*);
 
-			static void DestroyAll();
+    static void PrintAllObjects();
+    static Object* GetObjectWithID(int);
 
-			/*
-			template<class T>
-			vector<Object*> GameData::GetObjectsOfType() {	// Returns the component of Type type if the game object has one attached, null if it doesn't.
-				vector<Object*> results;
-				vector<Object*>::iterator it = std::find_if (Objects.begin(), Objects.end(), [id](const Object* obj){
-					if (dynamic_cast<T*>(component))
-						results.push_back(dynamic_cast<T*>(obj));
-				});
-				return results;
-			}			*/
+    static void DestroyAll();
 
-			static Camera* activeCamera;
-			static Scene* activeScene;
+    template <class T>
+    vector<T*> GetObjectsOfType() {
+        vector<Object*> results;
+        for(auto obj: Objects) {
+            if (dynamic_cast<T*>(obj))
+                results.push_back(dynamic_cast<T*>(obj));
+        }
+        return results;
+    }
 
-			static std::vector<Object*> Objects;
-			static std::vector<Component*> Components;
-	};
+    Multitype operator[](std::string key) {
+        return data[key];
+    }
 
-}
+    static Multitype Get(std::string key) {
+        return data[key];
+    }
+
+    static void Set(std::string key, Multitype value_) {
+        data[key] = value_;
+    }
+
+private:
+    static std::map<std::string, Multitype> data;
+};
+
+}  // namespace se

@@ -19,7 +19,7 @@ public:
         Entity* ent = originalComponent->entity;
         Entity* newEntity = ent->scene->AddEntity<T>(ent->name);
         P* newComponent = newEntity->GetComponent<P>(originalComponent->name);
-        newEntity->SetActive(ent->activeSelf);
+        newEntity->SetActive(ent->active);
         newEntity->setParent(ent);
         return (P*)newComponent;
         return nullptr;
@@ -28,7 +28,7 @@ public:
     template <class T>
     static T* InstantiateEntity(T* originalEntity) {
         T* newEntity = ((Entity*)originalEntity)->scene->AddEntity<T>(originalEntity->name);
-        newEntity->SetActive(originalEntity->activeSelf);
+        newEntity->SetActive(originalEntity->active);
         newEntity->setParent(originalEntity);
         return newEntity;
     }

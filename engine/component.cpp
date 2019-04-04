@@ -14,6 +14,8 @@
 
 namespace se {
 
+using namespace std;
+
 Component::Component() {
     name = getTitle();
     enabled = true;
@@ -51,34 +53,33 @@ T* Component::AddComponent(std::string _name) {
     return entity->AddComponent<T>(_name);
 }
 
-std::vector<Component*> Component::GetActiveComponentsInChildren() {
-    if (!entity->activeSelf) return vector<Component*>();
+std::multiset<Component*, Component::Compare> Component::GetActiveComponentsInChildren() {
+    if (!entity->active) return std::multiset<Component*, Component::Compare>();
 
-    std::vector<Component*> activeComponents;
-    activeComponents.clear();
+    std::multiset<Component*, Component::Compare> activeComponents;
 
     for (Component* c : entity->Components) {
         if (c->enabled) {
-            activeComponents.push_back(c);
+            activeComponents.insert(c);
         }
     }
 
-    for (Transform* t : entity->transform->children) {
-        if (t == nullptr) continue;
-        std::vector<Component*> newComponents = t->GetActiveComponentsInChildren();
-        activeComponents.insert(activeComponents.end(), newComponents.begin(), newComponents.end());
+    for (Transform* tr : entity->transform->children) {
+        if (tr == nullptr) continue;
+        std::multiset<Component*, Component::Compare> newComponents = tr->GetActiveComponentsInChildren();
+        activeComponents.insert(newComponents.begin(), newComponents.end());
     }
 
     return activeComponents;
 }
 
-std::vector<Entity*> Component::GetEntitiesInChildren() {
-    std::vector<Entity*> entities;
+std::set<Entity*> Component::GetEntitiesInChildren() {
+    std::set<Entity*> entities;
     for (Transform* t : entity->transform->children) {
         if (t == nullptr) continue;
-        entities.push_back(t->entity);
-        std::vector<Entity*> newEntities = t->GetEntitiesInChildren();
-        entities.insert(entities.end(), newEntities.begin(), newEntities.end());
+        entities.insert(t->entity);
+        std::set<Entity*> newEntities = t->GetEntitiesInChildren();
+        entities.insert(newEntities.begin(), newEntities.end());
     }
 
     return entities;
@@ -130,7 +131,7 @@ void Component::ReceiveMessage(std::string methodName, Object& parameter) {
 }
 
 bool Component::isActiveAndEnabled() {
-    return enabled && entity->activeSelf && entity->isActiveInHierarchy();
+    return enabled && entity->active && entity->isActiveInHierarchy();
 }
 
 void Component::init() {
@@ -189,31 +190,14 @@ void Component::OnEnable() {}
 void Component::OnDisable() {}
 void Component::OnDestroy() {}
 
-// static
-void Component::Sort(vector<Component*>& components) {
-    sort(components.begin(), components.end(), [](Component* ca, Component* cb) {
-        int sortingLayerA = 0;
-        int sortingLayerB = 0;
-        int orderInLayerA = 0;
-        int orderInLayerB = 0;
-
-        if (dynamic_cast<Renderer*>(ca)) {
-            sortingLayerA = ((Renderer*)ca)->sortingLayerID;
-            orderInLayerA = ((Renderer*)ca)->sortingOrder;
-        }
-
-        if (dynamic_cast<Renderer*>(cb)) {
-            sortingLayerB = ((Renderer*)cb)->sortingLayerID;
-            orderInLayerB = ((Renderer*)cb)->sortingOrder;
-        }
-
-        if (sortingLayerA == sortingLayerB)
-            return orderInLayerA < orderInLayerB;
-        else
-            return sortingLayerA < sortingLayerB;
-
-        return false;
-    });
+/*
+    Custom compare function used to sort the multiset
+*/
+bool Component::Compare::operator()(Component* A, Component* B) const {
+    if (A->sortingLayerID == B->sortingLayerID)
+        return A->sortingOrder < B->sortingOrder;
+    else
+        return A->sortingLayerID < B->sortingLayerID;
 }
 
 }  // namespace se

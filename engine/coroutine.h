@@ -1,6 +1,6 @@
 #pragma once
 
-#define BOOST_COROUTINES2_NO_LIB
+#define COROUTINE [=](RoutinePush & yield_return)
 
 /*
     Credits: https://github.com/exawon/CoroBehaviour
@@ -9,30 +9,21 @@
 #include <boost/coroutine2/all.hpp>
 #include <ctime>
 #include <functional>
+#include "globals.h"
 
 namespace se {
-
-// typeid without rtti
-using TYPE_INFO = void*;
-
-template <typename T>
-TYPE_INFO _TYPEID_() {
-    return reinterpret_cast<TYPE_INFO>(&_TYPEID_<T>);
-}
-
-#define TYPEID(T) _TYPEID_<T>()
 
 class YieldInstruction {
     friend class Component;
 
 public:
-    YieldInstruction(TYPE_INFO InType) : Type(InType) {}
+    YieldInstruction(TypeInfo InType) : Type(InType) {}
     virtual ~YieldInstruction() {}
     virtual void End() {}
     virtual bool IsEnded() {
         return true;
     }
-    TYPE_INFO Type;
+    TypeInfo Type;
 };
 
 class WaitForSeconds : public YieldInstruction {
@@ -101,6 +92,7 @@ using Routine = std::function<void(RoutinePush&)>;
 
 class Coroutine : public YieldInstruction {
     friend class Component;
+    friend class Program;
 
 public:
     Coroutine(RoutinePull& InPull) : YieldInstruction(TYPEID(Coroutine)), Pull(std::move(InPull)), NextPtr(nullptr) {}

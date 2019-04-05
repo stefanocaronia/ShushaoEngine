@@ -20,6 +20,40 @@ namespace se {
 		rectTransform = nullptr;
 	}
 
+	void Transform::Copy(Transform* other) {
+		if (other == nullptr) return;
+        Component::Copy(other);
+
+        isRoot = other->isRoot;
+        isFree = other->isFree;
+        origin = other->origin;
+        parent = other->parent;
+        localPosition = other->localPosition;
+        localRotation = other->localRotation;
+        localScale = other->localScale;
+        matrixInvalid = other->matrixInvalid;
+        inverseMatrixInvalid = other->inverseMatrixInvalid;
+        _position = other->position;
+        _rotation = other->rotation;
+        _scale = other->scale;
+        _velocity = other->velocity;
+        _forward = other->forward;
+        _right = other->right;
+        _up = other->up;
+        _pivot = other->pivot;
+        _MVP = other->MVP;
+        _MV = other->MV;
+        _VP = other->VP;
+        _M = other->M;
+        _V = other->V;
+        _P = other->P;
+        _localToWorldMatrix = other->localToWorldMatrix;
+        _localToParentMatrix = other->localToParentMatrix;
+        _worldToLocalMatrix = other->worldToLocalMatrix;
+        _rootMatrix = other->rootMatrix;
+        lastPosition = other->lastPosition;
+    }
+
 	//{ #region parenting
 
 	Transform* Transform::GetParent() {

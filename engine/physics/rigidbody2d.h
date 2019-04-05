@@ -42,6 +42,8 @@ namespace se {
 				if (body != nullptr) body->SetFixedRotation(fr);
 			}
 
+			void Copy(Rigidbody2D* other);
+
 			void Awake();
 			void Update();
 			void FixedUpdate();

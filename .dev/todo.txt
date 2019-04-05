@@ -5,20 +5,20 @@ BUG:
 
 le proporzioni sulla canvas screen non sembrano a posto
 
-Componenti UI:
+FUNZIONALITA':
 
-Layout Element
-Vertical Layout
-Horizontal Layout
-Grid Layout
-
-- Coroutines
 - funzioni rotate 2D in transform
 - aggiungere contatti in contact listener
 - gestire regole di collisione coi layer
-- Instantiate
 - filtro collisioni custom: impedire collisioni stesso oggetto
 - proprietà del rigidbody, damping, bullet, gravityscale, mass
+
+Componenti UI:
+
+- Layout Element
+- Vertical Layout
+- Horizontal Layout
+- Grid Layout
 
 3D
 

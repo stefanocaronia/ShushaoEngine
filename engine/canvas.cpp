@@ -11,6 +11,14 @@ using namespace glm;
 
 Canvas::~Canvas() {}
 
+void Canvas::Copy(Canvas* other) {
+	if (other == nullptr) return;
+    Component::Copy(other);
+
+    SetRenderMode(other->renderMode);
+    SetCamera(other->camera);
+}
+
 void Canvas::setup() {
     entity->transform->isRectTransform = true;
     entity->canvas = this;

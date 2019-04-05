@@ -34,8 +34,14 @@ public:
         return dynamic_cast<T*>(this) != nullptr;
     }
 
-    virtual Object* Copy() {
-        return nullptr;
+    virtual void Copy(Object* other) {
+        name = other->name;
+    }
+
+    virtual Object* Duplicate() {
+        Object* pObj = new Object();
+        pObj->Copy(this);
+        return pObj;
     }
 
 };

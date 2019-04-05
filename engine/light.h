@@ -40,9 +40,7 @@ namespace se {
 			virtual void setup() { name = "Light"; }
 
 			bool enabled;
-
 			Light::Type type = Light::Type::POINT;
-
 			glm::vec3 direction;
 			Color ambient = color::white;
 			Color diffuse = color::white;
@@ -52,6 +50,8 @@ namespace se {
 
 			std::string GetTypeDesc();
 			UniformLight GetUniform();
+
+			void Copy(Light* other);
 
 		protected:
 

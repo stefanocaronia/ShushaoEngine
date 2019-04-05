@@ -50,6 +50,7 @@
 #include "variation.h"
 #include "gradient.h"
 #include "coroutine.h"
+#include "textfile.h"
 
 // PHYSICS
 #include "physics/physics.h"

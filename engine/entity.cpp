@@ -1,65 +1,83 @@
 #include "entity.h"
-#include "transform.h"
 #include "scene.h"
+#include "transform.h"
 
 namespace se {
 
-	Entity::Entity() {
+Entity::Entity() {
+    name = "Entity";
+    active = true;
+    isStatic = false;
 
-		name = "Entity";
-		active = true;
-		isStatic = false;
+    transform = AddComponent<Transform>();
+}
 
-		transform = AddComponent<Transform>();
-	}
+void Entity::init() {
+    if (isInitialized) return;
+    if (!addedToScene) {
+        scene->Entities.insert(this);
+    }
+    Init();
+    isInitialized = true;
+}
 
-	void Entity::init() {
-		if (isInitialized) return;
-		if (!addedToScene) {
-			scene->Entities.insert(this);
-		}
-		Init();
-		isInitialized = true;
-	}
+Entity::~Entity() {
+    Debug::Log << "Entity Destructor: " << name << endl;
 
-	Entity::~Entity() {
+    // distruggo tutti i components
+    for (Component* pCO : Components) {
+        delete (pCO);
+    }
+    Components.clear();
+}
 
-		Debug::Log << "Entity Destructor: " << name << endl;
+Entity::Entity(string _name) {
+    name = _name;
+    active = true;
+    isStatic = false;
 
-		// distruggo tutti i components
-		for(Component* pCO : Components) {
-			delete(pCO);
-		}
-		Components.clear();
-	}
+    transform = AddComponent<Transform>();
+}
 
-	Entity::Entity(string _name) {
-		name = _name;
-		active = true;
-		isStatic = false;
+void Entity::Copy(Entity* other) {
+    if (other == nullptr) return;
+    Object::Copy(other);
 
-		transform = AddComponent<Transform>();
-	}
+    canvas = other->canvas;
+    scene = other->scene;
+    layer = other->layer;
+    tag = other->tag;
+    tags = other->tags;
+    activeInHierarchy = other->activeInHierarchy;
+    active = other->active;
+    isStatic = other->isStatic;
 
-	Entity* Entity::AddChild(string _name = "Entity") {
-		Entity* entity = new Entity();
-		entity->transform->SetParent(transform);
-		entity->scene = scene;
-		entity->name = _name;
-		if (entity->scene != nullptr) {
-			scene->Entities.insert(entity);
-			entity->addedToScene = true;
-			entity->init();
-		}
-		return entity;
-	}
+    auto c = Components.begin();
+    auto oc = other->Components.begin();
+    for (; c != Components.end(); c++, oc++) {
+        (*c)->Copy(*oc);
+    }
+}
 
-	std::multiset<Component*, Component::Compare> Entity::GetActiveComponentsInChildren() {
-		return transform->GetActiveComponentsInChildren();
-	}
+Entity* Entity::AddChild(string _name = "Entity") {
+    Entity* entity = new Entity();
+    entity->transform->SetParent(transform);
+    entity->scene = scene;
+    entity->name = _name;
+    if (entity->scene != nullptr) {
+        scene->Entities.insert(entity);
+        entity->addedToScene = true;
+        entity->init();
+    }
+    return entity;
+}
 
-	void Entity::BroadcastMessage(std::string methodName) {
-/*		if (!isActiveInHierarchy())	return;
+std::multiset<Component*, Component::Compare> Entity::GetActiveComponentsInChildren() {
+    return transform->GetActiveComponentsInChildren();
+}
+
+void Entity::BroadcastMessage(std::string methodName) {
+    /*		if (!isActiveInHierarchy())	return;
 
         for (Component* c : Components) {
             if (c->enabled)
@@ -69,71 +87,78 @@ namespace se {
         for (Transform* t : transform->children)
             t->entity->SendMessage(methodName);
 */
+}
 
-	}
+void Entity::SendMessage(std::string methodName, Object& parameter) {
+    if (!isActiveInHierarchy()) return;
 
-	void Entity::SendMessage(std::string methodName, Object& parameter) {
-		if (!isActiveInHierarchy())	return;
+    for (Component* c : Components) {
+        if (c->enabled) c->ReceiveMessage(methodName, parameter);
+    }
+}
 
-        for (Component* c : Components) {
-            if (c->enabled)	c->ReceiveMessage(methodName, parameter);
+void Entity::run(Cycle::Stage cycle) {
+    if (!isActiveInHierarchy()) {
+        return;
+    }
+
+    for (Component* c : Components) {
+        if (c->enabled) {
+            c->run(cycle);
         }
+    }
 
-	}
+    for (Transform* t : transform->children) {
+        t->entity->run(cycle);
+    }
+}
 
-	void Entity::run(Cycle::Stage cycle) {
-		if (!isActiveInHierarchy()) {
-			return;
-		}
+void Entity::PrintHierarchy(int level) {
+    Logger::setColor(ConsoleColor::DARKGREEN);
 
-        for (Component* c : Components) {
-            if (c->enabled) {
-				c->run(cycle);
-            }
-        }
+    for (int i = 0; i < level; i++) cout << "   ";
+    cout << " " << (char)192 << (char)196;
+    cout << " " << name << (active ? "+" : "");
 
-        for (Transform* t : transform->children) {
-            t->entity->run(cycle);
-        }
-	}
+    for (Component* c : Components) cout << " [" << c->index << ". " << c->getTitle() << "]";
 
-	void Entity::PrintHierarchy(int level) {
+    cout << endl;
 
-		Logger::setColor(ConsoleColor::DARKGREEN);
+    ++level;
+    for (Transform* t : transform->children) {
+        t->entity->PrintHierarchy(level);
+    }
 
-		for (int i = 0; i < level; i++) cout << "   ";
-		cout << " " << (char)192 << (char)196;
-		cout << " " << name << (active ? "+": "");
+    Logger::setColor(ConsoleColor::WHITE);
+}
 
-        for (Component* c : Components) cout << " [" << c->getTitle() << "]";
+bool Entity::isActiveInHierarchy() {
+    if (!active) return false;
 
-        cout << endl;
-
-        ++level;
-        for (Transform* t : transform->children) {
-            t->entity->PrintHierarchy(level);
-        }
-
-        Logger::setColor(ConsoleColor::WHITE);
-	}
-
-	bool Entity::isActiveInHierarchy() {
-		if (!active) return false;
-
-		/*Transform* p = transform->getParent();
+    /*Transform* p = transform->getParent();
 		while (p != nullptr) {
 			if (!p->entity->active)
 				return activeInHierarchy = false;
 			p = p->getParent();
 		}*/
 
-		return true;
-	}
-
-	void Entity::setParent(Entity* other) {
-		transform->SetParent(other->transform);
-		canvas = other->canvas;
-	}
-
-
+    return true;
 }
+
+void Entity::SetParent(Entity* other) {
+    transform->SetParent(other->transform);
+    canvas = other->canvas;
+}
+
+unsigned int Entity::GetNextIndex() {
+    if (Components.size() > 0) {
+        auto max = max_element(Components.begin(), Components.end(), [](const Component* a, const Component* b) {
+            return a->index < b->index;
+        });
+
+        return (*max)->index + 1;
+    }
+    return 1;
+}
+
+}  // namespace se

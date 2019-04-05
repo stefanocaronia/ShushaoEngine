@@ -36,25 +36,23 @@ bool Cycle::init() {
     // Load engine configuration files
     if (!Config::LoadEngineConfig()) {
         Debug::Log(ERROR) << "Error Initializing Engine Configuration" << endl;
-        ::exit(1);
+        ::exit(5);
     }
 
     // Load user configuration files
     if (!Config::LoadUserConfig()) {
         Debug::Log(ERROR) << "Error Initializing User Configuration" << endl;
-        ::exit(1);
     }
 
     // Load configuration overrides
     if (!InitConfig()) {
         Debug::Log(ERROR) << "Error Initializing Configuration overrides" << endl;
-        ::exit(1);
     }
 
     // OpenGL Context init
     if (!GLManager::Init(Config::title, Config::fullscreen)) {
         Debug::Log(ERROR) << "Error Initializing GL" << endl;
-        ::exit(1);
+        ::exit(5);
     }
 
     // Time init
@@ -65,7 +63,6 @@ bool Cycle::init() {
     if (Config::Physics::enabled) {
         if (!Physics::init()) {
             Debug::Log(ERROR) << "Error Initializing Physics" << endl;
-            ::exit(1);
         }
     }
 
@@ -78,19 +75,16 @@ bool Cycle::init() {
     // load resoruces (derived)
     if (!InitResources()) {
         Debug::Log(ERROR) << "Error loading resources" << endl;
-        ::exit(1);
     }
 
     // Init input mappings (derived)
     if (!InitMapping()) {
         Debug::Log(ERROR) << "Error In input mapping" << endl;
-        ::exit(1);
     }
 
     // init and load starting scene (derived)
     if (!InitScene()) {
         Debug::Log(ERROR) << "Error Initializing Scene" << endl;
-        ::exit(1);
     }
 
     // init all entities

@@ -1,41 +1,38 @@
 #pragma once
 
 #include <GL/glew.h>
-#include <glm/glm.hpp>
 #include <SDL.h>
-#include <vector>
+#include <glm/glm.hpp>
 #include <string>
+#include <vector>
 
 #include "object.h"
 #include "resource.h"
 
 namespace se {
 
-	class Texture : public Object, public Resource {
+class Texture : public Object, public Resource {
+public:
+    Texture(std::string filename = "", std::string n = "");
 
-		public:
+    ~Texture();
 
-			Texture(std::string filename = "", std::string n = "");
+    int height;
+    int width;
+    glm::vec2 size;
 
-			~Texture();
+    bool Load(std::string);
+    bool LoadEmbedded(int IDRES, std::string library = "");
+    bool LoadBytes(std::vector<char> data);
+    bool Bind(SDL_Surface* surface);
 
-			int height;
-			int width;
-			glm::vec2 size;
+    GLuint GetTextureID();
+    SDL_Surface* GetSurface();
 
-			bool Load(std::string);
-			bool LoadEmbedded(int IDRES, std::string library = "");
-			bool LoadBytes(std::vector<char> data);
-			bool Bind(SDL_Surface* surface);
+    GLuint TextureID = 0;
 
-			GLuint GetTextureID();
-			SDL_Surface* GetSurface();
+    SDL_Surface* Surface;
+    //SDL_Texture* SDLTexture;
+};
 
-			GLuint TextureID = 0;
-
-			SDL_Surface* Surface;
-			//SDL_Texture* SDLTexture;
-
-	};
-
-}
+}  // namespace se

@@ -31,6 +31,7 @@ public:
     std::string tag;
 	int sortingLayerID = 0; //Unique ID of the Renderer's sorting layer.
 	int sortingOrder = 0; //Renderer's order within a sorting layer.
+    unsigned int index = 0; // index in entity
 
     inline bool operator<(Component B) {
         if (sortingLayerID == B.sortingLayerID)
@@ -38,6 +39,8 @@ public:
         else
             return sortingLayerID < B.sortingLayerID;
     }
+
+    void Copy(Component* other);
 
     bool enabled = true;
 

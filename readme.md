@@ -10,6 +10,55 @@
 
 ## Resources
 
+### Resource::Load\<type\>(string filename, string name)
+Carica una Resource da disco e estituisce un pointer alla risorsa. Se name non è specificato la chiave diventa il nome file senza percorso e senza estensione.
+
+```c++
+Texture* tex = Resources::Load<Texture>("assets/particlestar.png");
+Resources::Load<Textfile>("assets/listadellaspesa.txt", "listasp");
+```
+
+### Resource::Load\<type\>(string name, int IDRES, string library)
+Carica una Resource embedded nell'exe o da una dll
+
+```c++
+Texture* avatar = Resources::Load<Texture>("avatar", IMG_AVATAR, LIB_SHUSHAO);
+```
+
+### Resource::Add\<type\>(string name)
+Aggiunge una Resource vuota.
+
+```c++
+Texture* tex = Resources::Add<Texture>();
+Texture* tex = Resources::Add<Texture>("texname");
+```
+
+### Resource::Add(Asset*)
+Aggiunge una Resource già esistente alle resources.
+
+```c++
+Sprite* sprite = new Sprite();
+Sprite* spr = Resources::Add(sprite);
+```
+
+### Resource::Get\<type\>(string name):
+Ottiene una risorsa dal nome. Il nome corrisponde al filename senza percorso e estensione per i file caricati da disco, o il nome specificato dal metodo Add.
+
+```c++
+Sprite* spr = Resources::Get<Sprite>("ominobuffo");
+```
+
+### std::vector\<char\> GetEmbeddedData(int IDRES, string library, LPCSTR type)
+Recupera una risorsa embedded nell'eseguibile o in una dll esterna, senza aggiungerla alle resources.
+```c++
+Resources::GetEmbeddedData(IMG_AVATAR);
+Resources::GetEmbeddedData(GONFIG_FILE, "libshushao.dll");
+```
+### std::string GetEmbeddedText(int IDRES, string library)
+Recupera una risorsa embedded nell'eseguibile o in una dll esterna, senza aggiungerla alle resources.
+```c++
+Resources::GetEmbeddedText(JSON_OBJ, "libshushao.dll");
+```
 
 ## Components
 
@@ -59,7 +108,7 @@ canvas->transform->SetPivot(PivotPosition::CENTER);
 ```c++
 // Label in una canvas ancorata a un singolo punto
 ui::Text* uiText = AddEntity<ui::Text>("Label su canvas");
-uiText->setParent(canvas);
+uiText->SetParent(canvas);
 uiText->transform->SetPivot(PivotPosition::BOTTOMLEFT);
 uiText->transform->rectTransform->SetAnchor({0.5f, 0.5f});
 uiText->transform->rectTransform->SetRectSize({4, 1});
@@ -70,7 +119,7 @@ tComp->SetFont(f)->SetText("Label su canvas")->SetColor(color::green)->SetSize(0
 
 // Text label in una child entity - ancorata diversamente
 ui::Text* anchoredText = AddEntity<ui::Text>("Label 2");
-anchoredText->setParent(canvas);
+anchoredText->SetParent(canvas);
 anchoredText->transform->SetPivot(PivotPosition::CENTER);
 anchoredText->transform->rectTransform->SetAnchorMax({1, 1});
 anchoredText->transform->rectTransform->SetAnchorMin({0, 1});

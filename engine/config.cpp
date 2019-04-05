@@ -84,7 +84,7 @@ bool LoadUserConfig() {
 */
 bool LoadEngineConfig() {
 
-    string engine_config = se::Resources::GetEmbeddedText(CONFIG_ENGINE, LIB_SHUSHAO);
+    string engine_config = se::Resources::GetEmbeddedText(CONFIG_ENGINE);
 
     if (engine_config == "") {
         se::Debug::Log(se::ERROR) << "Can't load engine config" << endl;

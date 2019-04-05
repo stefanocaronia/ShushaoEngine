@@ -43,6 +43,8 @@ namespace se {
 
 			void print();
 
+			void Copy(Camera* other);
+
 		private:
 
 			float aspect;

@@ -5,6 +5,18 @@
 
 namespace se {
 
+	void Rigidbody2D::Copy(Rigidbody2D* other) {
+		if (other == nullptr) return;
+		Component::Copy(other);
+
+		position = other->position;
+		velocity = other->velocity;
+		angle = other->angle;
+		angularVelocity = other->angularVelocity;
+		fixedRotation = other->fixedRotation;
+		type = other->type; // TODO: controllare che sia copy
+	}
+
 	void Rigidbody2D::OnDestroy() {
 		if (body == nullptr) return;
 		Physics::world->DestroyBody(body);

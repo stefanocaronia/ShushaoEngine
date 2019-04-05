@@ -7,6 +7,20 @@ namespace se {
 
 	using namespace glm;
 
+	void Light::Copy(Light* other) {
+		if (other == nullptr) return;
+		Component::Copy(other);
+
+		enabled = other->enabled;
+		type = other->type;
+		direction = other->direction;
+		ambient = other->ambient;
+		diffuse = other->diffuse;
+		specular = other->specular;
+		attenuation = other->attenuation;
+		cutoff = other->cutoff;
+	}
+
 	std::string Light::GetTypeDesc() {
 		switch (type) {
 			case Light::Type::SPOT: return "Spot"; break;

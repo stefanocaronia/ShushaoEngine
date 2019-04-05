@@ -75,6 +75,7 @@ GAME	= game
 RESDIR	= res
 SRCEXT	= cpp
 OBJEXT	= o
+RESEXT	= res
 RCEXT	= rc
 
 #Flags, Libraries and Includes
@@ -104,13 +105,13 @@ SOURCES  = $(wildcard $(SRCDIR)/$(ENGINE)/*.$(SRCEXT)) $(wildcard $(SRCDIR)/$(EN
 SOURCES += $(wildcard $(SRCDIR)/$(GAME)/*.$(SRCEXT)) $(wildcard $(SRCDIR)/$(GAME)/**/*.$(SRCEXT))
 RCSOURCES = $(wildcard $(SRCDIR)/$(GAME)/*.$(RCEXT)) $(wildcard $(SRCDIR)/$(GAME)/**/*.$(RCEXT))
 
-#per compilare le risorse dell'engine nell'exe
-RCSOURCES += $(wildcard $(SRCDIR)/$(ENGINE)/*.$(RCEXT)) $(wildcard $(SRCDIR)/$(ENGINE)/**/*.$(RCEXT))
+#per compilare le risorse dell'engine nell'exe (ora le metto nella dll)
+#RCSOURCES += $(wildcard $(SRCDIR)/$(ENGINE)/*.$(RCEXT)) $(wildcard $(SRCDIR)/$(ENGINE)/**/*.$(RCEXT))
 
 OBJECTS = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT)))
-RCFILES = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(RCSOURCES:.$(RCEXT)=.$(OBJEXT)))
+RCFILES = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(RCSOURCES:.$(RCEXT)=.$(RESEXT)))
 DEPENDS = $(OBJECTS:.o=.d)
 
-ENGINE_RCFILE = engine/resources/resources.rc
-ENGINE_RESFILE = engine/resources/resources.o
+ENGINE_RCFILE = engine/resources/resources.$(RCEXT)
+ENGINE_RESFILE = engine/resources/resources.$(RESEXT)
 

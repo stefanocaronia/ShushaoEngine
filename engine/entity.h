@@ -1,16 +1,16 @@
 #pragma once
 
-#include <string>
 #include <set>
+#include <string>
 
 #include "canvas.h"
 #include "component.h"
 #include "cycle.h"
 #include "debug.h"
+#include "globals.h"
 #include "object.h"
 #include "renderer.h"
 #include "utility.h"
-#include "globals.h"
 
 namespace se {
 
@@ -51,7 +51,11 @@ public:
     void SendMessage(std::string methodName, Object& parameter);  // Calls the method named methodName on every MonoBehaviour in this game object.
     void SendMessageUpwards(std::string methodName);  // Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour.
 
-    bool CompareTag(std::string t);  // Is this game object tagged with tag?
+    bool CompareTag(std::string t);
+    void SetParent(Entity*);
+    Entity* AddChild(std::string);
+
+    void Copy(Entity* other);
 
     template <class T>
     T* AddComponent(std::string _name = "") {  // Adds a component class named className to the game object.
@@ -61,6 +65,7 @@ public:
         component->transform = transform;
         component->entity = this;
         component->setup();  // va sempre chiamato
+        component->index = GetNextIndex();
 
         // tratto i componenti se siamo in una canvas
         if (GetComponent<Canvas>() != nullptr) {
@@ -80,6 +85,7 @@ public:
         component->transform = transform;
         component->entity = this;
         component->setup();  // va sempre chiamato
+        component->index = GetNextIndex();
 
         // tratto i componenti se siamo in una canvas
         if (GetComponent<Canvas>() != nullptr) {
@@ -91,8 +97,6 @@ public:
         Components.insert(component);
         return component;
     }
-
-    Entity* AddChild(std::string);
 
     template <class T>
     T* AddChild(std::string _name = "") {  // Adds a Entity of class T as a child
@@ -122,6 +126,12 @@ public:
         return nullptr;
     }
 
+    Component* GetComponent(unsigned int index_) {  // Returns the component of name
+        for (Component* component : Components)
+            if (component->index == index_) return component;
+        return nullptr;
+    }
+
     template <class T>
     T* GetComponentInChildren();  // TODO: Returns the component of Type type in the GameObject or any of its children using depth first search.
 
@@ -145,7 +155,7 @@ public:
     static Entity* FindEntitysWithTag(std::string);  // Returns a list of active Entitys tagged tag. Returns empty array if no Entity was found.
     static Entity* FindWithTag(std::string);  //	Returns one active Entity tagged tag. Returns null if no Entity was found.
 
-    void setParent(Entity*);
+    unsigned int GetNextIndex();
 
 protected:
     virtual void Init() {}

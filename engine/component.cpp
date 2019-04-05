@@ -27,6 +27,18 @@ Component::~Component() {
     exit();
 }
 
+void Component::Copy(Component* other) {
+    if (other == nullptr) return;
+    Object::Copy(other);
+
+    // NB: non copio l'entity e non copio il transform
+    sortingLayerID = other->sortingLayerID;
+    sortingOrder = other->sortingOrder;
+    tag = other->tag;
+    currentEnable = other->currentEnable;
+    started = other->started;
+}
+
 void Component::Enable() {
     enabled = true;
     OnEnable();
@@ -40,17 +52,6 @@ void Component::Disable() {
 std::string Component::getTitle() {
     std::string classname = util::classtitle(typeid(*this).name());
     return classname + (enabled ? "+" : "") + (name != "" && name != classname ? " '" + name + "'" : "");
-}
-
-// FIXME: impossibile
-template <class T>
-T* Component::GetComponent(std::string _name) {
-    return entity->GetComponent<T>(_name);
-}
-
-template <class T>
-T* Component::AddComponent(std::string _name) {
-    return entity->AddComponent<T>(_name);
 }
 
 std::multiset<Component*, Component::Compare> Component::GetActiveComponentsInChildren() {

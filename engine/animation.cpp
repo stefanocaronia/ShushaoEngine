@@ -17,6 +17,26 @@ namespace se {
 		layers.clear();
 	}
 
+	void Animation::Copy(Animation* other) {
+		if (other == nullptr) return;
+		Component::Copy(other);
+
+		state = other->state;
+		startState = other->startState;
+
+		loop = other->loop;
+		ready = other->ready;
+
+		frames = other->frames;
+		duration = other->frames;
+		fps = other->frames;
+		frameDuration = 1.0f / fps;
+		cursor = 0;
+		lastFrameTime = 0.0f;
+		animationTime = 0.0f;
+		startTime = 0.0f;
+	}
+
 	int Animation::getFPS() {
 		return fps;
 	}

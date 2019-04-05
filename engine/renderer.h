@@ -15,6 +15,8 @@ namespace se {
 
 			bool isVisible; //Is this renderer visible in any camera? (Read Only)
 
+			void Copy(Renderer* other);
+
 		protected:
 
 			virtual void Awake() {};

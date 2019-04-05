@@ -29,6 +29,8 @@ namespace se {
 			void Stop();
 			void Pause();
 
+			void Copy(Animation* other);
+
 		protected:
 
 			vector<Timeline*> layers;

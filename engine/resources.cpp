@@ -24,7 +24,7 @@ vector<char> Resources::GetEmbeddedData(int IDRES, string library, LPCSTR type) 
         module = GetModuleHandle(NULL);
     }
 
-    auto resourceHandle = FindResource(module, MAKEINTRESOURCE(IDRES), RT_RCDATA);
+    auto resourceHandle = FindResource(module, MAKEINTRESOURCE(IDRES), type);
 
     if (resourceHandle != nullptr) {
         auto dataHandle = LoadResource(module, resourceHandle);
@@ -38,6 +38,9 @@ vector<char> Resources::GetEmbeddedData(int IDRES, string library, LPCSTR type) 
                 }
             }
         }
+    } else {
+        Debug::Log(WARNING) << "Cant load Resource " << IDRES << (library != "" ? " from " + library : "") <<  endl;
+        return vector<char>();
     }
 
     return output;

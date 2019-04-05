@@ -44,6 +44,8 @@ public:
     const glm::quat& rotation = _rotation;
     const glm::vec3& scale = _scale;
     const glm::vec3& pivot = _pivot;
+    const glm::mat4& MV = _MV;
+    const glm::mat4& VP = _VP;
     const glm::mat4& MVP = _MVP;
     const glm::mat4& M = _M;
     const glm::mat4& V = _V;
@@ -123,6 +125,8 @@ public:
 
     RectTransform* rectTransform = nullptr;
     bool isRectTransform = false;
+
+    void Copy(Transform* other);
 
 private:
     bool matrixInvalid = false;

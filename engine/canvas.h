@@ -28,6 +28,8 @@ namespace se {
 			void Render();
 			void OnDestroy();
 
+			void Copy(Canvas* other);
+
         private:
 
 			RenderMode _renderMode = RenderMode::WORLD;

@@ -6,108 +6,131 @@
 
 namespace se {
 
-	class Rigidbody2D;
-	class Collider2D;
+class Rigidbody2D;
+class Collider2D;
 
-	class Collider2D : public Component {
+class Collider2D : public Component {
+public:
+    virtual void setup();
 
-		public:
+    Rigidbody2D* rigidbody = nullptr;
+    b2FixtureDef fixtureDef;
+    b2Fixture* fixture = nullptr;
 
-			virtual void setup();
+    glm::vec2 scale = {1.0f, 1.0f};
 
-			Rigidbody2D* rigidbody = nullptr;
-			b2FixtureDef fixtureDef;
-			b2Fixture* fixture = nullptr;
+    float density = 1.0f;
+    ;
+    float friction = 0.3f;
+    float restitution = 0.6f;
 
-			glm::vec2 scale = {1.0f, 1.0f};
+    bool isSensor = false;
 
-			float density = 1.0f;;
-			float friction = 0.3f;
-			float restitution = 0.6f;
+    void SetDensity(float);
+    void SetRestitution(float);
+    void SetFriction(float);
+    void SetSensor(bool);
 
-			bool isSensor = false;
+    void Awake();
+    void Start();
 
-			void SetDensity(float);
-			void SetRestitution(float);
-			void SetFriction(float);
-			void SetSensor(bool);
+    void Attach();
+    void Reset();
 
-			void Awake();
-			void Start();
+    virtual void ResetShape() {}
 
-			void Attach();
-			void Reset();
+    void FixedUpdate();
+    void OnDestroy();
 
-			virtual void ResetShape() {}
+    void ColliderEnter(Collider2D*);
+    void ColliderExit(Collider2D*);
 
-			void FixedUpdate();
-			void OnDestroy();
+    void Copy(Collider2D* other) {
+        if (other == nullptr) return;
+        Component::Copy(other);
 
-			void ColliderEnter(Collider2D*);
-			void ColliderExit(Collider2D*);
+        scale = other->scale;
+        density = other->density;
+        friction = other->friction;
+        restitution = other->restitution;
+        isSensor = other->isSensor;
+    }
 
-		protected:
+protected:
+    std::vector<Collider2D*> colliders;
 
-			std::vector<Collider2D*> colliders;
+private:
+};
 
-		private:
+class PolygonCollider2D : public Collider2D {
+public:
+    b2PolygonShape shape;
+    void SetShape(std::vector<glm::vec2>);
 
-	};
+    void ResetShape() {}
 
-	class PolygonCollider2D : public Collider2D {
+    void Copy(PolygonCollider2D* other) {
+        if (other == nullptr) return;
+        Collider2D::Copy(other);
 
-		public:
+        shape = other->shape;
+    }
 
-			b2PolygonShape shape;
-			void SetShape(std::vector<glm::vec2>);
+protected:
+};
 
-			void ResetShape() {}
+class BoxCollider2D : public Collider2D {
+public:
+    glm::vec2 boxHalfSize;
 
-		protected:
+    b2PolygonShape shape;
+    void SetShape(glm::vec2);
+    void ResetShape();
 
-	};
+    void Copy(BoxCollider2D* other) {
+        if (other == nullptr) return;
+        Collider2D::Copy(other);
 
-	class BoxCollider2D : public Collider2D {
+        shape = other->shape;
+        boxHalfSize = other->boxHalfSize;
+    }
 
-		public:
+protected:
+};
 
-			glm::vec2 boxHalfSize;
+class CircleCollider2D : public Collider2D {
+public:
+    b2CircleShape shape;
+    void SetShape(glm::vec2, float);
+    void ResetShape();
 
-			b2PolygonShape shape;
-			void SetShape(glm::vec2);
-			void ResetShape();
+    void Copy(CircleCollider2D* other) {
+        if (other == nullptr) return;
+        Collider2D::Copy(other);
 
-		protected:
+        shape = other->shape;
+    }
 
-	};
+protected:
+    glm::vec2 position;
+    float radius;
+};
 
-	class CircleCollider2D : public Collider2D {
+class EdgeCollider2D : public Collider2D {
+public:
+    b2EdgeShape shape;
 
-		public:
+    void SetShape(glm::vec2, glm::vec2);
 
-			b2CircleShape shape;
-			void SetShape(glm::vec2, float);
-			void ResetShape();
+    void ResetShape() {}
 
-		protected:
+    void Copy(EdgeCollider2D* other) {
+        if (other == nullptr) return;
+        Collider2D::Copy(other);
 
-			glm::vec2 position;
-			float radius;
+        shape = other->shape;
+    }
 
-	};
-
-	class EdgeCollider2D : public Collider2D {
-
-		public:
-
-			b2EdgeShape shape;
-
-			void SetShape(glm::vec2, glm::vec2);
-
-			void ResetShape() {}
-
-		protected:
-
-
-	};
-}
+protected:
+};
+}  // namespace se

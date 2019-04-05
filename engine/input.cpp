@@ -48,7 +48,7 @@ namespace se {
 
 	void Input::printActiveControllers() {
 		if (!Debug::enabled) return;
-		Logger::setColor(ConsoleColor::RED);
+		Logger::setColor(ConsoleColor::GREY);
 		cout << " InputManager Active Controllers:" << endl;
 		for (auto cm : controllers) {
 			Logger::setColor(ConsoleColor::RED);

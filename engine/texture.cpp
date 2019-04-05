@@ -22,7 +22,7 @@ Texture::~Texture() {
 }
 
 bool Texture::LoadEmbedded(int IDRES, std::string library) {
-    vector<char> data = Resources::GetEmbeddedData(IDRES, library, RT_BITMAP);
+    vector<char> data = Resources::GetEmbeddedData(IDRES, library);
     return LoadBytes(data);
 }
 

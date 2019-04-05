@@ -94,12 +94,6 @@ else
 	LNKFLAGS += -s -mwindows
 endif
 
-#SOURCES = $(wildcard $(SRCDIR)/**/*.$(SRCEXT)) $(wildcard $(SRCDIR)/*/*/*.$(SRCEXT))
-#RCSOURCES = $(wildcard $(SRCDIR)/**/*.$(RCEXT)) $(wildcard $(SRCDIR)/*/*/*.$(RCEXT))
-#OBJECTS = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT)))
-#RCFILES = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(RCSOURCES:.$(RCEXT)=.$(OBJEXT)))
-#DEPENDS = $(OBJECTS:.o=.d)
-
 SUBDIRS  = $(wildcard */)
 SOURCES  = $(wildcard $(SRCDIR)/$(ENGINE)/*.$(SRCEXT)) $(wildcard $(SRCDIR)/$(ENGINE)/**/*.$(SRCEXT))
 SOURCES += $(wildcard $(SRCDIR)/$(GAME)/*.$(SRCEXT)) $(wildcard $(SRCDIR)/$(GAME)/**/*.$(SRCEXT))

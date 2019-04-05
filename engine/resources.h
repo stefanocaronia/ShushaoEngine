@@ -71,17 +71,17 @@ public:
 
     template <class T>
     static T* Add(T* asset, std::string name = "") {
-        Assets[name == "" ? resource->name : name] = (T*)asset;
         auto it = Assets.find(asset->name);
         if (it != Assets.end()) {
             Debug::Log(WARNING) << "Resource " << asset->name << " already loaded" << endl;
             return nullptr;
         }
+        Assets[name == "" ? asset->name : name] = (T*)asset;
         return (T*)asset;
     }
 
     template <class T>
-    static T* Load(std::string filename, std::string name = "") {
+    static T* Load(std::string filename) {
         T* resource = new T(filename);
         auto it = Assets.find(resource->name);
         if (it != Assets.end()) {
@@ -90,7 +90,7 @@ public:
             resource = nullptr;
             return nullptr;
         }
-        Assets[name == "" ? resource->name : name] = (T*)resource;
+        Assets[resource->name] = (T*)resource;
         return (T*)resource;
     }
 

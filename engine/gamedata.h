@@ -17,7 +17,7 @@ using Multitype = boost::variant<int, float, double, std::string>;
 class GameData {
 public:
     static Camera* activeCamera;
-    static Scene* activeScene;
+    static Scene* scene;
     static std::vector<Object*> Objects;
     static std::vector<Component*> Components;
 

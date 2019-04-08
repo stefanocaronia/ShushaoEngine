@@ -15,6 +15,7 @@
 namespace se {
 
 using namespace std;
+using ComponentSet = std::multiset<Component*, Component::Compare>;
 
 Component::Component() {
     name = getTitle();
@@ -54,10 +55,10 @@ std::string Component::getTitle() {
     return classname + (enabled ? "+" : "") + (name != "" && name != classname ? " '" + name + "'" : "");
 }
 
-std::multiset<Component*, Component::Compare> Component::GetActiveComponentsInChildren() {
-    if (!entity->active) return std::multiset<Component*, Component::Compare>();
+ComponentSet Component::GetActiveComponentsInChildren() {
+    if (!entity->active) return ComponentSet();
 
-    std::multiset<Component*, Component::Compare> activeComponents;
+    ComponentSet activeComponents;
 
     for (Component* c : entity->Components) {
         if (c->enabled) {
@@ -67,7 +68,7 @@ std::multiset<Component*, Component::Compare> Component::GetActiveComponentsInCh
 
     for (Transform* tr : entity->transform->children) {
         if (tr == nullptr) continue;
-        std::multiset<Component*, Component::Compare> newComponents = tr->GetActiveComponentsInChildren();
+        ComponentSet newComponents = tr->GetActiveComponentsInChildren();
         activeComponents.insert(newComponents.begin(), newComponents.end());
     }
 
@@ -84,27 +85,6 @@ std::set<Entity*> Component::GetEntitiesInChildren() {
     }
 
     return entities;
-}
-
-// usato solo con i metodi di cycle della base class
-void Component::run(Cycle::Stage cycle) {
-    switch (cycle) {
-        case Cycle::Stage::INIT:
-            init();
-            break;
-        case Cycle::Stage::UPDATE:
-            update();
-            break;
-        case Cycle::Stage::RENDER:
-            render();
-            break;
-        case Cycle::Stage::FIXED:
-            fixed();
-            break;
-        case Cycle::Stage::EXIT:
-            exit();
-            break;
-    }
 }
 
 // usato per i metodi custom delle classi derivate (riceve i messages)
@@ -142,7 +122,6 @@ void Component::init() {
 void Component::fixed() {
     currentEnable = isActiveAndEnabled();
     if (!currentEnable) return;
-
     FixedUpdate();
 }
 

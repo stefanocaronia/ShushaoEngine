@@ -18,7 +18,7 @@ namespace se {
 
 			static Scene* activeScene;
 
-			static bool activeSceneSet;
+			static bool sceneSet;
 
 			template<class T>
 			static T* LoadScene(string _name = "") { // Adds a scene of class T
@@ -27,15 +27,15 @@ namespace se {
 				T* scene = new T();
 				scene->name = (_name == "" ? util::classtitle<T>() : _name);
 
-				if (activeSceneSet) {
-					delete(activeScene);
+				if (sceneSet) {
+					delete(scene);
 					GameData::DestroyAll();
 				}
-				SetActiveScene(scene);
+				Setscene(scene);
 				return scene;
 			}
 
-			static void SetActiveScene(Scene*);
+			static void Setscene(Scene*);
 			static void Clear();
 
 			/*template<class T>

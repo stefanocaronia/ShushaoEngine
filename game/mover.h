@@ -3,8 +3,8 @@
 #include "globals.h"
 
 class Mover : public se::Program {
-  public:
-  protected:
+public:
+protected:
     void FixedUpdate();
     void Update();
     void Awake();
@@ -18,7 +18,7 @@ class Mover : public se::Program {
     void OnTriggerExit2D(se::Collider2D&);
     void OnTriggerStay2D(se::Collider2D&);
 
-  private:
+private:
     float animTime;
     se::SpriteRenderer* sr = nullptr;
     se::Rigidbody2D* rb = nullptr;

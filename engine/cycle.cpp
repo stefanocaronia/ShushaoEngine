@@ -13,6 +13,7 @@
 #include "scenemanager.h"
 #include "stime.h"
 #include "system.h"
+#include "font.h"
 
 se::Cycle* GAME;
 
@@ -77,6 +78,9 @@ bool Cycle::init() {
         Debug::Log(ERROR) << "Error loading resources" << endl;
     }
 
+    // engine resources
+    Resources::Load<Font>("consolas", FONT_CONSOLAS, LIB_SHUSHAO);
+
     // Init input mappings (derived)
     if (!InitMapping()) {
         Debug::Log(ERROR) << "Error In input mapping" << endl;
@@ -95,7 +99,12 @@ bool Cycle::init() {
 
     SceneManager::activeScene->ScanActiveComponents();
     SceneManager::activeScene->ScanActiveLights();
-    SceneManager::activeScene->run(Cycle::Stage::INIT);  // vengono chiamati qui gli Awake di tutti gli oggetti attivi
+    SceneManager::activeScene->init(); // vengono chiamati qui gli Awake di tutti gli oggetti attivi
+
+    // FIXME: rifaccio lo scan per le cose instanziate in awake dalgi oggetti
+    // FIXME: per lo scan active components devo adottare un metodo "invalidate", si invalida la lista components quando si aggiungono components o si abilitano o disabilitano. ora vado a dormire
+    SceneManager::activeScene->ScanActiveComponents();
+    SceneManager::activeScene->ScanActiveLights();
 
     if (Debug::enabled) {
         SceneManager::activeScene->PrintHierarchy();
@@ -118,15 +127,22 @@ bool Cycle::init() {
 }
 
 void Cycle::run() {
-    if (!SceneManager::activeSceneSet)
+    if (!SceneManager::sceneSet)
         return;
 
     // Start method (derived)
     Start();
 
+    double updateStartTime = 0.0f;
+    double renderStartTime = 0.0f;
+
     // MAIN LOOP
     while (RUNNING) {
         Time::Update();
+
+        if (Debug::enabled && Debug::infoEnabled) {
+            updateStartTime = 0.0f;
+        }
 
         SceneManager::activeScene->ScanActiveComponents();
         SceneManager::activeScene->ScanActiveLights();
@@ -144,8 +160,18 @@ void Cycle::run() {
             fixed();
         }
 
+        if (Debug::enabled && Debug::infoEnabled) {
+            SceneManager::activeScene->debugInfo->updateTime = Time::time - updateStartTime;
+            renderStartTime = 0.0f;
+        }
+
         if (Time::renderDeltaTime >= Time::frameLimitDuration) {
             render();
+        }
+
+        if (Debug::enabled && Debug::infoEnabled) {
+            SceneManager::activeScene->debugInfo->renderTime = Time::time - renderStartTime;
+            SceneManager::activeScene->debugInfo->frameRate = 1.0 / Time::deltaTime;
         }
 
         SceneManager::activeScene->componentsScanned = false;
@@ -161,7 +187,7 @@ void Cycle::stop() {
 void Cycle::render() {
     Time::renderTime = Time::GetTime();
     GLManager::Reset();
-    SceneManager::activeScene->run(Cycle::Stage::RENDER);
+    SceneManager::activeScene->render();
     Render();  // (derived)
     if (Physics::enabled && Physics::debug) Physics::world->DrawDebugData();
     SceneManager::activeScene->renderOverlay();
@@ -172,7 +198,7 @@ void Cycle::render() {
 void Cycle::update() {
     Time::realtimeSinceStartup = Time::GetTime();
     GLManager::Update();
-    SceneManager::activeScene->run(Cycle::Stage::UPDATE);
+    SceneManager::activeScene->update();
     Update();  // (derived)
 }
 
@@ -180,14 +206,14 @@ void Cycle::fixed() {
     Time::fixedTime = Time::GetTime();
     Time::inFixedTimeStep = true;
     if (Physics::enabled) Physics::update();
-    SceneManager::activeScene->run(Cycle::Stage::FIXED);
+    SceneManager::activeScene->fixed();
     FixedUpdate();  // (derived)
     Time::inFixedTimeStep = false;
 }
 
 void Cycle::exit() {
     End();  // (derived)
-    SceneManager::activeScene->run(Cycle::Stage::EXIT);
+    SceneManager::activeScene->exit();
     Input::exit();
     System::exit();
     Physics::exit();

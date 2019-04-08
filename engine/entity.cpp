@@ -26,7 +26,7 @@ Entity::~Entity() {
 
     // distruggo tutti i components
     for (Component* pCO : Components) {
-        delete (pCO);
+        delete(pCO);
     }
     Components.clear();
 }
@@ -94,22 +94,6 @@ void Entity::SendMessage(std::string methodName, Object& parameter) {
 
     for (Component* c : Components) {
         if (c->enabled) c->ReceiveMessage(methodName, parameter);
-    }
-}
-
-void Entity::run(Cycle::Stage cycle) {
-    if (!isActiveInHierarchy()) {
-        return;
-    }
-
-    for (Component* c : Components) {
-        if (c->enabled) {
-            c->run(cycle);
-        }
-    }
-
-    for (Transform* t : transform->children) {
-        t->entity->run(cycle);
     }
 }
 

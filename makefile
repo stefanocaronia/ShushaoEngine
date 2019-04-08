@@ -15,20 +15,21 @@ rebuild: prebuild clean | directories resources $(TARGET)
 
 #Copy Resources from Resources Directory to Target Directory
 resources:
-	@echo -e $(CBLUE)$(BULLET)Syncing resources $(CEND)
+	@echo -e $(CLBLUE)$(BULLET)Syncing resources $(CEND)
 #@rescopy $(BUILD)
 	@rsync $(RESDIR)/ $(TARGETDIR) -az --delete --prune-empty-dirs
 
 #Make the directories
 directories:
-	@echo -e $(CBLUE)$(BULLET)Checking build directories $(CEND)
+	@echo -e $(CLBLUE)$(BULLET)Checking build directories $(CEND)
 	@$(MD) -p $(TARGETDIR)
 	@$(MD) -p $(BUILDDIR)
 	@$(RM) -f obj/$(BUILD)/$(ENGINE_RESFILE)
+	@$(RM) -f obj/$(BUILD)/$(GAME_RESFILE)
 
 #Clean only Objecst
 clean:
-	@echo -e $(CBLUE)$(BULLET)Cleaning build $(CEND)
+	@echo -e $(CLBLUE)$(BULLET)Cleaning build $(CEND)
 	@$(RM) -rf obj/*
 	@$(RM) -rf bin/*
 
@@ -39,7 +40,7 @@ test:
 	@echo "RCFILES: " $(RCFILES)
 
 compilation:
-	@echo -e $(CBLUE)$(BULLET)Compilation $(CEND)$(CLGREY)
+	@echo -e $(CLBLUE)$(BULLET)Compilation $(CEND)$(CLCYAN)
 	@$(MAKE) -f .makefiles/compile.mk --silent -j $(CORES) -Oline -l 80.0
 
 run: all
@@ -52,9 +53,9 @@ debug: all
 
 #Link
 $(TARGET): compilation
-	@echo -e $(CEND)$(CBLUE)$(BULLET)Linking $(LIBTARGET) $(CEND)
+	@echo -e $(CEND)$(CLBLUE)$(BULLET)Creating library $(LIBTARGET) $(CEND)
 	@$(CC) $(SHAREDFLAGS) -o $(TARGETDIR)/$(LIBTARGET) obj/$(BUILD)/$(ENGINE_RESFILE)
-	@echo -e $(CEND)$(CBLUE)$(BULLET)Linking $(TARGET) $(CEND)
+	@echo -e $(CEND)$(CLBLUE)$(BULLET)Linking executable $(TARGET) $(CEND)
 	@$(CC) $(LNKFLAGS) -o $(TARGETDIR)/$(TARGET) $(OBJECTS) $(RCFILES) $(LIBDIRS) $(LIB)
 
 #Non-File Targets

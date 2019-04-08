@@ -16,6 +16,7 @@ namespace se {
 		public:
 
 			static bool enabled;
+			static bool infoEnabled;
 			static bool gridEnabled;
 			static bool drawTransforms;
 			static bool drawRectTransforms;

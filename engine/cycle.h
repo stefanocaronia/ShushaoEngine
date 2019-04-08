@@ -4,57 +4,51 @@
 
 namespace se {
 
+class Cycle {
+public:
+    enum class Stage {
+        INIT,
+        UPDATE,
+        FIXED,
+        RENDER,
+        EXIT
+    };
 
+    Cycle();
+    ~Cycle();
 
-	class Cycle {
+    std::string name;
 
-		public:
+    bool init();
+    void run();
+    void stop();
 
-			enum class Stage {
-				INIT,
-				UPDATE,
-				FIXED,
-				RENDER,
-				EXIT
-			};
+protected:
+    // pure virtual (devo implementare x forza)
+    virtual void Awake(){};
+    virtual void Start(){};
+    virtual void GetInput(){};
+    virtual void Update(){};
+    virtual void FixedUpdate(){};
+    virtual void Render(){};
+    virtual void End(){};
 
-			Cycle();
-			~Cycle();
+    virtual bool InitResources() = 0;  // resources loading
+    virtual bool InitConfig() = 0;  // config override
+    virtual bool InitMapping() = 0;  // input mapping
+    virtual bool InitScene() = 0;  // scene load
 
-			std::string name;
+    bool RUNNING = true;
+    bool READY = false;
 
-			bool init();
-			void run();
-			void stop();
+    bool keys[350];
 
-		protected:
-
-			// pure virtual (devo implementare x forza)
-			virtual void Awake() {};
-			virtual void Start() {};
-			virtual void GetInput() {};
-			virtual void Update() {};
-			virtual void FixedUpdate() {};
-			virtual void Render() {};
-			virtual void End() {};
-
-			virtual bool InitResources() = 0; // resources loading
-			virtual bool InitConfig() = 0; // config override
-			virtual bool InitMapping() = 0; // input mapping
-			virtual bool InitScene() = 0; // scene load
-
-			bool RUNNING = true;
-			bool READY = false;
-
-			bool keys[350];
-
-		private:
-
-			void update();
-			void render();
-			void fixed();
-			void exit();
-	};
-}
+private:
+    void update();
+    void render();
+    void fixed();
+    void exit();
+};
+}  // namespace se
 
 extern se::Cycle* GAME;

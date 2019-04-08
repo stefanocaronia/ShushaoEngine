@@ -1,3 +1,4 @@
+// SHADERS
 #define BASESHADER_FRAG         1001
 #define BASESHADER_VERT         1002
 #define STANDARDSHADER_VERT     1004
@@ -12,8 +13,13 @@
 #define PARTICLESSHADER_FRAG    1017
 #define PARTICLESSHADER_GEOM    1018
 
+// BITMAPS
 #define IMG_AVATAR              2000
 
+// FONTS
+#define FONT_CONSOLAS           3000
+
+// CONFIG
 #ifndef CONFIG_ENGINE
 #define CONFIG_ENGINE 5000
 #endif

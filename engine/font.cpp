@@ -5,6 +5,7 @@
 #include "debug.h"
 #include "utility.h"
 #include "glmanager.h"
+#include "resources.h"
 
 namespace se {
 
@@ -31,5 +32,13 @@ namespace se {
 		}
 		return true;
 	}
+
+	bool Font::LoadEmbedded(int IDRES, std::string library) {
+		vector<char> data = Resources::GetEmbeddedData(IDRES, library);
+		const FT_Byte* cd = reinterpret_cast<const FT_Byte*>(data.data());
+		FT_Error r = FT_New_Memory_Face(GLManager::lFreetype, cd, data.size(), 0, &face);
+		return r == 0;
+	}
+
 
 }

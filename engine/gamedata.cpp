@@ -59,7 +59,7 @@ void GameData::DestroyAll() {
 
 // inizializations of members
 
-Scene* GameData::activeScene;
+Scene* GameData::scene;
 Camera* GameData::activeCamera;
 
 // FORSE DA ELIMINARE, SONO GESTITI NELLE SCENE

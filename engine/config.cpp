@@ -153,6 +153,10 @@ bool parseEngineConfig() {
         se::Debug::enabled = (data["debug_enabled"] == "Y");
     }
 
+    if (data.find("debuginfo_enabled") != data.end()) {
+        se::Debug::infoEnabled = (data["debuginfo_enabled"] == "Y");
+    }
+
     if (data.find("physics_debug") != data.end()) {
         Physics::debug = (data["physics_debug"] == "Y");
     }

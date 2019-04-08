@@ -4,89 +4,98 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
-#include "renderer.h"
 #include "color.h"
-#include "rect.h"
+#include "config.h"
 #include "font.h"
+#include "globals.h"
+#include "rect.h"
+#include "renderer.h"
 #include "shaders/shader.h"
 #include "vao.h"
-#include "config.h"
-#include "globals.h"
 
 // TODO: deve renderizzare più righe? controllare com'è in unity
 
 namespace se {
 
+class Text : public Renderer {
+public:
+    enum class BottomAlign {
+        BASELINE,
+        HEIGHT
+    };
 
+    struct Line {
+        std::string text;
+        Color color = color::white;
 
-	class Text : public Renderer {
+        Line(std::string& text_, const Color& color_) : text(text_), color(color_) {}
+    };
 
-		public:
+    virtual void setup();
 
-			enum class BottomAlign {
-				BASELINE,
-				HEIGHT
-			};
+    Shader* shader = nullptr;
+    Font* font = nullptr;
 
-			virtual void setup();
+    // readonly properties
+    const Color& color = _color;
+    const std::string& text = _text;
+    glm::fvec2& offset = _offset;
+    glm::fvec2& scale = _scale;
+    const unsigned int& pixelPerUnit = _pixelPerUnit;
+    const Align& align = _align;
+    const BottomAlign& bottomAlign = _bottomAlign;
+    bool alignToGeometry = false;
+    bool wordWrap = false;
 
-			Shader* shader = nullptr;
-			Font* font = nullptr;
+    float lineSpace = 0.3f;  // %
 
-			// readonly properties
-			const Color& color = _color;
-			const std::string& text = _text;
-			glm::fvec2& offset = _offset;
-			glm::fvec2& scale = _scale;
-			const unsigned int& pixelPerUnit = _pixelPerUnit;
-			const Align& align = _align;
-			const BottomAlign& bottomAlign = _bottomAlign;
-			bool alignToGeometry = false;
-			bool wordWrap = false;
+    Text* SetText(std::string value);
+    Text* SetText(std::string value, Color col);
+    Text* SetColor(Color value);
+    Text* SetFont(Font* value);
+    Text* SetScale(glm::fvec2 value);
+    Text* SetOffset(glm::fvec2 value);
+    Text* SetSize(float value);
+    Text* SetBottomAlign(BottomAlign value);
+    Text* SetAlign(Align value);
+    Text* SetPixelSize(int value);
+    Text* SetPixelPerUnit(unsigned int value);
+    Text* AddLine(Line line_);
+    Text* SetLines(std::vector<Line>& lines_);
+    Text* Clear();
 
-			float lineSpace = 0.3f; // %
+    void Awake();
+    void Update();
+    void Render();
+    void OnDestroy();
 
-			Text* SetText(std::string value) 			{ _text = value; return this;}
-			Text* SetColor(Color value) 				{ _color = value; return this; }
-			Text* SetFont(Font* value) 					{ font = value; return this; }
-			Text* SetScale(glm::fvec2 value) 			{ _scale = value; return this; } // scale locale del carattere (si aggiunge alla scale del transform, decidere se togliere, qual'è la migliore?)
-			Text* SetOffset(glm::fvec2 value) 			{ _offset = value; return this; }
-			Text* SetSize(float value) 					{ font->SetSize(value); return this;}
-			Text* SetBottomAlign(BottomAlign value)		{ _bottomAlign = value; return this; }
-			Text* SetAlign(Align value)					{ _align = value; return this; }
-			Text* SetPixelSize(int value) 				{ font->SetPixelSize(value); return this; }
-			Text* SetPixelPerUnit(unsigned int value) 	{ _pixelPerUnit = value; return this; }
+    int getWidth(std::string text);
 
-			void Awake();
-			void Update();
-			void Render();
-			void OnDestroy();
+private:
+    SDL_Surface* surface = nullptr;
+    SDL_Texture* texture = nullptr;
 
-			int getWidth(std::string text);
+    bool isReady();
 
-        private:
+    unsigned int _pixelPerUnit = Config::pixelPerUnit;
+    BottomAlign _bottomAlign = BottomAlign::HEIGHT;
+    glm::fvec2 _offset = {0.0f, 0.0f};
+    glm::fvec2 _scale = {1.0f, 1.0f};
+    Color _color = {1.0f, 1.0f, 1.0f, 1.0f};
+    std::string _text = "";
+    Align _align = Align::TOPLEFT;
+    std::string filename;
 
-            SDL_Surface* surface = nullptr;
-            SDL_Texture* texture = nullptr;
+    std::vector<Line> lines;
 
-            bool isReady();
+    float lastYpos = 0.0f;
 
-			unsigned int _pixelPerUnit = Config::pixelPerUnit;
-			BottomAlign _bottomAlign = BottomAlign::HEIGHT;
-			glm::fvec2 _offset = { 0.0f, 0.0f };
-			glm::fvec2 _scale = { 1.0f, 1.0f };
-            Color _color = { 1.0f, 1.0f, 1.0f, 1.0f };
-            std::string _text = "";
-			Align _align = Align::TOPLEFT;
-            std::string filename;
+    Rect textRect;
 
-			Rect textRect;
+    GLuint vbo;
+    Vao* VAO;
 
-            GLuint vbo;
-            Vao* VAO;
+    void writeLine(std::string text_, Color color);
+};
 
-            void write(std::string text_);
-
-	};
-
-}
+}  // namespace se

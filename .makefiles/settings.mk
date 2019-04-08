@@ -11,7 +11,6 @@ RC = windres
 MAKE = mingw32-make
 BUILD = Debug
 DEBUG = true
-COLORS = true
 
 BULLET = "* "
 BULLET2 = ""
@@ -26,25 +25,19 @@ TAB = "  "
 # Cyan         0;36     Light Cyan    1;36
 # Light Gray   0;37     White         1;37
 
-ifeq ($(COLORS),true)
-	CRED 	= "\033[1;31m"
-	CBLUE 	= "\033[1;34m"
-	CYELLOW = "\033[1;33m"
-	CGREEN 	= "\033[1;32m"
-	CGREY 	= "\033[1;30m"
-	CLGREY 	= "\033[0;37m"
-	CCYAN 	= "\033[1;36m"
-	CEND 	= "\033[0m"
-else
-	CRED 	= ""
-	CBLUE 	= ""
-	CYELLOW = ""
-	CGREEN 	= ""
-	CGREY 	= ""
-	CLGREY 	= ""
-	CCYAN 	= ""
-	CEND 	= ""
-endif
+CRED 		= "\033[1;31m"
+CLBLUE 		= "\033[1;34m"
+CYELLOW 	= "\033[1;33m"
+CGREEN 		= "\033[0;32m"
+CLGREEN 	= "\033[1;32m"
+CGREY 		= "\033[1;30m"
+CLGREY 		= "\033[0;37m"
+CORANGE 	= "\033[0;33m"
+CPURPLE 	= "\033[0;35m"
+CLPURPLE 	= "\033[1;35m"
+CCYAN 		= "\033[0;36m"
+CLCYAN 		= "\033[1;36m"
+CEND 		= "\033[0m"
 
 ifeq ($(BUILD),Debug)
 	DEBUG = true
@@ -79,7 +72,7 @@ RESEXT	= res
 RCEXT	= rc
 
 #Flags, Libraries and Includes
-COMFLAGS =  -MMD -MP -std=c++17 -fexceptions -DGLEW_STATIC -g -DDEBUG=$(DEBUG)
+COMFLAGS =  -MMD -MP -std=c++17 -fexceptions -DGLEW_STATIC -g -fmax-errors=1 -Wfatal-errors -DDEBUG=$(DEBUG)
 LNKFLAGS =
 SHAREDFLAGS = -shared
 LIBDIRS	 = -L$(BASE_LIBS)/boost/stage/lib -L$(BASE_LIBS)/glew/lib -L$(BASE_LIBS)/freetype/lib -L$(BASE_LIBS)/SDL2/lib -L$(BASE_LIBS)/SDL2_image/lib -L$(BASE_LIBS)/SDL2_ttf/lib -L$(BASE_LIBS)/SDL2_mixer/lib -L$(BASE_LIBS)/Box2D/lib
@@ -108,4 +101,5 @@ DEPENDS = $(OBJECTS:.o=.d)
 
 ENGINE_RCFILE = engine/resources/resources.$(RCEXT)
 ENGINE_RESFILE = engine/resources/resources.$(RESEXT)
+GAME_RESFILE = game/resources/resources.$(RESEXT)
 

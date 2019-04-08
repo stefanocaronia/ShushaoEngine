@@ -1,20 +1,23 @@
 #pragma once
 
-#include <string>
 #include <set>
+#include <string>
 
 #include "coroutineholder.h"
-#include "cycle.h"
 #include "object.h"
 
 namespace se {
 
+class Scene;
 class Entity;
 class Transform;
 class Collision2D;
 class Collider2D;
 
 class Component : public Object, public CoroutineHolder {
+    friend class Scene;
+    friend class Entity;
+
 public:
     struct Compare {
         bool operator()(Component* A, Component* B) const;
@@ -23,21 +26,22 @@ public:
     Component();
     virtual ~Component();
 
-    // è obbligatorio implementarla nelle derived e va eseguita a mano dopo l'istanziazione
-    virtual void setup() {};
+    // va eseguita a mano dopo l'istanziazione
+    virtual void setup(){};
 
     Entity* entity = nullptr;
     Transform* transform = nullptr;
     std::string tag;
-	int sortingLayerID = 0; //Unique ID of the Renderer's sorting layer.
-	int sortingOrder = 0; //Renderer's order within a sorting layer.
-    unsigned int index = 0; // index in entity
+    int sortingLayerID = 0;  //Unique ID of the Renderer's sorting layer.
+    int sortingOrder = 0;  //Renderer's order within a sorting layer.
+    unsigned int index = 0;  // index in entity
 
     inline bool operator<(Component B) {
-        if (sortingLayerID == B.sortingLayerID)
+        if (sortingLayerID == B.sortingLayerID) {
             return sortingOrder < B.sortingOrder;
-        else
+        } else {
             return sortingLayerID < B.sortingLayerID;
+        }
     }
 
     void Copy(Component* other);
@@ -54,7 +58,7 @@ public:
     void SendMessage(std::string methodName);  // Calls the method named methodName on every MonoBehaviour in this game object.
     void SendMessageUpwards(std::string methodName);  // Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour.
 
-    void run(Cycle::Stage stage);
+    // void run(Cycle::Stage stage);
     virtual void call(std::string method);
 
     virtual void ReceiveMessage(std::string methodName, Object& parameter);
@@ -97,7 +101,6 @@ private:
     bool currentEnable;
     bool started;
 
-    // questi metodi sono chiamati dal metodo run
     void init();
     void update();
     void fixed();

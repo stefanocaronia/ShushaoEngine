@@ -41,8 +41,6 @@ public:
     bool activeInHierarchy;  // 	Is the Entity active in the scene?
     bool active;  // 	The local active state of this Entity. (Read Only)
     bool isStatic;  // 	Editor only API that specifies if a game object is static.
-
-    void run(Cycle::Stage);
     std::multiset<Component*, Component::Compare> GetActiveComponentsInChildren();
     void PrintHierarchy(int);
     bool isActiveInHierarchy();
@@ -58,7 +56,7 @@ public:
     void Copy(Entity* other);
 
     template <class T>
-    T* AddComponent(std::string _name = "") {  // Adds a component class named className to the game object.
+    T* AddComponent(std::string _name = "") {
         T* component = new T();
 
         component->name = (_name == "" ? util::classtitle<T>() : _name);
@@ -75,7 +73,7 @@ public:
         }
 
         Components.insert(component);
-        return component;
+        return (T*)component;
     }
 
     template <class T>

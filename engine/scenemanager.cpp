@@ -13,15 +13,15 @@ namespace se {
 		Scenes.clear();
 	}
 
-	void SceneManager::SetActiveScene(Scene* scene) {
-		activeScene = scene;
-		GameData::activeScene = scene;
-		activeSceneSet = true;
+	void SceneManager::Setscene(Scene* scene_) {
+		activeScene = scene_;
+		GameData::scene = scene_;
+		sceneSet = true;
 	}
 
 	// init
 
-	bool SceneManager::activeSceneSet = false;
+	bool SceneManager::sceneSet = false;
 	vector<Scene*> SceneManager::Scenes;
 	Scene* SceneManager::activeScene = nullptr;
 

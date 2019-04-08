@@ -4,11 +4,13 @@
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
+
 #include "object.h"
+#include "resource.h"
 
 namespace se {
 
-	class Font : public Object {
+	class Font : public Object, public Resource {
 
 		public:
 
@@ -20,6 +22,7 @@ namespace se {
 			const int& size = _size;
 
 			bool Load(std::string);
+			bool LoadEmbedded(int IDRES, std::string library = "");
 			void SetSize(float);
 			void SetPixelSize(int);
 

@@ -16,3 +16,5 @@ PARTICLESSHADER_FRAG    RCDATA  "engine/shaders/glsl/particlesshader.frag"
 PARTICLESSHADER_GEOM    RCDATA  "engine/shaders/glsl/particlesshader.geom"
 
 IMG_AVATAR              RCDATA  "engine/resources/avatar.png"
+
+FONT_CONSOLAS           RCDATA  "engine/resources/consolas.ttf"

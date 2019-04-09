@@ -72,7 +72,7 @@ RESEXT	= res
 RCEXT	= rc
 
 #Flags, Libraries and Includes
-COMFLAGS =  -MMD -MP -std=c++17 -fexceptions -DGLEW_STATIC -g -fmax-errors=1 -Wfatal-errors -DDEBUG=$(DEBUG)
+COMFLAGS =  -MMD -MP -std=c++17 -fexceptions -DGLEW_STATIC -g -fmax-errors=4 -Wfatal-errors -DDEBUG=$(DEBUG)
 LNKFLAGS =
 SHAREDFLAGS = -shared
 LIBDIRS	 = -L$(BASE_LIBS)/boost/stage/lib -L$(BASE_LIBS)/glew/lib -L$(BASE_LIBS)/freetype/lib -L$(BASE_LIBS)/SDL2/lib -L$(BASE_LIBS)/SDL2_image/lib -L$(BASE_LIBS)/SDL2_ttf/lib -L$(BASE_LIBS)/SDL2_mixer/lib -L$(BASE_LIBS)/Box2D/lib
@@ -102,4 +102,7 @@ DEPENDS = $(OBJECTS:.o=.d)
 ENGINE_RCFILE = engine/resources/resources.$(RCEXT)
 ENGINE_RESFILE = engine/resources/resources.$(RESEXT)
 GAME_RESFILE = game/resources/resources.$(RESEXT)
+
+N_SOURCES := $(words $(SOURCES))
+N_RCSOURCES := $(words $(SOURCES))
 

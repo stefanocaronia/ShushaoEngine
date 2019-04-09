@@ -3,15 +3,13 @@
 #include "../entity.h"
 #include "../transform.h"
 
+namespace se {
 namespace ui {
 
     class Image : public se::Entity {
-
-        public:
-
-            Image();
-
+    public:
+        void Awake();
     };
 
-}
-
+}  // namespace ui
+}  // namespace se

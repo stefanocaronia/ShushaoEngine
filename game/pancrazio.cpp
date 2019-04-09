@@ -3,7 +3,7 @@
 
 using namespace se;
 
-Pancrazio::Pancrazio() {
+void Pancrazio::Awake() {
 
 	using namespace glm;
 
@@ -38,9 +38,4 @@ Pancrazio::Pancrazio() {
 	animation->setStartState(AnimationState::PLAY);
 	transform->localScale = {1.0f, 1.0f, 0.0f};*/
 }
-
-Pancrazio::~Pancrazio() {
-
-}
-
 

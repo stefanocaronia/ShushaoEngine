@@ -1,6 +1,7 @@
 #include "entity.h"
 #include "scene.h"
 #include "transform.h"
+#include "component.h"
 
 namespace se {
 
@@ -8,17 +9,22 @@ Entity::Entity() {
     name = "Entity";
     active = true;
     isStatic = false;
+}
 
-    transform = AddComponent<Transform>();
+Entity::Entity(string _name) {
+    name = _name;
+    active = true;
+    isStatic = false;
 }
 
 void Entity::init() {
-    if (isInitialized) return;
-    if (!addedToScene) {
-        scene->Entities.insert(this);
+    if (awaken) return;
+    if (!registered && scene != nullptr) {
+        scene->RegisterEntity(this);
     }
-    Init();
-    isInitialized = true;
+    transform = AddComponent<Transform>();
+    Awake();
+    awaken = true;
 }
 
 Entity::~Entity() {
@@ -26,17 +32,17 @@ Entity::~Entity() {
 
     // distruggo tutti i components
     for (Component* pCO : Components) {
-        delete(pCO);
+        scene->UnsetActiveComponent(pCO);
+        delete (pCO);
     }
+
+    scene->RemoveEntity(this);
     Components.clear();
 }
 
-Entity::Entity(string _name) {
-    name = _name;
-    active = true;
-    isStatic = false;
-
-    transform = AddComponent<Transform>();
+void Entity::SetActive(bool value_) {  // Activates/Deactivates the Entity.
+    active = value_;
+    scene->Invalidate();
 }
 
 void Entity::Copy(Entity* other) {
@@ -59,20 +65,31 @@ void Entity::Copy(Entity* other) {
     }
 }
 
+void Entity::UnsetActiveComponent(Component* component) {
+    scene->UnsetActiveComponent(component);
+}
+
+void Entity::SetActiveComponent(Component* component) {
+    scene->SetActiveComponent(component);
+}
+
+void Entity::InvalidateScene() {
+    scene->Invalidate();
+}
+
 Entity* Entity::AddChild(string _name = "Entity") {
     Entity* entity = new Entity();
     entity->transform->SetParent(transform);
-    entity->scene = scene;
     entity->name = _name;
     if (entity->scene != nullptr) {
         scene->Entities.insert(entity);
-        entity->addedToScene = true;
+        entity->registered = true;
         entity->init();
     }
     return entity;
 }
 
-std::multiset<Component*, Component::Compare> Entity::GetActiveComponentsInChildren() {
+std::multiset<Component*, CompareComponent> Entity::GetActiveComponentsInChildren() {
     return transform->GetActiveComponentsInChildren();
 }
 
@@ -117,14 +134,18 @@ void Entity::PrintHierarchy(int level) {
 }
 
 bool Entity::isActiveInHierarchy() {
-    if (!active) return false;
+    if (!active) {
+        return false;
+    }
 
-    /*Transform* p = transform->getParent();
-		while (p != nullptr) {
-			if (!p->entity->active)
-				return activeInHierarchy = false;
-			p = p->getParent();
-		}*/
+    Transform* p = transform->GetParent();
+    while (p != nullptr) {
+        if (!p->entity->active) {
+            activeInHierarchy = false;
+            return false;
+        }
+        p = p->GetParent();
+    }
 
     return true;
 }

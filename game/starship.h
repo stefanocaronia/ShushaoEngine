@@ -4,12 +4,6 @@
 
 class Starship : public se::Entity {
 	public:
-		Starship();
-
+		void Awake();
 		se::MeshRenderer* mr;
-
-	protected:
-
-
-	private:
 };

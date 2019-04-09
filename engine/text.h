@@ -62,6 +62,7 @@ public:
     Text* SetPixelPerUnit(unsigned int value);
     Text* AddLine(Line line_);
     Text* SetLines(std::vector<Line>& lines_);
+    Text* SetLinespace(int value);
     Text* Clear();
 
     void Awake();

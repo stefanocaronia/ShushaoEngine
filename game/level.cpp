@@ -8,13 +8,14 @@
 #include "part.h"
 #include "starship.h"
 
-Level::Level() {
-    using namespace se;
+using namespace se;
 
-    // testParticles();
-    // testSprites();
-    // testCoroutines();
-    // testCanvas();
+Level::Level() {
+
+    testParticles();
+    testSprites();
+    testCoroutines();
+    testCanvas();
 }
 
 void Level::testParticles() {

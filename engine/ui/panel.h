@@ -1,17 +1,15 @@
 #pragma once
 
-#include "image.h"
 #include "../transform.h"
+#include "image.h"
 
+namespace se {
 namespace ui {
 
     class Panel : public Image {
-
-        public:
-
-            Panel();
-
+    public:
+        void Awake();
     };
 
-}
-
+}  // namespace ui
+}  // namespace se

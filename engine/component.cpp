@@ -15,7 +15,7 @@
 namespace se {
 
 using namespace std;
-using ComponentSet = std::multiset<Component*, Component::Compare>;
+using ComponentSet = std::multiset<Component*, CompareComponent>;
 
 Component::Component() {
     name = getTitle();
@@ -24,8 +24,9 @@ Component::Component() {
 }
 
 Component::~Component() {
-    Debug::Log << "Component Destructor: " << name << " di " << entity->name << endl;
+    // Debug::Log << "Component Destructor: " << name << " di " << entity->name << endl;
     exit();
+    entity->scene->UnsetActiveComponent(this);
 }
 
 void Component::Copy(Component* other) {
@@ -42,11 +43,16 @@ void Component::Copy(Component* other) {
 
 void Component::Enable() {
     enabled = true;
+    if (isActiveAndEnabled()) {
+        entity->scene->SetActiveComponent(this);
+    }
     OnEnable();
 }
 
 void Component::Disable() {
     enabled = false;
+    entity->scene->UnsetActiveComponent(this);
+    started = false;
     OnDisable();
 }
 
@@ -117,6 +123,7 @@ bool Component::isActiveAndEnabled() {
 
 void Component::init() {
     Awake();
+    awaken = true;
 }
 
 void Component::fixed() {
@@ -135,7 +142,6 @@ void Component::update() {
 
     Update();
     LateUpdate();
-
     ResumeCoroutines();
 }
 
@@ -173,7 +179,7 @@ void Component::OnDestroy() {}
 /*
     Custom compare function used to sort the multiset
 */
-bool Component::Compare::operator()(Component* A, Component* B) const {
+bool CompareComponent::operator()(Component* A, Component* B) const {
     if (A->sortingLayerID == B->sortingLayerID)
         return A->sortingOrder < B->sortingOrder;
     else

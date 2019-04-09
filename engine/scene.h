@@ -4,14 +4,13 @@
 #include <string>
 
 #include "component.h"
-#include "cycle.h"
 #include "debug.h"
-#include "debuggrid.h"
+#include "entity/debuggrid.h"
 #include "debuginfo.h"
 #include "entity.h"
 #include "gamedata.h"
 #include "light.h"
-#include "maincamera.h"
+#include "entity/maincamera.h"
 #include "renderer.h"
 #include "transform.h"
 #include "utility.h"
@@ -20,6 +19,7 @@ namespace se {
 
 // class Component;
 class Camera;
+class Cycle;
 
 class Scene {
 public:
@@ -31,19 +31,24 @@ public:
     std::string name = "";
     int BuildIndex;
     bool isLoaded = false;
+    bool invalid = true;
 
     Entity* root = nullptr;
     Camera* activeCamera = nullptr;
     DebugInfo* debugInfo = nullptr;
 
-    std::set<Entity*> Entities;
-    std::multiset<Component*, Component::Compare> ActiveComponents;
-    std::set<Light*> ActiveLights;
-    std::multiset<Component*, Component::Compare> ActiveOverlayRenderers;
+    std::multiset<Entity*> Entities;
+    std::multiset<Component*, CompareComponent> ActiveComponents;
+    std::multiset<Light*> ActiveLights;
+    std::multiset<Component*, CompareComponent> ActiveOverlayRenderers;
 
     void renderOverlay();
 
-    std::set<Entity*> GetRootEntitys();
+    void Invalidate() {
+        invalid = true;
+    }
+
+    std::multiset<Entity*> GetRootEntitys();
 
     // scan
     void InitEntities();
@@ -51,7 +56,6 @@ public:
     void SortActiveComponents();
     void ScanActiveLights();
     void ScanActiveRenderers();
-    bool componentsScanned = false;
 
     // debug
     void PrintActiveComponentsInScene();
@@ -59,9 +63,10 @@ public:
     void PrintActiveLightsInScene();
     void PrintHierarchy();
 
-    Entity* AddEntity(Entity*);
+    Entity* RegisterEntity(Entity* entity_);
     Entity* AddEntity(std::string);
     Entity* GetEntity(std::string);
+    bool HasEntity(Entity* entity_);
 
     template <class T>
     T* AddEntity(std::string _name = "") {  // Adds a Entity of class T (Prefab)
@@ -69,11 +74,11 @@ public:
         T* entity = new T();
         entity->name = (_name == "" ? util::classtitle<T>() : _name);
         entity->scene = this;
-        entity->transform->SetParent(root->transform);
-
-        Entities.insert(entity);
-        entity->addedToScene = true;
         entity->init();
+        entity->transform->SetParent(root->transform);
+        Entities.insert(entity);
+        entity->registered = true;
+        Invalidate();
         return entity;
     }
 
@@ -85,6 +90,11 @@ public:
         }
         return nullptr;
     }
+
+    void RemoveEntity(Entity* entity_);
+
+    void UnsetActiveComponent(Component* component);
+    void SetActiveComponent(Component* component);
 
 private:
     void init();

@@ -2,6 +2,7 @@
 #include "debug.h"
 #include "design.h"
 #include "entity.h"
+#include "canvas.h"
 
 namespace se {
 

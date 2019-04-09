@@ -2,6 +2,9 @@
 
 /* include in derived projects */
 
+// engine entities
+#include "entity/maincamera.h"
+
 // ShushaoEngine Objects
 #include "resources/resources.h" // rc
 #include "factory.h"
@@ -19,7 +22,6 @@
 #include "entity.h"
 #include "glmanager.h"
 #include "geometryrenderer.h"
-#include "maincamera.h"
 #include "material.h"
 #include "input.h"
 #include "object.h"

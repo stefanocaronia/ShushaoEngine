@@ -1,11 +1,12 @@
 
 #include "canvas.h"
 
+namespace se {
 namespace ui {
 
-    Canvas::Canvas() {
+    void Canvas::Awake() {
         transform->isRectTransform = true;
         canvas = AddComponent<se::Canvas>();
     }
-}
-
+}  // namespace ui
+}  // namespace se

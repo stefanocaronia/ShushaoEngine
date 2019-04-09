@@ -8,6 +8,7 @@
 #include "utility.h"
 #include "design.h"
 #include "color.h"
+#include "canvas.h"
 
 namespace se {
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "scenemanager.h"
 
 namespace se {
 
@@ -44,6 +45,7 @@ protected:
     bool keys[350];
 
 private:
+    void initscan();
     void update();
     void render();
     void fixed();

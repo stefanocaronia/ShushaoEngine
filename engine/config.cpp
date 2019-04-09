@@ -138,7 +138,6 @@ bool parseEngineConfig() {
 
     if (data.find("framerate_limit") != data.end()) {
         Time::frameRateLimit = stof(data["framerate_limit"]);
-        Time::fixedRateLimit = stof(data["framerate_limit"]);
     }
 
     if (data.find("fixedrate_limit") != data.end()) {

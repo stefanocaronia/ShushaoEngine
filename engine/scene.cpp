@@ -15,8 +15,15 @@ using namespace std;
 
 Scene::Scene() {
     name = "Scene";
+
+    // root va istanziata manualmente a questo livello
     root = new Entity("ROOT");
+    root->scene = this;
+    root->transform = root->AddComponent<Transform>();
     root->transform->isRoot = true;
+    root->awaken = true;
+    Entities.insert(root);
+    root->registered = true;
 
     MainCamera* mainCameraObj = AddEntity<MainCamera>();
     activeCamera = mainCameraObj->camera;
@@ -43,15 +50,18 @@ Scene::~Scene() {
     Entities.clear();
 }
 
+bool Scene::HasEntity(Entity* entity_) {
+    return Entities.empty() || Entities.find(entity_) != Entities.end();
+}
+
 Entity* Scene::AddEntity(string _name = "Entity") {
     Entity* entity = new Entity();
-    entity->transform->SetParent(root->transform);
-    entity->scene = this;
     entity->name = _name;
-
-    Entities.insert(entity);
-    entity->addedToScene = true;
+    entity->scene = this;
     entity->init();
+    entity->transform->SetParent(root->transform);
+    Entities.insert(entity);
+    entity->registered = true;
     return entity;
 }
 
@@ -64,8 +74,6 @@ Entity* Scene::GetEntity(std::string name_) {
 }
 
 void Scene::ScanActiveComponents() {
-    if (componentsScanned) return;
-
     ActiveComponents.clear();
     ActiveOverlayRenderers.clear();
 
@@ -78,32 +86,29 @@ void Scene::ScanActiveComponents() {
             ActiveOverlayRenderers.insert(component);
     }
 
-    componentsScanned = true;
-}
-
-void Scene::InitEntities() {
-    // ottengo tutte le entities anche child
-    set<Entity*> entities = root->transform->GetEntitiesInChildren();
-
-    for (auto& entity : entities) {
-        if (!entity->isInitialized) {
-            entity->init();
-        }
-        if (!entity->addedToScene) {
-            Entities.insert(entity);
-            entity->addedToScene = true;
-        }
-    }
-}
-
-void Scene::ScanActiveLights() {
-    ScanActiveComponents();
     ActiveLights.clear();
     for (Component* component : ActiveComponents) {
         if (dynamic_cast<Light*>(component)) {
             ActiveLights.insert((Light*)component);
         }
     }
+    invalid = false;
+}
+
+void Scene::InitEntities() {
+    // ottengo tutte le entities, anche child
+    set<Entity*> entities = root->transform->GetEntitiesInChildren();
+
+    for (auto& entity : Entities) {
+        if (!entity->awaken) {
+            entity->init();
+        }
+        if (!entity->registered) {
+            Entities.insert(entity);
+            entity->registered = true;
+        }
+    }
+    invalid = false;
 }
 
 void Scene::PrintActiveComponentsInScene() {
@@ -118,7 +123,6 @@ void Scene::PrintActiveComponentsInScene() {
 }
 
 void Scene::PrintActiveLightsInScene() {
-    ScanActiveLights();
     if (!Debug::enabled) return;
     Logger::setColor(ConsoleColor::PINK);
     std::cout << " Scene " << name << " Active Lights:" << std::endl;
@@ -153,7 +157,7 @@ void Scene::PrintActiveRenderersInScene() {
 
 void Scene::init() {
     for (Component* component : ActiveComponents) {
-        if (component != nullptr) component->init();
+        if (component != nullptr && !component->awaken) component->init();
     }
 }
 
@@ -198,14 +202,71 @@ void Scene::PrintHierarchy() {
     Logger::setColor(ConsoleColor::LIGHTGREY);
 }
 
-set<Entity*> Scene::GetRootEntitys() {
+multiset<Entity*> Scene::GetRootEntitys() {
     // TODO: I GAMEOBJECT CON PARENT ROOT
     return Entities;
 }
 
-Entity* Scene::AddEntity(Entity* pEntity) {
-    pEntity->transform->SetParent(root->transform);
-    Entities.insert(pEntity);
-    return pEntity;
+Entity* Scene::RegisterEntity(Entity* entity_) {
+    if (entity_ == nullptr) return nullptr;
+
+    if (HasEntity(entity_)) {
+        return entity_;
+    }
+
+    entity_->scene = this;
+    Entities.insert(entity_);
+    entity_->registered = true;
+    Invalidate();
+    return entity_;
 }
+
+void Scene::RemoveEntity(Entity* entity_) {
+    if (HasEntity(entity_)) {
+        Entities.erase(entity_);
+    }
+}
+
+void Scene::UnsetActiveComponent(Component* component) {
+    if (ActiveComponents.empty()) {
+        return;
+    }
+
+    auto it = ActiveComponents.find(component);
+    if (it != ActiveComponents.end()) {
+        ActiveComponents.erase(it);
+    }
+
+    auto it2 = ActiveOverlayRenderers.find(component);
+    if (it2 != ActiveOverlayRenderers.end()) {
+        ActiveOverlayRenderers.erase(it2);
+    }
+
+    auto it3 = ActiveLights.find((Light*)component);
+    if (it3 != ActiveLights.end()) {
+        ActiveLights.erase(it3);
+    }
+}
+
+void Scene::SetActiveComponent(Component* component) {
+    if (!ActiveComponents.empty()) {
+        auto it = ActiveComponents.find(component);
+        if (it != ActiveComponents.end()) {
+            return;
+        }
+    }
+
+    ActiveComponents.insert(component);
+
+    Renderer* renderer = dynamic_cast<Renderer*>(component);
+    if (renderer != nullptr && renderer->overlay) {
+        ActiveOverlayRenderers.insert(component);
+    }
+
+    if (dynamic_cast<Light*>(component)) {
+        ActiveLights.insert((Light*)component);
+    }
+}
+
+
 }  // namespace se

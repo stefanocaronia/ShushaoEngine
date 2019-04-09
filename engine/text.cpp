@@ -59,7 +59,7 @@ void Text::writeLine(string text_, Color color) {
     if (lastYpos == 0.0f) {
         pos = _offset;
     } else {
-        pos = {_offset.x, _offset.y + lastYpos};
+        pos = {_offset.x, _offset.y + lastYpos - lineSpace};
     }
 
     const char* p;
@@ -305,6 +305,11 @@ Text* Text::SetAlign(Align value) {
 
 Text* Text::SetPixelSize(int value) {
     font->SetPixelSize(value);
+    return this;
+}
+
+Text* Text::SetLinespace(int value) {
+    lineSpace = value;
     return this;
 }
 

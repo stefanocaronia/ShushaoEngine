@@ -16,6 +16,8 @@
 
 const std::string LIB_SHUSHAO = "libshushao.dll";
 
+#define ENTITY_CONSTRUCTOR(class) class(se::Scene* scene_) : se::Entity(scene_) {}
+
 namespace se {
 
 // typeid without rtti

@@ -7,7 +7,7 @@
 namespace se {
 
 void DebugInfo::Awake() {
-    Font* consolas = Resources::Get<Font>("Modenine");
+    Font* consolas = Resources::Get<Font>("consolas_res");
 
     ui::Text* uiText = entity->AddChild<ui::Text>("time measures");
     uiText->transform->SetPivot(PivotPosition::TOPLEFT);
@@ -16,8 +16,9 @@ void DebugInfo::Awake() {
 
     times = uiText->GetComponent<Text>();
 	times->sortingLayerID = Config::SortingLayers.over();
-	times->SetFont(consolas)->SetColor(color::white)->SetSize(0.3f);
+	times->SetFont(consolas)->SetColor(color::white)->SetSize(0.2f);
     times->SetText("ciao consolas");
+    times->SetLinespace(6);
 }
 
 void DebugInfo::Update() {

@@ -14,15 +14,15 @@ class Transform;
 class Collision2D;
 class Collider2D;
 
+struct CompareComponent {
+    bool operator()(Component* A, Component* B) const;
+};
+
 class Component : public Object, public CoroutineHolder {
     friend class Scene;
     friend class Entity;
 
 public:
-    struct Compare {
-        bool operator()(Component* A, Component* B) const;
-    };
-
     Component();
     virtual ~Component();
 
@@ -35,6 +35,8 @@ public:
     int sortingLayerID = 0;  //Unique ID of the Renderer's sorting layer.
     int sortingOrder = 0;  //Renderer's order within a sorting layer.
     unsigned int index = 0;  // index in entity
+
+    bool awaken = false;
 
     inline bool operator<(Component B) {
         if (sortingLayerID == B.sortingLayerID) {
@@ -50,7 +52,7 @@ public:
 
     void BroadcastMessage();  // Calls the method named methodName on every MonoBehaviour in this game object or any of its children.
 
-    std::multiset<Component*, Component::Compare> GetActiveComponentsInChildren();
+    std::multiset<Component*, CompareComponent> GetActiveComponentsInChildren();
     std::set<Entity*> GetEntitiesInChildren();
     bool isActiveAndEnabled();
 
@@ -75,7 +77,7 @@ public:
     template <class T>
     T* AddComponent(std::string _name = "");  // Adds a component to the entity
 
-    // static void Sort(std::multiset<Component*, Component::Compare>&);
+    // static void Sort(std::multiset<Component*, CompareComponent>&);
 
 protected:
     virtual void Awake();  // Awake is called when the script instance is being loaded.
@@ -109,3 +111,18 @@ private:
 };
 
 }  // namespace se
+
+/* #include "entity.h"
+
+namespace se {
+
+template <class T>
+T* Component::GetComponent(std::string name_) {
+    return entity->GetComponent<T>(name_);
+}
+
+template <class T>
+T* Component::AddComponent(std::string name_) {
+    return entity->AddComponent<T>(name_);
+}
+}  // namespace se */

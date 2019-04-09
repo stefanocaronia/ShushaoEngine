@@ -3,9 +3,8 @@
 #include <set>
 #include <string>
 
-#include "canvas.h"
 #include "component.h"
-#include "cycle.h"
+#include "canvas.h"
 #include "debug.h"
 #include "globals.h"
 #include "object.h"
@@ -18,30 +17,30 @@ class Scene;
 class Transform;
 
 class Entity : public Object {
+    friend class Scene;
+
 public:
     Entity();
     Entity(std::string);
 
-    void init();
-
     ~Entity();
 
-    std::multiset<Component*, Component::Compare> Components;
+    std::multiset<Component*, CompareComponent> Components;
 
     Transform* transform = nullptr;
     Canvas* canvas = nullptr;
     Scene* scene = nullptr;  // Scene that the Entity is part of.
-    bool addedToScene = false;
-    bool isInitialized = false;
+    bool registered = false;
+    bool awaken = false;
 
     int layer;  // The layer the game object is in. A layer is in the range [0...31].
     std::string tag;  // The tag of this game object.
     std::set<std::string> tags;  // The tag of this game object.
 
-    bool activeInHierarchy;  // 	Is the Entity active in the scene?
-    bool active;  // 	The local active state of this Entity. (Read Only)
+    bool activeInHierarchy;  // Is the Entity active in the scene?
+    bool active;  // The local active state of this Entity. (Read Only)
     bool isStatic;  // 	Editor only API that specifies if a game object is static.
-    std::multiset<Component*, Component::Compare> GetActiveComponentsInChildren();
+    std::multiset<Component*, CompareComponent> GetActiveComponentsInChildren();
     void PrintHierarchy(int);
     bool isActiveInHierarchy();
 
@@ -54,6 +53,10 @@ public:
     Entity* AddChild(std::string);
 
     void Copy(Entity* other);
+
+    void UnsetActiveComponent(Component* component);
+    void SetActiveComponent(Component* component);
+    void InvalidateScene();
 
     template <class T>
     T* AddComponent(std::string _name = "") {
@@ -73,6 +76,9 @@ public:
         }
 
         Components.insert(component);
+        if (active) {
+            SetActiveComponent(component);
+        }
         return (T*)component;
     }
 
@@ -93,6 +99,9 @@ public:
         }
 
         Components.insert(component);
+        if (component->isActiveAndEnabled()) {
+            SetActiveComponent(component);
+        }
         return component;
     }
 
@@ -101,10 +110,14 @@ public:
         T* entity = new T();
         entity->name = (_name == "" ? util::classtitle<T>() : _name);
         entity->scene = scene;
-        entity->transform->SetParent(transform);
-        //scene->Entities.push_back(entity);
         if (entity->scene != nullptr) {
             entity->init();
+        }
+        entity->transform->SetParent(transform);
+        for (Component* c : entity->Components) {
+            if (c->isActiveAndEnabled()) {
+                SetActiveComponent(c);
+            }
         }
         return entity;
     }
@@ -145,9 +158,7 @@ public:
     template <class T>
     T* GetComponentsInParent();  // TODO: Returns all components of Type type in the Entity or any of its parents.
 
-    void SetActive(bool value_) {  // Activates/Deactivates the Entity.
-        active = value_;
-    }
+    void SetActive(bool value_);
 
     static Entity* Find(std::string);  // Finds a Entity by name and returns it.
     static Entity* FindEntitysWithTag(std::string);  // Returns a list of active Entitys tagged tag. Returns empty array if no Entity was found.
@@ -156,7 +167,10 @@ public:
     unsigned int GetNextIndex();
 
 protected:
-    virtual void Init() {}
+    virtual void Awake() {}
+
+private:
+    void init();
 };
 
 }  // namespace se

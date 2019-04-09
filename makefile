@@ -40,7 +40,7 @@ test:
 	@echo "RCFILES: " $(RCFILES)
 
 compilation:
-	@echo -e $(CLBLUE)$(BULLET)Compilation $(CEND)$(CLCYAN)
+	@echo -e $(CLBLUE)$(BULLET)Compilation of $(N_SOURCES) sources$(CEND)$(CLCYAN)
 	@$(MAKE) -f .makefiles/compile.mk --silent -j $(CORES) -Oline -l 80.0
 
 run: all

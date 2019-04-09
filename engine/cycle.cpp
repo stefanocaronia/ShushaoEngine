@@ -1,11 +1,13 @@
 #include <chrono>
 #include <iostream>
 #include <string>
+#include <thread>
 
 #include "config.h"
 #include "cycle.h"
 #include "debug.h"
 #include "design.h"
+#include "font.h"
 #include "glmanager.h"
 #include "input.h"
 #include "physics/physics.h"
@@ -13,7 +15,6 @@
 #include "scenemanager.h"
 #include "stime.h"
 #include "system.h"
-#include "font.h"
 
 se::Cycle* GAME;
 
@@ -91,20 +92,14 @@ bool Cycle::init() {
         Debug::Log(ERROR) << "Error Initializing Scene" << endl;
     }
 
-    // init all entities
-    SceneManager::activeScene->InitEntities();
-
     // Awake method (derived)
     Awake();
 
+    // init all entities
+    SceneManager::activeScene->InitEntities();
     SceneManager::activeScene->ScanActiveComponents();
-    SceneManager::activeScene->ScanActiveLights();
-    SceneManager::activeScene->init(); // vengono chiamati qui gli Awake di tutti gli oggetti attivi
 
-    // FIXME: rifaccio lo scan per le cose instanziate in awake dalgi oggetti
-    // FIXME: per lo scan active components devo adottare un metodo "invalidate", si invalida la lista components quando si aggiungono components o si abilitano o disabilitano. ora vado a dormire
-    SceneManager::activeScene->ScanActiveComponents();
-    SceneManager::activeScene->ScanActiveLights();
+    SceneManager::activeScene->init();  // vengono chiamati qui gli Awake di tutti gli oggetti attivi
 
     if (Debug::enabled) {
         SceneManager::activeScene->PrintHierarchy();
@@ -133,48 +128,44 @@ void Cycle::run() {
     // Start method (derived)
     Start();
 
-    double updateStartTime = 0.0f;
-    double renderStartTime = 0.0f;
-
-    // MAIN LOOP
     while (RUNNING) {
         Time::Update();
 
-        if (Debug::enabled && Debug::infoEnabled) {
-            updateStartTime = 0.0f;
-        }
+        std::thread tInput;
+        std::thread tUpdate;
+        std::thread tFixed;
 
-        SceneManager::activeScene->ScanActiveComponents();
-        SceneManager::activeScene->ScanActiveLights();
-
-        // Update Input Service
-        Input::update();
+        // scan scene (se invalid) e init objects
+        initscan();
 
         // Process input method (derived)
+        //tInput = std::thread(&Cycle::GetInput, this);
         GetInput();
 
-        System::update();
+        // Update Cycle
+        //tUpdate = std::thread(&Cycle::update, this);
         update();
 
         if (Time::fixedDeltaTime >= Time::fixedLimitDuration) {
+            // Fixed Update Cycle (physics)
+            //tFixed = std::thread(&Cycle::fixed, this);
             fixed();
         }
 
-        if (Debug::enabled && Debug::infoEnabled) {
-            SceneManager::activeScene->debugInfo->updateTime = Time::time - updateStartTime;
-            renderStartTime = 0.0f;
-        }
+        if (tInput.joinable()) tInput.join();
+        if (tUpdate.joinable()) tUpdate.join();
+        if (tFixed.joinable()) tFixed.join();
 
-        if (Time::renderDeltaTime >= Time::frameLimitDuration) {
+        if (Config::Time::frameRateLimit == 0 || (Time::renderDeltaTime >= Time::frameLimitDuration)) {
+            // Main render cycle
             render();
         }
 
-        if (Debug::enabled && Debug::infoEnabled) {
-            SceneManager::activeScene->debugInfo->renderTime = Time::time - renderStartTime;
+        /* if (Debug::enabled && Debug::infoEnabled) {
+            SceneManager::activeScene->debugInfo->renderTime = (Time::time - renderStartTime) * 1000.0f;
             SceneManager::activeScene->debugInfo->frameRate = 1.0 / Time::deltaTime;
-        }
+        } */
 
-        SceneManager::activeScene->componentsScanned = false;
     }
 
     exit();
@@ -182,6 +173,16 @@ void Cycle::run() {
 
 void Cycle::stop() {
     RUNNING = false;
+}
+
+void Cycle::initscan() {
+    if (SceneManager::activeScene->invalid) {
+        SceneManager::activeScene->InitEntities();
+        SceneManager::activeScene->ScanActiveComponents();
+    }
+
+    // chiamo awake di tutti i componenti non ancora svegli
+    SceneManager::activeScene->init();
 }
 
 void Cycle::render() {
@@ -197,6 +198,8 @@ void Cycle::render() {
 
 void Cycle::update() {
     Time::realtimeSinceStartup = Time::GetTime();
+    Input::update();  // Update Input Service
+    System::update();  // update dei system services
     GLManager::Update();
     SceneManager::activeScene->update();
     Update();  // (derived)

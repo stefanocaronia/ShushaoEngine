@@ -2,10 +2,12 @@
 #include "text.h"
 #include "../text.h"
 
+namespace se {
 namespace ui {
 
-    Text::Text() {
+    void Text::Awake() {
         transform->isRectTransform = true;
         AddComponent<se::Text>();
     }
-}
+}  // namespace ui
+}  // namespace se

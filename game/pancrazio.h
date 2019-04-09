@@ -4,19 +4,12 @@
 
 class Pancrazio : public se::Entity {
 	public:
-		Pancrazio();
-		~Pancrazio();
+		virtual void Awake();
 
 		se::SpriteRenderer* sr;
 		se::Rigidbody2D* rb;
 		se::BoxCollider2D* collider;
 		se::CircleCollider2D* circlec;
 		se::Animation* animation;
-
-	protected:
-
-
-
-	private:
 
 };

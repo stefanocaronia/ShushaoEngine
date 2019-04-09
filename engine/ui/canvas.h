@@ -3,15 +3,17 @@
 #include "../entity.h"
 #include "../transform.h"
 
+namespace se {
 namespace ui {
 
-    class Canvas : public se::Entity {
+    class Canvas : public Entity {
 
         public:
 
-            Canvas();
+            void Awake();
 
     };
 
+}
 }
 

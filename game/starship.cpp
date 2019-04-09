@@ -2,7 +2,7 @@
 
 using namespace se;
 
-Starship::Starship() {
+void Starship::Awake() {
 
 	using namespace glm;
 

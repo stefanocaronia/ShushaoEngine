@@ -8,7 +8,6 @@
 #include "camera.h"
 #include "component.h"
 #include "object.h"
-#include "scene.h"
 
 namespace se {
 
@@ -33,8 +32,8 @@ public:
     static void DestroyAll();
 
     template <class T>
-    vector<T*> GetObjectsOfType() {
-        vector<Object*> results;
+    std::vector<T*> GetObjectsOfType() {
+        std::vector<Object*> results;
         for(auto obj: Objects) {
             if (dynamic_cast<T*>(obj))
                 results.push_back(dynamic_cast<T*>(obj));

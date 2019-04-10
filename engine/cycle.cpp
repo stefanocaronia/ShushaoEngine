@@ -57,6 +57,15 @@ bool Cycle::init() {
         ::exit(5);
     }
 
+
+    // load resoruces (derived)
+    if (!InitResources()) {
+        Debug::Log(ERROR) << "Error loading resources" << endl;
+    }
+
+    // engine resources
+    Resources::Load<Font>("consolas", FONT_CONSOLAS, LIB_SHUSHAO);
+
     // Time init
     Time::setFrameRateLimit(Config::Time::frameRateLimit);
     Time::setFixedRateLimit(Config::Time::fixedRateLimit);
@@ -67,20 +76,12 @@ bool Cycle::init() {
             Debug::Log(ERROR) << "Error Initializing Physics" << endl;
         }
     }
-
     // Init Input service
     Input::init();
 
     // Init System services
     System::init();
 
-    // load resoruces (derived)
-    if (!InitResources()) {
-        Debug::Log(ERROR) << "Error loading resources" << endl;
-    }
-
-    // engine resources
-    Resources::Load<Font>("consolas", FONT_CONSOLAS, LIB_SHUSHAO);
 
     // Init input mappings (derived)
     if (!InitMapping()) {
@@ -96,7 +97,7 @@ bool Cycle::init() {
     Awake();
 
     // init all entities
-    SceneManager::activeScene->InitEntities();
+    SceneManager::activeScene->ScanEntities();
     SceneManager::activeScene->ScanActiveComponents();
 
     SceneManager::activeScene->init();  // vengono chiamati qui gli Awake di tutti gli oggetti attivi
@@ -161,11 +162,6 @@ void Cycle::run() {
             render();
         }
 
-        /* if (Debug::enabled && Debug::infoEnabled) {
-            SceneManager::activeScene->debugInfo->renderTime = (Time::time - renderStartTime) * 1000.0f;
-            SceneManager::activeScene->debugInfo->frameRate = 1.0 / Time::deltaTime;
-        } */
-
     }
 
     exit();
@@ -177,7 +173,7 @@ void Cycle::stop() {
 
 void Cycle::initscan() {
     if (SceneManager::activeScene->invalid) {
-        SceneManager::activeScene->InitEntities();
+        SceneManager::activeScene->ScanEntities();
         SceneManager::activeScene->ScanActiveComponents();
     }
 

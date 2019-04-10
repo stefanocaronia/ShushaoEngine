@@ -11,6 +11,7 @@ public:
     double updateTime;
     double renderTime;
     double frameRate;
+    double fixedTime;
 
 protected:
     void Awake();

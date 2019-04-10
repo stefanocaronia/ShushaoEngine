@@ -7,7 +7,7 @@
 namespace se {
 
 void DebugInfo::Awake() {
-    Font* consolas = Resources::Get<Font>("consolas_res");
+    Font* consolas = Resources::Get<Font>("consolas");
 
     ui::Text* uiText = entity->AddChild<ui::Text>("time measures");
     uiText->transform->SetPivot(PivotPosition::TOPLEFT);
@@ -22,17 +22,18 @@ void DebugInfo::Awake() {
 }
 
 void DebugInfo::Update() {
-    //#ifdef ASD
-    std::string fr = "Frame Rate: " + util::toString(frameRate);
-    std::string ut = "Update Time: " + util::toString(updateTime);
-    std::string rt = "Render Time: " + util::toString(renderTime);
+    std::string fr = std::string("Frame Rate: ") + util::toString(Time::frameRate);
+    std::string ut = std::string("Update Time: ") + util::toString(Time::deltaTime);
+    std::string ft = std::string("Fixed Time: ") + util::toString(Time::fixedDeltaTime);
+    std::string rt = std::string("Render Time: ") + util::toString(Time::renderDeltaTime);
     std::vector<Text::Line> lines = {
 		{fr, color::white},
         {ut, color::green},
+        {ft, color::magenta},
         {rt, color::yellow}
 	};
     times->SetLines(lines);
-    //#endif
+
 }
 
 }  // namespace se

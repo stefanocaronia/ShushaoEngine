@@ -51,7 +51,7 @@ public:
     std::multiset<Entity*> GetRootEntitys();
 
     // scan
-    void InitEntities();
+    void ScanEntities();
     void ScanActiveComponents();
     void SortActiveComponents();
     void ScanActiveLights();
@@ -76,8 +76,7 @@ public:
         entity->scene = this;
         entity->init();
         entity->transform->SetParent(root->transform);
-        Entities.insert(entity);
-        entity->registered = true;
+        RegisterEntity(entity);
         Invalidate();
         return entity;
     }

@@ -37,6 +37,7 @@ Entity::~Entity() {
     }
 
     scene->RemoveEntity(this);
+    scene->Invalidate();
     Components.clear();
 }
 

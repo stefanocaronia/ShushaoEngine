@@ -35,6 +35,7 @@ namespace se {
 			static float frameRateLimit;
 			static float fixedRateLimit;
 			static float renderTime;
+			static float frameRate;
 			static float renderDeltaTime;
 			static float frameLimitDuration;
 			static float fixedLimitDuration;

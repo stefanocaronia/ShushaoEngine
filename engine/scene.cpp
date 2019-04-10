@@ -22,8 +22,7 @@ Scene::Scene() {
     root->transform = root->AddComponent<Transform>();
     root->transform->isRoot = true;
     root->awaken = true;
-    Entities.insert(root);
-    root->registered = true;
+    RegisterEntity(root);
 
     MainCamera* mainCameraObj = AddEntity<MainCamera>();
     activeCamera = mainCameraObj->camera;
@@ -43,10 +42,14 @@ Scene::Scene() {
 }
 
 Scene::~Scene() {
+    vector<Entity*> toDelete;
     for (Entity* pGO : Entities) {
-        delete (pGO);
+        toDelete.push_back(pGO);
     }
-    delete (root);
+    for (Entity* pGO : toDelete) {
+        delete(pGO);
+    }
+    delete(root);
     Entities.clear();
 }
 
@@ -60,8 +63,7 @@ Entity* Scene::AddEntity(string _name = "Entity") {
     entity->scene = this;
     entity->init();
     entity->transform->SetParent(root->transform);
-    Entities.insert(entity);
-    entity->registered = true;
+    RegisterEntity(entity);
     return entity;
 }
 
@@ -95,17 +97,16 @@ void Scene::ScanActiveComponents() {
     invalid = false;
 }
 
-void Scene::InitEntities() {
+void Scene::ScanEntities() {
     // ottengo tutte le entities, anche child
-    set<Entity*> entities = root->transform->GetEntitiesInChildren();
+    set<Entity*> entities_ = root->transform->GetEntitiesInChildren();
 
-    for (auto& entity : Entities) {
+    for (auto& entity : entities_) {
         if (!entity->awaken) {
             entity->init();
         }
         if (!entity->registered) {
-            Entities.insert(entity);
-            entity->registered = true;
+            RegisterEntity(entity);
         }
     }
     invalid = false;
@@ -210,14 +211,12 @@ multiset<Entity*> Scene::GetRootEntitys() {
 Entity* Scene::RegisterEntity(Entity* entity_) {
     if (entity_ == nullptr) return nullptr;
 
-    if (HasEntity(entity_)) {
-        return entity_;
+    if (!HasEntity(entity_)) {
+        entity_->scene = this;
+        Entities.insert(entity_);
+        entity_->registered = true;
     }
 
-    entity_->scene = this;
-    Entities.insert(entity_);
-    entity_->registered = true;
-    Invalidate();
     return entity_;
 }
 
@@ -267,6 +266,5 @@ void Scene::SetActiveComponent(Component* component) {
         ActiveLights.insert((Light*)component);
     }
 }
-
 
 }  // namespace se

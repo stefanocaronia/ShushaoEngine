@@ -11,7 +11,6 @@
 using namespace se;
 
 Level::Level() {
-
     testParticles();
     testSprites();
     testCoroutines();
@@ -31,7 +30,6 @@ void Level::testParticles() {
     ParticleSystem* pops = po->GetComponent<ParticleSystem>();
     ParticleSystem* ps = (ParticleSystem*)Factory::InstantiateComponent<Part>(pops, vec3(-4, -4, 0));
     ps->sortingLayerID = 2;
-
 }
 
 void Level::testMesh() {

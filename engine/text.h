@@ -94,7 +94,7 @@ private:
 
     std::vector<Line> lines;
 
-    float lastYpos = 0.0f;
+    //float lastYpos = 0.0f;
     unsigned int currentLine = 0;
 
     Rect textRect;

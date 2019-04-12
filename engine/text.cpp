@@ -59,42 +59,57 @@ void Text::writeLine(string text_, Color color) {
         NB: y punta in alto anche qui, non confondere con il web
     */
 
+    // FIXME: verificare perché la prima linea è più distanziata
+
     shader->SetRenderColor(color);
 
+    // pos di partenza in pixel
     vec2 pos = offset * (float)pixelPerUnit;
 
+    // calcolo altezza linea e spaziatura utilizzando le percentuali
     int pixelLineHeight = font->size * lineHeight;
     int pixelLineSpace = font->size * lineSpace;
+
+    // calcolo il rect transform in pixel
+    vec2 rectPixelSize = transform->rectTransform->rect.size * (float)pixelPerUnit;
+
+    // calcolo la y di partenza in base all'interlinea (se è una sola riga, o è la prima riga è tutto zero)
     pos.y -= currentLine * (pixelLineHeight + pixelLineSpace);
 
-    const char* p;
+    // ottengo il Glyph dal font face
     FT_GlyphSlot g = font->face->glyph;
 
+    // genero la texture
     GLuint tex;
     glGenTextures(1, &tex);
     glActiveTexture(shader->GetTextureIndex("diffuse_map"));
     glBindTexture(GL_TEXTURE_2D, tex);
-
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-    float width = 0;
-    float height = 0;
+    // istanzio variabili
+    float width = 0.0f;
+    float height = 0.0f;
     unsigned int baselineGap = 0;
-    float rectWidth = transform->rectTransform->rect.width * (float)pixelPerUnit;
-
     map<int, int> words;
-    int i = 0;
     int row = 0;
+    float rowwidth = 0;
+    vector<float> rowheight;
+    rowheight.push_back(0.0f);
+    const char* p;
+    const char* ctext = text_.c_str();
+    size_t i = 0;
+    float rectWidth = transform->rectTransform->rect.width * (float)pixelPerUnit;
+    bool first = true;
+    bool baseline = false;
 
+    // estraggo tutte le words di una linea
     if (wordWrap) {
         string word = "";
-
-        for (p = text_.c_str(); *p; p++, i++) {
+        for (p = ctext, i = 0; i < text_.size(); ++p, ++i) {
             if (isspace(*p) || *p == '\0') {
                 words.insert({i - word.length(), getWidth(word)});
                 word = "";
@@ -105,13 +120,11 @@ void Text::writeLine(string text_, Color color) {
         words.insert({i - word.length(), getWidth(word)});
     }
 
-    i = 0;
-    float rowwidth = 0;
-    vector<float> rowheight;
-    rowheight.push_back(0.0f);
-    for (p = text_.c_str(); *p; p++, i++) {
-        if (FT_Load_Char(font->face, *p, FT_LOAD_RENDER))
+    // ciclo tutti i caratteri della linea per calcolare le dimensioni
+    for (p = ctext, i = 0; i < text_.size(); ++p, ++i) {
+        if (FT_Load_Char(font->face, *p, FT_LOAD_RENDER)) {
             continue;
+        }
 
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, g->bitmap.width, g->bitmap.rows, 0, GL_RED, GL_UNSIGNED_BYTE, g->bitmap.buffer);
 
@@ -130,19 +143,22 @@ void Text::writeLine(string text_, Color color) {
         }
     }
 
+    // calcolo l'altezza della riga
     if (wordWrap) {
         for (auto h : rowheight) height += h;
-        height += (rowheight[0] * lineSpace) * row;
+        height += (rowheight[0] * pixelLineSpace) * row;
     } else {
         height = rowheight[0];
     }
 
+    // qui aggiungo il bottomleft (?)
     pos += (transform->rectTransform->rect.bottomleft * (float)pixelPerUnit);
 
-    vec2 rectPixelSize = transform->rectTransform->rect.size * (float)pixelPerUnit;
+    // ricavo il size delta
     vec2 textPixelSize = {width, height};
     vec2 sizeDelta = rectPixelSize - textPixelSize;
 
+    // allineo il test
     switch (align) {  // si parte da bottomleft
         case Align::TOPLEFT:
             pos.y += sizeDelta.y;
@@ -180,24 +196,29 @@ void Text::writeLine(string text_, Color color) {
             break;
     }
 
-    float leftpos = pos.x;
-    textRect = {pos.x / (float)pixelPerUnit, pos.y / (float)pixelPerUnit, width / (float)pixelPerUnit, height / (float)pixelPerUnit};
+    // creo il textRect (debug)
+    // textRect = {pos.x / (float)pixelPerUnit, pos.y / (float)pixelPerUnit, width / (float)pixelPerUnit, height / (float)pixelPerUnit};
 
-    bool baseline;
-    if (bottomAlign == BottomAlign::HEIGHT && (align == Align::BOTTOMLEFT || align == Align::BOTTOM || align == Align::BOTTOMRIGHT)) {
+    // decido se applicare la correzione per baseline
+    if (currentLine < lines.size() - 1) {
+        baseline = true;
+    } else if (bottomAlign == BottomAlign::HEIGHT && (align == Align::BOTTOMLEFT || align == Align::BOTTOM || align == Align::BOTTOMRIGHT)) {
         baseline = false;
     }
-    bool first = true;
-    i = 0;
-    row = 0;
-    for (p = text_.c_str(); *p; p++, i++) {
-        if (FT_Load_Char(font->face, *p, FT_LOAD_RENDER))
+
+    // ciclo tutti i caratteri per stamparli
+    for (p = ctext, i = 0; i < text_.size(); ++p, ++i) {
+        if (FT_Load_Char(font->face, *p, FT_LOAD_RENDER)) {
             continue;
+        }
 
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, g->bitmap.width, g->bitmap.rows, 0, GL_RED, GL_UNSIGNED_BYTE, g->bitmap.buffer);
 
-        float x2 = (pos.x + (first && alignToGeometry ? 0 : g->bitmap_left) * scale.x) / (float)pixelPerUnit;
-        float y2 = (-pos.y - (g->bitmap_top + (baseline ? 0 : baselineGap)) * scale.y) / (float)pixelPerUnit;
+        float xAdjust = (first && alignToGeometry ? 0 : g->bitmap_left);
+        float yAdjust = (g->bitmap_top + (baseline ? 0 : baselineGap));
+
+        float x2 = (pos.x + xAdjust * scale.x) / (float)pixelPerUnit;
+        float y2 = -(pos.y + yAdjust * scale.y) / (float)pixelPerUnit;
         float w = (g->bitmap.width * scale.x) / (float)pixelPerUnit;
         float h = (g->bitmap.rows * scale.y) / (float)pixelPerUnit;
 
@@ -205,25 +226,25 @@ void Text::writeLine(string text_, Color color) {
             {x2, -y2, 0, 0},
             {x2 + w, -y2, 1, 0},
             {x2, -y2 - h, 0, 1},
-            {x2 + w, -y2 - h, 1, 1}};
+            {x2 + w, -y2 - h, 1, 1}  //
+        };
 
         VAO->Load<vec4>(Vbo::VERTICES, box);
-        glBindBuffer(GL_ARRAY_BUFFER, VAO->GetBuffer(Vbo::VERTICES)->Id);
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
-        first = false;
-
         if (wordWrap && words.find(i + 1) != words.end() && width + words[i + 1] > transform->rectTransform->rect.width * (float)pixelPerUnit) {
-            pos.x = leftpos;
             first = true;
-            pos.y -= ((g->advance.y) / 64) * scale.y + rowheight[row] + (rowheight[0] * lineSpace);
+            pos.y -= ((g->advance.y) / 64) * scale.y + rowheight[row] + (rowheight[0] * pixelLineSpace);
             row++;
         } else {
             pos.x += ((g->advance.x) / 64) * scale.x;
             pos.y += ((g->advance.y) / 64) * scale.y;
         }
+
+        first = false;
     }
-    lastYpos = pos.y;
+
+    //lastYpos = pos.y;
     currentLine++;
     rowheight.clear();
     words.clear();
@@ -234,7 +255,7 @@ void Text::Render() {
     if (!isReady()) return;
 
     currentLine = 0;
-    lastYpos = 0.0f;
+    //lastYpos = 0.0f;
 
     shader->Use();
     shader->SetMVP(transform->uMVP());
@@ -243,10 +264,11 @@ void Text::Render() {
     shader->update();
 
     VAO->Use();
-
+    VAO->GetBuffer(Vbo::VERTICES)->Bind();
     for (auto line : lines) {
         writeLine(line.text, line.color);
     }
+    VAO->GetBuffer(Vbo::VERTICES)->Unbind();
 
     VAO->Leave();
     shader->Leave();

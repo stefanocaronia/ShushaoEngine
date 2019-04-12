@@ -26,7 +26,7 @@ Component::Component() {
 Component::~Component() {
     // Debug::Log << "Component Destructor: " << name << " di " << entity->name << endl;
     exit();
-    entity->scene->UnsetActiveComponent(this);
+    entity->scene->UnregisterActiveComponent(this);
 }
 
 void Component::Copy(Component* other) {
@@ -44,14 +44,14 @@ void Component::Copy(Component* other) {
 void Component::Enable() {
     enabled = true;
     if (isActiveAndEnabled()) {
-        entity->scene->SetActiveComponent(this);
+        entity->scene->RegisterActiveComponent(this);
     }
     OnEnable();
 }
 
 void Component::Disable() {
     enabled = false;
-    entity->scene->UnsetActiveComponent(this);
+    entity->scene->UnregisterActiveComponent(this);
     started = false;
     OnDisable();
 }

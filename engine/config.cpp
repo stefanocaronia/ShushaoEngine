@@ -128,6 +128,7 @@ bool parseUserConfig() {
 }
 
 bool parseEngineConfig() {
+
     if (data.find("title") != data.end()) {
         title = data["title"];
     }
@@ -154,6 +155,14 @@ bool parseEngineConfig() {
 
     if (data.find("debuginfo_enabled") != data.end()) {
         se::Debug::infoEnabled = (data["debuginfo_enabled"] == "Y");
+    }
+
+    if (data.find("debug_draw_transforms") != data.end()) {
+        se::Debug::drawTransforms = (data["debug_draw_transforms"] == "Y");
+    }
+
+    if (data.find("debug_draw_rect_transforms") != data.end()) {
+        se::Debug::drawRectTransforms = (data["debug_draw_rect_transforms"] == "Y");
     }
 
     if (data.find("physics_debug") != data.end()) {

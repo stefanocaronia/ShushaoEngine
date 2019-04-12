@@ -32,11 +32,11 @@ Entity::~Entity() {
 
     // distruggo tutti i components
     for (Component* pCO : Components) {
-        scene->UnsetActiveComponent(pCO);
+        scene->UnregisterActiveComponent(pCO);
         delete (pCO);
     }
 
-    scene->RemoveEntity(this);
+    scene->UnregisterEntity(this);
     scene->Invalidate();
     Components.clear();
 }
@@ -66,12 +66,12 @@ void Entity::Copy(Entity* other) {
     }
 }
 
-void Entity::UnsetActiveComponent(Component* component) {
-    scene->UnsetActiveComponent(component);
+void Entity::RegisterActiveComponent(Component* component) {
+    scene->RegisterActiveComponent(component);
 }
 
-void Entity::SetActiveComponent(Component* component) {
-    scene->SetActiveComponent(component);
+void Entity::UnregisterActiveComponent(Component* component) {
+    scene->UnregisterActiveComponent(component);
 }
 
 void Entity::InvalidateScene() {

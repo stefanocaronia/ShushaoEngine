@@ -70,7 +70,6 @@ public:
 
     template <class T>
     T* AddEntity(std::string _name = "") {  // Adds a Entity of class T (Prefab)
-
         T* entity = new T();
         entity->name = (_name == "" ? util::classtitle<T>() : _name);
         entity->scene = this;
@@ -90,10 +89,10 @@ public:
         return nullptr;
     }
 
-    void RemoveEntity(Entity* entity_);
+    void UnregisterEntity(Entity* entity_);
 
-    void UnsetActiveComponent(Component* component);
-    void SetActiveComponent(Component* component);
+    void RegisterActiveComponent(Component* component);
+    void UnregisterActiveComponent(Component* component);
 
 private:
     void init();

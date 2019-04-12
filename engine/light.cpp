@@ -50,7 +50,7 @@ namespace se {
 	}
 
 	void Light::Render() {
-		if (Debug::enabled) {
+		if (Debug::enabled && Debug::drawTransforms) {
 			Design::DrawVector(transform->position, direction, color::red, 1, true);
 		}
 

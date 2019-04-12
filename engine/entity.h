@@ -38,7 +38,7 @@ public:
     std::set<std::string> tags;  // The tag of this game object.
 
     bool activeInHierarchy;  // Is the Entity active in the scene?
-    bool active;  // The local active state of this Entity. (Read Only)
+    bool active = true;  // The local active state of this Entity. (Read Only)
     bool isStatic;  // 	Editor only API that specifies if a game object is static.
     std::multiset<Component*, CompareComponent> GetActiveComponentsInChildren();
     void PrintHierarchy(int);
@@ -54,8 +54,8 @@ public:
 
     void Copy(Entity* other);
 
-    void UnsetActiveComponent(Component* component);
-    void SetActiveComponent(Component* component);
+    void RegisterActiveComponent(Component* component);
+    void UnregisterActiveComponent(Component* component);
     void InvalidateScene();
 
     template <class T>
@@ -77,7 +77,7 @@ public:
 
         Components.insert(component);
         if (active) {
-            SetActiveComponent(component);
+            RegisterActiveComponent(component);
         }
         return (T*)component;
     }
@@ -100,7 +100,7 @@ public:
 
         Components.insert(component);
         if (component->isActiveAndEnabled()) {
-            SetActiveComponent(component);
+            RegisterActiveComponent(component);
         }
         return component;
     }
@@ -116,7 +116,7 @@ public:
         entity->transform->SetParent(transform);
         for (Component* c : entity->Components) {
             if (c->isActiveAndEnabled()) {
-                SetActiveComponent(c);
+                RegisterActiveComponent(c);
             }
         }
         return entity;

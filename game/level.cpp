@@ -11,10 +11,10 @@
 using namespace se;
 
 Level::Level() {
-    testParticles();
-    testSprites();
-    testCoroutines();
-    testCanvas();
+    // testParticles();
+    // testSprites();
+    // testCoroutines();
+    // testCanvas();
 }
 
 void Level::testParticles() {
@@ -94,7 +94,7 @@ void Level::testSprites() {
 }
 
 void Level::testCanvas() {
-    Font* f = Resources::Get<Font>("Modenine");
+    Font* f = Resources::Get<Font>("modenine");
 
     Entity* label = AddEntity("Label");
     Text* text = label->AddComponent<Text>();

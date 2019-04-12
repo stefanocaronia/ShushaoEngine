@@ -28,7 +28,9 @@ namespace se {
 
 		private:
 
-			int _size = 12;
+			int _size = 12; // pixel size
+
+            FT_Byte* bytes = nullptr;
 	};
 
 }

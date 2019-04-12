@@ -1,21 +1,21 @@
 #pragma once
 
+#include <GL/glew.h>
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
 #include "color.h"
 #include "config.h"
-#include "font.h"
 #include "globals.h"
-#include "rect.h"
 #include "renderer.h"
-#include "shaders/shader.h"
-#include "vao.h"
-
-// TODO: deve renderizzare più righe? controllare com'è in unity
+#include "rect.h"
 
 namespace se {
+
+class Shader;
+class Font;
+class Vao;
 
 class Text : public Renderer {
 public:
@@ -28,7 +28,7 @@ public:
         std::string text;
         Color color = color::white;
 
-        Line(std::string& text_, const Color& color_) : text(text_), color(color_) {}
+        Line(std::string text_, const Color color_) : text(text_), color(color_) {}
     };
 
     virtual void setup();
@@ -47,7 +47,8 @@ public:
     bool alignToGeometry = false;
     bool wordWrap = false;
 
-    float lineSpace = 0.3f;  // %
+    const float& lineSpace = _lineSpace;  // %
+    const float& lineHeight = _lineHeight;  // %
 
     Text* SetText(std::string value);
     Text* SetText(std::string value, Color col);
@@ -55,14 +56,16 @@ public:
     Text* SetFont(Font* value);
     Text* SetScale(glm::fvec2 value);
     Text* SetOffset(glm::fvec2 value);
-    Text* SetSize(float value);
+    Text* SetSize(float unit_size);
+    Text* SetSize(int pixel_size);
     Text* SetBottomAlign(BottomAlign value);
     Text* SetAlign(Align value);
     Text* SetPixelSize(int value);
     Text* SetPixelPerUnit(unsigned int value);
     Text* AddLine(Line line_);
     Text* SetLines(std::vector<Line>& lines_);
-    Text* SetLinespace(int value);
+    Text* SetLineSpace(float value);
+    Text* SetLineHeight(float value);
     Text* Clear();
 
     void Awake();
@@ -85,11 +88,14 @@ private:
     Color _color = {1.0f, 1.0f, 1.0f, 1.0f};
     std::string _text = "";
     Align _align = Align::TOPLEFT;
+    float _lineSpace = 0.2f;  // %
+    float _lineHeight = 1.0f;  // %
     std::string filename;
 
     std::vector<Line> lines;
 
     float lastYpos = 0.0f;
+    unsigned int currentLine = 0;
 
     Rect textRect;
 

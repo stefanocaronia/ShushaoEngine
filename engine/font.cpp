@@ -14,7 +14,9 @@ namespace se {
 		name = (n == "" ? util::basename(filename) : n);
 	}
 
-	Font::~Font()	{}
+	Font::~Font() {
+        delete(face);
+    }
 
 	void Font::SetSize(float wsize_) {
         SetPixelSize(wsize_ * Config::pixelPerUnit);
@@ -34,9 +36,12 @@ namespace se {
 	}
 
 	bool Font::LoadEmbedded(int IDRES, std::string library) {
-		vector<char> data = Resources::GetEmbeddedData(IDRES, library);
-		const FT_Byte* cd = reinterpret_cast<const FT_Byte*>(data.data());
-		FT_Error r = FT_New_Memory_Face(GLManager::lFreetype, cd, data.size(), 0, &face);
+		vector<char> data = Resources::GetEmbeddedData(IDRES, library, RT_FONT);
+		//bytes = (FT_Byte*)(data.data());
+        if (bytes != nullptr) delete(bytes);
+        bytes = new FT_Byte[data.size()];
+        std::copy(data.begin(), data.end(), bytes);
+		FT_Error r = FT_New_Memory_Face(GLManager::lFreetype, bytes, data.size() * sizeof(char), 0, &face);
 		return r == 0;
 	}
 

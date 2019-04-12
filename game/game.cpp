@@ -39,7 +39,7 @@ bool Game::InitResources() {
 
     // Resources::Add<SpriteSheet>("walking")->Load(Resources::Get<TextureAtlas>("walking"));
 
-    Resources::Load<Font>("assets/modenine.ttf", "Modenine");
+    Resources::Load<Font>("assets/modenine.ttf", "modenine");
     Resources::Load<Font>("assets/consres.ttf", "consolas_res");
     Resources::Load<Font>("assets/pixelperfect.ttf", "Pixel Perfect");
 

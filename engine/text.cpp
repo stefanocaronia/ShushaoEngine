@@ -3,10 +3,14 @@
 #include "debug.h"
 #include "design.h"
 #include "entity.h"
+#include "font.h"
 #include "glmanager.h"
+#include "rect.h"
 #include "shaders/fontshader.h"
+#include "shaders/shader.h"
 #include "text.h"
 #include "transform.h"
+#include "vao.h"
 
 namespace se {
 
@@ -51,16 +55,17 @@ int Text::getWidth(string text_) {
 }
 
 void Text::writeLine(string text_, Color color) {
+    /*
+        NB: y punta in alto anche qui, non confondere con il web
+    */
+
     shader->SetRenderColor(color);
 
-    vec2 pos;
-    vec2 _offset = offset * (float)pixelPerUnit;
+    vec2 pos = offset * (float)pixelPerUnit;
 
-    if (lastYpos == 0.0f) {
-        pos = _offset;
-    } else {
-        pos = {_offset.x, _offset.y + lastYpos - lineSpace};
-    }
+    int pixelLineHeight = font->size * lineHeight;
+    int pixelLineSpace = font->size * lineSpace;
+    pos.y -= currentLine * (pixelLineHeight + pixelLineSpace);
 
     const char* p;
     FT_GlyphSlot g = font->face->glyph;
@@ -129,7 +134,7 @@ void Text::writeLine(string text_, Color color) {
         for (auto h : rowheight) height += h;
         height += (rowheight[0] * lineSpace) * row;
     } else {
-        height = rowheight[0] + baselineGap;
+        height = rowheight[0];
     }
 
     pos += (transform->rectTransform->rect.bottomleft * (float)pixelPerUnit);
@@ -191,10 +196,10 @@ void Text::writeLine(string text_, Color color) {
 
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, g->bitmap.width, g->bitmap.rows, 0, GL_RED, GL_UNSIGNED_BYTE, g->bitmap.buffer);
 
-        float x2 = (pos.x + (first && alignToGeometry ? 0 : g->bitmap_left) * scale.x) / Config::pixelPerUnit;
-        float y2 = (-pos.y - (g->bitmap_top + (baseline ? 0 : baselineGap)) * scale.y) / Config::pixelPerUnit;
-        float w = (g->bitmap.width * scale.x) / Config::pixelPerUnit;
-        float h = (g->bitmap.rows * scale.y) / Config::pixelPerUnit;
+        float x2 = (pos.x + (first && alignToGeometry ? 0 : g->bitmap_left) * scale.x) / (float)pixelPerUnit;
+        float y2 = (-pos.y - (g->bitmap_top + (baseline ? 0 : baselineGap)) * scale.y) / (float)pixelPerUnit;
+        float w = (g->bitmap.width * scale.x) / (float)pixelPerUnit;
+        float h = (g->bitmap.rows * scale.y) / (float)pixelPerUnit;
 
         vector<vec4> box{
             {x2, -y2, 0, 0},
@@ -219,6 +224,7 @@ void Text::writeLine(string text_, Color color) {
         }
     }
     lastYpos = pos.y;
+    currentLine++;
     rowheight.clear();
     words.clear();
     glDeleteTextures(1, &tex);
@@ -227,6 +233,7 @@ void Text::writeLine(string text_, Color color) {
 void Text::Render() {
     if (!isReady()) return;
 
+    currentLine = 0;
     lastYpos = 0.0f;
 
     shader->Use();
@@ -245,7 +252,7 @@ void Text::Render() {
     shader->Leave();
 
     // RenderMode rm = entity->canvas != nullptr ? entity->canvas->renderMode : RenderMode::WORLD;
-    // Design::DrawRect(Transform::VEC3_ZERO, textRect, {1.0f, 0.0f, 0.0f, 1.0f}, 2, DrawMode::HOLLOW, rm, transform->MVP);
+    // Design::DrawRect(Transform::VEC3_ZERO, textRect, {0.0f, 1.0f, 0.0f, 1.0f}, 1, DrawMode::HOLLOW, rm, transform->MVP);
 }
 
 Text* Text::SetText(std::string value, Color col) {
@@ -288,8 +295,13 @@ Text* Text::SetOffset(glm::fvec2 value) {
     return this;
 }
 
-Text* Text::SetSize(float value) {
-    font->SetSize(value);
+Text* Text::SetSize(float unit_size) {
+    font->SetSize(unit_size);
+    return this;
+}
+
+Text* Text::SetSize(int pixel_size) {
+    font->SetSize(pixel_size / (float)pixelPerUnit);
     return this;
 }
 
@@ -308,8 +320,13 @@ Text* Text::SetPixelSize(int value) {
     return this;
 }
 
-Text* Text::SetLinespace(int value) {
-    lineSpace = value;
+Text* Text::SetLineHeight(float value) {
+    _lineHeight = value;
+    return this;
+}
+
+Text* Text::SetLineSpace(float value) {
+    _lineSpace = value;
     return this;
 }
 
@@ -325,9 +342,9 @@ Text* Text::AddLine(Line line_) {
 
 Text* Text::SetLines(vector<Line>& lines_) {
     lines.clear();
-    for (auto l: lines_) {
-		lines.push_back(l);
-	}
+    for (auto l : lines_) {
+        lines.push_back(l);
+    }
     return this;
 }
 

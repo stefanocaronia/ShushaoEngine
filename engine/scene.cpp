@@ -49,12 +49,11 @@ Scene::~Scene() {
     for (Entity* pGO : toDelete) {
         delete(pGO);
     }
-    delete(root);
     Entities.clear();
 }
 
 bool Scene::HasEntity(Entity* entity_) {
-    return Entities.empty() || Entities.find(entity_) != Entities.end();
+    return Entities.find(entity_) != Entities.end();
 }
 
 Entity* Scene::AddEntity(string _name = "Entity") {
@@ -179,6 +178,8 @@ void Scene::render() {
         Renderer* renderer = dynamic_cast<Renderer*>(component);
         if (renderer != nullptr && !renderer->overlay) {  // non eseguo il rendering degli overlay in questo ciclo
             component->render();
+        } else if (renderer == nullptr && component != nullptr) {
+            component->render();
         }
     }
 }
@@ -211,7 +212,7 @@ multiset<Entity*> Scene::GetRootEntitys() {
 Entity* Scene::RegisterEntity(Entity* entity_) {
     if (entity_ == nullptr) return nullptr;
 
-    if (!HasEntity(entity_)) {
+    if (Entities.empty() || !HasEntity(entity_)) {
         entity_->scene = this;
         Entities.insert(entity_);
         entity_->registered = true;
@@ -220,13 +221,13 @@ Entity* Scene::RegisterEntity(Entity* entity_) {
     return entity_;
 }
 
-void Scene::RemoveEntity(Entity* entity_) {
+void Scene::UnregisterEntity(Entity* entity_) {
     if (HasEntity(entity_)) {
         Entities.erase(entity_);
     }
 }
 
-void Scene::UnsetActiveComponent(Component* component) {
+void Scene::UnregisterActiveComponent(Component* component) {
     if (ActiveComponents.empty()) {
         return;
     }
@@ -247,7 +248,7 @@ void Scene::UnsetActiveComponent(Component* component) {
     }
 }
 
-void Scene::SetActiveComponent(Component* component) {
+void Scene::RegisterActiveComponent(Component* component) {
     if (!ActiveComponents.empty()) {
         auto it = ActiveComponents.find(component);
         if (it != ActiveComponents.end()) {

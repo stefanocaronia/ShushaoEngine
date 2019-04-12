@@ -12,6 +12,7 @@ namespace se {
 	class Transform;
 
 	enum class RegisterMode {
+		XYWH,
 		LRYH,
 		TBXW,
 		LRTH,
@@ -77,6 +78,7 @@ namespace se {
 
 			bool hasSingleAnchorPoint() { return anchorMin == anchorMax; }
 
+			void RegisterPositionXYWH(float X, float Y, float width, float height);
 			void RegisterPositionLRYH(float left, float right, float Y, float height);
 			void RegisterPositionTBXW(float top, float bottom, float X, float width);
 			void RegisterPositionLRTH(float left, float right, float top, float height);

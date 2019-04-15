@@ -24,10 +24,9 @@ public:
         HEIGHT
     };
 
-    virtual void setup();
+    ~Text();
 
-    Shader* shader = nullptr;
-    Font* font = nullptr;
+    virtual void setup();
 
     // readonly properties
     const Color& color = _color;
@@ -58,16 +57,17 @@ public:
     Text* SetAlignToGeometry(bool value);
     Text* Clear();
 
+protected:
+
     void Awake();
     void Render();
 
-    int getWidth(std::wstring text);
-
 private:
-    SDL_Surface* surface = nullptr;
-    SDL_Texture* texture = nullptr;
 
-    bool isReady();
+    Shader* shader = nullptr;
+    Font* font = nullptr;
+    Vao* VAO = nullptr;
+    GLuint vbo;
 
     unsigned int _pixelPerUnit = Config::pixelPerUnit;
     BottomAlign _bottomAlign = BottomAlign::HEIGHT;
@@ -80,16 +80,19 @@ private:
     Align _align = Align::TOPLEFT;
     float _lineHeight = 1.0f;  // %
     std::string filename;
-
+    std::wstring lastText = L"";
     float lastYpos = 0.0f;
     float lastHeight = 0.0f;
     unsigned int currentLine = 0;
-
+    std::map<int, int> words;
+    std::vector<float> rowwidth {0.0f};
+    std::vector<float> rowheight {0.0f};
+    float width = 0.0f;
+    float height = 0.0f;
     Rect textRect;
 
-    GLuint vbo;
-    Vao* VAO;
-
+    bool isReady();
+    int getWidth(std::wstring text);
     void writeLine(std::wstring text_, Color color);
 };
 

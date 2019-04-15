@@ -114,6 +114,18 @@ namespace util {
         return elements;
     }
 
+    std::vector<std::wstring> wsplit(std::wstring text, wchar_t delim) {
+        std::vector<std::wstring> elements;
+        std::wstringstream stream(text);
+        std::wstring item;
+        while (getline(stream, item, delim)) {
+            item.erase(0, item.find_first_not_of(L" \n\r\t"));
+            item.erase(item.find_last_not_of(L" \n\r\t") + 1);
+            elements.push_back(item);
+        }
+        return elements;
+    }
+
     vector<string> filesindir(string path) {
         vector<string> files;
         DIR* dir;

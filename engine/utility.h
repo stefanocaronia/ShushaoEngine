@@ -31,6 +31,13 @@ namespace util {
         return stm.str();
     }
 
+    template <typename T>
+    std::wstring toWstring(const T& n) {
+        std::wostringstream stm;
+        stm << n;
+        return stm.str();
+    }
+
     template <class T>
     bool is(void* obj) {
         return dynamic_cast<T>(obj) != nullptr;
@@ -65,6 +72,8 @@ namespace util {
     glm::vec3 toEulerAngles(const glm::quat&);
 
     std::vector<std::string> split(std::string text, char delim);
+    std::vector<std::wstring> wsplit(std::wstring text, wchar_t delim);
+
     std::vector<std::string> filesindir(std::string path);
 };  // namespace util
 

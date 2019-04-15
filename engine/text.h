@@ -8,8 +8,8 @@
 #include "color.h"
 #include "config.h"
 #include "globals.h"
-#include "renderer.h"
 #include "rect.h"
+#include "renderer.h"
 
 namespace se {
 
@@ -24,13 +24,6 @@ public:
         HEIGHT
     };
 
-    struct Line {
-        std::string text;
-        Color color = color::white;
-
-        Line(std::string text_, const Color color_) : text(text_), color(color_) {}
-    };
-
     virtual void setup();
 
     Shader* shader = nullptr;
@@ -38,20 +31,18 @@ public:
 
     // readonly properties
     const Color& color = _color;
-    const std::string& text = _text;
+    const std::wstring& text = _text;
     glm::fvec2& offset = _offset;
     glm::fvec2& scale = _scale;
     const unsigned int& pixelPerUnit = _pixelPerUnit;
     const Align& align = _align;
     const BottomAlign& bottomAlign = _bottomAlign;
-    bool alignToGeometry = false;
-    bool wordWrap = false;
-
-    const float& lineSpace = _lineSpace;  // %
+    const bool& alignToGeometry = _alignToGeometry;
+    const bool& wordWrap = _wordWrap;
     const float& lineHeight = _lineHeight;  // %
 
-    Text* SetText(std::string value);
-    Text* SetText(std::string value, Color col);
+    Text* SetText(std::wstring value);
+    Text* SetText(std::wstring value, Color col);
     Text* SetColor(Color value);
     Text* SetFont(Font* value);
     Text* SetScale(glm::fvec2 value);
@@ -62,18 +53,15 @@ public:
     Text* SetAlign(Align value);
     Text* SetPixelSize(int value);
     Text* SetPixelPerUnit(unsigned int value);
-    Text* AddLine(Line line_);
-    Text* SetLines(std::vector<Line>& lines_);
-    Text* SetLineSpace(float value);
     Text* SetLineHeight(float value);
+    Text* SetWordWrap(bool value);
+    Text* SetAlignToGeometry(bool value);
     Text* Clear();
 
     void Awake();
-    void Update();
     void Render();
-    void OnDestroy();
 
-    int getWidth(std::string text);
+    int getWidth(std::wstring text);
 
 private:
     SDL_Surface* surface = nullptr;
@@ -83,18 +71,18 @@ private:
 
     unsigned int _pixelPerUnit = Config::pixelPerUnit;
     BottomAlign _bottomAlign = BottomAlign::HEIGHT;
+    bool _wordWrap = false;
+    bool _alignToGeometry = false;
     glm::fvec2 _offset = {0.0f, 0.0f};
     glm::fvec2 _scale = {1.0f, 1.0f};
     Color _color = {1.0f, 1.0f, 1.0f, 1.0f};
-    std::string _text = "";
+    std::wstring _text = L"";
     Align _align = Align::TOPLEFT;
-    float _lineSpace = 0.2f;  // %
     float _lineHeight = 1.0f;  // %
     std::string filename;
 
-    std::vector<Line> lines;
-
-    //float lastYpos = 0.0f;
+    float lastYpos = 0.0f;
+    float lastHeight = 0.0f;
     unsigned int currentLine = 0;
 
     Rect textRect;
@@ -102,7 +90,7 @@ private:
     GLuint vbo;
     Vao* VAO;
 
-    void writeLine(std::string text_, Color color);
+    void writeLine(std::wstring text_, Color color);
 };
 
 }  // namespace se

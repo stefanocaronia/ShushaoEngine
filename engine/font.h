@@ -10,27 +10,29 @@
 
 namespace se {
 
-	class Font : public Object, public Resource {
+class Font : public Object, public Resource {
+public:
+    Font(std::string filename = "", std::string n = "");
+    ~Font();
 
-		public:
+    FT_Face face;
 
-			Font(std::string filename = "", std::string n = "");
-			~Font();
+    // readonly
+    const int& size = _size;
 
-			FT_Face face;
+    bool Load(std::string);
+    bool LoadEmbedded(int IDRES, std::string library = "");
+    void SetSize(float);
+    void SetPixelSize(int);
 
-			const int& size = _size;
+    bool LoadCharTexture(const wchar_t p);
 
-			bool Load(std::string);
-			bool LoadEmbedded(int IDRES, std::string library = "");
-			void SetSize(float);
-			void SetPixelSize(int);
+private:
+    int _size = 12;  // pixel size
 
-		private:
+    FT_Byte* bytes = nullptr;
 
-			int _size = 12; // pixel size
+    void init();
+};
 
-            FT_Byte* bytes = nullptr;
-	};
-
-}
+}  // namespace se

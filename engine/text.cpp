@@ -18,7 +18,10 @@ using namespace std;
 using namespace glm;
 
 Text::~Text() {
-    // if (tex > 0) glDeleteTextures(1, &tex);
+    delete (VAO);
+    delete (shader);
+    VAO = nullptr;
+    shader = nullptr;
 }
 
 void Text::setup() {
@@ -44,10 +47,10 @@ void Text::Awake() {
     }
 }
 
-int Text::getWidth(std::wstring text_) {
+int Text::getWidth(std::wstring text) {
     const wchar_t* p;
     float width = 0;
-    for (p = text_.c_str(); *p; p++) {
+    for (p = text.c_str(); *p; p++) {
         if (!font->LoadCharTexture(*p)) {
             continue;
         }
@@ -59,12 +62,13 @@ int Text::getWidth(std::wstring text_) {
     return width;
 }
 
-void Text::writeLine(std::wstring text_, Color color) {
+void Text::renderText() {
     // NB: y punta in alto anche qui, non confondere con il web
 
+    if (text == L"") return;
+
     const wchar_t* p;
-    const wchar_t* ctext = text_.c_str();
-    unsigned int baselineGap = 0;
+    const wchar_t* ctext = _text.c_str();
     bool baseline = true;
     size_t i = 0;
     int row = 0;
@@ -74,7 +78,7 @@ void Text::writeLine(std::wstring text_, Color color) {
 
     // pos di partenza in pixel
     vec2 pos = offset * (float)pixelPerUnit;
-    float leftpos = pos.x; // memorizzo la leftpos
+    float leftpos = pos.x;  // memorizzo la leftpos
 
     // calcolo altezza linea e spaziatura utilizzando le percentuali
     int pixelLineHeight = font->size * lineHeight;
@@ -100,7 +104,7 @@ void Text::writeLine(std::wstring text_, Color color) {
     if (wordWrap && text != lastText) {
         words.clear();
         std::wstring word = L"";
-        for (p = ctext, i = 0; i < text_.size(); ++p, ++i) {
+        for (p = ctext, i = 0; i < text.size(); ++p, ++i) {
             if (isspace(*p) || *p == '\0') {
                 words.insert({i - word.length(), getWidth(word)});
                 word = L"";
@@ -113,6 +117,7 @@ void Text::writeLine(std::wstring text_, Color color) {
 
     // ciclo tutti i caratteri della linea per calcolare le dimensioni del testo - solo se il testo è cambiato
     if (text != lastText) {
+        baselineGap = 0.0f;
         width = 0.0f;
         height = 0.0f;
         rowwidth.clear();
@@ -120,7 +125,7 @@ void Text::writeLine(std::wstring text_, Color color) {
         rowwidth.push_back(0.0f);
         rowheight.push_back(0.0f);
 
-        for (p = ctext, i = 0; i < text_.size(); ++p, ++i) {
+        for (p = ctext, i = 0; i < text.size(); ++p, ++i) {
             if (!font->LoadCharTexture(*p)) {
                 continue;
             }
@@ -137,6 +142,7 @@ void Text::writeLine(std::wstring text_, Color color) {
                 row++;
                 rowheight.push_back(0.0f);
                 rowwidth.push_back(0.0f);
+                baselineGap = 0;  // lo azzero, tanto serve solo quello dell'ultima riga
             }
 
             // calcolo il baseline gap
@@ -218,7 +224,7 @@ void Text::writeLine(std::wstring text_, Color color) {
     float rwidth = 0.0f;
 
     // ciclo tutti i caratteri per stamparli
-    for (p = ctext, i = 0; i < text_.size(); ++p, ++i) {
+    for (p = ctext, i = 0; i < text.size(); ++p, ++i) {
         if (!font->LoadCharTexture(*p)) {
             continue;
         }
@@ -250,7 +256,7 @@ void Text::writeLine(std::wstring text_, Color color) {
             VAO->GetBuffer(Vbo::VERTICES)->Unbind();
         }
 
-        if (*p == '\n' || (wordWrap && words.find(i + 1) != words.end() && rwidth + words[i + 1] > pixelRect.width)) { // c'è una nuova riga, imposto il testo successivo
+        if (*p == '\n' || (wordWrap && words.find(i + 1) != words.end() && rwidth + words[i + 1] > pixelRect.width)) {  // c'è una nuova riga, imposto il testo successivo
 
             // imposto la x del testo successivo
             switch (align) {  // si parte da bottomleft
@@ -285,7 +291,7 @@ void Text::writeLine(std::wstring text_, Color color) {
             row++;
             rwidth = 0;
 
-        } else { // non c'è una nuova riga, vado avanti su x
+        } else {  // non c'è una nuova riga, vado avanti su x
             pos.x += (glyph->advance.x / 64) * scale.x;
             pos.y += (glyph->advance.y / 64) * scale.y;
         }
@@ -296,7 +302,7 @@ void Text::writeLine(std::wstring text_, Color color) {
 }
 
 void Text::Render() {
-    if (!isReady()) return;
+    if (!isReady() || text == L"") return;
 
     // currentLine = 0;
     // lastYpos = 0.0f;
@@ -308,11 +314,7 @@ void Text::Render() {
     shader->update();
 
     VAO->Use();
-
-    //for (auto& line : lines) {
-    writeLine(text, color);
-    //}
-
+    renderText();
     VAO->Leave();
     shader->Leave();
 

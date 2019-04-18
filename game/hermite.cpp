@@ -1,3 +1,5 @@
+#include "glm/glm.hpp"
+
 #include "hermite.h"
 
 using namespace se;
@@ -17,12 +19,12 @@ void Hermite::Awake() {
 
     std::vector<glm::vec3> points;
     for (double d = 0.0; d <= 1.0; d += 0.001) {
-        vec3 point = vec3(d * 6.0, curve.Evaluate(d) * 2.0f, 0.0f);
+        glm::vec3 point = glm::vec3(d * 6.0, curve.Evaluate(d) * 2.0f, 0.0f);
         points.push_back(point);
     }
 
     for (auto point : curve.points) {
-        Debug::Log << "point: " << point.time << ", " << point.value << endl;
+        Debug::Log << "point: " << point.time << ", " << point.value << std::endl;
     }
 
     gr->AddPolyline(points, color::green); */
@@ -31,9 +33,9 @@ void Hermite::Awake() {
 
     for (double d = 0.0; d <= 1.0; d += 0.001) {
         Color color = gradient.Evaluate(d);
-        gr->AddLine(vec3(d * 6.0f, 0.0f, 0.0f), vec3(d * 6.0f, 2.0f, 0.0f), color);
-        //gr->AddLine(vec3(d * 6.0f, 0.0f, 0.0f), vec3(d * 6.0f, 2.0f, 0.0f), color::red);
-        //Debug::Log << (d * 6.0f) << ", " << 0.0f << ", " << 0.0f << " -> " << (d * 6.0f) << ", " << 2.0f << ", " << 0.0f << endl;
-        // Debug::Log << "r: " << color.r << "; g: " << color.g << "; b: " << color.b << "; a: " << color.a << endl;
+        gr->AddLine(glm::vec3(d * 6.0f, 0.0f, 0.0f), glm::vec3(d * 6.0f, 2.0f, 0.0f), color);
+        //gr->AddLine(glm::vec3(d * 6.0f, 0.0f, 0.0f), glm::vec3(d * 6.0f, 2.0f, 0.0f), color::red);
+        //Debug::Log << (d * 6.0f) << ", " << 0.0f << ", " << 0.0f << " -> " << (d * 6.0f) << ", " << 2.0f << ", " << 0.0f << std::endl;
+        // Debug::Log << "r: " << color.r << "; g: " << color.g << "; b: " << color.b << "; a: " << color.a << std::endl;
     }
 }

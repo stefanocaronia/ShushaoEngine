@@ -6,7 +6,19 @@
             "cStandard": "c99",
             "cppStandard": "c++17",
             "intelliSenseMode": "gcc-x64",
-            "includePath": ["C:/bin/mingw64/mingw64/**", "${workspaceFolder}/engine/pch/*", "${workspaceFolder}/engine/*", "${workspaceFolder}/game/*", "${workspaceFolder}/../../mingw-dev-libs/boost/**", "${workspaceFolder}/../../mingw-dev-libs/glew/include/**", "${workspaceFolder}/../../mingw-dev-libs/glm/**", "${workspaceFolder}/../../mingw-dev-libs/SDL2/include/SDL2/**", "${workspaceFolder}/../../mingw-dev-libs/SDL2_image/include/SDL2/**", "${workspaceFolder}/../../mingw-dev-libs/SDL2_ttf/include/SDL2/**", "${workspaceFolder}/../../mingw-dev-libs/SDL2_mixer/include/SDL2/**", "${workspaceFolder}/../../mingw-dev-libs/Box2D/include/**", "${workspaceFolder}/../../mingw-dev-libs/freetype/include/**"]
+            "includePath": [
+                "C:/bin/mingw64/mingw64/**",
+                "${workspaceFolder}/include/**",
+                "${workspaceFolder}/engine/.precompiled/*",
+                "${workspaceFolder}/../../mingw-dev-libs/boost/*",
+                "${workspaceFolder}/../../mingw-dev-libs/glew/include/*",
+                "${workspaceFolder}/../../mingw-dev-libs/glm/*",
+                "${workspaceFolder}/../../mingw-dev-libs/SDL2/include/SDL2/*",
+                "${workspaceFolder}/../../mingw-dev-libs/SDL2_image/include/SDL2/*",
+                "${workspaceFolder}/../../mingw-dev-libs/SDL2_mixer/include/SDL2/*",
+                "${workspaceFolder}/../../mingw-dev-libs/Box2D/include/*",
+                "${workspaceFolder}/../../mingw-dev-libs/freetype/include/*"
+            ]
         }
     ],
     "version": 4

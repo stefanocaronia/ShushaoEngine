@@ -30,12 +30,12 @@ namespace se {
 	void MeshRenderer::Awake() {
 
 		if (mesh == nullptr) {
-			Debug::Log(ERROR) << "Mesh undefined" << endl;
+			Debug::Log(ERROR) << "Mesh undefined" << std::endl;
 			return;
 		}
 
 		if (mesh->VAO == nullptr) {
-			Debug::Log(ERROR) << "Mesh VAO undefined" << endl;
+			Debug::Log(ERROR) << "Mesh VAO undefined" << std::endl;
 			return;
 		}
 

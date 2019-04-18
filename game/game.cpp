@@ -1,20 +1,16 @@
-#include <iostream>
-
 #include <sdl_.h>
+#include <std_.h>
 
 #include "game.h"
 #include "globals.h"
 #include "level.h"
 
-using namespace std;
-using namespace glm;
 using namespace se;
 
 /*
 	[INIT] RESOURCE LOADING
 */
 bool Game::InitResources() {
-
     //Resources::Load<Textfile>("assets/cube.obj", "textcube");
     Resources::Load<Texture>("avatar", IMG_AVATAR, LIB_SHUSHAO);
     Resources::Load<Texture>("assets/particlestar.png");
@@ -23,7 +19,7 @@ bool Game::InitResources() {
     Resources::Load<Texture>("assets/night.jpg");
     Resources::Load<Texture>("assets/eye.jpg");
     Resources::Load<Texture>("assets/pancsmile.png");
-    Resources::Load<TextureAtlas>("assets/walking.png")->AddGrid(vec2(16, 16), Align::BOTTOM);
+    Resources::Load<TextureAtlas>("assets/walking.png")->AddGrid(glm::vec2(16, 16), Align::BOTTOM);
     Resources::Add<Sprite>("pancrazio_sprite")->SetTexture(Resources::Get<Texture>("pancrazio"))->SetPixelPerUnit(16)->Build();
     Resources::Add<Sprite>("eye_sprite")->SetTexture(Resources::Get<Texture>("eye"))->SetPixelPerUnit(200)->Build();
 
@@ -52,7 +48,6 @@ bool Game::InitResources() {
 	[INIT] CONFIG OVERRIDE
 */
 bool Game::InitConfig() {
-
     perspectiveTest = false;
 
     Debug::debugGridMode = perspectiveTest ? GridMode::PERSPECTIVE : GridMode::ORTHOGRAFIC;
@@ -142,18 +137,18 @@ void Game::GetInput() {
         GLManager::ToggleFullscreen();
 
     if (Input::getButtonDown("fire")) {
-        Debug::Log << "FIRE!" << endl;
+        Debug::Log << "FIRE!" << std::endl;
         Resources::Get<Effect>("shoot")->play();
     }
 
     if (Input::getButtonDown("fire2")) {
-        Debug::Log << "FIRE 2!" << endl;
+        Debug::Log << "FIRE 2!" << std::endl;
         Resources::Get<Effect>("hit")->play();
     }
 
     //double horizontal = Input::getAxis("horizontal");
     /* if (horizontal != 0) {
-        Debug::Log << horizontal << endl;
+        Debug::Log << horizontal << std::endl;
     } */
 
     if (Input::getKeyDown(SDL_SCANCODE_D)) {
@@ -166,59 +161,59 @@ void Game::GetInput() {
 
     if (Input::getKeyDown(SDL_SCANCODE_P)) {
         if (Music::isPlaying()) {
-            Debug::Log << "PAUSE" << endl;
+            Debug::Log << "PAUSE" << std::endl;
             Music::pause();
         } else if (Music::isPaused()) {
-            Debug::Log << "RESUME" << endl;
+            Debug::Log << "RESUME" << std::endl;
             Music::resume();
         } else {
-            Debug::Log << "PLAY" << endl;
+            Debug::Log << "PLAY" << std::endl;
             Resources::Get<Music>("fizz")->play(-1);
         }
     } else if (Input::getKeyDown(SDL_SCANCODE_O)) {
-        Debug::Log << "STOP" << endl;
+        Debug::Log << "STOP" << std::endl;
         Music::stop();
     } else if (Input::getKeyDown(SDL_SCANCODE_M)) {
         if (!Music::isMuted()) {
-            Debug::Log << "MUTE" << endl;
+            Debug::Log << "MUTE" << std::endl;
             Music::mute();
         } else {
-            Debug::Log << "UNMUTE" << endl;
+            Debug::Log << "UNMUTE" << std::endl;
             Music::unMute();
         }
     }
 
     if (Input::getKey(SDL_SCANCODE_I)) {
-        Debug::Log << Music::addVolume(1) << endl;
+        Debug::Log << Music::addVolume(1) << std::endl;
     } else if (Input::getKey(SDL_SCANCODE_U)) {
-        Debug::Log << Music::addVolume(-1) << endl;
+        Debug::Log << Music::addVolume(-1) << std::endl;
     }
 
     if (Input::getKey(SDL_SCANCODE_C)) {
-        vec3 pos = SceneManager::activeScene->activeCamera->transform->position;
+        glm::vec3 pos = SceneManager::activeScene->activeCamera->transform->position;
         SceneManager::activeScene->activeCamera->transform->SetLocalPosition({pos.x - (2.4f * Time::deltaTime), pos.y, pos.z});
     } else if (Input::getKey(SDL_SCANCODE_V)) {
-        vec3 pos = SceneManager::activeScene->activeCamera->transform->position;
+        glm::vec3 pos = SceneManager::activeScene->activeCamera->transform->position;
         SceneManager::activeScene->activeCamera->transform->SetLocalPosition({pos.x + (2.4f * Time::deltaTime), pos.y, pos.z});
     }
 
     if (Input::getKey(SDL_SCANCODE_B)) {
         Entity* lightEntity = SceneManager::activeScene->GetEntity("Point 1");
-        vec3 pos = lightEntity->transform->position;
+        glm::vec3 pos = lightEntity->transform->position;
         lightEntity->transform->SetLocalPosition({pos.x - (2.4f * Time::deltaTime), pos.y, pos.z});
     } else if (Input::getKey(SDL_SCANCODE_N)) {
         Entity* lightEntity = SceneManager::activeScene->GetEntity("Point 1");
-        vec3 pos = lightEntity->transform->position;
+        glm::vec3 pos = lightEntity->transform->position;
         lightEntity->transform->SetLocalPosition({pos.x + (2.4f * Time::deltaTime), pos.y, pos.z});
     }
 
     if (Input::getKey(SDL_SCANCODE_G)) {
         Entity* lightEntity = SceneManager::activeScene->GetEntity("Directional");
-        vec3 pos = lightEntity->transform->position;
+        glm::vec3 pos = lightEntity->transform->position;
         lightEntity->transform->SetLocalPosition({pos.x - (10 * Time::deltaTime), pos.y, pos.z});
     } else if (Input::getKey(SDL_SCANCODE_H)) {
         Entity* lightEntity = SceneManager::activeScene->GetEntity("Directional");
-        vec3 rot = lightEntity->transform->GetLocalEulerAngles();
+        glm::vec3 rot = lightEntity->transform->GetLocalEulerAngles();
         lightEntity->transform->SetLocalRotation({rot.x + (10 * Time::deltaTime), rot.y, rot.z});
     }
 

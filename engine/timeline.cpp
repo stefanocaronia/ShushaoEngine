@@ -5,9 +5,6 @@
 
 namespace se {
 
-using namespace std;
-using namespace glm;
-
 Timeline::Timeline(std::string _name) : Object(_name){};
 
 Timeline::~Timeline() {
@@ -101,7 +98,7 @@ Timeline* Timeline::setTarget(int& var) {
     return this;
 }
 
-Timeline* Timeline::load(initializer_list<int> ilist) {
+Timeline* Timeline::load(std::initializer_list<int> ilist) {
     if (propertyType != PropertyType::INT) return this;
     vInt.values = ilist;
     return this;
@@ -121,26 +118,26 @@ Timeline* Timeline::add(int var, int nFrames) {
 
 //{ #region VEC3
 
-Timeline* Timeline::setTarget(vec3& var) {
+Timeline* Timeline::setTarget(glm::vec3& var) {
     vVec3.setTarget(var);
     propertyType = PropertyType::VEC3;
     return this;
 }
 
-/*Timeline* Timeline::setTarget(const vec3& var) {
+/*Timeline* Timeline::setTarget(const glm::vec3& var) {
 		vVec3.setTarget(var);
-		cout << vVec3.backupValue.x << " " << vVec3.backupValue.y << endl;
+		cout << vVec3.backupValue.x << " " << vVec3.backupValue.y << std::endl;
 		propertyType = PropertyType::VEC3;
 		return this;
 	}*/
 
-Timeline* Timeline::load(initializer_list<vec3> ilist) {
+Timeline* Timeline::load(std::initializer_list<glm::vec3> ilist) {
     if (propertyType != PropertyType::VEC3) return this;
     vVec3.values = ilist;
     return this;
 }
 
-Timeline* Timeline::add(vec3 var, int nFrames) {
+Timeline* Timeline::add(glm::vec3 var, int nFrames) {
     if (propertyType != PropertyType::VEC3) return this;
     if (nFrames > 1) {
         vVec3.values.insert(vVec3.values.end(), nFrames, var);
@@ -160,7 +157,7 @@ Timeline* Timeline::setTarget(float& var) {
     return this;
 }
 
-Timeline* Timeline::load(initializer_list<float> ilist) {
+Timeline* Timeline::load(std::initializer_list<float> ilist) {
     if (propertyType != PropertyType::FLOAT) return this;
     vFloat.values = ilist;
     return this;
@@ -176,13 +173,13 @@ Timeline* Timeline::setTarget(Sprite*& var) {
     return this;
 }
 
-Timeline* Timeline::load(initializer_list<Sprite*> ilist) {
+Timeline* Timeline::load(std::initializer_list<Sprite*> ilist) {
     if (propertyType != PropertyType::SPRITE) return this;
     pSprite.pointers = ilist;
     return this;
 }
 
-Timeline* Timeline::load(vector<Sprite*> elements) {
+Timeline* Timeline::load(std::vector<Sprite*> elements) {
     if (propertyType != PropertyType::SPRITE) return this;
     pSprite.pointers = elements;
     return this;

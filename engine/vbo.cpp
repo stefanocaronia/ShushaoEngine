@@ -1,12 +1,10 @@
 #include <math_.h>
 
+#include "debug.h"
 #include "shaders/shader.h"
 #include "vbo.h"
 
 namespace se {
-
-using namespace glm;
-using namespace std;
 
 const std::string Vbo::VERTICES = "vertices";
 const std::string Vbo::NORMALS = "normals";
@@ -61,7 +59,7 @@ Vbo::~Vbo() {
 
 Vbo* Vbo::Init() {
     if (ready) {
-        Debug::Log(WARNING) << "Vbo " << name << " already initializated" << endl;
+        Debug::Log(WARNING) << "Vbo " << name << " already initializated" << std::endl;
         return this;
     }
 
@@ -85,7 +83,7 @@ Vbo* Vbo::Delete() {
 
 Vbo* Vbo::Bind() {
     if (!config.target) {
-        Debug::Log(ERROR) << "Can't bind Vbo " << name << ", no target array set" << endl;
+        Debug::Log(ERROR) << "Can't bind Vbo " << name << ", no target array set" << std::endl;
         exit(1);
         return this;
     }
@@ -95,7 +93,7 @@ Vbo* Vbo::Bind() {
 
 Vbo* Vbo::Unbind() {
     if (!config.target) {
-        Debug::Log(WARNING) << "Can't unbind " << name << ", no target array set" << endl;
+        Debug::Log(WARNING) << "Can't unbind " << name << ", no target array set" << std::endl;
         return this;
     }
     glBindBuffer(config.target, 0);

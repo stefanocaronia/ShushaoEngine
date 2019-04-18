@@ -1,4 +1,3 @@
-#include "object.h"
 #include "component.h"
 #include "debug.h"
 #include "gamedata.h"
@@ -6,9 +5,6 @@
 #include "utility.h"
 
 namespace se {
-
-using namespace std;
-using namespace glm;
 
 Object::Object() {
     name = "Object";
@@ -80,12 +76,12 @@ void Object::Destroy(Object* obj) {
         return nullptr;
     }
 
-    Object* Object::Instantiate(Object* original, vec3 position, quat rotation) {
+    Object* Object::Instantiate(Object* original, glm::vec3 position, quat rotation) {
         // TODO Object::Instantiate
         return nullptr;
     }
 
-    Object* Object::Instantiate(Object* original, vec3 position, quat rotation, Transform* parent) {
+    Object* Object::Instantiate(Object* original, glm::vec3 position, quat rotation, Transform* parent) {
         // TODO Object::Instantiate
         return nullptr;
     } */

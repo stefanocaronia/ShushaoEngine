@@ -30,7 +30,7 @@ namespace se {
 	void SpriteRenderer::Awake() {
 
 		if (sprite == nullptr) {
-			Debug::Log(ERROR) << "Sprite undefined" << endl;
+			Debug::Log(ERROR) << "Sprite undefined" << std::endl;
 			return;
 		}
 

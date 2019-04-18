@@ -1,4 +1,4 @@
-#include <iostream>
+#include <std_.h>
 
 #include "debug.h"
 #include "design.h"
@@ -13,9 +13,6 @@
 #include "vao.h"
 
 namespace se {
-
-using namespace std;
-using namespace glm;
 
 Text::~Text() {
     delete (VAO);
@@ -77,7 +74,7 @@ void Text::renderText() {
     shader->SetRenderColor(color);
 
     // pos di partenza in pixel
-    vec2 pos = offset * (float)pixelPerUnit;
+    glm::vec2 pos = offset * (float)pixelPerUnit;
     float leftpos = pos.x;  // memorizzo la leftpos
 
     // calcolo altezza linea e spaziatura utilizzando le percentuali
@@ -238,7 +235,7 @@ void Text::renderText() {
         float h = (glyph->bitmap.rows * scale.y) / (float)pixelPerUnit;
 
         // creo il box del carattere
-        vector<vec4> box{
+        std::vector<glm::vec4> box{
             {x2, -y2, 0.0f, 0.0f},
             {x2 + w, -y2, 1.0f, 0.0f},
             {x2, -y2 - h, 0.0f, 1.0f},
@@ -250,7 +247,7 @@ void Text::renderText() {
         if (*p != '\n') {
             rwidth += (glyph->advance.x / 64) * scale.x;
 
-            VAO->Load<vec4>(Vbo::VERTICES, box);
+            VAO->Load<glm::vec4>(Vbo::VERTICES, box);
             VAO->GetBuffer(Vbo::VERTICES)->Bind();
             glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
             VAO->GetBuffer(Vbo::VERTICES)->Unbind();

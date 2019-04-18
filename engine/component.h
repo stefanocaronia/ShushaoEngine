@@ -4,6 +4,7 @@
 #include <std_.h>
 
 #include "coroutineholder.h"
+#include "object.h"
 
 namespace se {
 
@@ -49,15 +50,13 @@ public:
 
     bool enabled = true;
 
-    void BroadcastMessage();  // Calls the method named methodName on every MonoBehaviour in this game object or any of its children.
-
     std::multiset<Component*, CompareComponent> GetActiveComponentsInChildren();
     std::set<Entity*> GetEntitiesInChildren();
     bool isActiveAndEnabled();
 
-    void BroadcastMessage(std::string methodName);  // Calls the method named methodName on every MonoBehaviour in this game object or any of its children.
-    void SendMessage(std::string methodName);  // Calls the method named methodName on every MonoBehaviour in this game object.
-    void SendMessageUpwards(std::string methodName);  // Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour.
+    void BroadcastInvokeMethod(std::string methodName);  // Calls the method named methodName on every MonoBehaviour in this game object or any of its children.
+    void InvokeMethod(std::string methodName);  // Calls the method named methodName on every MonoBehaviour in this game object.
+    void InvokeMethodUpwards(std::string methodName);  // Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour.
 
     // void run(Cycle::Stage stage);
     virtual void call(std::string method);

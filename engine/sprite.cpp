@@ -8,20 +8,17 @@
 
 namespace se {
 
-using namespace std;
-using namespace glm;
-
 Sprite::Sprite() {
     name = "Sprite";
     Init();
 }
 
-Sprite::Sprite(string n) {
+Sprite::Sprite(std::string n) {
     name = n;
     Init();
 }
 
-Sprite::Sprite(string n, Texture* texture_) {
+Sprite::Sprite(std::string n, Texture* texture_) {
     name = n;
     SetTexture(texture_);
     Init();
@@ -59,7 +56,7 @@ Sprite* Sprite::SetPixelPerUnit(unsigned int ppu) {
     return this;
 }
 
-Sprite* Sprite::SetPivot(vec2 _pivot) {
+Sprite* Sprite::SetPivot(glm::vec2 _pivot) {
     pixel_pivot = CalculatePivot(Align::CUSTOM, rect, _pivot);
     return this;
 }
@@ -85,7 +82,7 @@ Rect Sprite::GetRect() {
     return rect;
 }
 
-vec2 Sprite::GetPivot() {
+glm::vec2 Sprite::GetPivot() {
     return pivot;
 }
 
@@ -126,9 +123,9 @@ Sprite* Sprite::Build() {
     }
 
     VAO->Use();
-    VAO->Load<vec3>(Vbo::VERTICES, vertices);
-    VAO->Load<vec2>(Vbo::UV, uv);
-    VAO->Load<vec3>(Vbo::NORMALS, normals);
+    VAO->Load<glm::vec3>(Vbo::VERTICES, vertices);
+    VAO->Load<glm::vec2>(Vbo::UV, uv);
+    VAO->Load<glm::vec3>(Vbo::NORMALS, normals);
     VAO->Load<GLushort>(Vbo::INDEXES, indexes);
     VAO->Leave();
 
@@ -136,8 +133,8 @@ Sprite* Sprite::Build() {
     return this;
 }
 
-vec2 Sprite::CalculatePivot(Align pp, Rect re, vec2 custom) {
-    vec2 piv;
+glm::vec2 Sprite::CalculatePivot(Align pp, Rect re, glm::vec2 custom) {
+    glm::vec2 piv;
     switch (pp) {
         case (Align::CENTER):
             piv = re.center;

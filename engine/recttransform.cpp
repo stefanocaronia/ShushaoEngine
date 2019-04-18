@@ -6,8 +6,6 @@
 
 namespace se {
 
-using namespace glm;
-
 RectTransform::RectTransform(Transform* transform_) {
     transform = transform_;
     init();
@@ -19,11 +17,11 @@ RectTransform::RectTransform(Transform* transform_) {
 glm::mat4 RectTransform::GetLocalToParentMatrix() {
     glm::mat4 matrix;
     if (hasSingleAnchorPoint()) {
-        vec2 parentAnchorCoord = parentRectTransform->rectCoordToLocal(anchorMin * parentRectTransform->rect.size);
-        matrix = glm::translate(glm::mat4(), vec3(parentAnchorCoord, 0.0f)) * glm::translate(glm::mat4(), transform->localPosition) * glm::toMat4(transform->localRotation) * glm::scale(glm::mat4(), transform->localScale);
+        glm::vec2 parentAnchorCoord = parentRectTransform->rectCoordToLocal(anchorMin * parentRectTransform->rect.size);
+        matrix = glm::translate(glm::mat4(), glm::vec3(parentAnchorCoord, 0.0f)) * glm::translate(glm::mat4(), transform->localPosition) * glm::toMat4(transform->localRotation) * glm::scale(glm::mat4(), transform->localScale);
     } else {
         if (rectInvalid) SetSizeWithCurrentAnchors();
-        matrix = glm::translate(glm::mat4(), vec3(anchoredPosition, 0.0f)) * glm::toMat4(transform->localRotation) * glm::scale(glm::mat4(), transform->localScale);
+        matrix = glm::translate(glm::mat4(), glm::vec3(anchoredPosition, 0.0f)) * glm::toMat4(transform->localRotation) * glm::scale(glm::mat4(), transform->localScale);
     }
 
     return matrix;
@@ -33,17 +31,17 @@ void RectTransform::update() {
     if (isRectTransformChild && !hasSingleAnchorPoint()) {
         // if (rectInvalid) SetSizeWithCurrentAnchors();
     } else {
-        _rect.SetPosition(vec2(0, rect.height) - localPivot());
+        _rect.SetPosition(glm::vec2(0, rect.height) - localPivot());
     }
 }
 
-vec2 RectTransform::rectCoordToLocal(vec2 pcoord) {
+glm::vec2 RectTransform::rectCoordToLocal(glm::vec2 pcoord) {
     return pcoord - localPivot();
 }
 
-vec2 RectTransform::localPivot(bool flipY) {
+glm::vec2 RectTransform::localPivot(bool flipY) {
     if (flipY) {
-        return rect.size * pivot * vec2(1, -1);
+        return rect.size * pivot * glm::vec2(1, -1);
     }
     return rect.size * pivot;
 }
@@ -63,7 +61,7 @@ Rect RectTransform::GetAnchorsParentRect() {
 void RectTransform::SetSizeWithCurrentAnchors() {
     if (!isRectTransformChild) return;
     Rect apr = GetAnchorsParentRect();
-    vec2 piv = pivot * vec2(deltas.width, deltas.height);
+    glm::vec2 piv = pivot * glm::vec2(deltas.width, deltas.height);
 
     Rect tempRect;
     tempRect.YUP = true;
@@ -131,18 +129,18 @@ void RectTransform::SetSizeWithCurrentAnchors() {
             break;
     }
 
-    vec2 localPosition = tempRect.position - parentRectTransform->localPivot();
+    glm::vec2 localPosition = tempRect.position - parentRectTransform->localPivot();
 
     _rect.SetSize(tempRect.size);
-    _rect.SetPosition(vec2(0, 0) - localPivot(true));
+    _rect.SetPosition(glm::vec2(0, 0) - localPivot(true));
     _anchoredPosition = localPosition + localPivot(true);
 
-    /* Debug::Log << "AnchorsParentRect" << endl;
-        Debug::Log << apr.ToString() << endl;
-        Debug::Log << "Rect" << endl;
-        Debug::Log << tempRect.ToString() << endl;
-        Debug::Log << "Anchored Position: " <<_anchoredPosition.x << ", " << _anchoredPosition.y << endl;
-        Debug::Log(WARNING) << deltas.toString() << endl; */
+    /* Debug::Log << "AnchorsParentRect" << std::endl;
+        Debug::Log << apr.ToString() << std::endl;
+        Debug::Log << "Rect" << std::endl;
+        Debug::Log << tempRect.ToString() << std::endl;
+        Debug::Log << "Anchored Position: " <<_anchoredPosition.x << ", " << _anchoredPosition.y << std::endl;
+        Debug::Log(WARNING) << deltas.toString() << std::endl; */
 
     rectInvalid = false;
 }
@@ -272,7 +270,7 @@ void RectTransform::InvalidateChildren() {
 void RectTransform::render() {
     if (Debug::enabled) {
         Color color;
-        vec3 position = Transform::VEC3_ZERO;
+        glm::vec3 position = Transform::VEC3_ZERO;
         if (renderMode == RenderMode::WORLD) {
             color = {0.1f, 0.1f, 0.5f, 0.6f};
         } else if (renderMode == RenderMode::CAMERA) {

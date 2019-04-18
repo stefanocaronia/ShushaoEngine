@@ -1,13 +1,14 @@
 #pragma once
 
+#include <math_.h>
 #include <physics_.h>
+#include <std_.h>
 
 #include "../component.h"
 
 namespace se {
 
 class Rigidbody2D;
-class Collider2D;
 
 class Collider2D : public Component {
 public:
@@ -20,7 +21,6 @@ public:
     glm::vec2 scale = {1.0f, 1.0f};
 
     float density = 1.0f;
-    ;
     float friction = 0.3f;
     float restitution = 0.6f;
 

@@ -14,8 +14,8 @@ public:
     virtual void setup() { name = "Animation"; }
     ~Animation();
 
-    Timeline* addLayer(string);
-    Timeline* getLayer(string);
+    Timeline* addLayer(std::string);
+    Timeline* getLayer(std::string);
 
     void setFPS(int);
 
@@ -29,7 +29,7 @@ public:
     void Copy(Animation* other);
 
 protected:
-    vector<Timeline*> layers;
+    std::vector<Timeline*> layers;
 
     void initialize();
 

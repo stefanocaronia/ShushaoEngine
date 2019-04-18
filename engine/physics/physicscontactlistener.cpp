@@ -18,19 +18,19 @@ namespace se {
 
 		if (colliderA != nullptr) {
 			if (colliderA->isSensor) {
-				colliderA->entity->SendMessage("OnTriggerEnter2D", *colliderB);
+				colliderA->entity->InvokeMethod("OnTriggerEnter2D", *colliderB);
 				colliderA->ColliderEnter(colliderB);
 			} else {
-				colliderA->entity->SendMessage("OnCollisionEnter2D", collisionA);
+				colliderA->entity->InvokeMethod("OnCollisionEnter2D", collisionA);
 			}
 		}
 
 		if (colliderB != nullptr) {
 			if (colliderB->isSensor) {
-				colliderB->entity->SendMessage("OnTriggerEnter2D", *colliderA);
+				colliderB->entity->InvokeMethod("OnTriggerEnter2D", *colliderA);
 				colliderB->ColliderEnter(colliderA);
 			} else {
-				colliderB->entity->SendMessage("OnCollisionEnter2D", collisionB);
+				colliderB->entity->InvokeMethod("OnCollisionEnter2D", collisionB);
 			}
 		}
 	}
@@ -45,26 +45,26 @@ namespace se {
 
 		if (colliderA != nullptr) {
 			if (colliderA->isSensor) {
-				colliderA->entity->SendMessage("OnTriggerExit2D", *colliderB);
+				colliderA->entity->InvokeMethod("OnTriggerExit2D", *colliderB);
 				colliderA->ColliderExit(colliderB);
 			} else {
-				colliderA->entity->SendMessage("OnCollisionExit2D", collisionA);
+				colliderA->entity->InvokeMethod("OnCollisionExit2D", collisionA);
 			}
 		}
 
 		if (colliderB != nullptr) {
 			if (colliderB->isSensor) {
-				colliderB->entity->SendMessage("OnTriggerExit2D", *colliderA);
+				colliderB->entity->InvokeMethod("OnTriggerExit2D", *colliderA);
 				colliderB->ColliderExit(colliderA);
 			} else {
-				colliderB->entity->SendMessage("OnCollisionExit2D", collisionB);
+				colliderB->entity->InvokeMethod("OnCollisionExit2D", collisionB);
 			}
 		}
 	}
 
 	void PhysicsContactListener::PreSolve(b2Contact* contact, const b2Manifold* oldManifold) {
 
-		//std::cout << "PreSolve" << endl;
+		//std::cout << "PreSolve" << std::endl;
 
 		Collider2D* colliderA = dynamic_cast<Collider2D*>((Collider2D*)contact->GetFixtureA()->GetUserData());
 		Collider2D* colliderB = dynamic_cast<Collider2D*>((Collider2D*)contact->GetFixtureB()->GetUserData());
@@ -72,13 +72,13 @@ namespace se {
 		Collision2D collisionA, collisionB;
 		BuildCollisions(contact, colliderA, colliderB, collisionA, collisionB);
 
-		if (colliderA != nullptr) colliderA->entity->SendMessage("OnCollisionStay2D", collisionA);
-		if (colliderB != nullptr) colliderB->entity->SendMessage("OnCollisionStay2D", collisionB);
+		if (colliderA != nullptr) colliderA->entity->InvokeMethod("OnCollisionStay2D", collisionA);
+		if (colliderB != nullptr) colliderB->entity->InvokeMethod("OnCollisionStay2D", collisionB);
 	}
 
 	/*void PhysicsContactListener::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse) {
 
-		//std::cout << "PostSolve" << endl;
+		//std::cout << "PostSolve" << std::endl;
 
 	}*/
 

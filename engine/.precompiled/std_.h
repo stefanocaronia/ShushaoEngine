@@ -2,7 +2,6 @@
 #define GCH_STD
 
 #include <dirent.h>
-#include <math_.h>
 #include <stdlib.h>
 #include <algorithm>
 #include <chrono>
@@ -11,7 +10,6 @@
 #include <functional>
 #include <iostream>
 #include <map>
-#include <set>
 #include <ostream>
 #include <random>
 #include <regex>

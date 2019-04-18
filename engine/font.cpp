@@ -3,6 +3,7 @@
 #include <std_.h>
 
 #include "font.h"
+#include "glmanager.h"
 #include "resources.h"
 #include "utility.h"
 
@@ -28,7 +29,7 @@ void Font::SetPixelSize(int size_) {
 
 bool Font::Load(std::string filename) {
     if (FT_New_Face(GLManager::lFreetype, filename.c_str(), 0, &face)) {
-        Debug::Log(ERROR) << "Could not load font: " << filename << endl;
+        Debug::Log(ERROR) << "Could not load font: " << filename << std::endl;
         return false;
     }
     init();
@@ -36,7 +37,7 @@ bool Font::Load(std::string filename) {
 }
 
 bool Font::LoadEmbedded(int IDRES, std::string library) {
-    vector<char> data = Resources::GetEmbeddedData(IDRES, library, RT_FONT);
+    std::vector<char> data = Resources::GetEmbeddedData(IDRES, library, RT_FONT);
     //bytes = (FT_Byte*)(data.data());
     if (bytes != nullptr) delete (bytes);
     bytes = new FT_Byte[data.size()];
@@ -49,7 +50,7 @@ bool Font::LoadEmbedded(int IDRES, std::string library) {
 void Font::init() {
     int result = FT_Select_Charmap(face, FT_ENCODING_UNICODE);
     if (result > 0) {
-        Debug::Log(WARNING) << "Impossible to select charmap in font " << name << endl;
+        Debug::Log(WARNING) << "Impossible to select charmap in font " << name << std::endl;
     }
 }
 

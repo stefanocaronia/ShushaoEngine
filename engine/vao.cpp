@@ -5,9 +5,6 @@
 
 namespace se {
 
-using namespace glm;
-using namespace std;
-
 Vao::Vao() {
     name = "Vao";
 }
@@ -15,7 +12,7 @@ Vao::Vao() {
 Vao::~Vao() {
     for (auto& it : buffers) {
         if (it.second != nullptr) {
-            Debug::Log << "Cancello buffer" << it.second->name << endl;  //<< " (" + util::classtitle(typeid(*it.second).name()) +")"
+            Debug::Log << "Cancello buffer" << it.second->name << std::endl;  //<< " (" + util::classtitle(typeid(*it.second).name()) +")"
             delete (it.second);
             it.second = nullptr;
         }
@@ -26,7 +23,7 @@ Vao::~Vao() {
     glDeleteVertexArrays(1, &Id);
 }
 
-Vbo* Vao::AddBuffer(const string name_, VboConfiguration config_) {
+Vbo* Vao::AddBuffer(const std::string name_, VboConfiguration config_) {
     Vbo* buff = new Vbo(config_);
     buff->name = name_;
     AddBuffer(buff);
@@ -46,7 +43,7 @@ Vbo* Vao::GetBuffer(const std::string name_) {
 
 Vao* Vao::Use() {
     if (!Id) {
-        Debug::Log(ERROR) << "VAO not initializated" << endl;
+        Debug::Log(ERROR) << "VAO not initializated" << std::endl;
     }
     glBindVertexArray(Id);
     EnablePointers();

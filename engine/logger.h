@@ -5,13 +5,10 @@
 #ifdef CONSOLE_COLORS
 #include <windows.h>
 #undef ERROR
-#undef SendMessage
+#undef InvokeMethod
 #endif
 
-#include <iostream>
-#include <sstream>
-#include <fstream>
-#include <map>
+#include <std_.h>
 
 #include "stime.h"
 #include "utility.h"
@@ -21,63 +18,59 @@
 
 namespace se {
 
-	using namespace std;
+enum DebugLevel {
+    INFO,
+    WARNING,
+    ERROR
+};
 
-	enum DebugLevel {
-		INFO,
-		WARNING,
-		ERROR
-	};
+enum ConsoleColor {
+    ZERO,
+    DARKBLUE,
+    DARKGREEN,
+    DARKCYAN,
+    DARKRED,
+    DARKPURPLE,
+    DARKYELLOW,
+    LIGHTGREY,
+    GREY,
+    BLUE,
+    GREEN,
+    CYAN,
+    RED,
+    PINK,
+    YELLOW,
+    WHITE
+};
 
-	enum ConsoleColor {
-		ZERO,
-		DARKBLUE,
-		DARKGREEN,
-		DARKCYAN,
-		DARKRED,
-		DARKPURPLE,
-		DARKYELLOW,
-		LIGHTGREY,
-		GREY,
-		BLUE,
-		GREEN,
-		CYAN,
-		RED,
-		PINK,
-		YELLOW,
-		WHITE
-	};
+class Logger {
+    std::ostringstream stream;
+    DebugLevel streamLevel = DebugLevel::INFO;
+    bool logStarted = false;
+    std::ofstream debugfile;
+    std::string sender = "";
+    std::string debugFilename = "debug.log";
 
-	class Logger {
+public:
+    Logger(DebugLevel level_);
 
-			std::ostringstream stream;
-			DebugLevel streamLevel = DebugLevel::INFO;
-			bool logStarted = false;
-			ofstream debugfile;
-			string sender = "";
-			string debugFilename = "debug.log";
+    DebugLevel level;
+    bool enabled = false;
 
-		public:
+    Logger& operator()(DebugLevel l);
+    Logger& operator()(DebugLevel l, std::string s);
+    Logger& operator()(std::string s);
 
-			Logger(DebugLevel level_);
+    template <typename T>
+    Logger& operator<<(T&& value) {
+        if (streamLevel < level) return *this;
+        stream << value;
+        return *this;
+    }
 
-			DebugLevel level;
-			bool enabled = false;
+    Logger& operator<<(std::ostream& (*os)(std::ostream&));
 
-			Logger& operator()(DebugLevel l);
-			Logger& operator()(DebugLevel l, string s) ;
-			Logger& operator()(string s) ;
+    static void setColor(ConsoleColor);
+};
 
-			template<typename T>
-			Logger& operator<<(T&& value) {
-				if (streamLevel < level) return *this;
-				stream << value;
-				return *this;
-			}
-
-			Logger& operator<<(std::ostream& (*os)(std::ostream&));
-
-			static void setColor(ConsoleColor);
-	};
-
-}
+}  // namespace se

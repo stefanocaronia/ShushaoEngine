@@ -12,12 +12,12 @@ namespace se {
 		Load(texture);
 	}
 
-	SpriteSheet::SpriteSheet(string _name, TextureAtlas* texture) {
+	SpriteSheet::SpriteSheet(std::string _name, TextureAtlas* texture) {
 		name = _name;
 		Load(texture);
 	}
 
-	SpriteSheet::SpriteSheet(string _name) {
+	SpriteSheet::SpriteSheet(std::string _name) {
 		name = _name;
 	}
 
@@ -54,7 +54,7 @@ namespace se {
 			return;
         }
 
-        for (const pair<Rect, Align>& slice : atlas->slices) {
+        for (const std::pair<Rect, Align>& slice : atlas->slices) {
             Rect rect = slice.first;
             Align pivotpos = slice.second;
 

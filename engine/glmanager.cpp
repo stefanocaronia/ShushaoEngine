@@ -1,19 +1,12 @@
-#include <core_.h>
 #include <freetype_.h>
 #include <opengl_.h>
 #include <sdl_.h>
 #include <std_.h>
 
-#include "shaders/baseshader.h"
-#include "shaders/fontshader.h"
-#include "shaders/phongshader.h"
-#include "shaders/standardshader.h"
-#include "shaders/wireframeshader.h"
+#include "config.h"
+#include "glmanager.h"
 
 namespace se {
-
-using namespace std;
-using namespace glm;
 
 bool GLManager::Init(std::string title, bool fs) {
     fullscreen = fs;
@@ -23,7 +16,6 @@ bool GLManager::Init(std::string title, bool fs) {
 
     SDL_Init(SDL_INIT_EVERYTHING);  //  | SDL_INIT_JOYSTICK
     IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
-    // TTF_Init();
 
     FT_Init_FreeType(&lFreetype);
 
@@ -97,15 +89,6 @@ void GLManager::Quit() {
     Mix_CloseAudio();
     Mix_Quit();
     SDL_Quit();
-
-    /* for (auto& shader : shaders) {
-			if (shader != nullptr) {
-				Debug::Log << "Cancello " << shader->name  << endl; //<< " (" + util::classtitle(typeid(*it.second).name()) +")"
-				delete(shader);
-				shader = nullptr;
-			}
-		}
-		shaders.clear(); */
 }
 
 void GLManager::Clear() {
@@ -152,12 +135,13 @@ FT_Library GLManager::lFreetype = nullptr;
 
 bool GLManager::fullscreen = false;
 bool GLManager::ready = false;
-//vector<Shader*> GLManager::shaders;
+//std::vector<Shader*> GLManager::shaders;
 
 unsigned int GLManager::DESKTOP_WIDTH;
 unsigned int GLManager::DESKTOP_HEIGHT;
 unsigned int GLManager::WIDTH;
 unsigned int GLManager::HEIGHT;
-vec2 GLManager::VIEWPORT;
+glm::vec2 GLManager::VIEWPORT;
 float GLManager::ASPECT;
+
 }  // namespace se

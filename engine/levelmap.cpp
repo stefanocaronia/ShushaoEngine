@@ -4,8 +4,6 @@
 
 namespace se {
 
-using namespace std;
-
 LevelMap::LevelMap() {
     for (std::string i : defaults) {
         if (size() >= maxElements) return;
@@ -13,21 +11,21 @@ LevelMap::LevelMap() {
     }
 }
 
-LevelMap::LevelMap(initializer_list<std::string> ilist) {
+LevelMap::LevelMap(std::initializer_list<std::string> ilist) {
     for (std::string i : ilist) {
         if (size() >= maxElements) return;
         push_back(i);
     }
 }
 
-LevelMap::LevelMap(vector<std::string> list) {
+LevelMap::LevelMap(std::vector<std::string> list) {
     for (std::string i : list) {
         if (size() >= maxElements) return;
         push_back(i);
     }
 }
 
-void LevelMap::operator=(initializer_list<std::string> ilist) {
+void LevelMap::operator=(std::initializer_list<std::string> ilist) {
     clear();
     for (std::string i : defaults) {
         if (size() >= maxElements) return;
@@ -63,7 +61,7 @@ std::string LevelMap::operator[](unsigned int index) {
     return at(index);
 }
 
-void LevelMap::setDefaults(initializer_list<std::string> ilist) {
+void LevelMap::setDefaults(std::initializer_list<std::string> ilist) {
     for (std::string i : ilist) defaults.push_back(i);
     for (std::string i : ilist) push_back(i);
 }
@@ -82,12 +80,12 @@ void LevelMap::setMaxElements(unsigned int m) {
 
 void LevelMap::toString(std::string title) {
     Logger::setColor(ConsoleColor::GREY);
-    cout << " " << util::classtitle(typeid(*this).name()) << " " << title << " [" << maxElements << "] :" << endl;
+    std::cout << " " << util::classtitle(typeid(*this).name()) << " " << title << " [" << maxElements << "] :" << std::endl;
     for (auto it = begin(); it != end(); ++it) {
         int key = distance(begin(), it);
-        cout << "  (" << key << ") " << *it << endl;
+        std::cout << "  (" << key << ") " << *it << std::endl;
     }
-    // cout << "  (" << maxElements << ") " << "^overall" << endl;
+    // cout << "  (" << maxElements << ") " << "^overall" << std::endl;
     Logger::setColor(ConsoleColor::LIGHTGREY);
 }
 

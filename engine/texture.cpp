@@ -9,8 +9,6 @@
 
 namespace se {
 
-using namespace std;
-
 Texture::Texture(std::string filename, std::string n) {
     if (filename != "") Load(filename);
     name = (n == "" ? util::basename(filename) : n);
@@ -22,7 +20,7 @@ Texture::~Texture() {
 }
 
 bool Texture::LoadEmbedded(int IDRES, std::string library) {
-    vector<char> data = Resources::GetEmbeddedData(IDRES, library);
+    std::vector<char> data = Resources::GetEmbeddedData(IDRES, library);
     return LoadBytes(data);
 }
 
@@ -31,7 +29,7 @@ bool Texture::LoadBytes(std::vector<char> data) {
     Surface = IMG_LoadPNG_RW(rw);
 
     if (Surface == nullptr) {
-        Debug::Log(WARNING) << "Can't load embedded image '" << name << "': " << IMG_GetError() << endl;
+        Debug::Log(WARNING) << "Can't load embedded image '" << name << "': " << IMG_GetError() << std::endl;
         return false;
     }
     return Bind(Surface);
@@ -42,7 +40,7 @@ bool Texture::Load(std::string filename) {
     name = util::basename(filename);
 
     if (!Surface) {
-        Debug::Log(ERROR) << "IMG_Load " << IMG_GetError() << endl;
+        Debug::Log(ERROR) << "IMG_Load " << IMG_GetError() << std::endl;
         return false;
     }
 

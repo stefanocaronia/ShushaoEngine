@@ -1,5 +1,6 @@
 #include "component.h"
 #include "cycle.h"
+#include "debug.h"
 #include "entity.h"
 #include "gamedata.h"
 #include "physics/collider2d.h"
@@ -10,7 +11,6 @@
 
 namespace se {
 
-using namespace std;
 using ComponentSet = std::multiset<Component*, CompareComponent>;
 
 Component::Component() {
@@ -20,7 +20,7 @@ Component::Component() {
 }
 
 Component::~Component() {
-    // Debug::Log << "Component Destructor: " << name << " di " << entity->name << endl;
+    // Debug::Log << "Component Destructor: " << name << " di " << entity->name << std::endl;
     exit();
     entity->scene->UnregisterActiveComponent(this);
 }
@@ -90,7 +90,7 @@ std::set<Entity*> Component::GetEntitiesInChildren() {
 }
 
 // usato per i metodi custom delle classi derivate (riceve i messages)
-void Component::call(string method) {
+void Component::call(std::string method) {
     // riscritto nelle derived
 }
 
@@ -143,7 +143,7 @@ void Component::update() {
 
 void Component::render() {
     if (!currentEnable) return;
-
+    Debug::Log(WARNING) << name << std::endl;
     Render();
     OnPostRender();
 }

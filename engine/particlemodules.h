@@ -8,8 +8,6 @@
 
 namespace se {
 
-using namespace glm;
-
 struct ParticleSystemModule {
     bool enabled;  // Enable/disable the Emission module.
     void Enable() { enabled = true; }
@@ -84,7 +82,7 @@ struct ColorOverLifetimeModule : public ParticleSystemModule {
 struct SizeOverLifetimeModule : public ParticleSystemModule {
     bool separateAxes = false;
     Curve size;
-    glm::vec2 sizeScale = vec2(1.0f);
+    glm::vec2 sizeScale = glm::vec2(1.0f);
 
     Curve xSize;
     Curve ySize;

@@ -6,7 +6,9 @@ namespace se {
 
 class Renderer : public Component {
 public:
-    virtual void setup() { name = "Renderer"; }
+    virtual void setup() {
+        name = "Renderer";
+    }
 
     bool enabled;  // Makes the rendered 3D object visible if enabled.
     bool overlay = false;

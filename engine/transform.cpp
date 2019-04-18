@@ -1,8 +1,13 @@
-#include "transform.h"
+
+#include <math_.h>
+#include <opengl_.h>
+#include <std_.h>
+
 #include "canvas.h"
 #include "color.h"
 #include "design.h"
 #include "scenemanager.h"
+#include "transform.h"
 #include "utility.h"
 
 namespace se {
@@ -106,8 +111,8 @@ Transform* Transform::GetChild(unsigned int index) {
     return children.at(index);
 }
 
-vector<Transform*> Transform::GetParents() {
-    vector<Transform*> parents;
+std::vector<Transform*> Transform::GetParents() {
+    std::vector<Transform*> parents;
     if (isAtRoot()) return parents;
 
     Transform* p = parent;
@@ -384,4 +389,5 @@ const glm::vec3 Transform::BACK = {0.0f, 0.0f, -1.0f};
 const glm::vec3 Transform::RIGHT = {1.0f, 0.0f, 0.0f};
 const glm::vec3 Transform::LEFT = {-1.0f, 0.0f, 0.0f};
 const glm::quat Transform::QUATERNION_IDENTITY = {1.0f, 0.0f, 0.0f, 0.0f};
+
 }  // namespace se

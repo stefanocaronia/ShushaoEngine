@@ -5,6 +5,7 @@
 
 #include "sprite.h"
 #include "spritesheet.h"
+#include "object.h"
 
 namespace se {
 
@@ -82,22 +83,22 @@ public:
 
     // INT
     Timeline* setTarget(int&);
-    Timeline* load(initializer_list<int>);
+    Timeline* load(std::initializer_list<int>);
     Timeline* add(int var, int nFrames = 1);
 
     // VEC3
     Timeline* setTarget(glm::vec3&);
     Timeline* setTarget(const glm::vec3&);
-    Timeline* load(initializer_list<glm::vec3>);
+    Timeline* load(std::initializer_list<glm::vec3>);
     Timeline* add(glm::vec3 var, int nFrames = 1);
 
     // FLOAT
     Timeline* setTarget(float&);
-    Timeline* load(initializer_list<float>);
+    Timeline* load(std::initializer_list<float>);
 
     // SPRITE *
     Timeline* setTarget(Sprite*& var);
-    Timeline* load(initializer_list<Sprite*>);
+    Timeline* load(std::initializer_list<Sprite*>);
     Timeline* load(std::vector<Sprite*>);
     Timeline* load(SpriteSheet*);
 

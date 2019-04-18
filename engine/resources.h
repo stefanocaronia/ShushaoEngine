@@ -13,7 +13,7 @@ namespace se {
 
 class Resources {
 public:
-    vector<float> aci;
+    std::vector<float> aci;
     static std::map<std::string, Object*> Assets;
 
     static std::vector<char> GetEmbeddedData(int IDRES, std::string library = "", LPCSTR type = RT_RCDATA);
@@ -24,7 +24,7 @@ public:
         T* resource = new T(filename, name);
         auto it = Assets.find(resource->name);
         if (it != Assets.end()) {
-            Debug::Log(WARNING) << "Resource " << resource->name << " already loaded" << endl;
+            Debug::Log(WARNING) << "Resource " << resource->name << " already loaded" << std::endl;
             delete (resource);
             resource = nullptr;
             return nullptr;
@@ -36,13 +36,13 @@ public:
     template <class T>
     static T* Load(std::string name, int IDRES, std::string library = "") {
         if (Assets.find(name) != Assets.end()) {
-            Debug::Log(WARNING) << "Resource '" << name << "' already loaded" << endl;
+            Debug::Log(WARNING) << "Resource '" << name << "' already loaded" << std::endl;
             return nullptr;
         }
 
         T* resource = new T("", name);
         if (!((T*)resource)->LoadEmbedded(IDRES, library)) {
-            Debug::Log(WARNING) << "Resource '" << name << "' not loaded" << endl;
+            Debug::Log(WARNING) << "Resource '" << name << "' not loaded" << std::endl;
             return nullptr;
         }
 
@@ -55,7 +55,7 @@ public:
         T* resource = new T(name);
         auto it = Assets.find(resource->name);
         if (it != Assets.end()) {
-            Debug::Log(WARNING) << "Resource " << resource->name << " already loaded" << endl;
+            Debug::Log(WARNING) << "Resource " << resource->name << " already loaded" << std::endl;
             delete (resource);
             resource = nullptr;
             return nullptr;
@@ -68,7 +68,7 @@ public:
     static T* Add(T* asset, std::string name = "") {
         auto it = Assets.find(asset->name);
         if (it != Assets.end()) {
-            Debug::Log(WARNING) << "Resource " << asset->name << " already loaded" << endl;
+            Debug::Log(WARNING) << "Resource " << asset->name << " already loaded" << std::endl;
             return nullptr;
         }
         Assets[name == "" ? asset->name : name] = (T*)asset;
@@ -80,7 +80,7 @@ public:
         T* resource = new T(filename);
         auto it = Assets.find(resource->name);
         if (it != Assets.end()) {
-            Debug::Log(WARNING) << "Resource " << resource->name << " already loaded" << endl;
+            Debug::Log(WARNING) << "Resource " << resource->name << " already loaded" << std::endl;
             delete (resource);
             resource = nullptr;
             return nullptr;

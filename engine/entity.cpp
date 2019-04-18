@@ -1,7 +1,10 @@
+#include <std_.h>
+
+#include "debug.h"
 #include "entity.h"
+#include "component.h"
 #include "scene.h"
 #include "transform.h"
-#include "component.h"
 
 namespace se {
 
@@ -11,7 +14,7 @@ Entity::Entity() {
     isStatic = false;
 }
 
-Entity::Entity(string _name) {
+Entity::Entity(std::string _name) {
     name = _name;
     active = true;
     isStatic = false;
@@ -28,7 +31,7 @@ void Entity::init() {
 }
 
 Entity::~Entity() {
-    Debug::Log << "Entity Destructor: " << name << endl;
+    Debug::Log << "Entity Destructor: " << name << std::endl;
 
     // distruggo tutti i components
     for (Component* pCO : Components) {
@@ -78,7 +81,7 @@ void Entity::InvalidateScene() {
     scene->Invalidate();
 }
 
-Entity* Entity::AddChild(string _name = "Entity") {
+Entity* Entity::AddChild(std::string _name = "Entity") {
     Entity* entity = new Entity();
     entity->transform->SetParent(transform);
     entity->name = _name;
@@ -94,7 +97,7 @@ std::multiset<Component*, CompareComponent> Entity::GetActiveComponentsInChildre
     return transform->GetActiveComponentsInChildren();
 }
 
-void Entity::BroadcastMessage(std::string methodName) {
+void Entity::BroadcastInvokeMethod(std::string methodName) {
     /*		if (!isActiveInHierarchy())	return;
 
         for (Component* c : Components) {
@@ -103,11 +106,11 @@ void Entity::BroadcastMessage(std::string methodName) {
         }
 
         for (Transform* t : transform->children)
-            t->entity->SendMessage(methodName);
+            t->entity->InvokeMethod(methodName);
 */
 }
 
-void Entity::SendMessage(std::string methodName, Object& parameter) {
+void Entity::InvokeMethod(std::string methodName, Object& parameter) {
     if (!isActiveInHierarchy()) return;
 
     for (Component* c : Components) {
@@ -118,13 +121,13 @@ void Entity::SendMessage(std::string methodName, Object& parameter) {
 void Entity::PrintHierarchy(int level) {
     Logger::setColor(ConsoleColor::DARKGREEN);
 
-    for (int i = 0; i < level; i++) cout << "   ";
-    cout << " " << (char)192 << (char)196;
-    cout << " " << name << (active ? "+" : "");
+    for (int i = 0; i < level; i++) std::cout << "   ";
+    std::cout << " " << (char)192 << (char)196;
+    std::cout << " " << name << (active ? "+" : "");
 
-    for (Component* c : Components) cout << " [" << c->index << ". " << c->getTitle() << "]";
+    for (Component* c : Components) std::cout << " [" << c->index << ". " << c->getTitle() << "]";
 
-    cout << endl;
+    std::cout << std::endl;
 
     ++level;
     for (Transform* t : transform->children) {

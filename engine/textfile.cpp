@@ -7,8 +7,6 @@
 
 namespace se {
 
-using namespace std;
-
 Textfile::Textfile(std::string filename, std::string n) {
     if (filename != "") Load(filename);
     name = (n == "" ? util::basename(filename) : n);
@@ -25,7 +23,7 @@ bool Textfile::LoadEmbedded(int IDRES, std::string library) {
 bool Textfile::Load(std::string filename) {
     name = util::basename(filename);
     buffer.clear();
-    ifstream t(filename);
+    std::ifstream t(filename);
     buffer << t.rdbuf();
     text = buffer.str();
 

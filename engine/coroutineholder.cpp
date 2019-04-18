@@ -2,8 +2,6 @@
 
 namespace se {
 
-using namespace std;
-
 CoroutineHolder::~CoroutineHolder() {
     StopAllCoroutines();
     ResumeCoroutines();
@@ -78,7 +76,7 @@ Coroutine* CoroutineHolder::PopCoroutine(Coroutine* CoroutinePtr) {
 
 void CoroutineHolder::ResumeCoroutines() {
     if (Coroutines.empty()) return;
-    set<Coroutine*> CoroutinesCopy;
+    std::set<Coroutine*> CoroutinesCopy;
     CoroutinesCopy.swap(Coroutines);
 
     for (Coroutine* CoroutinePtr : CoroutinesCopy) {

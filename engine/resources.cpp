@@ -8,9 +8,7 @@
 
 namespace se {
 
-using namespace std;
-
-vector<char> Resources::GetEmbeddedData(int IDRES, string library, LPCSTR type) {
+std::vector<char> Resources::GetEmbeddedData(int IDRES, std::string library, LPCSTR type) {
     std::vector<char> output;
 
     HMODULE module;
@@ -36,14 +34,14 @@ vector<char> Resources::GetEmbeddedData(int IDRES, string library, LPCSTR type) 
             }
         }
     } else {
-        Debug::Log(WARNING) << "Cant load Resource " << IDRES << (library != "" ? " from " + library : "") << endl;
-        return vector<char>();
+        Debug::Log(WARNING) << "Cant load Resource " << IDRES << (library != "" ? " from " + library : "") << std::endl;
+        return std::vector<char>();
     }
 
     return output;
 }
 
-string Resources::GetEmbeddedText(int IDRES, std::string library) {
+std::string Resources::GetEmbeddedText(int IDRES, std::string library) {
     auto data = se::Resources::GetEmbeddedData(IDRES, library, RT_RCDATA);
     return std::string(data.begin(), data.end());
 }
@@ -51,7 +49,7 @@ string Resources::GetEmbeddedText(int IDRES, std::string library) {
 void Resources::Clear() {
     for (auto& asset : Assets) {
         if (asset.second != nullptr) {
-            Debug::Log << "Cancello " << asset.second->name << " (" + util::classtitle(typeid(*asset.second).name()) + ")" << endl;
+            Debug::Log << "Cancello " << asset.second->name << " (" + util::classtitle(typeid(*asset.second).name()) + ")" << std::endl;
             delete (asset.second);
             asset.second = nullptr;
         }
@@ -61,13 +59,13 @@ void Resources::Clear() {
 
 void Resources::toString() {
     Logger::setColor(ConsoleColor::DARKBLUE);
-    cout << " Resources [" << Assets.size() << "] :" << endl;
+    std::cout << " Resources [" << Assets.size() << "] :" << std::endl;
     for (auto const& asset : Assets) {
-        cout << "  - (" << util::classtitle(typeid(*asset.second).name()) << ") " << asset.first << endl;
+        std::cout << "  - (" << util::classtitle(typeid(*asset.second).name()) << ") " << asset.first << std::endl;
     }
     Logger::setColor(ConsoleColor::LIGHTGREY);
 }
 
-map<string, Object*> Resources::Assets;
+std::map<std::string, Object*> Resources::Assets;
 
 }  // namespace se

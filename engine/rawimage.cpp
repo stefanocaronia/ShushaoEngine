@@ -9,9 +9,6 @@
 
 namespace se {
 
-using namespace std;
-using namespace glm;
-
 void RawImage::setup() {
     entity->transform->isRectTransform = true;
     material = new Material();
@@ -116,9 +113,9 @@ RawImage* RawImage::Build() {
     };
 
     VAO->Use();
-    VAO->Load<vec3>(Vbo::VERTICES, vertices);
-    VAO->Load<vec2>(Vbo::UV, uv);
-    VAO->Load<vec3>(Vbo::NORMALS, normals);
+    VAO->Load<glm::vec3>(Vbo::VERTICES, vertices);
+    VAO->Load<glm::vec2>(Vbo::UV, uv);
+    VAO->Load<glm::vec3>(Vbo::NORMALS, normals);
     VAO->Load<GLushort>(Vbo::INDEXES, indexes);
     VAO->Leave();
 

@@ -15,7 +15,7 @@ public:
     TextureAtlas(std::string filename) : Texture(filename){};
     TextureAtlas(std::string filename, std::string n) : Texture(filename, n){};
 
-    vector<pair<Rect, Align>> slices;
+    std::vector<std::pair<Rect, Align>> slices;
 
     void AddSlice(Rect, Align pp = Align::CENTER);
 

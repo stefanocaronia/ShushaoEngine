@@ -6,6 +6,7 @@
 
 #include "texture.h"
 #include "vao.h"
+#include "object.h"
 
 namespace se {
 

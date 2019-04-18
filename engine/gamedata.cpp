@@ -8,8 +8,6 @@
 
 namespace se {
 
-using namespace std;
-
 int GameData::GenerateObjectID() {
     if (Objects.size() > 0) {
         return Objects.back()->GetInstanceID() + 1;
@@ -24,7 +22,7 @@ int GameData::RegisterObject(Object* obj) {
 }
 
 void GameData::UnRegisterObject(int id) {
-    vector<Object*>::iterator it = find_if(Objects.begin(), Objects.end(), [id](const Object* obj) {
+    std::vector<Object*>::iterator it = std::find_if(Objects.begin(), Objects.end(), [id](const Object* obj) {
         return obj->InstanceID == id;
     });
     Objects.erase(it);
@@ -36,12 +34,12 @@ void GameData::RegisterComponent(Component* obj) {
 
 void GameData::PrintAllObjects() {
     for (Object* obj : Objects) {
-        cout << obj->GetInstanceID() << ": " << obj->name << endl;
+        std::cout << obj->GetInstanceID() << ": " << obj->name << std::endl;
     }
 }
 
 Object* GameData::GetObjectWithID(int id) {
-    vector<Object*>::iterator it = find_if(Objects.begin(), Objects.end(), [id](const Object* obj) {
+    std::vector<Object*>::iterator it = std::find_if(Objects.begin(), Objects.end(), [id](const Object* obj) {
         return obj->InstanceID == id;
     });
 
@@ -61,8 +59,8 @@ Scene* GameData::scene;
 Camera* GameData::activeCamera;
 
 // FORSE DA ELIMINARE, SONO GESTITI NELLE SCENE
-vector<Object*> GameData::Objects;
-vector<Component*> GameData::Components;
+std::vector<Object*> GameData::Objects;
+std::vector<Component*> GameData::Components;
 
 //
 //for (int i = 1; i < 31; i++) {

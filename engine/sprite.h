@@ -1,6 +1,7 @@
 #pragma once
 
 #include <math_.h>
+
 #include "config.h"
 #include "globals.h"
 #include "object.h"

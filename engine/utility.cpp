@@ -7,23 +7,21 @@
 
 namespace se {
 
-using namespace std;
-
 namespace util {
 
-    uint64_t timeSeed = chrono::high_resolution_clock::now().time_since_epoch().count();
-    seed_seq ss{uint32_t(timeSeed & 0xffffffff), uint32_t(timeSeed >> 32)};
+    uint64_t timeSeed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+    std::seed_seq ss{uint32_t(timeSeed & 0xffffffff), uint32_t(timeSeed >> 32)};
     //random_device rd; // obtain a random number from hardware
     //mt19937 mt(rd()); // seed the generator
-    mt19937_64 mt(ss);
+    std::mt19937_64 mt(ss);
 
     int random(int min, int max) {
-        uniform_int_distribution<int> distr(min, max);
+        std::uniform_int_distribution<int> distr(min, max);
         return distr(mt);
     }
 
     float random(float min, float max) {
-        uniform_real_distribution<float> distr(min, max);
+        std::uniform_real_distribution<float> distr(min, max);
         return distr(mt);
     }
 
@@ -34,18 +32,18 @@ namespace util {
     bool happens(float probability) {
         if (probability == 1.0f) return true;
         float tr = random(0.0f, 1.0f);
-        //Debug::Log << "tr: " << tr << " probability: " << probability << endl;
+        //Debug::Log << "tr: " << tr << " probability: " << probability << std::endl;
         return tr <= probability;
     }
 
-    string basename(string filename) {
-        string n = filename.substr(filename.find_last_of("/\\") + 1);
+    std::string basename(std::string filename) {
+        std::string n = filename.substr(filename.find_last_of("/\\") + 1);
         return n.substr(0, n.find_last_of("."));
     }
 
-    string zerofill(int number, int lenght) {
-        ostringstream out;
-        string sNumber = toString(number);
+    std::string zerofill(int number, int lenght) {
+        std::ostringstream out;
+        std::string sNumber = toString(number);
 
         for (unsigned int i = 0; i < lenght - sNumber.size(); i++) {
             out << "0";
@@ -57,14 +55,14 @@ namespace util {
     }
 
     /// NB: modificare anche versione template in header
-    string classtitle(string type) {
-        regex pat("N2se|P6");
-        type = regex_replace(type, pat, "");
+    std::string classtitle(std::string type) {
+        std::regex pat("N2se|P6");
+        type = std::regex_replace(type, pat, "");
 
         pat = "E$";
-        type = regex_replace(type, pat, "");
+        type = std::regex_replace(type, pat, "");
 
-        string title;
+        std::string title;
         bool inName = false;
         char prevc;
         for (char& c : type) {
@@ -101,10 +99,10 @@ namespace util {
         return {roll, pitch, yaw};
     }
 
-    std::vector<std::string> split(string text, char delim) {
+    std::vector<std::string> split(std::string text, char delim) {
         std::vector<std::string> elements;
-        stringstream stream(text);
-        string item;
+        std::stringstream stream(text);
+        std::string item;
         while (getline(stream, item, delim)) {
             item.erase(0, item.find_first_not_of(" \n\r\t"));
             item.erase(item.find_last_not_of(" \n\r\t") + 1);

@@ -9,8 +9,6 @@
 
 namespace se {
 
-using namespace glm;
-
 void GeometryRenderer::setup() {
     shader = new WireframeShader();
 }
@@ -70,8 +68,8 @@ void GeometryRenderer::Awake() {
     VAO->Init();
 
     VAO->Use();
-    VAO->Load<vec3>(Vbo::VERTICES, vertices);
-    VAO->Load<vec4>("colors", colors);
+    VAO->Load<glm::vec3>(Vbo::VERTICES, vertices);
+    VAO->Load<glm::vec4>("colors", colors);
     VAO->Leave();
 
     shader->Leave();

@@ -4,6 +4,8 @@
 #include <opengl_.h>
 #include <std_.h>
 
+#include "object.h"
+
 namespace se {
 
 class VboConfiguration {

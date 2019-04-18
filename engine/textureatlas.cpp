@@ -6,25 +6,22 @@
 
 namespace se {
 
-using namespace std;
-using namespace glm;
-
 void TextureAtlas::AddSlice(Rect _rect, Align _Align) {
     if (TextureID == 0) {
-        Debug::Log(WARNING, SOURCE) << "No texture loaded" << endl;
+        Debug::Log(WARNING, SOURCE) << "No texture loaded" << std::endl;
         return;
     }
     slices.push_back({_rect, _Align});
 }
 
-void TextureAtlas::AddGrid(vec2 _size, Align _pivotPos, vec2 _offset, vec2 _padding) {
+void TextureAtlas::AddGrid(glm::vec2 _size, Align _pivotPos, glm::vec2 _offset, glm::vec2 _padding) {
     if (TextureID == 0) {
-        Debug::Log(WARNING, SOURCE) << "No texture loaded" << endl;
+        Debug::Log(WARNING, SOURCE) << "No texture loaded" << std::endl;
         return;
     }
 
-    vec2 cursor = vec2(0, 0) + _offset;
-    vec2 step = _size + _padding;
+    glm::vec2 cursor = glm::vec2(0, 0) + _offset;
+    glm::vec2 step = _size + _padding;
 
     while (cursor.y < height) {
         while (cursor.x < width) {

@@ -6,13 +6,13 @@ namespace se {
 
 class LevelMap : private std::vector<std::string> {
 public:
-    using vector::at;
-    using vector::begin;
-    using vector::end;
+    using std::vector<std::string>::at;
+    using std::vector<std::string>::begin;
+    using std::vector<std::string>::end;
 
     LevelMap();
     LevelMap(std::initializer_list<std::string>);
-    LevelMap(vector<std::string> list);
+    LevelMap(std::vector<std::string> list);
     void operator=(std::initializer_list<std::string>);
     void operator+=(std::string);
     void operator-=(std::string);
@@ -27,7 +27,8 @@ public:
 private:
     unsigned int maxElements = 32;
     std::vector<std::string> defaults = {
-        "Default"};
+        "Default"  //
+    };
 };
 
 }  // namespace se

@@ -7,6 +7,7 @@
 #include "debug.h"
 #include "shaders/shader.h"
 #include "vbo.h"
+#include "object.h"
 
 namespace se {
 
@@ -34,13 +35,13 @@ public:
     template <class T>
     Vao* Load(std::string name_, std::vector<T>& elements) {
         if (!inUse) {
-            Debug::Log(ERROR) << "VAO is not in use" << endl;
+            Debug::Log(ERROR) << "VAO is not in use" << std::endl;
             return this;
         }
 
         auto it = buffers.find(name_);
         if (it == buffers.end()) {
-            Debug::Log(ERROR) << "VBO " << name_ << " not found" << endl;
+            Debug::Log(ERROR) << "VBO " << name_ << " not found" << std::endl;
             return this;
         }
 

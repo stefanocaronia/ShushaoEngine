@@ -85,8 +85,8 @@ public:
     void Emit(unsigned int count);  // Emit count particles immediately.
     void Clear();
 
-    vector<Particle> GetParticles();  // Gets the particles of this Particle System.
-    ParticleSystem* SetParticles(vector<Particle>);  // Sets the particles of this Particle System.
+    std::vector<Particle> GetParticles();  // Gets the particles of this Particle System.
+    ParticleSystem* SetParticles(std::vector<Particle>);  // Sets the particles of this Particle System.
     ParticleSystem* SetTexture(Texture* value_);
     ParticleSystem* SetMaxParticles(unsigned int max);
     ParticleSystem* SetPlayOnAwake(bool value_);
@@ -123,7 +123,7 @@ private:
 
     unsigned int particleCount;
 
-    vector<Particle*> particles;
+    std::vector<Particle*> particles;
 
     Transform::Origin simulationSpace = Transform::Origin::WORLD;  // This selects the space in which to simulate particles. It can be either world or local space
     EmitterVelocityMode emitterVelocityMode = EmitterVelocityMode::NONE;  // This selects the space in which to simulate particles. It can be either world or local space

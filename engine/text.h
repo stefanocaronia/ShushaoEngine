@@ -1,6 +1,8 @@
 #pragma once
 
+#include <math_.h>
 #include <opengl_.h>
+#include <std_.h>
 
 #include "color.h"
 #include "config.h"

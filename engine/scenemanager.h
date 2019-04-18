@@ -19,7 +19,7 @@ public:
     static bool sceneSet;
 
     template <class T>
-    static T* LoadScene(string _name = "") {  // Adds a scene of class T
+    static T* LoadScene(std::string _name = "") {  // Adds a scene of class T
 
         // todo pause e restore dopo
         T* scene = new T();
@@ -46,7 +46,7 @@ public:
 			}*/
 
 protected:
-    static vector<Scene*> Scenes;
+    static std::vector<Scene*> Scenes;
 };
 
 }  // namespace se

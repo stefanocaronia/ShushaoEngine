@@ -52,7 +52,8 @@ THIS_DIR = "$(shell basename "$(CURDIR)")"
 #TARGET = $(THIS_DIR).exe
 TARGET = Game.exe
 LIBTARGET = libshushao.dll
-CORES = 7
+CORES = 8
+
 
 #PATHS
 BASE_LIBS	= ../../mingw-dev-libs
@@ -61,28 +62,35 @@ VCPKG_LIBS	= ../../vcpkg/installed/x64-windows
 SRCDIR	= .
 ENGINE	= engine
 GAME	= game
+INCDIR	= include
 RESDIR	= res
 SRCEXT	= cpp
 OBJEXT	= o
 RESEXT	= res
 RCEXT	= rc
-GCHDIR  = pch
+ASEXT	= s
+GCHDIR  = .precompiled
 GCHEXT  = h.gch
 
 BUILDDIR = obj/$(BUILD)
 TARGETDIR = bin/$(BUILD)
-PRECOMPILEDDIR = $(ENGINE)/pch
+PRECOMPILEDDIR = $(ENGINE)/$(GCHDIR)
 
+#Single file comp
+SINGLEFILE = $(subst $(GAME), $(SRCDIR)/$(GAME)/, $(subst $(ENGINE), $(SRCDIR)/$(ENGINE)/, $(FILE)))
+SINGLEOBJ = $(patsubst $(SRCDIR)/%, $(BUILDDIR)/%, $(SINGLEFILE:.$(SRCEXT)=.$(OBJEXT)))
+SINGLEASSEMBLY = $(patsubst $(SRCDIR)/%, $(BUILDDIR)/%, $(SINGLEFILE:.$(SRCEXT)=.$(ASEXT)))
 
 #Flags, Libraries and Includes
+# -fexceptions
 DEPFLAGS =
-COMFLAGS = -MMD -MP -std=c++17 -fexceptions -DGLEW_STATIC -fmax-errors=10 -Wfatal-errors -DDEBUG=$(DEBUG)
-GCHFLAGS = -std=c++17 -fexceptions -DGLEW_STATIC -fmax-errors=10 -Wfatal-errors -DDEBUG=$(DEBUG) -x c++-header
+COMFLAGS = -MMD -MP -std=c++17 -DGLEW_STATIC -fmax-errors=10 -Wfatal-errors -DDEBUG=$(DEBUG) -x c++
+GCHFLAGS = -std=c++17 -DGLEW_STATIC -fmax-errors=10 -Wfatal-errors -DDEBUG=$(DEBUG) -x c++-header
 LNKFLAGS =
 SHAREDFLAGS = -shared
 LIBDIRS	 = -L$(BASE_LIBS)/boost/stage/lib -L$(BASE_LIBS)/glew/lib -L$(BASE_LIBS)/freetype/lib -L$(BASE_LIBS)/SDL2/lib -L$(BASE_LIBS)/SDL2_image/lib -L$(BASE_LIBS)/SDL2_ttf/lib -L$(BASE_LIBS)/SDL2_mixer/lib -L$(BASE_LIBS)/Box2D/lib
 LIB 	 = -lboost_context -lboost_coroutine -lglew32 -lmingw32 -lopengl32 -lgdi32 -lglu32 -lfreetype -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lBox2D
-INCDIRS  = -I$(BASE_LIBS)/boost -I$(BASE_LIBS)/glew/include -I$(BASE_LIBS)/glew/include -I$(BASE_LIBS)/glm -I$(BASE_LIBS)/freetype/include -I$(BASE_LIBS)/SDL2/include/SDL2 -I$(BASE_LIBS)/SDL2_image/include/SDL2 -I$(BASE_LIBS)/SDL2_ttf/include/SDL2 -I$(BASE_LIBS)/SDL2_mixer/include/SDL2 -I$(BASE_LIBS)/Box2D/include -I$(ROOT_DIR)/$(ENGINE) -I$(ROOT_DIR)/$(GAME) -I$(ROOT_DIR)/$(PRECOMPILEDDIR)
+INCDIRS  = -I$(BASE_LIBS)/boost -I$(BASE_LIBS)/glew/include -I$(BASE_LIBS)/glew/include -I$(BASE_LIBS)/glm -I$(BASE_LIBS)/freetype/include -I$(BASE_LIBS)/SDL2/include/SDL2 -I$(BASE_LIBS)/SDL2_image/include/SDL2 -I$(BASE_LIBS)/SDL2_mixer/include/SDL2 -I$(BASE_LIBS)/Box2D/include -I$(ROOT_DIR)/$(INCDIR) -I$(ROOT_DIR)/$(PRECOMPILEDDIR) -I$(ROOT_DIR)/$(ENGINE) -I$(ROOT_DIR)/$(GAME) -I$(ROOT_DIR)
 
 #Condizioni
 ifeq ($(DEBUG),true)
@@ -113,5 +121,6 @@ ENGINE_RESFILE = engine/resources/resources.$(RESEXT)
 GAME_RESFILE = game/resources/resources.$(RESEXT)
 
 N_SOURCES := $(words $(SOURCES))
-N_RCSOURCES := $(words $(SOURCES))
+N_RCSOURCES := $(words $(RCSOURCES))
+
 

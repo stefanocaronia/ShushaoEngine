@@ -1,6 +1,3 @@
-
-#include <std_.h>
-
 #include "config.h"
 #include "debug.h"
 #include "globals.h"
@@ -11,10 +8,8 @@
 
 namespace Config {
 
-using namespace std;
-
-string title = "Shushao Engine";
-string startScene = "";
+std::string title = "Shushao Engine";
+std::string startScene = "";
 bool debug = false;
 
 // textures
@@ -56,15 +51,15 @@ std::map<std::string, std::string> data;
 	caricamento configurazione user
 */
 bool LoadUserConfig() {
-    ifstream cfile;
+    std::ifstream cfile;
     cfile.open(USER_CONFIG_FILE);
 
     if (!cfile.is_open()) {
-        se::Debug::Log(se::ERROR) << "Can't load user config from " << USER_CONFIG_FILE << endl;
+        se::Debug::Log(se::ERROR) << "Can't load user config from " << USER_CONFIG_FILE << std::endl;
         return false;
     }
 
-    if (!processConfigData<ifstream>(cfile)) {
+    if (!processConfigData<std::ifstream>(cfile)) {
         cfile.close();
         return false;
     }
@@ -72,7 +67,7 @@ bool LoadUserConfig() {
     cfile.close();
 
     if (!parseUserConfig()) {
-        se::Debug::Log(se::ERROR) << "Can't parse user config" << endl;
+        se::Debug::Log(se::ERROR) << "Can't parse user config" << std::endl;
         return false;
     }
 
@@ -83,26 +78,26 @@ bool LoadUserConfig() {
 	caricamento configurazione engine
 */
 bool LoadEngineConfig() {
-    string engine_config = se::Resources::GetEmbeddedText(CONFIG_ENGINE);
+    std::string engine_config = se::Resources::GetEmbeddedText(CONFIG_ENGINE);
 
     if (engine_config == "") {
-        se::Debug::Log(se::ERROR) << "Can't load engine config" << endl;
+        se::Debug::Log(se::ERROR) << "Can't load engine config" << std::endl;
         return false;
     }
 
     std::istringstream cstring(engine_config);
 
-    if (!processConfigData<istringstream>(cstring)) {
+    if (!processConfigData<std::istringstream>(cstring)) {
         return false;
     }
 
     if (!parseUserConfig()) {
-        se::Debug::Log(se::ERROR) << "Can't parse user config" << endl;
+        se::Debug::Log(se::ERROR) << "Can't parse user config" << std::endl;
         return false;
     }
 
     if (!parseEngineConfig()) {
-        se::Debug::Log(se::ERROR) << "Can't parse engine config" << endl;
+        se::Debug::Log(se::ERROR) << "Can't parse engine config" << std::endl;
         return false;
     }
 

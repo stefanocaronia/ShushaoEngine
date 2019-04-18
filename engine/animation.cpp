@@ -5,8 +5,6 @@
 
 namespace se {
 
-using namespace std;
-
 Animation::~Animation() {
     Stop();
     for (Timeline* layer : layers) {
@@ -44,13 +42,13 @@ void Animation::setFPS(int _fps) {
     initialize();
 }
 
-Timeline* Animation::addLayer(string _name) {
+Timeline* Animation::addLayer(std::string _name) {
     Timeline* timeline = new Timeline(_name);
     layers.push_back(timeline);
     return timeline;
 }
 
-Timeline* Animation::getLayer(string _name) {
+Timeline* Animation::getLayer(std::string _name) {
     if (layers.empty()) return nullptr;
     for (Timeline* layer : layers) {
         if (layer->name == _name) return layer;
@@ -121,10 +119,10 @@ void Animation::initialize() {
     frameDuration = 1.0f / (float)fps;
     duration = frames * frameDuration;
 
-    //cout << "frames: " << frames << endl;
-    //cout << "frameDuration: " << frameDuration << endl;
-    //cout << "duration: " << duration << endl;
-    //cout << "state: " << (int)state << endl;
+    //cout << "frames: " << frames << std::endl;
+    //cout << "frameDuration: " << frameDuration << std::endl;
+    //cout << "duration: " << duration << std::endl;
+    //cout << "state: " << (int)state << std::endl;
 }
 
 void Animation::Update() {

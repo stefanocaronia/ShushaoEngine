@@ -2,17 +2,18 @@
 
 #include "sprite.h"
 #include "textureatlas.h"
+#include "object.h"
 
 namespace se {
 
-	class SpriteSheet : public Object, public vector<Sprite*> {
+	class SpriteSheet : public Object, public std::vector<Sprite*> {
 
 		public:
 
 			SpriteSheet();
-			SpriteSheet(string);
+			SpriteSheet(std::string);
 			SpriteSheet(TextureAtlas*);
-			SpriteSheet(string, TextureAtlas*);
+			SpriteSheet(std::string, TextureAtlas*);
 			~SpriteSheet();
 
 			short cursor = 0;

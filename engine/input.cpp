@@ -3,22 +3,22 @@
 #include <std_.h>
 
 #include "cycle.h"
+#include "debug.h"
+#include "glmanager.h"
 #include "input.h"
 #include "stime.h"
 #include "system.h"
 
-using namespace std;
-
 namespace se {
 
-InputMapping* Input::addMapping(string name_) {
+InputMapping* Input::addMapping(std::string name_) {
     InputMapping* input = new InputMapping();
     input->name = name_;
     inputs[name_] = input;
     return input;
 }
 
-InputMapping* Input::getMapping(string name_) {
+InputMapping* Input::getMapping(std::string name_) {
     return inputs[name_];
 }
 
@@ -27,29 +27,29 @@ void Input::addController(int index) {
         SDL_GameController* gc = SDL_GameControllerOpen(index);
         SDL_JoystickID id = SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(gc));
         controllers.insert({id, {index, id, nullptr, gc}});
-        // cout << controllers[id].toString() << endl;
+        // cout << controllers[id].toString() << std::endl;
     } else {
         SDL_Joystick* j = SDL_JoystickOpen(index);
         SDL_JoystickID id = SDL_JoystickInstanceID(j);
         controllers.insert({id, {index, id, j, nullptr}});
-        // cout << controllers[id].toString() << endl;
+        // cout << controllers[id].toString() << std::endl;
     }
 }
 
 void Input::removeController(int instance) {
     SDL_GameController* gc = controllers.at(instance).controller;
     SDL_GameControllerClose(gc);
-    Debug::Log(WARNING) << "Disconnected: " << controllers.at(instance).toString() << endl;
+    Debug::Log(WARNING) << "Disconnected: " << controllers.at(instance).toString() << std::endl;
     controllers.erase(instance);
 }
 
 void Input::printActiveControllers() {
     if (!Debug::enabled) return;
     Logger::setColor(ConsoleColor::GREY);
-    cout << " InputManager Active Controllers:" << endl;
+    std::cout << " InputManager Active Controllers:" << std::endl;
     for (auto cm : controllers) {
         Logger::setColor(ConsoleColor::RED);
-        cout << "  - " << cm.second.toString() << endl;
+        std::cout << "  - " << cm.second.toString() << std::endl;
     }
     Logger::setColor(ConsoleColor::LIGHTGREY);
 }
@@ -90,7 +90,7 @@ void Input::update() {
                     GLManager::HEIGHT = event.window.data2;
                     glViewport(0, 0, GLManager::WIDTH, GLManager::HEIGHT);
                     GLManager::Update();
-                    //Debug::Log << GLManager::WIDTH << "x" << GLManager::HEIGHT << endl;
+                    //Debug::Log << GLManager::WIDTH << "x" << GLManager::HEIGHT << std::endl;
                 }
                 break;
 

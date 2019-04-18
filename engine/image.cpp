@@ -1,5 +1,5 @@
 #include <math_.h>
-#include <iostream>
+#include <std_.h>
 
 #include "debug.h"
 #include "entity.h"
@@ -9,9 +9,6 @@
 #include "transform.h"
 
 namespace se {
-
-using namespace std;
-using namespace glm;
 
 void Image::setup() {
     entity->transform->isRectTransform = true;
@@ -64,7 +61,7 @@ bool Image::isReady() {
 
 void Image::Awake() {
     if (sprite == nullptr) {
-        Debug::Log(ERROR) << "Sprite undefined" << endl;
+        Debug::Log(ERROR) << "Sprite undefined" << std::endl;
         return;
     }
 

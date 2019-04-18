@@ -4,9 +4,6 @@
 
 namespace se {
 
-using namespace std;
-using namespace glm;
-
 Curve::Curve() {
     // nada
 }
@@ -75,10 +72,10 @@ float Curve::Evaluate(float time) {
                 time = -0.999999f;
                 break;
             case WrapMode::LOOP:
-                time = fract(time);
+                time = glm::fract(time);
                 break;
             case WrapMode::PINGPONG:
-                time = 1.0f - fract(time);
+                time = 1.0f - glm::fract(time);
                 break;
             case WrapMode::CLAMP:
                 time = glm::clamp(time, 0.0f, 1.0f);
@@ -106,8 +103,8 @@ float Curve::Evaluate(float time) {
 }
 
 float Curve::hermite(const float& time, const Point& start, const Point& end) {
-    float s2 = pow2(time);
-    float s3 = pow3(time);
+    float s2 = glm::pow2(time);
+    float s3 = glm::pow3(time);
     float f1 = float(2) * s3 - float(3) * s2 + float(1);
     float f2 = float(-2) * s3 + float(3) * s2;
     float f3 = s3 - float(2) * s2 + time;

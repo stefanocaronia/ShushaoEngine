@@ -2,13 +2,12 @@
 #include <windoz_.h>
 
 #include "cycle.h"
+#include "debug.h"
 #include "debuginfo.h"
 #include "scene.h"
 #include "ui/canvas.h"
 
 namespace se {
-
-using namespace std;
 
 Scene::Scene() {
     name = "Scene";
@@ -39,7 +38,7 @@ Scene::Scene() {
 }
 
 Scene::~Scene() {
-    vector<Entity*> toDelete;
+    std::vector<Entity*> toDelete;
     for (Entity* pGO : Entities) {
         toDelete.push_back(pGO);
     }
@@ -53,7 +52,7 @@ bool Scene::HasEntity(Entity* entity_) {
     return Entities.find(entity_) != Entities.end();
 }
 
-Entity* Scene::AddEntity(string _name = "Entity") {
+Entity* Scene::AddEntity(std::string _name = "Entity") {
     Entity* entity = new Entity();
     entity->name = _name;
     entity->scene = this;
@@ -95,7 +94,7 @@ void Scene::ScanActiveComponents() {
 
 void Scene::ScanEntities() {
     // ottengo tutte le entities, anche child
-    set<Entity*> entities_ = root->transform->GetEntitiesInChildren();
+    std::set<Entity*> entities_ = root->transform->GetEntitiesInChildren();
 
     for (auto& entity : entities_) {
         if (!entity->awaken) {
@@ -201,7 +200,7 @@ void Scene::PrintHierarchy() {
     Logger::setColor(ConsoleColor::LIGHTGREY);
 }
 
-multiset<Entity*> Scene::GetRootEntitys() {
+std::multiset<Entity*> Scene::GetRootEntitys() {
     // TODO: I GAMEOBJECT CON PARENT ROOT
     return Entities;
 }

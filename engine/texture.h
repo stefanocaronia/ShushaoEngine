@@ -6,6 +6,7 @@
 #include <sdl_.h>
 #include <std_.h>
 
+#include "object.h"
 #include "resource.h"
 
 namespace se {

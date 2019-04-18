@@ -8,17 +8,17 @@ void CoroutineTest::Start() {
 
 Routine CoroutineTest::coroutineA() {
     return COROUTINE {
-        Debug::Log(WARNING) << "coroutineA created" << endl;
+        Debug::Log(WARNING) << "coroutineA created" << std::endl;
         yield_return(new WaitForSeconds(2.0f));
         yield_return(StartCoroutine(coroutineB()));
-        Debug::Log(WARNING) << "coroutineA running again" << endl;
+        Debug::Log(WARNING) << "coroutineA running again" << std::endl;
     };
 }
 
 Routine CoroutineTest::coroutineB() {
     return COROUTINE {
-        Debug::Log(WARNING) << "coroutineB created" << endl;
+        Debug::Log(WARNING) << "coroutineB created" << std::endl;
         yield_return(new WaitForSeconds(4.5f));
-        Debug::Log(WARNING) << "coroutineB enables coroutineA to run" << endl;
+        Debug::Log(WARNING) << "coroutineB enables coroutineA to run" << std::endl;
     };
 }

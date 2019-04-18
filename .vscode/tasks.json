@@ -68,7 +68,7 @@
         {
             "label": "Build current file",
             "type": "shell",
-            "command": "mingw32-make single FILE=${fileBasenameNoExtension}",
+            "command": "mingw32-make single FILE=${relativeFile}",
             "problemMatcher": [],
             "presentation": {
                 "clear": true

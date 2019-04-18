@@ -9,9 +9,6 @@
 
 namespace se {
 
-using namespace std;
-using namespace glm;
-
 bool PhysicsDebugDraw::Init() {
     if (!GLManager::ready || !Config::Physics::debug) return false;
     if (ready) return true;
@@ -33,7 +30,7 @@ bool PhysicsDebugDraw::Init() {
 void PhysicsDebugDraw::DrawPolygon(const b2Vec2* b2vertices, int32 vertexCount, const b2Color& color) {
     if (!Init()) return;
 
-    vector<vec3> vertices;
+    std::vector<glm::vec3> vertices;
 
     for (int i = 0; i < vertexCount; i++) {
         vertices.push_back({b2vertices[i].x, b2vertices[i].y, 0.0f});
@@ -41,7 +38,7 @@ void PhysicsDebugDraw::DrawPolygon(const b2Vec2* b2vertices, int32 vertexCount, 
 
     shader->Use();
     VAO->Use();
-    VAO->Load<vec3>(Vbo::VERTICES, vertices);
+    VAO->Load<glm::vec3>(Vbo::VERTICES, vertices);
 
     glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
 
@@ -59,7 +56,7 @@ void PhysicsDebugDraw::DrawPolygon(const b2Vec2* b2vertices, int32 vertexCount, 
 void PhysicsDebugDraw::DrawSolidPolygon(const b2Vec2* b2vertices, int32 vertexCount, const b2Color& color) {
     if (!Init()) return;
 
-    vector<vec3> vertices;
+    std::vector<glm::vec3> vertices;
 
     for (int i = 0; i < vertexCount; i++) {
         vertices.push_back({b2vertices[i].x, b2vertices[i].y, 0.0f});
@@ -69,7 +66,7 @@ void PhysicsDebugDraw::DrawSolidPolygon(const b2Vec2* b2vertices, int32 vertexCo
     shader->update();
 
     VAO->Use();
-    VAO->Load<vec3>(Vbo::VERTICES, vertices);
+    VAO->Load<glm::vec3>(Vbo::VERTICES, vertices);
 
     glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
     shader->SetMVP(&MVP[0][0]);
@@ -90,7 +87,7 @@ void PhysicsDebugDraw::DrawSolidPolygon(const b2Vec2* b2vertices, int32 vertexCo
 void PhysicsDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color) {
     if (!Init()) return;
 
-    vector<vec3> vertices;
+    std::vector<glm::vec3> vertices;
     int NUM_DIVISIONS = 31;
 
     for (int i = 0; i < NUM_DIVISIONS + 1; i++) {
@@ -100,7 +97,7 @@ void PhysicsDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2
     shader->Use();
 
     VAO->Use();
-    VAO->Load<vec3>(Vbo::VERTICES, vertices);
+    VAO->Load<glm::vec3>(Vbo::VERTICES, vertices);
     shader->update();
 
     glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
@@ -120,7 +117,7 @@ void PhysicsDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2
 void PhysicsDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color) {
     if (!Init()) return;
 
-    vector<vec3> vertices;
+    std::vector<glm::vec3> vertices;
     int NUM_DIVISIONS = 31;
 
     for (int i = 0; i < NUM_DIVISIONS + 1; i++) {
@@ -132,7 +129,7 @@ void PhysicsDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, con
     shader->update();
 
     VAO->Use();
-    VAO->Load<vec3>(Vbo::VERTICES, vertices);
+    VAO->Load<glm::vec3>(Vbo::VERTICES, vertices);
 
     glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
     shader->SetMVP(&MVP[0][0]);
@@ -151,7 +148,7 @@ void PhysicsDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, con
 void PhysicsDebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color) {
     if (!Init()) return;
 
-    vector<vec3> vertices;
+    std::vector<glm::vec3> vertices;
     vertices = {
         {p1.x, p1.y, 0.0f},
         {p2.x, p2.y, 0.0f},
@@ -161,7 +158,7 @@ void PhysicsDebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2C
     shader->update();
 
     VAO->Use();
-    VAO->Load<vec3>(Vbo::VERTICES, vertices);
+    VAO->Load<glm::vec3>(Vbo::VERTICES, vertices);
 
     glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
     shader->SetMVP(&MVP[0][0]);
@@ -181,7 +178,7 @@ void PhysicsDebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2C
 void PhysicsDebugDraw::DrawTransform(const b2Transform& xf) {
     if (!Init()) return;
 
-    vector<vec3> vertices;
+    std::vector<glm::vec3> vertices;
     vertices = {
         {0.2f, 0.0f, 0.0f},
         {0.0f, 0.0f, 0.0f},
@@ -197,7 +194,7 @@ void PhysicsDebugDraw::DrawTransform(const b2Transform& xf) {
     shader->update();
 
     VAO->Use();
-    VAO->Load<vec3>(Vbo::VERTICES, vertices);
+    VAO->Load<glm::vec3>(Vbo::VERTICES, vertices);
 
     glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
     shader->SetMVP(&MVP[0][0]);

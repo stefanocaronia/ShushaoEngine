@@ -1,30 +1,30 @@
-# Universal MakeFile v1.4
+# Universal MakeFile v1.5
 # Compatible with Code::blocks
 include .makefiles/settings.mk
 
-#Defauilt
+# Defauilt
 ifeq ($(PRECOMPILED_HEADERS),true)
 all: prebuild directories resources precomp | $(TARGET)
-	@echo -e $(CEND)$(CGREEN)$(BULLET)$(BUILD) Compilation and linking done! $(CEND)
+	@echo -e $(CEND)$(CGREEN)$(BULLET)$(BUILD) Linking done! $(CEND)
 else
 all: prebuild directories resources | $(TARGET)
-	@echo -e $(CEND)$(CGREEN)$(BULLET)$(BUILD) Compilation and linking done! $(CEND)
+	@echo -e $(CEND)$(CGREEN)$(BULLET)$(BUILD) Linking done! $(CEND)
 endif
 
 prebuild:
-	@echo -e $(CYELLOW)Building $(THIS_DIR) "("$(BUILD)")"$(CEND) "\n"
+	@echo -e $(CYELLOW)Building $(THIS_DIR) "["$(BUILD)"]" - $(N_SOURCES) sources$(CEND) "\n"
 
-#Rebuild
-rebuild: prebuild clean | directories resources $(TARGET)
+# Rebuild
+rebuild: prebuild clean | directories resources precomp $(TARGET)
 	@echo -e $(CEND)$(CGREEN)$(BULLET)$(BUILD) Clean, Compilation and linking done! $(CEND)
 
-#Copy Resources from Resources Directory to Target Directory
+# Copy Resources from Resources Directory to Target Directory
 resources:
 	@echo -e $(CLBLUE)$(BULLET)Syncing resources $(CEND)
 #@rescopy $(BUILD)
 	@rsync $(RESDIR)/ $(TARGETDIR) -az --delete --prune-empty-dirs
 
-#Make the directories
+# Make the directories
 directories:
 	@echo -e $(CLBLUE)$(BULLET)Checking build directories $(CEND)
 	@$(MD) -p $(TARGETDIR)
@@ -37,8 +37,8 @@ clean:
 	@echo -e $(CLBLUE)$(BULLET)Cleaning build $(CEND)
 	@$(RM) -rf obj/*
 	@$(RM) -rf bin/*
-	@$(RM) -f $(SRCDIR)/$(ENGINE)/$(GCHDIR)/*.gch
-	@$(RM) -f $(SRCDIR)/$(ENGINE)/$(GCHDIR)/*.d
+	@$(RM) -f $(PRECOMPILEDDIR)/*.gch
+	@$(RM) -f $(PRECOMPILEDDIR)/*.d
 
 test:
 	@echo "SOURCES: " $(SOURCES)
@@ -46,24 +46,33 @@ test:
 	@echo "OBJECTS: " $(OBJECTS)
 	@echo "RCFILES: " $(RCFILES)
 	@echo "TOPRECOMP: " $(TOPRECOMP)
+	@echo "DEPENDS: " $(DEPENDS)
 
 single:
-	@$(CC) $(COMFLAGS) $(INCDIRS) -c $(ENGINE)/$(FILE).$(SRCEXT) -o $(BUILDDIR)/$(ENGINE)/$(FILE).$(OBJEXT)
+# -H
+	@$(MD) -p $(dir $(SINGLEOBJ))
+	@echo -e $(CLCYAN)$(BULLET)Compiling: $(subst ./,'',$(SINGLEFILE)) -\> $(SINGLEOBJ) $(CEND)$(CLCYAN)
+	@$(CC) $(COMFLAGS) $(INCDIRS) -c $(SINGLEFILE) -o $(SINGLEOBJ)
+	@echo -e $(CLCYAN)$(BULLET)Compiling assembly: $(subst ./,'',$(SINGLEFILE)) -\> $(SINGLEASSEMBLY) $(CEND)$(CLCYAN)
+	@$(CC) $(COMFLAGS) -S $(INCDIRS) -c $(SINGLEFILE) -o $(SINGLEASSEMBLY)
+	@echo -e $(CGREEN)$(BULLET)Compilation done $(CEND)$(CLCYAN)
 
 precompstart:
 	@echo -e $(CLBLUE)$(BULLET)Precompiling headers $(CEND)$(CLCYAN)
 
 precomp: precompstart $(PRECOMP)
-	@echo -e $(CGREEN)$(BULLET)Precompilation done! $(CEND)
+	@echo -e $(CLPURPLE)$(BULLET)Precompiling headers done $(CEND)
 
-#Pre-compiled headers
+# Pre-compiled headers
 $(PRECOMPILEDDIR)/%.$(GCHEXT): $(SRCDIR)/$(ENGINE)/$(GCHDIR)/%.h
 	@echo -e $(TAB)$(BULLET2)$< -\> $@
+	@$(MD) -p $(dir $@)
 	@$(CC) $(GCHFLAGS) $(INCDIRS) -c $< -o $@
 
 compilation:
-	@echo -e $(CLBLUE)$(BULLET)Compilation of $(N_SOURCES) sources$(CEND)$(CLCYAN)
+	@echo -e $(CLBLUE)$(BULLET)Compilation$(CEND)$(CLCYAN)
 	@$(MAKE) -f .makefiles/compile.mk --silent -j $(CORES) -Oline -l 80.0
+	@echo -e $(CLPURPLE)$(BULLET)Compilation done$(CEND)
 
 run: all
 	@echo -e $(CYELLOW)$(BULLET)Running $(TARGET) $(CEND)
@@ -73,19 +82,15 @@ debug: all
 	@echo -e $(CYELLOW)$(BULLET)Running Debug of $(TARGET) $(CEND)
 	@cd $(TARGETDIR) && $(DB) $(TARGET)
 
-#Link
+# Link
 $(TARGET): compilation
 	@echo -e $(CEND)$(CLBLUE)$(BULLET)Creating library $(LIBTARGET) $(CEND)
 	@$(CC) $(SHAREDFLAGS) -o $(TARGETDIR)/$(LIBTARGET) obj/$(BUILD)/$(ENGINE_RESFILE)
 	@echo -e $(CEND)$(CLBLUE)$(BULLET)Linking executable $(TARGET) $(CEND)
 	@$(CC) $(LNKFLAGS) -o $(TARGETDIR)/$(TARGET) $(OBJECTS) $(RCFILES) $(LIBDIRS) $(LIB)
 
-
-
-#Non-File Targets
+# Non-File Targets
 .PHONY: all prebuild release rebuild clean resources directories run debug test
 
 .NOTPARALLEL: all
 
-# include dependency files (*.d) if available
--include $(DEPENDS)

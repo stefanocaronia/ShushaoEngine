@@ -2,11 +2,13 @@
 #include <std_.h>
 
 #include "config.h"
+#include "debug.h"
+#include "logger.h"
 #include "utility.h"
 
 namespace se {
 
-std::map<DebugLevel, string> DebugLevelName = {
+std::map<DebugLevel, std::string> DebugLevelName = {
     {INFO, "INFO"},
     {WARNING, "WARNING"},
     {ERROR, "ERROR"}};
@@ -20,13 +22,13 @@ Logger& Logger::operator()(DebugLevel debugLevel_) {
     return *this;
 }
 
-Logger& Logger::operator()(DebugLevel debugLevel_, string sender_) {
+Logger& Logger::operator()(DebugLevel debugLevel_, std::string sender_) {
     streamLevel = debugLevel_;
     sender = sender_;
     return *this;
 }
 
-Logger& Logger::operator()(string sender_) {
+Logger& Logger::operator()(std::string sender_) {
     sender = sender_;
     return *this;
 }
@@ -44,13 +46,13 @@ Logger& Logger::operator<<(std::ostream& (*os)(std::ostream&)) {
 
     if (sender != "") sender = "<" + sender + "> ";
 
-    ostringstream buildmex;
+    std::ostringstream buildmex;
     buildmex << Time::Clock() << " [" << DebugLevelName[streamLevel] << "] " << sender << stream.str() << os;
 
     std::cout << buildmex.str();
 
-    ios_base::openmode mode = ios_base::out;
-    if (logStarted) mode = mode | ios_base::app;
+    std::ios_base::openmode mode = std::ios_base::out;
+    if (logStarted) mode = mode | std::ios_base::app;
 
     if (streamLevel > INFO) {
         debugfile.open(debugFilename, mode);

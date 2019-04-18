@@ -22,13 +22,13 @@ void Level::testParticles() {
     po->GetComponent<ParticleSystem>()->sortingLayerID = 1;
 
     Part* po2 = AddEntity<Part>("Particle Object 2");
-    po2->transform->SetLocalPosition(vec3(2, 2, 0));
+    po2->transform->SetLocalPosition(glm::vec3(2, 2, 0));
     po2->GetComponent<ParticleSystem>()->sortingLayerID = 1;
 
     // AddEntity<Hermite>();
     // Part* po3 = (Part*)Factory::InstantiateEntity(po);
     ParticleSystem* pops = po->GetComponent<ParticleSystem>();
-    ParticleSystem* ps = (ParticleSystem*)Factory::InstantiateComponent<Part>(pops, vec3(-4, -4, 0));
+    ParticleSystem* ps = (ParticleSystem*)Factory::InstantiateComponent<Part>(pops, glm::vec3(-4, -4, 0));
     ps->sortingLayerID = 2;
 }
 

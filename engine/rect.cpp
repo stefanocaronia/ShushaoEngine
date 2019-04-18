@@ -5,9 +5,6 @@
 
 namespace se {
 
-using namespace glm;
-using namespace std;
-
 Rect::Rect() {
     Set(0.0f, 0.0f, 0.0f, 0.0f);
 }
@@ -21,7 +18,7 @@ Rect Rect::Copy() {
     return c;
 }
 
-string Rect::ToString() {
+std::string Rect::ToString() {
     std::ostringstream stream;
 
     stream << "\n*** Rect Info Dump ***"
@@ -123,36 +120,36 @@ void Rect::SetYMin(float _y) {
     Set(x, _y, width, (yMax - _y));
 }
 
-void Rect::SetPosition(vec2 _p) {
+void Rect::SetPosition(glm::vec2 _p) {
     Set(_p.x, _p.y, width, height);
 }
 
-void Rect::SetCenter(vec2 _p) {
+void Rect::SetCenter(glm::vec2 _p) {
     Set(_p.x - (width / 2), _p.y - (height / 2), width, height);
 }
 
-void Rect::SetSize(vec2 _p) {
+void Rect::SetSize(glm::vec2 _p) {
     Set(x, y, _p.x, _p.y);
 }
 
-void Rect::SetMax(vec2 _max) {
+void Rect::SetMax(glm::vec2 _max) {
     Set(x, y, (_max.x - x), (_max.y - y));
 }
 
-void Rect::SetMin(vec2 _min) {
+void Rect::SetMin(glm::vec2 _min) {
     Set(_min.x, _min.y, (xMax - _min.x), (yMax - _min.y));
 }
 
-vector<vec2> Rect::GetVertices() {
+std::vector<glm::vec2> Rect::GetVertices() {
     return {topleft, topright, bottomright, bottomleft};
 }
 
-vector<vec3> Rect::GetVertices3D() {
+std::vector<glm::vec3> Rect::GetVertices3D() {
     return {
-        vec3(topleft, 0),
-        vec3(topright, 0),
-        vec3(bottomright, 0),
-        vec3(bottomleft, 0)};
+        glm::vec3(topleft, 0),
+        glm::vec3(topright, 0),
+        glm::vec3(bottomright, 0),
+        glm::vec3(bottomleft, 0)};
 }
 
 float Rect::GetAspect() {
@@ -164,4 +161,5 @@ Rect Rect::operator*(const float& scalar_) const {
 }
 
 Rect Rect::zero = {0.0f, 0.0f, 0.0f, 0.0f};
+
 }  // namespace se

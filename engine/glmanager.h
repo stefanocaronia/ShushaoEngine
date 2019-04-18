@@ -1,11 +1,10 @@
 #pragma once
 
 #include <freetype_.h>
+#include <math_.h>
 #include <opengl_.h>
 #include <sdl_.h>
 #include <std_.h>
-
-#include <math_.h>
 
 namespace se {
 
@@ -14,12 +13,10 @@ public:
     static SDL_GLContext gContext;
     static SDL_Window* gWindow;
     static SDL_Renderer* gRenderer;
-
     static FT_Library lFreetype;
 
     static bool fullscreen;
     static bool ready;
-
     static unsigned int DESKTOP_WIDTH;
     static unsigned int DESKTOP_HEIGHT;
     static unsigned int WIDTH;
@@ -36,24 +33,6 @@ public:
     static void Swap();
     static void Reset();
     static void Update();
-
-    /* static Shader* AddShader(Shader* shader) {
-				shaders.push_back(shader);
-				return shader;
-			} */
-
-    /* template<class T>
-			static T* GetShader(std::string _name = "") {	// Returns the component of Type type if the game object has one attached, null if it doesn't.
-				for(auto& shader: shaders) {
-					if (dynamic_cast<T*>(shader)) {
-						if (_name == "" || shader->name == _name) return dynamic_cast<T*>(shader);
-					}
-				}
-				return nullptr;
-			} */
-
-private:
-    //static std::vector<Shader*> shaders;
 };
 
 }  // namespace se

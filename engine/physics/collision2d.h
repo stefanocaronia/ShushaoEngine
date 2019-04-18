@@ -1,9 +1,10 @@
 #pragma once
 
-#include <core_.h>
 #include <math_.h>
 #include <physics_.h>
 #include <std_.h>
+
+#include "../object.h"
 
 namespace se {
 

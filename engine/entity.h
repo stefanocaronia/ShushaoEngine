@@ -1,11 +1,11 @@
 #pragma once
 
-#include <core_.h>
 #include <std_.h>
 
 #include "canvas.h"
 #include "component.h"
 #include "globals.h"
+#include "object.h"
 #include "renderer.h"
 #include "utility.h"
 
@@ -42,9 +42,9 @@ public:
     void PrintHierarchy(int);
     bool isActiveInHierarchy();
 
-    void BroadcastMessage(std::string methodName);  // Calls the method named methodName on every MonoBehaviour in this game object or any of its children.
-    void SendMessage(std::string methodName, Object& parameter);  // Calls the method named methodName on every MonoBehaviour in this game object.
-    void SendMessageUpwards(std::string methodName);  // Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour.
+    void BroadcastInvokeMethod(std::string methodName);  // Calls the method named methodName on every MonoBehaviour in this game object or any of its children.
+    void InvokeMethod(std::string methodName, Object& parameter);  // Calls the method named methodName on every MonoBehaviour in this game object.
+    void InvokeMethodUpwards(std::string methodName);  // Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour.
 
     bool CompareTag(std::string t);
     void SetParent(Entity*);

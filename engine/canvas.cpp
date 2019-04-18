@@ -6,13 +6,10 @@
 
 namespace se {
 
-using namespace std;
-using namespace glm;
-
 Canvas::~Canvas() {}
 
 void Canvas::Copy(Canvas* other) {
-	if (other == nullptr) return;
+    if (other == nullptr) return;
     Component::Copy(other);
 
     SetRenderMode(other->renderMode);

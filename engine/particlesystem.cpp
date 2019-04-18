@@ -10,9 +10,6 @@
 
 namespace se {
 
-using namespace std;
-using namespace glm;
-
 void ParticleSystem::setup() {
     material = new Material();
     material->SetShader(new ParticlesShader());
@@ -105,14 +102,14 @@ void ParticleSystem::EmitParticle() {
     // common properties
     Color color = startColor;
     float rotation = startRotation;
-    vec2 size = startSize;
+    glm::vec2 size = startSize;
     float lifetime = startLifetime;
-    vec3 position = (simulationSpace == Transform::Origin::LOCAL ? Transform::VEC3_ZERO : transform->position);
-    vec3 direction = transform->forward;
-    vec3 velocity;
+    glm::vec3 position = (simulationSpace == Transform::Origin::LOCAL ? Transform::VEC3_ZERO : transform->position);
+    glm::vec3 direction = transform->forward;
+    glm::vec3 velocity;
 
     if (emitterVelocityMode == EmitterVelocityMode::RIGIDBODY && entity->GetComponent<Rigidbody2D>() != nullptr) {
-        velocity = vec3(entity->GetComponent<Rigidbody2D>()->velocity, 0.0f);
+        velocity = glm::vec3(entity->GetComponent<Rigidbody2D>()->velocity, 0.0f);
     } else if (emitterVelocityMode == EmitterVelocityMode::TRANSFORM) {
         velocity = transform->velocity;
     } else {
@@ -176,16 +173,16 @@ void ParticleSystem::UpdateParticles() {
 
         // process sizeOverLifetime
         if (sizeOverLifetime.enabled && particle->lifetime > 0) {
-            glm::vec2 scale = vec2(
+            glm::vec2 scale = glm::vec2(
                 startSize.x * sizeOverLifetime.sizeScale.x,
                 startSize.y * sizeOverLifetime.sizeScale.y);
             if (!sizeOverLifetime.separateAxes) {
                 float sizevar = sizeOverLifetime.size.Evaluate(moment);
-                particle->size = vec2(
+                particle->size = glm::vec2(
                     sizevar * scale.x,
                     sizevar * scale.y);
             } else {
-                particle->size = vec2(
+                particle->size = glm::vec2(
                     sizeOverLifetime.xSize.Evaluate(moment) * scale.x,
                     sizeOverLifetime.ySize.Evaluate(moment) * scale.y);
             }
@@ -302,17 +299,17 @@ void ParticleSystem::LoadBuffers() {
     VAO->Use();
 
     if (last_positions != positions) {
-        VAO->Load<vec3>("positions", positions);
+        VAO->Load<glm::vec3>("positions", positions);
         last_positions.swap(positions);
     }
 
     if (last_colors != colors) {
-        VAO->Load<vec4>("colors", colors);
+        VAO->Load<glm::vec4>("colors", colors);
         last_colors.swap(colors);
     }
 
     if (last_sizes != sizes) {
-        VAO->Load<vec2>("sizes", sizes);
+        VAO->Load<glm::vec2>("sizes", sizes);
         last_sizes.swap(sizes);
     }
 

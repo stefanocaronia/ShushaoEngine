@@ -24,7 +24,7 @@ namespace se {
 		track = Mix_LoadMUS(filename.c_str());
 
 		if (track == nullptr) {
-			Debug::Log(ERROR) << "Impossibile caricare " << filename << ": " << Mix_GetError() << endl;
+			Debug::Log(ERROR) << "Impossibile caricare " << filename << ": " << Mix_GetError() << std::endl;
 			return nullptr;
 		}
 
@@ -137,7 +137,7 @@ namespace se {
 		sample = Mix_LoadWAV(filename.c_str());
 
 		if (sample == nullptr) {
-			Debug::Log(ERROR) << "Impossibile caricare " << filename << ": " << Mix_GetError() << endl;
+			Debug::Log(ERROR) << "Impossibile caricare " << filename << ": " << Mix_GetError() << std::endl;
 			return nullptr;
 		}
 

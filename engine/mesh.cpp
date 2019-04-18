@@ -6,15 +6,12 @@
 
 namespace se {
 
-using namespace std;
-using namespace glm;
-
 Mesh::Mesh() {
     name = "Mesh";
     Init();
 }
 
-Mesh::Mesh(string filename_) {
+Mesh::Mesh(std::string filename_) {
     name = util::basename(filename_);
     Init();
     Load(filename_);
@@ -35,7 +32,7 @@ Mesh* Mesh::Init() {
     return this;
 }
 
-Mesh* Mesh::Load(string filename) {
+Mesh* Mesh::Load(std::string filename) {
     indexesData.clear();
     normalsData.clear();
     indexesData.clear();
@@ -48,7 +45,7 @@ Mesh* Mesh::Load(string filename) {
 
     FILE* file = fopen(filename.c_str(), "r");
     if (file == NULL) {
-        Debug::Log(ERROR) << "Impossible to open the file " << filename << endl;
+        Debug::Log(ERROR) << "Impossible to open the file " << filename << std::endl;
         return this;
     }
 
@@ -82,7 +79,7 @@ Mesh* Mesh::Load(string filename) {
             unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
             int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2]);
             if (matches != 9) {
-                Debug::Log(ERROR) << "File can't be read by our simple parser: Try exporting with other options" << endl;
+                Debug::Log(ERROR) << "File can't be read by our simple parser: Try exporting with other options" << std::endl;
                 return this;
             }
             vertexIndices.push_back(vertexIndex[0]);
@@ -122,9 +119,9 @@ Mesh* Mesh::Load(string filename) {
     // PrintData();
 
     VAO->Use();
-    VAO->Load<vec3>(Vbo::VERTICES, vertexData);
-    VAO->Load<vec2>(Vbo::UV, uvData);
-    VAO->Load<vec3>(Vbo::NORMALS, normalsData);
+    VAO->Load<glm::vec3>(Vbo::VERTICES, vertexData);
+    VAO->Load<glm::vec2>(Vbo::UV, uvData);
+    VAO->Load<glm::vec3>(Vbo::NORMALS, normalsData);
     // VAO->Load<GLushort>(Vbo::INDEXES, indexesData);
     VAO->Leave();
 
@@ -133,24 +130,24 @@ Mesh* Mesh::Load(string filename) {
 }
 
 void Mesh::PrintData() {
-    Debug::Log(WARNING) << "vertices:" << endl;
+    Debug::Log(WARNING) << "vertices:" << std::endl;
     for (auto& element : vertexData) {
-        Debug::Log << element.x << ", " << element.y << ", " << element.z << endl;
+        Debug::Log << element.x << ", " << element.y << ", " << element.z << std::endl;
     }
 
-    Debug::Log(WARNING) << "uv:" << endl;
+    Debug::Log(WARNING) << "uv:" << std::endl;
     for (auto& element : uvData) {
-        Debug::Log << element.x << ", " << element.y << endl;
+        Debug::Log << element.x << ", " << element.y << std::endl;
     }
 
-    Debug::Log(WARNING) << "normals:" << endl;
+    Debug::Log(WARNING) << "normals:" << std::endl;
     for (auto& element : normalsData) {
-        Debug::Log << element.x << ", " << element.y << ", " << element.z << endl;
+        Debug::Log << element.x << ", " << element.y << ", " << element.z << std::endl;
     }
 
-    Debug::Log(WARNING) << "indexes:" << endl;
+    Debug::Log(WARNING) << "indexes:" << std::endl;
     for (auto& element : indexesData) {
-        Debug::Log << element << endl;
+        Debug::Log << element << std::endl;
     }
 }
 

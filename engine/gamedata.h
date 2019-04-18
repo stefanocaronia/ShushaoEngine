@@ -1,8 +1,7 @@
 #pragma once
 
-#include <boost_.h>
-#include <core_.h>
-#include <std_.h>
+#include "pch/boost.h"
+#include "pch/std.h"
 
 #include "camera.h"
 #include "component.h"

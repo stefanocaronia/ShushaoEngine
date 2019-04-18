@@ -29,14 +29,20 @@ directories:
 	@echo -e $(CLBLUE)$(BULLET)Checking build directories $(CEND)
 	@$(MD) -p $(TARGETDIR)
 	@$(MD) -p $(BUILDDIR)
+	@if $(COPY_INCLUDE_HEADERS); then $(MD) -p $(HEADERSDIR); fi
+	@if $(COMPILE_STATIC_LIB); then $(MD) -p $(TARGETLIBDIR); fi
 	@$(RM) -f obj/$(BUILD)/$(ENGINE_RESFILE)
 	@$(RM) -f obj/$(BUILD)/$(GAME_RESFILE)
+	@if $(COPY_INCLUDE_HEADERS); then echo -e $(CLBLUE)$(BULLET)Copying headers $(CEND) && \
+	rsync $(SRCDIR)/$(ENGINE)/ $(HEADERSDIR) -az --delete --filter='+ **/*.h' --filter='- **/*.*' --prune-empty-dirs; fi
 
 #Clean only Objecst
 clean:
 	@echo -e $(CLBLUE)$(BULLET)Cleaning build $(CEND)
 	@$(RM) -rf obj/*
 	@$(RM) -rf bin/*
+	@$(RM) -rf $(HEADERSDIR)/*
+	@$(RM) -rf $(TARGETLIBDIR)/*
 	@$(RM) -f $(PRECOMPILEDDIR)/*.gch
 	@$(RM) -f $(PRECOMPILEDDIR)/*.d
 
@@ -61,7 +67,7 @@ precompstart:
 	@echo -e $(CLBLUE)$(BULLET)Precompiling headers $(CEND)$(CLCYAN)
 
 precomp: precompstart $(PRECOMP)
-	@echo -e $(CLPURPLE)$(BULLET)Precompiling headers done $(CEND)
+#@echo -e $(CLPURPLE)$(BULLET)Precompiling headers done $(CEND)
 
 # Pre-compiled headers
 $(PRECOMPILEDDIR)/%.$(GCHEXT): $(SRCDIR)/$(ENGINE)/$(GCHDIR)/%.h
@@ -70,9 +76,9 @@ $(PRECOMPILEDDIR)/%.$(GCHEXT): $(SRCDIR)/$(ENGINE)/$(GCHDIR)/%.h
 	@$(CC) $(GCHFLAGS) $(INCDIRS) -c $< -o $@
 
 compilation:
-	@echo -e $(CLBLUE)$(BULLET)Compilation$(CEND)$(CLCYAN)
+	@echo -e $(CLBLUE)$(BULLET)Compiling sources$(CEND)$(CLCYAN)
 	@$(MAKE) -f .makefiles/compile.mk --silent -j $(CORES) -Oline -l 80.0
-	@echo -e $(CLPURPLE)$(BULLET)Compilation done$(CEND)
+#@echo -e $(CLPURPLE)$(BULLET)Compiling done$(CEND)
 
 run: all
 	@echo -e $(CYELLOW)$(BULLET)Running $(TARGET) $(CEND)
@@ -84,13 +90,16 @@ debug: all
 
 # Link
 $(TARGET): compilation
-	@echo -e $(CEND)$(CLBLUE)$(BULLET)Creating library $(LIBTARGET) $(CEND)
+	@echo -e $(CEND)$(CLBLUE)$(BULLET)Creating resources library $(LIBTARGET) $(CEND)
 	@$(CC) $(SHAREDFLAGS) -o $(TARGETDIR)/$(LIBTARGET) obj/$(BUILD)/$(ENGINE_RESFILE)
+	@if $(COMPILE_STATIC_LIB); then $(CP) $(TARGETDIR)/$(LIBTARGET) $(TARGETLIBDIR)/; fi
+	@if $(COMPILE_STATIC_LIB); then echo -e $(CEND)$(CLBLUE)$(BULLET)Creating static lib $(STATICLIB) $(CEND) && \
+	$(AR) $(ARFLAGS) $(TARGETLIBDIR)/$(STATICLIB) $(ENGINEOBJECTS); fi
 	@echo -e $(CEND)$(CLBLUE)$(BULLET)Linking executable $(TARGET) $(CEND)
 	@$(CC) $(LNKFLAGS) -o $(TARGETDIR)/$(TARGET) $(OBJECTS) $(RCFILES) $(LIBDIRS) $(LIB)
 
 # Non-File Targets
-.PHONY: all prebuild release rebuild clean resources directories run debug test
+.PHONY: all prebuild release rebuild clean resources directories run debug test single precomp precompstart
 
 .NOTPARALLEL: all
 

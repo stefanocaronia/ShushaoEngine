@@ -1,5 +1,4 @@
-#include <sdl_.h>
-#include <std_.h>
+#include <glm/glm.hpp>
 
 #include "game.h"
 #include "globals.h"

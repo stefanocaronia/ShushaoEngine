@@ -1,7 +1,7 @@
-#include <freetype_.h>
-#include <opengl_.h>
-#include <sdl_.h>
-#include <std_.h>
+#include "pch/freetype.h"
+#include "pch/opengl.h"
+#include "pch/sdl.h"
+#include "pch/std.h"
 
 #include "config.h"
 #include "glmanager.h"

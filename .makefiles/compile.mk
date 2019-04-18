@@ -3,7 +3,7 @@
 include .makefiles/settings.mk
 
 #Defauilt
-all: $(OBJECTS) $(RCFILES)
+all: $(OBJECTS) $(RCFILES) .makefiles/settings.mk
 	@$(MD) -p obj/$(BUILD)/engine/resources
 	@echo -e $(TAB)$(BULLET2)$(ENGINE_RCFILE) -\> obj/$(BUILD)/$(ENGINE_RESFILE)
 	@$(RC) $(ENGINE_RCFILE) -o obj/$(BUILD)/$(ENGINE_RESFILE) --output-format=coff
@@ -18,7 +18,7 @@ $(BUILDDIR)/%.$(RESEXT): $(SRCDIR)/%.$(RCEXT)
 #-include $(DEPENDS)
 
 #Compile
-$(BUILDDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT) settings.mk
+$(BUILDDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
 	@echo -e $(TAB)$(BULLET2)$< -\> $@
 	@$(MD) -p $(dir $@)
 	@$(CC) $(COMFLAGS) $(INCDIRS) -c $< -o $@

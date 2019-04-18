@@ -1,6 +1,6 @@
 #pragma once
 
-#include <opengl_.h>
+#include "pch/opengl.h"
 
 #include "component.h"
 #include "globals.h"

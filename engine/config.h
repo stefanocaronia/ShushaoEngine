@@ -1,7 +1,7 @@
 #pragma once
 
-#include <math_.h>
-#include <std_.h>
+#include "pch/math.h"
+#include "pch/std.h"
 
 #include "levelmap.h"
 #include "utility.h"

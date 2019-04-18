@@ -11,19 +11,21 @@
 using namespace se;
 
 Level::Level() {
-    //testParticles();
+    testParticles();
     testSprites();
-    //testCoroutines();
-    //testCanvas();
+    testCoroutines();
+    testCanvas();
 }
 
 void Level::testParticles() {
-    Part* po = AddEntity<Part>("Particle Object");
-    po->GetComponent<ParticleSystem>()->sortingLayerID = 1;
+
 
     Part* po2 = AddEntity<Part>("Particle Object 2");
     po2->transform->SetLocalPosition(glm::vec3(2, 2, 0));
     po2->GetComponent<ParticleSystem>()->sortingLayerID = 1;
+
+    Part* po = AddEntity<Part>("Particle Object");
+    po->GetComponent<ParticleSystem>()->sortingLayerID = 1;
 
     // AddEntity<Hermite>();
     // Part* po3 = (Part*)Factory::InstantiateEntity(po);

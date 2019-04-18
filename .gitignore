@@ -1,6 +1,7 @@
 bin/
 obj/
 lib/
+se/
 
 # vscode
 .vscode/ipch

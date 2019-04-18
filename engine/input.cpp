@@ -1,6 +1,6 @@
-#include <core_.h>
-#include <sdl_.h>
-#include <std_.h>
+#include "pch/opengl.h"
+#include "pch/sdl.h"
+#include "pch/std.h"
 
 #include "cycle.h"
 #include "debug.h"

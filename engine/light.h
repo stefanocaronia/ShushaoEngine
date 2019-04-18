@@ -1,7 +1,7 @@
 #pragma once
 
-#include <opengl_.h>
-#include <std_.h>
+#include "pch/opengl.h"
+#include "pch/std.h"
 
 #include "color.h"
 #include "component.h"

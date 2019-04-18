@@ -1,9 +1,9 @@
-// #include <boost_.h>
-// #include <core_.h>
-// #include <freetype_.h>
-// #include <math_.h>
-// #include <opengl_.h>
-// #include <physics_.h>
-// #include <sdl_.h>
-// #include <std_.h>
-// #include <windoz_.h>
+//#include "pch/boost.h"
+//
+// #include "pch/freetype.h"
+// #include "pch/math.h"
+// #include "pch/opengl.h"
+// #include "pch/physics.h"
+// #include "pch/sdl.h"
+// #include "pch/std.h"
+// #include "pch/windoz.h"

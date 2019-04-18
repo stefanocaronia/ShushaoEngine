@@ -1,6 +1,6 @@
 #pragma once
 
-#include <math_.h>
+#include "pch/math.h"
 #include <glm/gtc/quaternion.hpp>
 
 #include "component.h"

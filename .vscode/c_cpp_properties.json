@@ -8,8 +8,6 @@
             "intelliSenseMode": "gcc-x64",
             "includePath": [
                 "C:/bin/mingw64/mingw64/**",
-                "${workspaceFolder}/include/**",
-                "${workspaceFolder}/engine/.precompiled/*",
                 "${workspaceFolder}/../../mingw-dev-libs/boost/*",
                 "${workspaceFolder}/../../mingw-dev-libs/glew/include/*",
                 "${workspaceFolder}/../../mingw-dev-libs/glm/*",

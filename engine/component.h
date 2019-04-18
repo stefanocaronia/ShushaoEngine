@@ -1,7 +1,6 @@
 #pragma once
 
-#include <core_.h>
-#include <std_.h>
+#include "pch/std.h"
 
 #include "coroutineholder.h"
 #include "object.h"

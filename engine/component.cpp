@@ -143,7 +143,6 @@ void Component::update() {
 
 void Component::render() {
     if (!currentEnable) return;
-    Debug::Log(WARNING) << name << std::endl;
     Render();
     OnPostRender();
 }

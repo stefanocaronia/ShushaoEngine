@@ -1,12 +1,11 @@
 #pragma once
 
-#include <core_.h>
-#include <math_.h>
-#include <std_.h>
+#include "pch/math.h"
+#include "pch/std.h"
 
+#include "object.h"
 #include "texture.h"
 #include "vao.h"
-#include "object.h"
 
 namespace se {
 

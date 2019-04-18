@@ -1,10 +1,9 @@
 #pragma once
 
-#include <core_.h>
-#include <math_.h>
-#include <opengl_.h>
-#include <sdl_.h>
-#include <std_.h>
+#include "pch/math.h"
+#include "pch/opengl.h"
+#include "pch/sdl.h"
+#include "pch/std.h"
 
 #include "object.h"
 #include "resource.h"

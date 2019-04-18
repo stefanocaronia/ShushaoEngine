@@ -1,6 +1,6 @@
 #pragma once
 
-#include <math_.h>
+#include "pch/math.h"
 #include "color.h"
 #include "curve.h"
 

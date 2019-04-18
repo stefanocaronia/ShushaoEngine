@@ -1,5 +1,5 @@
-#include <std_.h>
-#include <windoz_.h>
+#include "pch/std.h"
+#include "pch/windoz.h"
 
 #include "cycle.h"
 #include "debug.h"

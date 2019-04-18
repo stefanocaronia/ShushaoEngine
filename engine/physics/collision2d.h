@@ -1,8 +1,8 @@
 #pragma once
 
-#include <math_.h>
-#include <physics_.h>
-#include <std_.h>
+#include "../pch/math.h"
+#include "../pch/physics.h"
+#include "../pch/std.h"
 
 #include "../object.h"
 

@@ -1,8 +1,7 @@
-#include <math_.h>
-#include <std_.h>
+#include "pch/math.h"
+#include "pch/std.h"
 
 #include "camera.h"
-
 #include "config.h"
 #include "debug.h"
 #include "glmanager.h"

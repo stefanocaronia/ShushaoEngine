@@ -1,6 +1,6 @@
 #pragma once
 
-#include <freetype_.h>
+#include "pch/freetype.h"
 
 #include "object.h"
 #include "resource.h"

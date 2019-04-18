@@ -1,7 +1,7 @@
-#include <core_.h>
-#include <opengl_.h>
-#include <sdl_.h>
-#include <std_.h>
+
+#include "pch/opengl.h"
+#include "pch/sdl.h"
+#include "pch/std.h"
 
 #include "resources.h"
 #include "texture.h"

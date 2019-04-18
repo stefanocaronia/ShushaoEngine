@@ -1,6 +1,5 @@
 #pragma once
 
-#include <glm/glm.hpp>
 #include <string>
 
 namespace se {
@@ -43,7 +42,6 @@ public:
         pObj->Copy(this);
         return pObj;
     }
-
 };
 
 }  // namespace se

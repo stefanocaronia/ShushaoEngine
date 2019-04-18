@@ -4,7 +4,8 @@
     Credits: https://github.com/exawon/CoroBehaviour
 */
 
-#include <set>
+#include <std_.h>
+
 #include "coroutine.h"
 
 namespace se {

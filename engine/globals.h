@@ -1,9 +1,7 @@
 #pragma once
 
-#include <glm/glm.hpp>
-#include <map>
-#include <set>
-#include <string>
+#include <math_.h>
+#include <std_.h>
 
 #define _USE_MATH_DEFINES
 
@@ -15,8 +13,6 @@
 #define RADTODEG 57.295779513082320876f
 
 const std::string LIB_SHUSHAO = "libshushao.dll";
-
-#define ENTITY_CONSTRUCTOR(class) class(se::Scene* scene_) : se::Entity(scene_) {}
 
 namespace se {
 

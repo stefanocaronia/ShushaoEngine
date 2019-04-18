@@ -1,8 +1,5 @@
-#include <stdlib.h>
-#include <windows.h>
-#include <iostream>
-#include <typeinfo>
-#include <vector>
+#include <std_.h>
+#include <windoz_.h>
 
 #include "cycle.h"
 #include "debuginfo.h"
@@ -47,7 +44,7 @@ Scene::~Scene() {
         toDelete.push_back(pGO);
     }
     for (Entity* pGO : toDelete) {
-        delete(pGO);
+        delete (pGO);
     }
     Entities.clear();
 }

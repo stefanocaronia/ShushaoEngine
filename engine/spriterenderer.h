@@ -1,50 +1,45 @@
 #pragma once
 
-#include <glm/glm.hpp>
+#include <math_.h>
 
-#include <GL/glew.h>
-#include "renderer.h"
 #include "color.h"
 #include "material.h"
-#include "sprite.h"
+#include "renderer.h"
 #include "shaders/shader.h"
+#include "sprite.h"
 
 namespace se {
 
-	class SpriteRenderer : public Renderer {
+class SpriteRenderer : public Renderer {
+public:
+    virtual void setup();
+    ~SpriteRenderer();
 
-		public:
+    bool isReady();
 
-			virtual void setup();
-			~SpriteRenderer();
+    Sprite* sprite = nullptr;
+    Material* material = nullptr;
 
-			bool isReady();
+    SpriteRenderer* SetSprite(Sprite* sprite_) {
+        sprite = sprite_;
+        return this;
+    }
 
-			Sprite* sprite = nullptr;
-			Material* material = nullptr;
+    SpriteRenderer* SetMaterial(Material* material_) {
+        material = material_;
+        return this;
+    }
 
-			SpriteRenderer* SetSprite(Sprite* sprite_) {
-				sprite = sprite_;
-				return this;
-			}
+    Color color = {1.0f, 1.0f, 1.0f, 1.0f};  //	Rendering color for the Sprite graphic.
+    bool flipX;  //	Flips the sprite on the X axis.
+    bool flipY;  //	Flips the sprite on the Y axis.
+    glm::vec2 size;  //	Property to set/get the size to render when the SpriteRenderer.drawMode is set to SpriteDrawMode.NineSlice.
 
-			SpriteRenderer* SetMaterial(Material* material_) {
-				material = material_;
-				return this;
-			}
+protected:
+    void Awake();
+    void Update();
+    void Render();
+    void OnDestroy();
+};
 
-			Color color = {1.0f, 1.0f, 1.0f, 1.0f}; //	Rendering color for the Sprite graphic.
-			bool flipX;//	Flips the sprite on the X axis.
-			bool flipY; //	Flips the sprite on the Y axis.
-			glm::vec2 size; //	Property to set/get the size to render when the SpriteRenderer.drawMode is set to SpriteDrawMode.NineSlice.
-
-		protected:
-
-			void Awake();
-			void Update();
-			void Render();
-			void OnDestroy();
-
-	};
-
-}
+}  // namespace se

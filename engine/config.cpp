@@ -1,5 +1,5 @@
 
-#include <fstream>
+#include <std_.h>
 
 #include "config.h"
 #include "debug.h"
@@ -83,7 +83,6 @@ bool LoadUserConfig() {
 	caricamento configurazione engine
 */
 bool LoadEngineConfig() {
-
     string engine_config = se::Resources::GetEmbeddedText(CONFIG_ENGINE);
 
     if (engine_config == "") {
@@ -128,7 +127,6 @@ bool parseUserConfig() {
 }
 
 bool parseEngineConfig() {
-
     if (data.find("title") != data.end()) {
         title = data["title"];
     }

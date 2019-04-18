@@ -1,7 +1,5 @@
+
 #include "curve.h"
-#include <algorithm>
-#include <glm/gtx/spline.hpp>
-#include <vector>
 #include "debug.h"
 
 namespace se {

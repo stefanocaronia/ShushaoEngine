@@ -1,13 +1,11 @@
 #pragma once
 
-#include <set>
-#include <string>
+#include <core_.h>
+#include <std_.h>
 
-#include "component.h"
 #include "canvas.h"
-#include "debug.h"
+#include "component.h"
 #include "globals.h"
-#include "object.h"
 #include "renderer.h"
 #include "utility.h"
 

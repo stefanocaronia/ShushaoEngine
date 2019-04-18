@@ -1,123 +1,115 @@
 #pragma once
 
-#include <iostream>
-#include <vector>
-#include <string>
-#include <glm/glm.hpp>
+#include <math_.h>
+#include <std_.h>
 
 #include "sprite.h"
 #include "spritesheet.h"
 
 namespace se {
 
-	enum class PropertyType {
-		INT,
-		FLOAT,
-		//VEC2,
-		VEC3,
-		//VEC4,
-		SPRITE
-	};
+enum class PropertyType {
+    INT,
+    FLOAT,
+    //VEC2,
+    VEC3,
+    //VEC4,
+    SPRITE
+};
 
-	template <class T>
-	class TimelineProperty {
+template <class T>
+class TimelineProperty {
+public:
+    ~TimelineProperty() {
+        clear();
+    }
 
-		public:
+    T* target = nullptr;
+    T backupValue;
 
-			~TimelineProperty() {
-				clear();
-			}
+    std::vector<T*> pointers;
+    std::vector<T> values;
 
-			T* target = nullptr;
-			T backupValue;
+    void setTarget(T& var) {
+        //if (&var == nullptr) return;
+        target = &var;
+        backupValue = var;
+    }
 
-			std::vector<T*> pointers;
-			std::vector<T> values;
+    void setTarget(T*& var) {
+        //if (&var == nullptr) return;
+        target = var;
+        backupValue = *var;
+    }
 
-			void setTarget(T& var) {
-				//if (&var == nullptr) return;
-				target = &var;
-				backupValue = var;
-			}
+    void loadValue(unsigned int pos) {
+        //if (target == nullptr) return;
+        if (pos >= values.size()) return;
+        *target = values[pos];
+    }
 
-			void setTarget(T*& var) {
-				//if (&var == nullptr) return;
-				target = var;
-				backupValue = *var;
-			}
+    void loadPointer(unsigned int pos) {
+        //if (target == nullptr) return;
+        if (pos >= pointers.size()) return;
+        *target = *pointers[pos];
+    }
 
-			void loadValue(unsigned int pos) {
-				//if (target == nullptr) return;
-				if (pos >= values.size()) return;
-				*target = values[pos];
-			}
+    void reset() {
+        //if (target == nullptr) return;
+        *target = backupValue;
+    }
 
-			void loadPointer(unsigned int pos) {
-				//if (target == nullptr) return;
-				if (pos >= pointers.size()) return;
-				*target = *pointers[pos];
-			}
+    void backup() {
+        backupValue = *target;
+    }
 
-			void reset() {
-				//if (target == nullptr) return;
-				*target = backupValue;
-			}
+    void clear() {
+        target = nullptr;
+        pointers.clear();
+        values.clear();
+    }
+};
 
-			void backup() {
-				backupValue = *target;
-			}
+class Timeline : public Object {
+public:
+    Timeline(std::string);
+    ~Timeline();
 
-			void clear() {
-				target = nullptr;
-				pointers.clear();
-				values.clear();
-			}
-	};
+    Timeline* loadFrame(unsigned int);
+    Timeline* reset();
+    Timeline* backup();
+    unsigned int getFrameCount();
 
-	class Timeline : public Object {
+    // INT
+    Timeline* setTarget(int&);
+    Timeline* load(initializer_list<int>);
+    Timeline* add(int var, int nFrames = 1);
 
-		public:
+    // VEC3
+    Timeline* setTarget(glm::vec3&);
+    Timeline* setTarget(const glm::vec3&);
+    Timeline* load(initializer_list<glm::vec3>);
+    Timeline* add(glm::vec3 var, int nFrames = 1);
 
-			Timeline(std::string);
-			~Timeline();
+    // FLOAT
+    Timeline* setTarget(float&);
+    Timeline* load(initializer_list<float>);
 
-			Timeline* loadFrame(unsigned int);
-			Timeline* reset();
-			Timeline* backup();
-			unsigned int getFrameCount();
+    // SPRITE *
+    Timeline* setTarget(Sprite*& var);
+    Timeline* load(initializer_list<Sprite*>);
+    Timeline* load(std::vector<Sprite*>);
+    Timeline* load(SpriteSheet*);
 
-			// INT
-			Timeline* setTarget(int&);
-			Timeline* load(initializer_list<int>);
-			Timeline* add(int var, int nFrames = 1);
+    void clear();
 
-			// VEC3
-			Timeline* setTarget(glm::vec3&);
-			Timeline* setTarget(const glm::vec3&);
-			Timeline* load(initializer_list<glm::vec3>);
-			Timeline* add(glm::vec3 var, int nFrames = 1);
+private:
+    PropertyType propertyType;
 
-			// FLOAT
-			Timeline* setTarget(float&);
-			Timeline* load(initializer_list<float>);
+    TimelineProperty<float> vFloat;
+    TimelineProperty<int> vInt;
+    TimelineProperty<glm::vec3> vVec3;
+    TimelineProperty<Sprite> pSprite;
+};
 
-			// SPRITE *
-			Timeline* setTarget(Sprite*& var);
-			Timeline* load(initializer_list<Sprite*>);
-			Timeline* load(std::vector<Sprite*>);
-			Timeline* load(SpriteSheet*);
-
-			void clear();
-
-		private:
-
-		PropertyType propertyType;
-
-			TimelineProperty<float> vFloat;
-			TimelineProperty<int> vInt;
-			TimelineProperty<glm::vec3> vVec3;
-			TimelineProperty<Sprite> pSprite;
-
-	};
-
-}
+}  // namespace se

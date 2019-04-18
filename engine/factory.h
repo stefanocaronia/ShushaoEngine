@@ -1,6 +1,6 @@
 #pragma once
 
-#include <glm/glm.hpp>
+#include <math_.h>
 #include <glm/gtc/quaternion.hpp>
 
 #include "component.h"
@@ -60,7 +60,7 @@ public:
     static T* InstantiateEntity(T* originalEntity, glm::vec3 position, glm::quat rotation = Transform::QUATERNION_IDENTITY, Transform* parent = nullptr) {
         T* newEntity = InstantiateEntity(originalEntity, parent);
         ((Entity*)newEntity)->transform->SetLocalPosition(position);
-        if(rotation != Transform::QUATERNION_IDENTITY) {
+        if (rotation != Transform::QUATERNION_IDENTITY) {
             ((Entity*)newEntity)->transform->SetLocalRotation(rotation);
         }
         return (T*)newEntity;

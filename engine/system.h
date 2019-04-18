@@ -1,47 +1,43 @@
 #pragma once
 
-#include <string>
-#include <vector>
+#include <std_.h>
 
 #include "service.h"
 
 namespace se {
 
-	class System {
+class System {
+public:
+    static void init();
+    static void update();
+    static void exit();
 
-		public:
+    //static InputManager& Input;
 
-			static void init();
-			static void update();
-			static void exit();
+    template <class T>
+    static T& AddService() {
+        T* service = new T();
+        Services.push_back(service);
+        return *service;
+    }
 
-			//static InputManager& Input;
+    template <class T>
+    static T& GetService() {
+        for (Service* service : Services) {
+            if (dynamic_cast<T*>(service))
+                return dynamic_cast<T>(*service);
+        }
+        return nullptr;
+    }
 
-			template<class T>
-			static T& AddService() {
-				T* service = new T();
-				Services.push_back(service);
-				return *service;
-			}
+    static void Clear();
 
-			template<class T>
-			static T& GetService() {
-				for(Service* service: Services) {
-					if (dynamic_cast<T*>(service))
-						return dynamic_cast<T>(*service);
-				}
-				return nullptr;
-			}
+    static void ListServices();
 
-			static void Clear();
+protected:
+    static std::vector<Service*> Services;
 
-			static void ListServices();
+private:
+};
 
-		protected:
-
-            static std::vector<Service*> Services;
-
-		private:
-	};
-
-}
+}  // namespace se

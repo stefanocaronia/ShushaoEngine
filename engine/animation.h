@@ -1,65 +1,60 @@
 #pragma once
 
-#include <vector>
+#include <std_.h>
 
 #include "component.h"
 #include "playable.h"
 
 namespace se {
 
-	class Timeline;
+class Timeline;
 
-	class Animation : public Component, public Playable {
+class Animation : public Component, public Playable {
+public:
+    virtual void setup() { name = "Animation"; }
+    ~Animation();
 
+    Timeline* addLayer(string);
+    Timeline* getLayer(string);
 
-		public:
+    void setFPS(int);
 
-			virtual void setup() { name = "Animation"; }
-			~Animation();
+    int getFPS();
+    int getFrameCount();
 
-			Timeline* addLayer(string);
-			Timeline* getLayer(string);
+    void Play();
+    void Stop();
+    void Pause();
 
-			void setFPS(int);
+    void Copy(Animation* other);
 
-			int getFPS();
-			int getFrameCount();
+protected:
+    vector<Timeline*> layers;
 
-			void Play();
-			void Stop();
-			void Pause();
+    void initialize();
 
-			void Copy(Animation* other);
+    // lifecycle
+    void Awake();
+    void Update();
 
-		protected:
+private:
+    Playable::State state = Playable::State::STOP;
+    Playable::State startState = Playable::State::STOP;
 
-			vector<Timeline*> layers;
+    bool loop = true;
+    bool ready = false;
 
-			void initialize();
+    float frames = 0;
+    float duration = 0.0f;
+    int fps = 20;
+    float frameDuration = 1.0f / fps;
+    unsigned int cursor = 0;
+    float lastFrameTime = 0.0f;
+    float animationTime = 0.0f;
+    float startTime = 0.0f;
 
-			// lifecycle
-			void Awake();
-			void Update();
+    void loadFrame(unsigned int);
+    void reset();
+};
 
-		private:
-
-			Playable::State state = Playable::State::STOP;
-			Playable::State startState = Playable::State::STOP;
-
-			bool loop = true;
-			bool ready = false;
-
-			float frames = 0;
-			float duration = 0.0f;
-			int fps = 20;
-			float frameDuration = 1.0f / fps;
-			unsigned int cursor = 0;
-			float lastFrameTime = 0.0f;
-			float animationTime = 0.0f;
-			float startTime = 0.0f;
-
-			void loadFrame(unsigned int);
-			void reset();
-	};
-
-}
+}  // namespace se

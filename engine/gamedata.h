@@ -1,13 +1,11 @@
 #pragma once
 
-#include <boost/variant.hpp>
-#include <map>
-#include <string>
-#include <vector>
+#include <boost_.h>
+#include <core_.h>
+#include <std_.h>
 
 #include "camera.h"
 #include "component.h"
-#include "object.h"
 
 namespace se {
 
@@ -34,7 +32,7 @@ public:
     template <class T>
     std::vector<T*> GetObjectsOfType() {
         std::vector<Object*> results;
-        for(auto obj: Objects) {
+        for (auto obj : Objects) {
             if (dynamic_cast<T*>(obj))
                 results.push_back(dynamic_cast<T*>(obj));
         }

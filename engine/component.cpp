@@ -1,14 +1,10 @@
-#include <algorithm>
-
 #include "component.h"
 #include "cycle.h"
-#include "debug.h"
 #include "entity.h"
 #include "gamedata.h"
 #include "physics/collider2d.h"
 #include "physics/collision2d.h"
 #include "renderer.h"
-#include "stime.h"
 #include "transform.h"
 #include "utility.h"
 

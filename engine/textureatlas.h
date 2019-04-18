@@ -1,33 +1,29 @@
 #pragma once
 
-#include <vector>
+#include <std_.h>
 
-#include "texture.h"
+#include "globals.h"
 #include "rect.h"
 #include "sprite.h"
-#include "globals.h"
+#include "texture.h"
 
 namespace se {
 
-	class TextureAtlas : public Texture {
+class TextureAtlas : public Texture {
+public:
+    TextureAtlas(){};
+    TextureAtlas(std::string filename) : Texture(filename){};
+    TextureAtlas(std::string filename, std::string n) : Texture(filename, n){};
 
-		public:
+    vector<pair<Rect, Align>> slices;
 
-			TextureAtlas() {};
-			TextureAtlas(std::string filename) : Texture(filename) {};
-			TextureAtlas(std::string filename, std::string n) : Texture(filename, n) {};
+    void AddSlice(Rect, Align pp = Align::CENTER);
 
-			vector<pair<Rect, Align>> slices;
+    void AddGrid(
+        glm::vec2,
+        Align pp = Align::CENTER,
+        glm::vec2 = glm::vec2(0, 0),
+        glm::vec2 = glm::vec2(0, 0));
+};
 
-			void AddSlice(Rect, Align pp = Align::CENTER);
-
-            void AddGrid(
-				glm::vec2,
-				Align pp = Align::CENTER,
-				glm::vec2 = glm::vec2(0,0),
-				glm::vec2 = glm::vec2(0,0)
-			);
-
-	};
-
-}
+}  // namespace se

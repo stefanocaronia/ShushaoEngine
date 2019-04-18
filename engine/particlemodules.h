@@ -1,10 +1,10 @@
 #pragma once
 
-#include <glm/glm.hpp>
+#include <math_.h>
 
 #include "color.h"
-#include "variation.h"
 #include "gradient.h"
+#include "variation.h"
 
 namespace se {
 
@@ -17,7 +17,6 @@ struct ParticleSystemModule {
 };
 
 struct EmissionModule : public ParticleSystemModule {
-
     struct Burst {
         double time;
         unsigned int count;
@@ -48,10 +47,10 @@ struct EmissionModule : public ParticleSystemModule {
 
     unsigned int burstCount;  //	The current number of bursts.
 
-    Variation rateOverDistance;            // The rate at which new particles are spawned, over distance.
+    Variation rateOverDistance;  // The rate at which new particles are spawned, over distance.
     float rateOverDistanceScale = 1.0f;  // Change the rate over distance multiplier.
-    Variation rateOverTime;                // The rate at which new particles are spawned, over time.
-    float rateOverTimeScale = 1.0f;      // Change the rate over time multiplier.
+    Variation rateOverTime;  // The rate at which new particles are spawned, over time.
+    float rateOverTimeScale = 1.0f;  // Change the rate over time multiplier.
 
     std::vector<Burst> bursts;
 
@@ -83,14 +82,12 @@ struct ColorOverLifetimeModule : public ParticleSystemModule {
 };
 
 struct SizeOverLifetimeModule : public ParticleSystemModule {
-
     bool separateAxes = false;
     Curve size;
     glm::vec2 sizeScale = vec2(1.0f);
 
     Curve xSize;
     Curve ySize;
-
 };
 
 struct ForceOverLifetimeModule : public ParticleSystemModule {

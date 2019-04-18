@@ -1,10 +1,8 @@
-#include <math.h>
-#include <glm/glm.hpp>
-#include <vector>
-
-#include "particlesystem.h"
+#include <math_.h>
+#include <std_.h>
 
 #include "entity.h"
+#include "particlesystem.h"
 #include "physics/rigidbody2d.h"
 #include "shaders/particlesshader.h"
 #include "transform.h"
@@ -141,11 +139,11 @@ void ParticleSystem::EmitParticle() {
 
             AddParticle(
                 (direction * emitter.radius) + position,  // position
-                direction * startSpeed + velocity,        // velocity
-                color,                                    // color
-                rotation,                                 // rotation
-                size,                                     // size
-                lifetime                                  // lifetime
+                direction * startSpeed + velocity,  // velocity
+                color,  // color
+                rotation,  // rotation
+                size,  // size
+                lifetime  // lifetime
             );
 
             break;
@@ -178,22 +176,18 @@ void ParticleSystem::UpdateParticles() {
 
         // process sizeOverLifetime
         if (sizeOverLifetime.enabled && particle->lifetime > 0) {
-
             glm::vec2 scale = vec2(
                 startSize.x * sizeOverLifetime.sizeScale.x,
-                startSize.y * sizeOverLifetime.sizeScale.y
-            );
+                startSize.y * sizeOverLifetime.sizeScale.y);
             if (!sizeOverLifetime.separateAxes) {
                 float sizevar = sizeOverLifetime.size.Evaluate(moment);
                 particle->size = vec2(
                     sizevar * scale.x,
-                    sizevar * scale.y
-                );
+                    sizevar * scale.y);
             } else {
                 particle->size = vec2(
                     sizeOverLifetime.xSize.Evaluate(moment) * scale.x,
-                    sizeOverLifetime.ySize.Evaluate(moment) * scale.y
-                );
+                    sizeOverLifetime.ySize.Evaluate(moment) * scale.y);
             }
         }
 
@@ -244,7 +238,6 @@ void ParticleSystem::Update() {
 }
 
 void ParticleSystem::ProcessEmission() {
-
     float rate = emission.rateOverTime.Evaluate(ratio);
     if (rate > 0.0f) {
         toEmit += rate * emission.rateOverTimeScale * Time::deltaTime;

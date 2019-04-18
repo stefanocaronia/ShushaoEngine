@@ -1,6 +1,5 @@
 
-#include <dirent.h>
-#include <random>
+#include <std_.h>
 
 #include "debug.h"
 #include "globals.h"
@@ -102,8 +101,8 @@ namespace util {
         return {roll, pitch, yaw};
     }
 
-    vector<string> split(string text, char delim) {
-        vector<string> elements;
+    std::vector<std::string> split(string text, char delim) {
+        std::vector<std::string> elements;
         stringstream stream(text);
         string item;
         while (getline(stream, item, delim)) {
@@ -126,8 +125,8 @@ namespace util {
         return elements;
     }
 
-    vector<string> filesindir(string path) {
-        vector<string> files;
+    std::vector<std::string> filesindir(std::string path) {
+        std::vector<std::string> files;
         DIR* dir;
         struct dirent* ent;
         if ((dir = opendir(path.c_str())) != NULL) {

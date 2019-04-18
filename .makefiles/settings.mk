@@ -11,7 +11,8 @@ RC = windres
 MAKE = mingw32-make
 BUILD = Debug
 DEBUG = true
-
+PRECOMPILED_HEADERS = true
+FILE =
 BULLET = "* "
 BULLET2 = ""
 TAB = "  "
@@ -51,17 +52,12 @@ THIS_DIR = "$(shell basename "$(CURDIR)")"
 #TARGET = $(THIS_DIR).exe
 TARGET = Game.exe
 LIBTARGET = libshushao.dll
-CORES = 6
+CORES = 7
 
 #PATHS
 BASE_LIBS	= ../../mingw-dev-libs
 VCPKG_LIBS	= ../../vcpkg/installed/x64-windows
 
-#The Directories, Source, Includes, Objects, Binary and Resources
-BUILDDIR = obj/$(BUILD)
-TARGETDIR = bin/$(BUILD)
-
-RESFILE	=
 SRCDIR	= .
 ENGINE	= engine
 GAME	= game
@@ -70,20 +66,31 @@ SRCEXT	= cpp
 OBJEXT	= o
 RESEXT	= res
 RCEXT	= rc
+GCHDIR  = pch
+GCHEXT  = h.gch
+
+BUILDDIR = obj/$(BUILD)
+TARGETDIR = bin/$(BUILD)
+PRECOMPILEDDIR = $(ENGINE)/pch
+
 
 #Flags, Libraries and Includes
-COMFLAGS =  -MMD -MP -std=c++17 -fexceptions -DGLEW_STATIC -g -fmax-errors=4 -Wfatal-errors -DDEBUG=$(DEBUG)
+DEPFLAGS =
+COMFLAGS = -MMD -MP -std=c++17 -fexceptions -DGLEW_STATIC -fmax-errors=10 -Wfatal-errors -DDEBUG=$(DEBUG)
+GCHFLAGS = -std=c++17 -fexceptions -DGLEW_STATIC -fmax-errors=10 -Wfatal-errors -DDEBUG=$(DEBUG) -x c++-header
 LNKFLAGS =
 SHAREDFLAGS = -shared
 LIBDIRS	 = -L$(BASE_LIBS)/boost/stage/lib -L$(BASE_LIBS)/glew/lib -L$(BASE_LIBS)/freetype/lib -L$(BASE_LIBS)/SDL2/lib -L$(BASE_LIBS)/SDL2_image/lib -L$(BASE_LIBS)/SDL2_ttf/lib -L$(BASE_LIBS)/SDL2_mixer/lib -L$(BASE_LIBS)/Box2D/lib
 LIB 	 = -lboost_context -lboost_coroutine -lglew32 -lmingw32 -lopengl32 -lgdi32 -lglu32 -lfreetype -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lBox2D
-INCDIRS  = -I$(BASE_LIBS)/boost -I$(BASE_LIBS)/glew/include -I$(BASE_LIBS)/glew/include -I$(BASE_LIBS)/glm -I$(BASE_LIBS)/freetype/include -I$(BASE_LIBS)/SDL2/include/SDL2 -I$(BASE_LIBS)/SDL2_image/include/SDL2 -I$(BASE_LIBS)/SDL2_ttf/include/SDL2 -I$(BASE_LIBS)/SDL2_mixer/include/SDL2 -I$(BASE_LIBS)/Box2D/include -I$(ROOT_DIR)/engine -I$(ROOT_DIR)
+INCDIRS  = -I$(BASE_LIBS)/boost -I$(BASE_LIBS)/glew/include -I$(BASE_LIBS)/glew/include -I$(BASE_LIBS)/glm -I$(BASE_LIBS)/freetype/include -I$(BASE_LIBS)/SDL2/include/SDL2 -I$(BASE_LIBS)/SDL2_image/include/SDL2 -I$(BASE_LIBS)/SDL2_ttf/include/SDL2 -I$(BASE_LIBS)/SDL2_mixer/include/SDL2 -I$(BASE_LIBS)/Box2D/include -I$(ROOT_DIR)/$(ENGINE) -I$(ROOT_DIR)/$(GAME) -I$(ROOT_DIR)/$(PRECOMPILEDDIR)
 
 #Condizioni
 ifeq ($(DEBUG),true)
 	COMFLAGS += -Wall -g
+	GCHFLAGS += -Wall -g
 else
 	COMFLAGS += -O2
+	GCHFLAGS += -O2
 	LNKFLAGS += -s -mwindows
 endif
 
@@ -91,12 +98,14 @@ SUBDIRS  = $(wildcard */)
 SOURCES  = $(wildcard $(SRCDIR)/$(ENGINE)/*.$(SRCEXT)) $(wildcard $(SRCDIR)/$(ENGINE)/**/*.$(SRCEXT))
 SOURCES += $(wildcard $(SRCDIR)/$(GAME)/*.$(SRCEXT)) $(wildcard $(SRCDIR)/$(GAME)/**/*.$(SRCEXT))
 RCSOURCES = $(wildcard $(SRCDIR)/$(GAME)/*.$(RCEXT)) $(wildcard $(SRCDIR)/$(GAME)/**/*.$(RCEXT))
+TOPRECOMP = $(wildcard $(SRCDIR)/$(ENGINE)/$(GCHDIR)/*.h)
 
 #per compilare le risorse dell'engine nell'exe (ora le metto nella dll)
 #RCSOURCES += $(wildcard $(SRCDIR)/$(ENGINE)/*.$(RCEXT)) $(wildcard $(SRCDIR)/$(ENGINE)/**/*.$(RCEXT))
 
 OBJECTS = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT)))
 RCFILES = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(RCSOURCES:.$(RCEXT)=.$(RESEXT)))
+PRECOMP = $(patsubst $(SRCDIR)/$(ENGINE)/$(GCHDIR)/%,$(PRECOMPILEDDIR)/%,$(TOPRECOMP:.h=.$(GCHEXT)))
 DEPENDS = $(OBJECTS:.o=.d)
 
 ENGINE_RCFILE = engine/resources/resources.$(RCEXT)

@@ -1,19 +1,15 @@
-#include <chrono>
-#include <iostream>
-#include <string>
-#include <thread>
+#include <core_.h>
+#include <std_.h>
 
 #include "config.h"
 #include "cycle.h"
 #include "debug.h"
 #include "design.h"
 #include "font.h"
-#include "glmanager.h"
 #include "input.h"
 #include "physics/physics.h"
 #include "resources.h"
 #include "scenemanager.h"
-#include "stime.h"
 #include "system.h"
 
 se::Cycle* GAME;
@@ -57,7 +53,6 @@ bool Cycle::init() {
         ::exit(5);
     }
 
-
     // load resoruces (derived)
     if (!InitResources()) {
         Debug::Log(ERROR) << "Error loading resources" << endl;
@@ -81,7 +76,6 @@ bool Cycle::init() {
 
     // Init System services
     System::init();
-
 
     // Init input mappings (derived)
     if (!InitMapping()) {
@@ -161,7 +155,6 @@ void Cycle::run() {
             // Main render cycle
             render();
         }
-
     }
 
     exit();

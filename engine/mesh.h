@@ -1,37 +1,33 @@
 #pragma once
 
-#include <string>
-#include <vector>
-#include <glm/glm.hpp>
+#include <core_.h>
+#include <math_.h>
+#include <std_.h>
 
-#include "object.h"
 #include "texture.h"
 #include "vao.h"
 
 namespace se {
 
-    class Mesh : public Object {
+class Mesh : public Object {
+public:
+    Mesh();
+    Mesh(std::string objfilename);
+    ~Mesh();
 
-        public:
+    Vao* VAO = nullptr;
 
-            Mesh();
-            Mesh(std::string objfilename);
-            ~Mesh();
+    std::vector<glm::vec3> vertexData;
+    std::vector<glm::vec2> uvData;
+    std::vector<glm::vec3> normalsData;
+    std::vector<GLushort> indexesData;
 
-			Vao* VAO = nullptr;
+    bool ready = false;
 
-            std::vector<glm::vec3> vertexData;
-            std::vector<glm::vec2> uvData;
-            std::vector<glm::vec3> normalsData;
-            std::vector<GLushort> indexesData;
+    Mesh* Init();
+    Mesh* Load(std::string objectFile);
 
-			bool ready = false;
+    void PrintData();
+};
 
-            Mesh* Init();
-            Mesh* Load(std::string objectFile);
-
-            void PrintData();
-
-    };
-
-}
+}  // namespace se

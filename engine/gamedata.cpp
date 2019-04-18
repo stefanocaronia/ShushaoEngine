@@ -1,11 +1,9 @@
-#include <algorithm>
-#include <string>
-#include <vector>
+#include <core_.h>
+#include <std_.h>
 
 #include "camera.h"
 #include "component.h"
 #include "gamedata.h"
-#include "object.h"
 #include "scene.h"
 
 namespace se {

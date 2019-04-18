@@ -6,9 +6,8 @@
     Credits: https://github.com/exawon/CoroBehaviour
 */
 
-#include <boost/coroutine2/all.hpp>
-#include <ctime>
-#include <functional>
+#include <boost_.h>
+
 #include "globals.h"
 
 namespace se {

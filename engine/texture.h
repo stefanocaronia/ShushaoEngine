@@ -1,12 +1,11 @@
 #pragma once
 
-#include <GL/glew.h>
-#include <SDL.h>
-#include <glm/glm.hpp>
-#include <string>
-#include <vector>
+#include <core_.h>
+#include <math_.h>
+#include <opengl_.h>
+#include <sdl_.h>
+#include <std_.h>
 
-#include "object.h"
 #include "resource.h"
 
 namespace se {

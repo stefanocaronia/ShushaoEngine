@@ -10,7 +10,7 @@
                 "kind": "build",
                 "isDefault": true
             },
-            "command": "mingw32-make",//  -Oline
+            "command": "mingw32-make", //  -Oline
             "presentation": {
                 "clear": true
             }
@@ -60,6 +60,24 @@
             "label": "Clean",
             "type": "shell",
             "command": "mingw32-make clean",
+            "problemMatcher": [],
+            "presentation": {
+                "clear": true
+            }
+        },
+        {
+            "label": "Build current file",
+            "type": "shell",
+            "command": "mingw32-make single FILE=${fileBasenameNoExtension}",
+            "problemMatcher": [],
+            "presentation": {
+                "clear": true
+            }
+        },
+        {
+            "label": "Header Precompilation",
+            "type": "shell",
+            "command": "mingw32-make precomp",
             "problemMatcher": [],
             "presentation": {
                 "clear": true

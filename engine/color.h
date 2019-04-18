@@ -1,7 +1,7 @@
 #pragma once
 
-#include <glm/glm.hpp>
-#include <string>
+#include <math_.h>
+#include <std_.h>
 
 namespace se {
 
@@ -20,14 +20,14 @@ public:
     void Set(float r, float g, float b, float a = 1.0f);
     void Set(int r, int g, int b, float a = 1.0f);
 
-    Color grayscale(); //	The grayscale value of the color. (Read Only)
+    Color grayscale();  //	The grayscale value of the color. (Read Only)
 
     float maxColorComponent();  //	Returns the maximum color component value: Max(r,g,b).
     std::string ToString();
 
     glm::vec4 rgba();
     glm::vec3 rgb();
-	void Clamp();
+    void Clamp();
 
     bool operator==(Color& other);
     void operator=(const Color& other);
@@ -44,21 +44,20 @@ public:
     Color& operator-=(Color const& other) &;
 
     static glm::vec3 hex2rgb(std::string hexcode);
-
 };
 
 namespace color {
-	const Color black = {0.0f, 0.0f, 0.0f, 1.0f};
-	const Color blue = {0.0f, 0.0f, 1.0f, 1.0f};
-	const Color clear = {0.0f, 0.0f, 0.0f, 0.0f};
-	const Color cyan = {0.0f, 1.0f, 1.0f, 1.0f};
-	const Color gray = {0.5f, 0.5f, 0.5f, 1.0f};
-	const Color green = {0.0f, 1.0f, 0.0f, 1.0f};
-	const Color grey = {0.5f, 0.5f, 0.5f, 1.0f};
-	const Color magenta = {1.0f, 0.0f, 1.0f, 1.0f};
-	const Color red = {1.0f, 0.0f, 0.0f, 1.0f};
-	const Color white = {1.0f, 1.0f, 1.0f, 1.0f};
-	const Color yellow = {1.0f, 0.92f, 0.016f, 1.0f};
-}
+    const Color black = {0.0f, 0.0f, 0.0f, 1.0f};
+    const Color blue = {0.0f, 0.0f, 1.0f, 1.0f};
+    const Color clear = {0.0f, 0.0f, 0.0f, 0.0f};
+    const Color cyan = {0.0f, 1.0f, 1.0f, 1.0f};
+    const Color gray = {0.5f, 0.5f, 0.5f, 1.0f};
+    const Color green = {0.0f, 1.0f, 0.0f, 1.0f};
+    const Color grey = {0.5f, 0.5f, 0.5f, 1.0f};
+    const Color magenta = {1.0f, 0.0f, 1.0f, 1.0f};
+    const Color red = {1.0f, 0.0f, 0.0f, 1.0f};
+    const Color white = {1.0f, 1.0f, 1.0f, 1.0f};
+    const Color yellow = {1.0f, 0.92f, 0.016f, 1.0f};
+}  // namespace color
 
 }  // namespace se

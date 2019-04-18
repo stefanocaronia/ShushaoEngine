@@ -1,6 +1,7 @@
 #pragma once
 
-#include <string>
+#include <std_.h>
+
 #include "scenemanager.h"
 
 namespace se {

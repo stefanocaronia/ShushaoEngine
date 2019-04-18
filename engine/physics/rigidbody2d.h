@@ -1,61 +1,57 @@
 #pragma once
 
-#include <Box2D/Box2D.h>
-#include <glm/glm.hpp>
+#include <math_.h>
+#include <physics_.h>
 
 #include "../component.h"
 
 namespace se {
 
-	class Collider2D;
+class Collider2D;
 
-	enum class RigidbodyType {
-		STATIC = b2_staticBody,
-		KINEMATIC = b2_kinematicBody,
-		DYNAMIC = b2_dynamicBody
-	};
+enum class RigidbodyType {
+    STATIC = b2_staticBody,
+    KINEMATIC = b2_kinematicBody,
+    DYNAMIC = b2_dynamicBody
+};
 
-	class Rigidbody2D : public Component {
+class Rigidbody2D : public Component {
+public:
+    virtual void setup() { name = "Rigidbody 2D"; }
 
-		public:
+    b2Body* body = nullptr;
 
-			virtual void setup() { name = "Rigidbody 2D"; }
+    glm::vec2 position = glm::vec2(0, 0);
+    glm::vec2 velocity = glm::vec2(0, 0);
+    float angle = 0.0f;  // DEGREES
+    float angularVelocity = 0.0f;
 
-			b2Body* body = nullptr;
+    bool fixedRotation = false;
 
-			glm::vec2 position = glm::vec2(0, 0);
-			glm::vec2 velocity = glm::vec2(0, 0);
-			float angle = 0.0f; // DEGREES
-			float angularVelocity = 0.0f;
+    void SetType(RigidbodyType type_) {
+        type = type_;
+        bodyDef.type = (b2BodyType)type;
+        if (body != nullptr) body->SetType(bodyDef.type);
+    }
 
-			bool fixedRotation = false;
+    void SetFixedRotation(bool fr) {
+        fixedRotation = fr;
+        bodyDef.fixedRotation = fr;
+        if (body != nullptr) body->SetFixedRotation(fr);
+    }
 
-			void SetType(RigidbodyType type_) {
-				type = type_;
-				bodyDef.type = (b2BodyType)type;
-				if (body != nullptr) body->SetType(bodyDef.type);
-			}
+    void Copy(Rigidbody2D* other);
 
-			void SetFixedRotation(bool fr) {
-				fixedRotation = fr;
-				bodyDef.fixedRotation = fr;
-				if (body != nullptr) body->SetFixedRotation(fr);
-			}
+    void Awake();
+    void Update();
+    void FixedUpdate();
+    void OnDestroy();
+    void OnDisable();
+    void OnEnable();
 
-			void Copy(Rigidbody2D* other);
+private:
+    b2BodyDef bodyDef;
+    RigidbodyType type = RigidbodyType::DYNAMIC;
+};
 
-			void Awake();
-			void Update();
-			void FixedUpdate();
-			void OnDestroy();
-			void OnDisable();
-			void OnEnable();
-
-		private:
-
-			b2BodyDef bodyDef;
-			RigidbodyType type = RigidbodyType::DYNAMIC;
-
-	};
-
-}
+}  // namespace se

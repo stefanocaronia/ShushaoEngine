@@ -1,8 +1,7 @@
 #pragma once
 
-#include <glm/glm.hpp>
-#include <string>
-#include <vector>
+#include <math_.h>
+#include <std_.h>
 
 namespace se {
 

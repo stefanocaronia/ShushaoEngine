@@ -1,44 +1,42 @@
 #pragma once
 
-#include <vector>
+#include <std_.h>
 
-#include "scene.h"
 #include "gamedata.h"
+#include "scene.h"
 #include "utility.h"
 
 namespace se {
 
-	//class Cycle;
+//class Cycle;
 
-	class SceneManager {
+class SceneManager {
+public:
+    ~SceneManager();
 
-		public:
+    static Scene* activeScene;
 
-			~SceneManager();
+    static bool sceneSet;
 
-			static Scene* activeScene;
+    template <class T>
+    static T* LoadScene(string _name = "") {  // Adds a scene of class T
 
-			static bool sceneSet;
+        // todo pause e restore dopo
+        T* scene = new T();
+        scene->name = (_name == "" ? util::classtitle<T>() : _name);
 
-			template<class T>
-			static T* LoadScene(string _name = "") { // Adds a scene of class T
+        if (sceneSet) {
+            delete (scene);
+            GameData::DestroyAll();
+        }
+        Setscene(scene);
+        return scene;
+    }
 
-				// todo pause e restore dopo
-				T* scene = new T();
-				scene->name = (_name == "" ? util::classtitle<T>() : _name);
+    static void Setscene(Scene*);
+    static void Clear();
 
-				if (sceneSet) {
-					delete(scene);
-					GameData::DestroyAll();
-				}
-				Setscene(scene);
-				return scene;
-			}
-
-			static void Setscene(Scene*);
-			static void Clear();
-
-			/*template<class T>
+    /*template<class T>
 			static T* GetSceneByClass() {	// Returns the component of Type type if the game object has one attached, null if it doesn't.
 				for(Scene* scene: Scenes) {
 					if (dynamic_cast<T*>(scene))
@@ -47,10 +45,8 @@ namespace se {
 				return nullptr;
 			}*/
 
-		protected:
+protected:
+    static vector<Scene*> Scenes;
+};
 
-			static vector<Scene*> Scenes;
-
-	};
-
-}
+}  // namespace se

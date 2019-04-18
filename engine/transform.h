@@ -1,13 +1,8 @@
 #pragma once
 
-#include <algorithm>
-#include <iostream>
-#include <vector>
-
-#include <GL/glew.h>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/quaternion.hpp>
-#include <glm/gtx/transform.hpp>
+#include <math_.h>
+#include <opengl_.h>
+#include <std_.h>
 
 #include "component.h"
 #include "globals.h"

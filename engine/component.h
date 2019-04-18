@@ -1,10 +1,9 @@
 #pragma once
 
-#include <set>
-#include <string>
+#include <core_.h>
+#include <std_.h>
 
 #include "coroutineholder.h"
-#include "object.h"
 
 namespace se {
 
@@ -77,8 +76,6 @@ public:
     template <class T>
     T* AddComponent(std::string _name = "");  // Adds a component to the entity
 
-    // static void Sort(std::multiset<Component*, CompareComponent>&);
-
 protected:
     virtual void Awake();  // Awake is called when the script instance is being loaded.
     virtual void Start();  // Start is called on the frame when a script is enabled just before any of the Update methods is called the first time.
@@ -111,18 +108,3 @@ private:
 };
 
 }  // namespace se
-
-/* #include "entity.h"
-
-namespace se {
-
-template <class T>
-T* Component::GetComponent(std::string name_) {
-    return entity->GetComponent<T>(name_);
-}
-
-template <class T>
-T* Component::AddComponent(std::string name_) {
-    return entity->AddComponent<T>(name_);
-}
-}  // namespace se */

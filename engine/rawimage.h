@@ -1,77 +1,71 @@
 #pragma once
 
-#include <glm/glm.hpp>
+#include <math_.h>
 
-#include "renderer.h"
 #include "color.h"
 #include "material.h"
+#include "renderer.h"
+#include "shaders/shader.h"
 #include "sprite.h"
 #include "texture.h"
-#include "shaders/shader.h"
 
 namespace se {
 
-	class RawImage : public Renderer {
+class RawImage : public Renderer {
+public:
+    virtual void setup();
+    ~RawImage();
 
-		public:
+    bool isReady();
 
-			virtual void setup();
-			~RawImage();
+    Texture* texture = nullptr;
+    Material* material = nullptr;
+    Vao* VAO = nullptr;
 
-			bool isReady();
+    Rect uvRect = {0, 0, 1, 1};
+    Color color = color::white;
 
-			Texture* texture = nullptr;
-			Material* material = nullptr;
-			Vao* VAO = nullptr;
+    RawImage* SetTexture(Texture* texture_) {
+        texture = texture_;
+        return this;
+    }
 
-			Rect uvRect = {0, 0, 1, 1};
-			Color color = color::white;
+    RawImage* SetUvRect(Rect rect_);
+    RawImage* SetColor(Color color_);
 
-			RawImage* SetTexture(Texture* texture_) {
-				texture = texture_;
-				return this;
-			}
+    RawImage* SetMaterial(Material* material_) {
+        material = material_;
+        return this;
+    }
 
-			RawImage* SetUvRect(Rect rect_);
-			RawImage* SetColor(Color color_);
+    RawImage* Build();
 
-			RawImage* SetMaterial(Material* material_) {
-				material = material_;
-				return this;
-			}
+    std::vector<glm::vec3> vertices{
+        {-1.0f, -1.0f, 0.0f},  // Bottom-left
+        {1.0f, -1.0f, 0.0f},  // Bottom-right
+        {1.0f, 1.0f, 0.0f},  // Top-right
+        {-1.0f, 1.0f, 0.0f}  // Top-left
+    };
 
-			RawImage* Build();
+    std::vector<glm::vec3> normals{
+        {0.0f, 0.0f, -1.0f}};
 
-			std::vector<glm::vec3> vertices {
-				{-1.0f, -1.0f, 0.0f},  	// Bottom-left
-				{ 1.0f, -1.0f, 0.0f}, 	// Bottom-right
-				{ 1.0f,  1.0f, 0.0f}, 	// Top-right
-				{-1.0f,  1.0f, 0.0f} 	// Top-left
-			};
+    std::vector<GLushort> indexes{
+        0, 1, 2,
+        2, 3, 0};
 
-			std::vector<glm::vec3> normals {
-				{ 0.0f,  0.0f, -1.0f}
-			};
+    std::vector<glm::vec2> uv{
+        {0.0f, 1.0f},  // Bottom-left of texture
+        {1.0f, 1.0f},  // Bottom-right of texture
+        {1.0f, 0.0f},  // Top-Right of texture
+        {0.0f, 0.0f}  // Top-left of texture
+    };
 
-			std::vector<GLushort> indexes {
-				0, 1, 2,
-				2, 3, 0
-			};
+protected:
+    void Awake();
+    void Update();
+    void Render();
+    void OnDestroy();
+};
 
-			std::vector<glm::vec2> uv {
-				{0.0f, 1.0f}, // Bottom-left of texture
-				{1.0f, 1.0f}, // Bottom-right of texture
-				{1.0f, 0.0f}, // Top-Right of texture
-				{0.0f, 0.0f}	// Top-left of texture
-			};
-
-		protected:
-
-			void Awake();
-			void Update();
-			void Render();
-			void OnDestroy();
-
-	};
-
-}
+}  // namespace se

@@ -1,27 +1,24 @@
 #pragma once
 
-#include <string>
+#include <std_.h>
 
 #include "object.h"
 
 namespace se {
 
-	class Service : public Object {
+class Service : public Object {
+public:
+    Service();
+    virtual ~Service();
 
-		public:
+    bool active;
 
-			Service();
-			virtual ~Service();
+    virtual void Init();
+    virtual void Update();
+    virtual void Exit();
 
-			bool active;
+protected:
+private:
+};
 
-			virtual void Init();
-			virtual void Update();
-			virtual void Exit();
-
-		protected:
-
-		private:
-	};
-
-}
+}  // namespace se

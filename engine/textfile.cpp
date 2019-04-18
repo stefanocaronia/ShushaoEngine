@@ -1,8 +1,6 @@
-#include <SDL_image.h>
-#include <string>
-#include <fstream>
+#include <core_.h>
+#include <std_.h>
 
-#include "debug.h"
 #include "resources.h"
 #include "textfile.h"
 #include "utility.h"
@@ -21,17 +19,17 @@ Textfile::~Textfile() {}
 bool Textfile::LoadEmbedded(int IDRES, std::string library) {
     auto data = Resources::GetEmbeddedText(IDRES, library);
     text = std::string(data.begin(), data.end());
-	return true;
+    return true;
 }
 
 bool Textfile::Load(std::string filename) {
     name = util::basename(filename);
-	buffer.clear();
-	ifstream t(filename);
-	buffer << t.rdbuf();
-	text = buffer.str();
+    buffer.clear();
+    ifstream t(filename);
+    buffer << t.rdbuf();
+    text = buffer.str();
 
-	return true;
+    return true;
 }
 
 }  // namespace se

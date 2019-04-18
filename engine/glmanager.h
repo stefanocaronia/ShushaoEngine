@@ -1,52 +1,48 @@
 #pragma once
 
-#include <map>
-#include <string>
-#include <vector>
-#include <SDL.h>
-#include <ft2build.h>
-#include FT_FREETYPE_H
+#include <freetype_.h>
+#include <opengl_.h>
+#include <sdl_.h>
+#include <std_.h>
 
-#include <glm/glm.hpp>
+#include <math_.h>
 
 namespace se {
 
-	class GLManager {
+class GLManager {
+public:
+    static SDL_GLContext gContext;
+    static SDL_Window* gWindow;
+    static SDL_Renderer* gRenderer;
 
-		public:
+    static FT_Library lFreetype;
 
-			static SDL_GLContext gContext;
-			static SDL_Window* gWindow;
-			static SDL_Renderer* gRenderer;
+    static bool fullscreen;
+    static bool ready;
 
-			static FT_Library lFreetype;
+    static unsigned int DESKTOP_WIDTH;
+    static unsigned int DESKTOP_HEIGHT;
+    static unsigned int WIDTH;
+    static unsigned int HEIGHT;
+    static float ASPECT;
+    static glm::vec2 VIEWPORT;
 
-			static bool fullscreen;
-			static bool ready;
+    static bool Init(std::string, bool);
+    static void Quit();
+    static void Clear();
+    static void Clear(float, float, float, float, float);
+    static void SetFullscreen(bool);
+    static void ToggleFullscreen();
+    static void Swap();
+    static void Reset();
+    static void Update();
 
-			static unsigned int DESKTOP_WIDTH;
-			static unsigned int DESKTOP_HEIGHT;
-			static unsigned int WIDTH;
-			static unsigned int HEIGHT;
-			static float ASPECT;
-			static glm::vec2 VIEWPORT;
-
-			static bool Init(std::string, bool);
-			static void Quit();
-			static void Clear();
-			static void Clear(float, float, float, float, float);
-			static void SetFullscreen(bool);
-			static void ToggleFullscreen();
-			static void Swap();
-			static void Reset();
-			static void Update();
-
-			/* static Shader* AddShader(Shader* shader) {
+    /* static Shader* AddShader(Shader* shader) {
 				shaders.push_back(shader);
 				return shader;
 			} */
 
-			/* template<class T>
+    /* template<class T>
 			static T* GetShader(std::string _name = "") {	// Returns the component of Type type if the game object has one attached, null if it doesn't.
 				for(auto& shader: shaders) {
 					if (dynamic_cast<T*>(shader)) {
@@ -56,10 +52,8 @@ namespace se {
 				return nullptr;
 			} */
 
-		private:
+private:
+    //static std::vector<Shader*> shaders;
+};
 
-			//static std::vector<Shader*> shaders;
-
-	};
-
-}
+}  // namespace se

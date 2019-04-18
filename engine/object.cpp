@@ -1,63 +1,60 @@
-#include <string>
-#include <typeinfo>
-
+#include "object.h"
+#include "component.h"
 #include "debug.h"
 #include "gamedata.h"
-#include "object.h"
 #include "scenemanager.h"
 #include "utility.h"
-#include "component.h"
 
 namespace se {
 
-    using namespace std;
-    using namespace glm;
+using namespace std;
+using namespace glm;
 
-    Object::Object() {
-        name = "Object";
-        GameData::RegisterObject(this);
-    }
+Object::Object() {
+    name = "Object";
+    GameData::RegisterObject(this);
+}
 
-    Object::Object(std::string _name) {
-        name = _name;
-        GameData::RegisterObject(this);
-    }
+Object::Object(std::string _name) {
+    name = _name;
+    GameData::RegisterObject(this);
+}
 
-    Object::~Object() {
-        Destroy(this);
-    }
+Object::~Object() {
+    Destroy(this);
+}
 
-    bool Object::operator==(const char* _name) {
-        return name == _name;
-    }
+bool Object::operator==(const char* _name) {
+    return name == _name;
+}
 
-    bool Object::operator==(const Object& obj) {
-        return obj.InstanceID == InstanceID;
-    }
+bool Object::operator==(const Object& obj) {
+    return obj.InstanceID == InstanceID;
+}
 
-    std::string Object::ToString() {
-        return name;
-    }
+std::string Object::ToString() {
+    return name;
+}
 
-    int Object::GetInstanceID() {
-        return InstanceID;
-    }
+int Object::GetInstanceID() {
+    return InstanceID;
+}
 
-    void Object::Destroy(Object* obj, float t) {
-        // TODO: GameData::UnRegisterObject(this.InstanceID);
+void Object::Destroy(Object* obj, float t) {
+    // TODO: GameData::UnRegisterObject(this.InstanceID);
 
-        // TODO: eliminazione ritardata con t
+    // TODO: eliminazione ritardata con t
 
-        // delete obj;
-    }
+    // delete obj;
+}
 
-    void Object::Destroy(Object* obj) {
-        // TODO: eliminazione ritardata con t
+void Object::Destroy(Object* obj) {
+    // TODO: eliminazione ritardata con t
 
-        // delete obj;
-    }
+    // delete obj;
+}
 
-    /* 	TODO: Clones the object original and returns the clone.
+/* 	TODO: Clones the object original and returns the clone.
 
             This function makes a copy of an object in a similar way to the Duplicate command in the editor. If you are cloning a Entity then you can also optionally
             specify its position and rotation (these default to the original Entity's position and rotation otherwise). If you are cloning a Component then the Entity
@@ -73,7 +70,7 @@ namespace se {
             The active status of a Entity at the time of cloning will be passed on, so if the original is inactive then the clone will be created in an inactive state too.
         */
 
-    /* Object* Object::Instantiate(Object* original, Transform* parent) {
+/* Object* Object::Instantiate(Object* original, Transform* parent) {
         // TODO Object::Instantiate
         return nullptr;
     }

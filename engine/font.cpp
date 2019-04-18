@@ -1,9 +1,8 @@
-#include <SDL_image.h>
-#include <string>
+#include <core_.h>
+#include <opengl_.h>
+#include <std_.h>
 
-#include "debug.h"
 #include "font.h"
-#include "glmanager.h"
 #include "resources.h"
 #include "utility.h"
 

@@ -1,81 +1,71 @@
 #pragma once
 
-#include <SDL_mixer.h>
-#include <string>
-
-#include "object.h"
+#include <core_.h>
+#include <sdl_.h>
+#include <std_.h>
 
 namespace se {
 
-	class Music : public Object {
+class Music : public Object {
+public:
+    Music(std::string filename = "");
+    ~Music();
 
-		public:
+    Mix_Music* track;
 
-			Music(std::string filename = "");
-			~Music();
+    Music* Load(std::string);
 
-			Mix_Music* track;
+    void play(int loops = 1);
+    void fadeIn(int loops = 1, int ms = 1000);
 
-			Music* Load(std::string);
+    // STATIC
 
-			void play(int loops = 1);
-			void fadeIn(int loops = 1, int ms = 1000);
+    static void resume();
+    static void pause();
+    static void stop();
+    static void rewind();
+    static void fadeOut(int ms = 1000);
+    static void seek(double position);
 
-			// STATIC
+    static int setVolume(int);
+    static int addVolume(int);
+    static int volumeDown(int);
+    static int getVolume();
+    static void mute();
+    static void unMute();
 
-			static void resume();
-			static void pause();
-			static void stop();
-			static void rewind();
-			static void fadeOut(int ms = 1000);
-			static void seek(double position);
+    static bool isPlaying();
+    static bool isPaused();
+    static bool isFading();
+    static bool isMuted();
 
-			static int setVolume(int);
-			static int addVolume(int);
-			static int volumeDown(int);
-			static int getVolume();
-			static void mute();
-			static void unMute();
+private:
+    static bool muted;
+    static int volume;
+};
 
-			static bool isPlaying();
-			static bool isPaused();
-			static bool isFading();
-			static bool isMuted();
+class Effect : public Object {
+    // TODO: PANNING
 
-		private:
+public:
+    Effect(std::string filename = "");
+    ~Effect();
 
-			static bool muted;
-			static int volume;
+    Mix_Chunk* sample;
 
-	};
+    Effect* Load(std::string);
 
-	class Effect : public Object {
+    void setVolume(int);
 
+    void play(int loops = 0);
+    void play(int loops, int ticks);
+    void fadeIn(int loops, int ms = 1000);
+    void fadeIn(int loops, int ms, int ticks);
+    void stop();
 
-		// TODO: PANNING
+private:
+    int volume = 128;
+    int channel;
+};
 
-		public:
-
-			Effect(std::string filename = "");
-			~Effect();
-
-			Mix_Chunk *sample;
-
-			Effect* Load(std::string);
-
-			void setVolume(int);
-
-			void play(int loops = 0);
-			void play(int loops, int ticks);
-			void fadeIn(int loops, int ms = 1000);
-			void fadeIn(int loops, int ms, int ticks);
-			void stop();
-
-		private:
-
-			int volume = 128;
-			int channel;
-
-	};
-
-}
+}  // namespace se

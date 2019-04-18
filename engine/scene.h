@@ -1,16 +1,15 @@
 #pragma once
 
-#include <set>
-#include <string>
+#include <core_.h>
+#include <std_.h>
 
 #include "component.h"
-#include "debug.h"
-#include "entity/debuggrid.h"
 #include "debuginfo.h"
 #include "entity.h"
+#include "entity/debuggrid.h"
+#include "entity/maincamera.h"
 #include "gamedata.h"
 #include "light.h"
-#include "entity/maincamera.h"
 #include "renderer.h"
 #include "transform.h"
 #include "utility.h"

@@ -1,46 +1,42 @@
 #pragma once
 
-#include <glm/glm.hpp>
+#include <math_.h>
 
-#include <GL/glew.h>
-#include "renderer.h"
 #include "color.h"
 #include "material.h"
 #include "mesh.h"
+#include "renderer.h"
 #include "shaders/shader.h"
 
 namespace se {
 
-	class MeshRenderer : public Renderer {
+class MeshRenderer : public Renderer {
+public:
+    virtual void setup();
+    ~MeshRenderer();
 
-		public:
+    bool isReady();
 
-			virtual void setup();
-			~MeshRenderer();
+    Mesh* mesh = nullptr;
+    Material* material = nullptr;
 
-			bool isReady();
+    MeshRenderer* SetMesh(Mesh* mesh_) {
+        mesh = mesh_;
+        return this;
+    }
 
-			Mesh* mesh = nullptr;
-			Material* material = nullptr;
+    MeshRenderer* SetMaterial(Material* material_) {
+        material = material_;
+        return this;
+    }
 
-			MeshRenderer* SetMesh(Mesh* mesh_) {
-				mesh = mesh_;
-				return this;
-			}
+protected:
+    void Awake();
+    void Update();
+    void Render();
+    void OnDestroy();
 
-			MeshRenderer* SetMaterial(Material* material_) {
-				material = material_;
-				return this;
-			}
+private:
+};
 
-		protected:
-
-			void Awake();
-			void Update();
-			void Render();
-			void OnDestroy();
-
-		private:
-	};
-
-}
+}  // namespace se

@@ -1,43 +1,39 @@
 #pragma once
 
-#include <Box2D/Box2D.h>
-#include <glm/glm.hpp>
-#include <vector>
+#include <math_.h>
+#include <physics_.h>
+#include <std_.h>
 
-#include "physicscontactlistener.h"
 #include "physicscontactfilter.h"
+#include "physicscontactlistener.h"
 #include "physicsdebugdraw.h"
 
 namespace se {
 
-	class Physics {
+class Physics {
+public:
+    static bool enabled;
+    static bool debug;
 
-		public:
+    static b2World* world;
 
-			static bool enabled;
-			static bool debug;
+    static b2Vec2 gravity;
+    static bool doSleep;
+    static float32 timeStep;
+    static int32 velocityIterations;
+    static int32 positionIterations;
 
-			static b2World* world;
+    static PhysicsDebugDraw debugDraw;
+    static PhysicsContactListener contactListener;
+    static PhysicsContactFilter contactFilter;
 
-			static b2Vec2 gravity;
-			static bool doSleep;
-			static float32 timeStep;
-			static int32 velocityIterations;
-			static int32 positionIterations;
+    void setGravity(glm::vec3);
 
-			static PhysicsDebugDraw debugDraw;
-			static PhysicsContactListener contactListener;
-			static PhysicsContactFilter contactFilter;
+    static bool init();
+    static void update();
+    static void exit();
 
-			void setGravity(glm::vec3);
+private:
+};
 
-			static bool init();
-			static void update();
-			static void exit();
-
-		private:
-
-	};
-
-
-}
+}  // namespace se

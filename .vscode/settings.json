@@ -1,13 +1,13 @@
 {
-    "files.exclude": {
-        "**/bin": true,
-        "**/obj": true,
-        "**/.makefiles": true,
-        "**/.vscode": true,
-        ".gitignore": true,
-        "makefile": true,
-        "*.bat": true
-    },
+    //"files.exclude": {
+    //    "**/bin": true,
+    //    "**/obj": true,
+    //    "**/.makefiles": true,
+    //    "**/.vscode": true,
+    //    ".gitignore": true,
+    //    "makefile": true,
+    //    "*.bat": true
+    //},
     "files.associations": {
         "*.inc": "php",
         "*.php.old": "php",
@@ -72,6 +72,7 @@
         "list": "cpp",
         "typeindex": "cpp",
         "variant": "cpp",
-        "unordered_set": "cpp"
+        "unordered_set": "cpp",
+        "random": "cpp"
     }
 }

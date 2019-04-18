@@ -4,32 +4,29 @@
 
 namespace se {
 
-	class Renderer : public Component {
+class Renderer : public Component {
+public:
+    virtual void setup() { name = "Renderer"; }
 
-		public:
+    bool enabled;  // Makes the rendered 3D object visible if enabled.
+    bool overlay = false;
 
-			virtual void setup() { name = "Renderer"; }
+    bool isVisible;  //Is this renderer visible in any camera? (Read Only)
 
-			bool enabled;  // Makes the rendered 3D object visible if enabled.
-			bool overlay = false;
+    void Copy(Renderer* other);
 
-			bool isVisible; //Is this renderer visible in any camera? (Read Only)
+protected:
+    virtual void Awake(){};
+    virtual void Update(){};
+    virtual void Render(){};
+    virtual void OnDestroy(){};
 
-			void Copy(Renderer* other);
+    // messages
 
-		protected:
+    void OnBecameInvisible();  // OnBecameInvisible is called when the object is no longer visible by any camera.
+    void OnBecameVisible();  // OnBecameVisible is called when the object became visible by any camera.
 
-			virtual void Awake() {};
-			virtual void Update() {};
-			virtual void Render() {};
-			virtual void OnDestroy() {};
+private:
+};
 
-			// messages
-
-			void OnBecameInvisible(); // OnBecameInvisible is called when the object is no longer visible by any camera.
-			void OnBecameVisible(); // OnBecameVisible is called when the object became visible by any camera.
-
-		private:
-	};
-
-}
+}  // namespace se

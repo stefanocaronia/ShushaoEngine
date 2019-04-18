@@ -1,7 +1,7 @@
 #pragma once
 
-#include <glm/glm.hpp>
-#include <vector>
+#include <math_.h>
+#include <std_.h>
 
 namespace se {
 
@@ -17,14 +17,14 @@ public:
     struct Point {
         float time, value, inTangent, outTangent;
 
-        Point(float time_ = 0.0f, float value_ = 0.0f, float inTangent_ = 0.0f, float outTangent_ = 0.0f){
+        Point(float time_ = 0.0f, float value_ = 0.0f, float inTangent_ = 0.0f, float outTangent_ = 0.0f) {
             time = glm::clamp(time_, 0.0f, 1.0f);
             value = glm::clamp(value_, 0.0f, 1.0f);
             inTangent = inTangent_;
             outTangent = outTangent_;
         }
 
-        template<typename T>
+        template <typename T>
         T vertex() {
             T v;
             v.x = time;
@@ -44,7 +44,7 @@ public:
     }
 
     std::vector<Curve::Point>& points = _points;  // All points defined in the animation curve.
-    unsigned int& length = _length;               // The number of points in the curve.(Read Only)
+    unsigned int& length = _length;  // The number of points in the curve.(Read Only)
     WrapMode wrapMode = WrapMode::ONCE;
 
     Point operator[](int index);
@@ -64,7 +64,7 @@ public:
 
 private:
     std::vector<Point> _points;  // All points defined in the animation curve.
-    unsigned int _length = 0;    // The number of points in the curve.(Read Only)
+    unsigned int _length = 0;  // The number of points in the curve.(Read Only)
 
     void sortPoints();
 };

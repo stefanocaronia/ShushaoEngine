@@ -1,5 +1,7 @@
 #include <iostream>
 
+#include <sdl_.h>
+
 #include "game.h"
 #include "globals.h"
 #include "level.h"

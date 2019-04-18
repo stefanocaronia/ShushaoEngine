@@ -1,11 +1,7 @@
-#include <fstream>
-#include <ostream>
-#include <sstream>
-#include <string>
+#include <core_.h>
+#include <std_.h>
 
 #include "config.h"
-#include "debug.h"
-#include "stime.h"
 #include "utility.h"
 
 namespace se {

@@ -1,41 +1,37 @@
 #pragma once
 
-#include "config.h"
-#include "renderer.h"
-#include "rect.h"
-#include "globals.h"
 #include "camera.h"
+#include "config.h"
+#include "globals.h"
+#include "rect.h"
+#include "renderer.h"
 
 namespace se {
 
-	class Canvas : public Component {
+class Canvas : public Component {
+public:
+    virtual void setup();
+    ~Canvas();
 
-		public:
+    const RenderMode& renderMode = _renderMode;
+    Camera* camera = nullptr;
 
-			virtual void setup();
-			~Canvas();
+    std::vector<Component*> ChildRenderers;
 
-			const RenderMode& renderMode = _renderMode;
-			Camera* camera = nullptr;
+    Canvas* SetRenderMode(RenderMode value);
+    Canvas* SetCamera(Camera* camera_);
 
-			std::vector<Component*> ChildRenderers;
+    void Awake();
+    void Update();
+    void Render();
+    void OnDestroy();
 
-			Canvas* SetRenderMode(RenderMode value);
-			Canvas* SetCamera(Camera* camera_);
+    void Copy(Canvas* other);
 
-			void Awake();
-			void Update();
-			void Render();
-			void OnDestroy();
+private:
+    RenderMode _renderMode = RenderMode::WORLD;
+    RenderMode _lastRenderMode;
+    void processRenderMode();
+};
 
-			void Copy(Canvas* other);
-
-        private:
-
-			RenderMode _renderMode = RenderMode::WORLD;
-			RenderMode _lastRenderMode;
-			void processRenderMode();
-
-	};
-
-}
+}  // namespace se

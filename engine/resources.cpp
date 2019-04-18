@@ -1,9 +1,6 @@
-#include <exception>
-#include <iostream>
-#include <vector>
+#include <core_.h>
+#include <std_.h>
 
-#include "debug.h"
-#include "object.h"
 #include "resources.h"
 #include "shaders/shader.h"
 #include "texture.h"
@@ -39,7 +36,7 @@ vector<char> Resources::GetEmbeddedData(int IDRES, string library, LPCSTR type) 
             }
         }
     } else {
-        Debug::Log(WARNING) << "Cant load Resource " << IDRES << (library != "" ? " from " + library : "") <<  endl;
+        Debug::Log(WARNING) << "Cant load Resource " << IDRES << (library != "" ? " from " + library : "") << endl;
         return vector<char>();
     }
 
@@ -48,7 +45,7 @@ vector<char> Resources::GetEmbeddedData(int IDRES, string library, LPCSTR type) 
 
 string Resources::GetEmbeddedText(int IDRES, std::string library) {
     auto data = se::Resources::GetEmbeddedData(IDRES, library, RT_RCDATA);
-	return std::string(data.begin(), data.end());
+    return std::string(data.begin(), data.end());
 }
 
 void Resources::Clear() {

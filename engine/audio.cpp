@@ -1,7 +1,6 @@
 #include "audio.h"
-
-#include "debug.h"
 #include "utility.h"
+#include "debug.h"
 
 namespace se {
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <glm/glm.hpp>
+#include <math_.h>
 #include "color.h"
 #include "curve.h"
 

@@ -1,11 +1,8 @@
 #pragma once
 
-#include <iostream>
-#include <map>
-#include <string>
-#include <vector>
+#include <core_.h>
+#include <std_.h>
 
-#include "object.h"
 #include "resource.h"
 #include "resources/resources.h"
 #include "shaders/shader.h"

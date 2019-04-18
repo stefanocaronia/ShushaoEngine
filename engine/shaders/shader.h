@@ -1,147 +1,135 @@
 #pragma once
 
-#include <string>
-#include <map>
-#include <GL/glew.h>
+#include <opengl_.h>
+#include <std_.h>
 
-#include "../object.h"
 #include "../color.h"
 #include "../light.h"
+#include "../object.h"
 
 namespace se {
 
-	enum ShaderLocation {
-		LOCATION_POSITION = 1,
-		LOCATION_TEXCOORD = 2,
-		LOCATION_COLOR = 3,
-		LOCATION_NORMAL = 4,
-		LOCATION_MVP = 5,
-		LOCATION_RENDER_COLOR = 6,
-		LOCATION_SIZE = 7
-	};
+enum ShaderLocation {
+    LOCATION_POSITION = 1,
+    LOCATION_TEXCOORD = 2,
+    LOCATION_COLOR = 3,
+    LOCATION_NORMAL = 4,
+    LOCATION_MVP = 5,
+    LOCATION_RENDER_COLOR = 6,
+    LOCATION_SIZE = 7
+};
 
-	class Uniform {
+class Uniform {
+public:
+    enum class Type {
+        FLOAT,
+        INTEGER,
+        MATRIX,
+        VECTOR,
+        TEXTURE,
+        COLOR,
+        LIGHT
+    };
 
-		public:
+    Uniform(std::string name_, std::string var_, Uniform::Type type_, GLuint location_, bool locked_ = false) : name(name_), var(var_), type(type_), location(location_), locked(locked_) {}
 
-			enum class Type {
-				FLOAT,
-				INTEGER,
-				MATRIX,
-				VECTOR,
-				TEXTURE,
-				COLOR,
-				LIGHT
-			};
+    std::string name;
+    std::string var;
+    Uniform::Type type;
+    GLuint location = 0;
+    bool locked = false;
 
-			Uniform(std::string name_,
-				std::string var_,
-				Uniform::Type type_,
-				GLuint location_,
-				bool locked_ = false) : name(name_), var(var_), type(type_), location(location_), locked(locked_) {}
+    // values
+    GLenum texture;
 
-			std::string name;
-			std::string var;
-			Uniform::Type type;
-			GLuint location = 0;
-			bool locked = false;
+    void SetFloat(GLfloat&);
+    void SetInteger(GLint&);
+    void SetTextureIndex(GLint&);
+    void SetMatrix(GLfloat*);
+    void SetVector(glm::vec2&);
+    void SetVector(glm::vec3&);
+    void SetVector(glm::vec4&);
+    void SetColor(Color&);
+    void SetLight(UniformLight&);
+};
 
-			// values
-			GLenum texture;
+class Shader : public Object {
+public:
+    std::map<std::string, Uniform> uniforms;
 
-			void SetFloat(GLfloat&);
-			void SetInteger(GLint&);
-			void SetTextureIndex(GLint&);
-			void SetMatrix(GLfloat*);
-			void SetVector(glm::vec2&);
-			void SetVector(glm::vec3&);
-			void SetVector(glm::vec4&);
-			void SetColor(Color&);
-			void SetLight(UniformLight&);
-	};
+    Shader();
+    Shader(std::string);
+    Shader(std::string, std::string);
+    ~Shader();
 
-	class Shader : public Object {
+    bool inUse = false;
 
-		public:
+    bool Init();
+    void Use();
+    void Leave();
+    bool Load(std::string);
+    void LoadFromString(std::string vsc, std::string fsc, std::string gsc = "");
 
-			std::map<std::string, Uniform> uniforms;
+    void awake();
+    void update();
+    void exit();
 
-			Shader();
-			Shader(std::string);
-			Shader(std::string, std::string);
-			~Shader();
+    GLuint GetProgram();
 
-			bool inUse = false;
+    void AddUniform(std::string name_, std::string var_, Uniform::Type type_, GLuint location_ = 0);
+    void AddUniform(std::string var_, Uniform::Type type_, GLuint location_ = 0);
+    void AddShaderUniform(std::string var_, Uniform::Type type_, GLuint location_ = 0);
+    void AddShaderUniform(std::string name_, std::string var_, Uniform::Type type_, GLuint location_ = 0);
 
-			bool Init();
-			void Use();
-			void Leave();
-			bool Load(std::string);
-			void LoadFromString(std::string vsc, std::string fsc, std::string gsc = "");
+    void SetFloat(std::string, GLfloat);
+    void SetInteger(std::string, GLint);
+    void SetTextureIndex(std::string, GLint);
+    void SetMatrix(std::string, GLfloat*);
+    void SetVector(std::string, glm::vec2);
+    void SetVector(std::string, glm::vec3);
+    void SetVector(std::string, glm::vec4);
+    void SetColor(std::string, Color);
+    void SetLight(std::string, UniformLight&);
 
-			void awake();
-			void update();
-			void exit();
+    GLenum GetTextureIndex(std::string);
 
-			GLuint GetProgram();
+    void SetMVP(GLfloat*);
+    void SetMV(GLfloat*);
+    void SetVP(GLfloat*);
+    void SetP(GLfloat*);
+    void SetV(GLfloat*);
+    void SetM(GLfloat*);
+    void SetRenderColor(Color);
 
-            void AddUniform(std::string name_, std::string var_, Uniform::Type type_, GLuint location_ = 0);
-            void AddUniform(std::string var_, Uniform::Type type_, GLuint location_ = 0);
-			void AddShaderUniform(std::string var_, Uniform::Type type_, GLuint location_ = 0);
-			void AddShaderUniform(std::string name_, std::string var_, Uniform::Type type_, GLuint location_ = 0);
+    void Enable(std::string var);
+    void Disable(std::string var);
 
-            void SetFloat(std::string, GLfloat);
-			void SetInteger(std::string, GLint);
-			void SetTextureIndex(std::string, GLint);
-			void SetMatrix(std::string, GLfloat*);
-			void SetVector(std::string, glm::vec2);
-			void SetVector(std::string, glm::vec3);
-			void SetVector(std::string, glm::vec4);
-			void SetColor(std::string, Color);
-			void SetLight(std::string, UniformLight&);
+protected:
+    // per override
+    virtual void Awake();
+    virtual void Update();
+    virtual void Exit();
 
-			GLenum GetTextureIndex(std::string);
+    std::string VertexShaderCode;
+    std::string FragmentShaderCode;
+    std::string GeometryShaderCode;
 
-			void SetMVP(GLfloat*);
-			void SetMV(GLfloat*);
-			void SetVP(GLfloat*);
-			void SetP(GLfloat*);
-			void SetV(GLfloat*);
-			void SetM(GLfloat*);
-			void SetRenderColor(Color);
+private:
+    GLuint programID = 0;
 
-			void Enable(std::string var);
-			void Disable(std::string var);
+    bool debug = true;
 
-		protected:
+    GLuint VertexShaderID;
+    GLuint FragmentShaderID;
+    GLuint GeometryShaderID;
 
-			// per override
-			virtual void Awake();
-			virtual void Update();
-			virtual void Exit();
+    bool loadWithName(std::string, std::string);
 
-			std::string VertexShaderCode;
-			std::string FragmentShaderCode;
-			std::string GeometryShaderCode;
+    bool compile();
+    bool link();
 
-		private:
+    bool shaderCompilationLog(const GLuint&);
+    bool programCompilationLog(const GLuint&);
+};
 
-			GLuint programID = 0;
-
-			bool debug = true;
-
-			GLuint VertexShaderID;
-			GLuint FragmentShaderID;
-			GLuint GeometryShaderID;
-
-			bool loadWithName(std::string, std::string);
-
-			bool compile();
-			bool link();
-
-			bool shaderCompilationLog(const GLuint&);
-			bool programCompilationLog(const GLuint&);
-
-	};
-
-}
+}  // namespace se

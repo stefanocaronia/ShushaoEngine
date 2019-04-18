@@ -1,15 +1,7 @@
 #pragma once
 
-#include <algorithm>
-#include <cmath>
-#include <glm/glm.hpp>
-#include <glm/gtx/quaternion.hpp>
-#include <iostream>
-#include <regex>
-#include <sstream>
-#include <string>
-#include <typeinfo>
-#include <vector>
+#include <math_.h>
+#include <std_.h>
 
 #define ts(str) util::toString(str)
 

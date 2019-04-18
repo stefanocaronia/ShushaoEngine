@@ -1,6 +1,3 @@
-#include <glm/glm.hpp>
-#include <string>
-
 #include "color.h"
 #include "utility.h"
 

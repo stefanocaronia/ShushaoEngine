@@ -3,8 +3,13 @@
 include .makefiles/settings.mk
 
 #Defauilt
+ifeq ($(PRECOMPILED_HEADERS),true)
+all: prebuild directories resources precomp | $(TARGET)
+	@echo -e $(CEND)$(CGREEN)$(BULLET)$(BUILD) Compilation and linking done! $(CEND)
+else
 all: prebuild directories resources | $(TARGET)
 	@echo -e $(CEND)$(CGREEN)$(BULLET)$(BUILD) Compilation and linking done! $(CEND)
+endif
 
 prebuild:
 	@echo -e $(CYELLOW)Building $(THIS_DIR) "("$(BUILD)")"$(CEND) "\n"
@@ -32,12 +37,29 @@ clean:
 	@echo -e $(CLBLUE)$(BULLET)Cleaning build $(CEND)
 	@$(RM) -rf obj/*
 	@$(RM) -rf bin/*
+	@$(RM) -f $(SRCDIR)/$(ENGINE)/$(GCHDIR)/*.gch
+	@$(RM) -f $(SRCDIR)/$(ENGINE)/$(GCHDIR)/*.d
 
 test:
 	@echo "SOURCES: " $(SOURCES)
 	@echo "RCSOURCES: " $(RCSOURCES)
 	@echo "OBJECTS: " $(OBJECTS)
 	@echo "RCFILES: " $(RCFILES)
+	@echo "TOPRECOMP: " $(TOPRECOMP)
+
+single:
+	@$(CC) $(COMFLAGS) $(INCDIRS) -c $(ENGINE)/$(FILE).$(SRCEXT) -o $(BUILDDIR)/$(ENGINE)/$(FILE).$(OBJEXT)
+
+precompstart:
+	@echo -e $(CLBLUE)$(BULLET)Precompiling headers $(CEND)$(CLCYAN)
+
+precomp: precompstart $(PRECOMP)
+	@echo -e $(CGREEN)$(BULLET)Precompilation done! $(CEND)
+
+#Pre-compiled headers
+$(PRECOMPILEDDIR)/%.$(GCHEXT): $(SRCDIR)/$(ENGINE)/$(GCHDIR)/%.h
+	@echo -e $(TAB)$(BULLET2)$< -\> $@
+	@$(CC) $(GCHFLAGS) $(INCDIRS) -c $< -o $@
 
 compilation:
 	@echo -e $(CLBLUE)$(BULLET)Compilation of $(N_SOURCES) sources$(CEND)$(CLCYAN)
@@ -57,6 +79,8 @@ $(TARGET): compilation
 	@$(CC) $(SHAREDFLAGS) -o $(TARGETDIR)/$(LIBTARGET) obj/$(BUILD)/$(ENGINE_RESFILE)
 	@echo -e $(CEND)$(CLBLUE)$(BULLET)Linking executable $(TARGET) $(CEND)
 	@$(CC) $(LNKFLAGS) -o $(TARGETDIR)/$(TARGET) $(OBJECTS) $(RCFILES) $(LIBDIRS) $(LIB)
+
+
 
 #Non-File Targets
 .PHONY: all prebuild release rebuild clean resources directories run debug test

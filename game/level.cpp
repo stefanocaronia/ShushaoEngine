@@ -11,10 +11,10 @@
 using namespace se;
 
 Level::Level() {
-    // testParticles();
-    // testSprites();
-    // testCoroutines();
-    testCanvas();
+    //testParticles();
+    testSprites();
+    //testCoroutines();
+    //testCanvas();
 }
 
 void Level::testParticles() {

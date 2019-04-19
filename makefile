@@ -66,6 +66,12 @@ single:
 precompstart:
 	@echo -e $(CLBLUE)$(BULLET)Precompiling headers $(CEND)$(CLCYAN)
 
+compileresources:
+	@echo -e $(CLBLUE)$(BULLET)Compiling resources $(CEND)$(CLCYAN)
+	@$(MD) -p obj/$(BUILD)/engine/resources
+	@echo -e $(TAB)$(BULLET2)$(ENGINE_RCFILE) -\> obj/$(BUILD)/$(ENGINE_RESFILE)
+	@$(RC) $(ENGINE_RCFILE) -o obj/$(BUILD)/$(ENGINE_RESFILE) --output-format=coff
+
 precomp: precompstart $(PRECOMP)
 #@echo -e $(CLPURPLE)$(BULLET)Precompiling headers done $(CEND)
 
@@ -88,8 +94,15 @@ debug: all
 	@echo -e $(CYELLOW)$(BULLET)Running Debug of $(TARGET) $(CEND)
 	@cd $(TARGETDIR) && $(DB) $(TARGET)
 
+
+#Compile rc files
+$(BUILDDIR)/%.$(RESEXT): $(SRCDIR)/%.$(RCEXT)
+	@echo -e $(TAB)$(BULLET2)$< -\> $@
+	@$(MD) -p $(dir $@)
+	@$(RC) $< -o $@ --output-format=coff
+
 # Link
-$(TARGET): compilation
+$(TARGET): compilation compileresources $(RCFILES)
 	@echo -e $(CEND)$(CLBLUE)$(BULLET)Creating resources library $(LIBTARGET) $(CEND)
 	@$(CC) $(SHAREDFLAGS) -o $(TARGETDIR)/$(LIBTARGET) obj/$(BUILD)/$(ENGINE_RESFILE)
 	@if $(COMPILE_STATIC_LIB); then $(CP) $(TARGETDIR)/$(LIBTARGET) $(TARGETLIBDIR)/; fi
@@ -99,7 +112,7 @@ $(TARGET): compilation
 	@$(CC) $(LNKFLAGS) -o $(TARGETDIR)/$(TARGET) $(OBJECTS) $(RCFILES) $(LIBDIRS) $(LIB)
 
 # Non-File Targets
-.PHONY: all prebuild release rebuild clean resources directories run debug test single precomp precompstart
+.PHONY: all prebuild release rebuild clean resources directories run debug test single precomp precompstart compileresources
 
 .NOTPARALLEL: all
 

@@ -13,7 +13,8 @@ class Transform;
 class Collision2D;
 class Collider2D;
 
-struct CompareComponent {
+class SHUSHAO_API CompareComponent {
+public:
     bool operator()(Component* A, Component* B) const;
 };
 

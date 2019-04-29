@@ -1,8 +1,6 @@
 # Directories
 bin/
 obj/
-lib/
-se/
 
 # vs
 *.user
@@ -19,14 +17,6 @@ se/
 *.depend
 *.cscope_file_list
 *.save-failed
-
-# Prerequisites
-*.d
-
-# Compiled Object files
-*.slo
-*.lo
-*.o
 
 # Precompiled Headers
 *.gch

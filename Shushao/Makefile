@@ -26,12 +26,14 @@ INCLUDES += -Isrc -Ivendor/SDL2/include/SDL2 -Ivendor/SDL2_image/include/SDL2 -I
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-LIBS += -lboost_context -lboost_coroutine -lglew32 -lmingw32 -lopengl32 -lgdi32 -lglu32 -lfreetype -lBox2D -lSDL2 -lSDL2main -lSDL2_image -lSDL2_mixer
+LIBS += -lboost_context -lboost_coroutine -lglew32 -lmingw32 -lopengl32 -lgdi32 -lglu32 -lfreetype -lBox2D -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer
 LDDEPS +=
 LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
 define PREBUILDCMDS
 endef
 define PRELINKCMDS
+endef
+define POSTBUILDCMDS
 endef
 
 ifeq ($(config),debug)
@@ -42,15 +44,6 @@ DEFINES += -DGLEW_STATIC -DSE_PLATFORM_WINDOWS -DSE_BUILD_DLL -DSE_DEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -g
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -g -std=c++17
 ALL_LDFLAGS += $(LDFLAGS) -Lvendor/boost/stage/lib -Lvendor/glew/lib -Lvendor/Box2D/lib -Lvendor/freetype/lib -Lvendor/SDL2/lib -Lvendor/SDL2_image/lib -Lvendor/SDL2_mixer/lib -L/usr/lib64 -m64 -shared -Wl,--out-implib="../bin/Debug-windows-x86_64/Shushao/libshushao.lib"
-define POSTBUILDCMDS
-	@echo Running postbuild commands
-	@IF NOT EXIST "..\bin\Debug-windows-x86_64\Game\" (mkdir "..\bin\Debug-windows-x86_64\Game\")
-	@IF EXIST ..\bin\Debug-windows-x86_64\Shushao\libshushao.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-windows-x86_64\Shushao\libshushao.dll "..\bin\Debug-windows-x86_64\Game\" > nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-windows-x86_64\Shushao\libshushao.dll "..\bin\Debug-windows-x86_64\Game\" > nul)
-	@IF EXIST vendor\SDL2\bin\SDL2.dll\ (xcopy /Q /E /Y /I vendor\SDL2\bin\SDL2.dll "..\bin\Debug-windows-x86_64\Game\" > nul) ELSE (xcopy /Q /Y /I vendor\SDL2\bin\SDL2.dll "..\bin\Debug-windows-x86_64\Game\" > nul)
-	@IF EXIST vendor\SDL2_image\bin\*.dll\ (xcopy /Q /E /Y /I vendor\SDL2_image\bin\*.dll "..\bin\Debug-windows-x86_64\Game\" > nul) ELSE (xcopy /Q /Y /I vendor\SDL2_image\bin\*.dll "..\bin\Debug-windows-x86_64\Game\" > nul)
-	@IF EXIST vendor\SDL2_mixer\bin\libogg-0.dll\ (xcopy /Q /E /Y /I vendor\SDL2_mixer\bin\libogg-0.dll "..\bin\Debug-windows-x86_64\Game\" > nul) ELSE (xcopy /Q /Y /I vendor\SDL2_mixer\bin\libogg-0.dll "..\bin\Debug-windows-x86_64\Game\" > nul)
-	@IF EXIST vendor\SDL2_mixer\bin\libmpg123-0.dll\ (xcopy /Q /E /Y /I vendor\SDL2_mixer\bin\libmpg123-0.dll "..\bin\Debug-windows-x86_64\Game\" > nul) ELSE (xcopy /Q /Y /I vendor\SDL2_mixer\bin\libmpg123-0.dll "..\bin\Debug-windows-x86_64\Game\" > nul)
-endef
 
 else ifeq ($(config),release)
 TARGETDIR = ../bin/Release-windows-x86_64/Shushao
@@ -60,15 +53,6 @@ DEFINES += -DGLEW_STATIC -DSE_PLATFORM_WINDOWS -DSE_BUILD_DLL -DSE_RELEASE
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -O2
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -O2 -std=c++17
 ALL_LDFLAGS += $(LDFLAGS) -Lvendor/boost/stage/lib -Lvendor/glew/lib -Lvendor/Box2D/lib -Lvendor/freetype/lib -Lvendor/SDL2/lib -Lvendor/SDL2_image/lib -Lvendor/SDL2_mixer/lib -L/usr/lib64 -m64 -shared -Wl,--out-implib="../bin/Release-windows-x86_64/Shushao/libshushao.lib" -s
-define POSTBUILDCMDS
-	@echo Running postbuild commands
-	@IF NOT EXIST "..\bin\Release-windows-x86_64\Game\" (mkdir "..\bin\Release-windows-x86_64\Game\")
-	@IF EXIST ..\bin\Release-windows-x86_64\Shushao\libshushao.dll\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\Shushao\libshushao.dll "..\bin\Release-windows-x86_64\Game\" > nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\Shushao\libshushao.dll "..\bin\Release-windows-x86_64\Game\" > nul)
-	@IF EXIST vendor\SDL2\bin\SDL2.dll\ (xcopy /Q /E /Y /I vendor\SDL2\bin\SDL2.dll "..\bin\Release-windows-x86_64\Game\" > nul) ELSE (xcopy /Q /Y /I vendor\SDL2\bin\SDL2.dll "..\bin\Release-windows-x86_64\Game\" > nul)
-	@IF EXIST vendor\SDL2_image\bin\*.dll\ (xcopy /Q /E /Y /I vendor\SDL2_image\bin\*.dll "..\bin\Release-windows-x86_64\Game\" > nul) ELSE (xcopy /Q /Y /I vendor\SDL2_image\bin\*.dll "..\bin\Release-windows-x86_64\Game\" > nul)
-	@IF EXIST vendor\SDL2_mixer\bin\libogg-0.dll\ (xcopy /Q /E /Y /I vendor\SDL2_mixer\bin\libogg-0.dll "..\bin\Release-windows-x86_64\Game\" > nul) ELSE (xcopy /Q /Y /I vendor\SDL2_mixer\bin\libogg-0.dll "..\bin\Release-windows-x86_64\Game\" > nul)
-	@IF EXIST vendor\SDL2_mixer\bin\libmpg123-0.dll\ (xcopy /Q /E /Y /I vendor\SDL2_mixer\bin\libmpg123-0.dll "..\bin\Release-windows-x86_64\Game\" > nul) ELSE (xcopy /Q /Y /I vendor\SDL2_mixer\bin\libmpg123-0.dll "..\bin\Release-windows-x86_64\Game\" > nul)
-endef
 
 else
   $(error "invalid configuration $(config)")

@@ -8,7 +8,14 @@ workspace "Shushao"
 	}
 
     outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+    Game = "Game"
     Engine = "Shushao"
+    cores = 8
+    gamebin = "../bin/" .. outputdir .. "/%{Game}/"
+    enginebin = "../bin/" .. outputdir .. "/%{Engine}/"
+
+    include "%{Engine}/vendor/GLFW"
+    include "%{Engine}/vendor/Glad"
 
 project "Shushao"
 	location "Shushao"
@@ -23,11 +30,11 @@ project "Shushao"
 	pchheader "sepch.h"
     pchsource "%{Engine}/src/sepch.cpp"
 
---   configuration { "gmake2" }
---       buildoptions {
---           "-static-libgcc",
---           "-static-libstdc++"
---       }
+    configuration { "gmake2" }
+        buildoptions {
+                --           "-static-libgcc",
+                --           "-static-libstdc++"
+        }
 
     files {
 		"%{prj.name}/src/**.h",
@@ -66,8 +73,8 @@ project "Shushao"
         "glu32",
         "freetype",
         "Box2D",
-        "SDL2",
         "SDL2main",
+        "SDL2",
         "SDL2_image",
         "SDL2_mixer",
     }
@@ -85,14 +92,7 @@ project "Shushao"
 			"SE_BUILD_DLL"
 		}
 
-		postbuildcommands {
-            ("@{MKDIR} \"../bin/" .. outputdir .. "/Game/\""),
-			("@{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Game/\""),
-			("@{COPY} vendor/SDL2/bin/SDL2.dll \"../bin/" .. outputdir .. "/Game/\""),
-			("@{COPY} vendor/SDL2_image/bin/*.dll \"../bin/" .. outputdir .. "/Game/\""),
-			("@{COPY} vendor/SDL2_mixer/bin/libogg-0.dll \"../bin/" .. outputdir .. "/Game/\""),
-			("@{COPY} vendor/SDL2_mixer/bin/libmpg123-0.dll \"../bin/" .. outputdir .. "/Game/\"")
-		}
+		postbuildcommands {}
 
 	filter "configurations:Debug"
 		defines "SE_DEBUG"
@@ -138,21 +138,35 @@ project "Game"
     libdirs {
 		"%{Engine}/vendor/SDL2/lib",
 		"%{Engine}/vendor/SDL2_image/lib",
-		"%{Engine}/vendor/SDL2_mixer/lib",
+        "%{Engine}/vendor/SDL2_mixer/lib",
+        "%{Engine}/vendor/Box2D/lib",
     }
 
 	links {
         Engine,
-        "SDL2",
-        "SDL2main",
         "mingw32",
+        "opengl32",
+        "gdi32",
+        "glu32",
+        "SDL2main",
+        "SDL2",
         "SDL2_image",
         "SDL2_mixer",
+        "Box2D",
     }
 
     prelinkcommands {
-        ("@{COPY} res \"../bin/" .. outputdir .. "/Game/\"")
+        ("@{COPY} res %{gamebin}"),
+        ("@{COPY} %{enginebin}/*.dll %{gamebin}"),
+		("@{COPY} ../%{Engine}/vendor/SDL2/bin/SDL2.dll %{gamebin}"),
+		("@{COPY} ../%{Engine}/vendor/SDL2_image/bin/*.dll %{gamebin}"),
+		("@{COPY} ../%{Engine}/vendor/SDL2_mixer/bin/SDL2_mixer.dll %{gamebin}"),
+		("@{COPY} ../%{Engine}/vendor/SDL2_mixer/bin/libogg-0.dll %{gamebin}"),
+		("@{COPY} ../%{Engine}/vendor/SDL2_mixer/bin/libmpg123-0.dll %{gamebin}")
     }
+
+    configuration { "gmake2" }
+        buildoptions {}
 
 	filter "system:windows"
 		cppdialect "C++17"

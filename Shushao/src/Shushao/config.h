@@ -39,8 +39,8 @@ namespace Physics {
     extern int SHUSHAO_API positionIterations;
 }  // namespace Physics
 
-extern se::LevelMap Layers;
-extern se::LevelMap SortingLayers;
+extern se::LevelMap SHUSHAO_API Layers;
+extern se::LevelMap SHUSHAO_API SortingLayers;
 
 extern std::map<std::string, std::string> data;
 extern bool SHUSHAO_API LoadUserConfig();

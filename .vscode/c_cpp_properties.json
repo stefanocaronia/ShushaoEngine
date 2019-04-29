@@ -8,14 +8,15 @@
             "intelliSenseMode": "gcc-x64",
             "includePath": [
                 "C:/bin/mingw64/mingw64/**",
-                "${workspaceFolder}/../../mingw-dev-libs/boost/*",
-                "${workspaceFolder}/../../mingw-dev-libs/glew/include/*",
-                "${workspaceFolder}/../../mingw-dev-libs/glm/*",
-                "${workspaceFolder}/../../mingw-dev-libs/SDL2/include/SDL2/*",
-                "${workspaceFolder}/../../mingw-dev-libs/SDL2_image/include/SDL2/*",
-                "${workspaceFolder}/../../mingw-dev-libs/SDL2_mixer/include/SDL2/*",
-                "${workspaceFolder}/../../mingw-dev-libs/Box2D/include/*",
-                "${workspaceFolder}/../../mingw-dev-libs/freetype/include/*"
+                "${workspaceFolder}/Shushao/src/*",
+                "${workspaceFolder}/Shushao/vendor/boost/*",
+                "${workspaceFolder}/Shushao/vendor/glew/include/*",
+                "${workspaceFolder}/Shushao/vendor/glm/*",
+                "${workspaceFolder}/Shushao/vendor/SDL2/include/SDL2/*",
+                "${workspaceFolder}/Shushao/vendor/SDL2_image/include/SDL2/*",
+                "${workspaceFolder}/Shushao/vendor/SDL2_mixer/include/SDL2/*",
+                "${workspaceFolder}/Shushao/vendor/Box2D/include/*",
+                "${workspaceFolder}/Shushao/vendor/freetype/include/*"
             ]
         }
     ],

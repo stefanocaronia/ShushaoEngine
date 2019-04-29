@@ -1,13 +1,20 @@
+# Directories
 bin/
 obj/
 lib/
 se/
 
+# vs
+*.user
+.vs/
+*.vcxproj
+*.filters
+*.sln
+
 # vscode
 .vscode/ipch
 
 # codeblocks
-
 *.layout
 *.depend
 *.cscope_file_list
@@ -24,26 +31,3 @@ se/
 # Precompiled Headers
 *.gch
 *.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-
-# eccezioni
-!/res/*.dll

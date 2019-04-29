@@ -58,7 +58,6 @@ LIBTARGET = libshushao.dll
 STATICLIB = libshushaos.a
 CORES = 8
 
-
 #PATHS
 BASE_LIBS	= ../../mingw-dev-libs
 

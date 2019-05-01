@@ -7,3 +7,6 @@
 [submodule "Shushao/vendor/spdlog"]
 	path = Shushao/vendor/spdlog
 	url = https://github.com/gabime/spdlog
+[submodule "Shushao/vendor/GLFW"]
+	path = Shushao/vendor/GLFW
+	url = https://github.com/stefanocaronia/glfw

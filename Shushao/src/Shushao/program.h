@@ -1,7 +1,7 @@
 #pragma once
 
 #include "component.h"
-#include "core.h"
+#include "Core.h"
 
 namespace se {
 

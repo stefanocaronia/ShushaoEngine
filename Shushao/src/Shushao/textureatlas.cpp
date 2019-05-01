@@ -1,7 +1,7 @@
 #include "pch/math.h"
 
 #include "debug.h"
-#include "core.h"
+#include "Core.h"
 #include "textureatlas.h"
 
 namespace se {

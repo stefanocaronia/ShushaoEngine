@@ -2,7 +2,7 @@
 #include "pch/sdl.h"
 #include "pch/std.h"
 
-#include "cycle.h"
+#include "Application.h"
 #include "debug.h"
 #include "glmanager.h"
 #include "input.h"

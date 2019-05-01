@@ -1,0 +1,9 @@
+SDL2 2.0.9
+SDL2_image 2.0.4
+SDL2_mixer 2.0.4
+SDL2_ttf 2.0.4
+freetype 2.9
+Box2D ???
+Glew 1.13.0
+GLM 0.9.9.5
+boost 1.69

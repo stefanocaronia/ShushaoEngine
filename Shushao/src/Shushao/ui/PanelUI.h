@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../core.h"
+#include "../Core.h"
 #include "../transform.h"
 
 #include "ImageUI.h"

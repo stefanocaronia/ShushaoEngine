@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core.h"
+#include "Core.h"
 
 #undef ERROR
 #undef InvokeMethod

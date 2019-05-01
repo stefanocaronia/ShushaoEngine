@@ -1,8 +1,8 @@
 #pragma once
 
-#include "core.h"
+#include "Core.h"
 
-#include "core.h"
+#include "Core.h"
 #include "rect.h"
 #include "transform.h"
 

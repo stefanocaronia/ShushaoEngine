@@ -10,7 +10,7 @@
                 "kind": "build",
                 "isDefault": true
             },
-            "command": "mingw32-make", //  -Oline
+            "command": "mingw32-make -j 8",
             "presentation": {
                 "clear": true
             }
@@ -19,7 +19,7 @@
             "label": "Build Release",
             "type": "shell",
             "group": "build",
-            "command": "mingw32-make BUILD=Release",
+            "command": "mingw32-make config=Release",
             "problemMatcher": [],
             "presentation": {
                 "clear": true
@@ -29,7 +29,7 @@
             "label": "Rebuild",
             "type": "shell",
             "group": "build",
-            "command": "mingw32-make rebuild",
+            "command": "mingw32-make clean && mingw32-make -j 8",
             //"command": "mingw32-make clean && mingw32-make",
             "presentation": {
                 "clear": true
@@ -42,7 +42,7 @@
                 "kind": "test",
                 "isDefault": true
             },
-            "command": "mingw32-make run",
+            "command": "mingw32-make -j 8 && cd bin/Debug-windows-x86_64/Game &&./Game.exe",
             "presentation": {
                 "clear": true
             }
@@ -51,7 +51,7 @@
             "label": "Run",
             "type": "shell",
             "group": "test",
-            "command": "cd bin/Debug && ./Game.exe",
+            "command": "cd bin/Debug-windows-x86_64/Game &&./Game.exe",
             "presentation": {
                 "clear": true
             }

@@ -9,10 +9,14 @@ ifndef verbose
 endif
 
 ifeq ($(config),debug)
+  GLFW_config = debug
+  Glad_config = debug
   Shushao_config = debug
   Game_config = debug
 
 else ifeq ($(config),release)
+  GLFW_config = release
+  Glad_config = release
   Shushao_config = release
   Game_config = release
 
@@ -20,13 +24,25 @@ else
   $(error "invalid configuration $(config)")
 endif
 
-PROJECTS := Shushao Game
+PROJECTS := GLFW Glad Shushao Game
 
 .PHONY: all clean help $(PROJECTS) 
 
 all: $(PROJECTS)
 
-Shushao:
+GLFW:
+ifneq (,$(GLFW_config))
+	@echo "==== Building GLFW ($(GLFW_config)) ===="
+	@${MAKE} --no-print-directory -C Shushao/vendor/GLFW -f Makefile config=$(GLFW_config)
+endif
+
+Glad:
+ifneq (,$(Glad_config))
+	@echo "==== Building Glad ($(Glad_config)) ===="
+	@${MAKE} --no-print-directory -C Shushao/vendor/Glad -f Makefile config=$(Glad_config)
+endif
+
+Shushao: GLFW Glad
 ifneq (,$(Shushao_config))
 	@echo "==== Building Shushao ($(Shushao_config)) ===="
 	@${MAKE} --no-print-directory -C Shushao -f Makefile config=$(Shushao_config)
@@ -39,6 +55,8 @@ ifneq (,$(Game_config))
 endif
 
 clean:
+	@${MAKE} --no-print-directory -C Shushao/vendor/GLFW -f Makefile clean
+	@${MAKE} --no-print-directory -C Shushao/vendor/Glad -f Makefile clean
 	@${MAKE} --no-print-directory -C Shushao -f Makefile clean
 	@${MAKE} --no-print-directory -C Game -f Makefile clean
 
@@ -52,6 +70,8 @@ help:
 	@echo "TARGETS:"
 	@echo "   all (default)"
 	@echo "   clean"
+	@echo "   GLFW"
+	@echo "   Glad"
 	@echo "   Shushao"
 	@echo "   Game"
 	@echo ""

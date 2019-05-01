@@ -1,6 +1,6 @@
 #ifndef GCH_OPENGL
 #define GCH_OPENGL
 
-#include <GL/glew.h>
+#include <glad/glad.h>
 
 #endif

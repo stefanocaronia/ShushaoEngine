@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core.h"
+#include "Core.h"
 #include "rect.h"
 #include "sprite.h"
 #include "texture.h"

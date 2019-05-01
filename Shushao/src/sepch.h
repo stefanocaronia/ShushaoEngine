@@ -1,8 +1,8 @@
 #ifndef GCH
 #define GCH
 
+#include "pch/Core.h"
 #include "pch/boost.h"
-#include "pch/core.h"
 #include "pch/freetype.h"
 #include "pch/math.h"
 #include "pch/opengl.h"

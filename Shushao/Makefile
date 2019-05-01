@@ -22,12 +22,10 @@ RESCOMP = windres
 PCH = src/sepch.h
 PCH_PLACEHOLDER = $(OBJDIR)/$(notdir $(PCH))
 GCH = $(PCH_PLACEHOLDER).gch
-INCLUDES += -Isrc -Ivendor/SDL2/include/SDL2 -Ivendor/SDL2_image/include/SDL2 -Ivendor/SDL2_mixer/include/SDL2 -Ivendor/glm -Ivendor/boost -Ivendor/glew/include -Ivendor/Box2D/include -Ivendor/freetype/include
+INCLUDES += -Isrc -Ivendor/spdlog/include -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/imgui -Ivendor/glm -Ivendor/glew/include -Ivendor/boost -Ivendor/Box2D/include -Ivendor/freetype/include -Ivendor/SDL2/include/SDL2 -Ivendor/SDL2_image/include/SDL2 -Ivendor/SDL2_mixer/include/SDL2
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-LIBS += -lboost_context -lboost_coroutine -lglew32 -lmingw32 -lopengl32 -lgdi32 -lglu32 -lfreetype -lBox2D -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer
-LDDEPS +=
 LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
 define PREBUILDCMDS
 endef
@@ -40,19 +38,23 @@ ifeq ($(config),debug)
 TARGETDIR = ../bin/Debug-windows-x86_64/Shushao
 TARGET = $(TARGETDIR)/libshushao.dll
 OBJDIR = ../obj/Debug-windows-x86_64/Shushao
-DEFINES += -DGLEW_STATIC -DSE_PLATFORM_WINDOWS -DSE_BUILD_DLL -DSE_DEBUG
+DEFINES += -DGLEW_STATIC -DSE_PLATFORM_WINDOWS -DSE_BUILD_DLL -DGLFW_INCLUDE_NONE -DSE_DEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -g
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -g -std=c++17
-ALL_LDFLAGS += $(LDFLAGS) -Lvendor/boost/stage/lib -Lvendor/glew/lib -Lvendor/Box2D/lib -Lvendor/freetype/lib -Lvendor/SDL2/lib -Lvendor/SDL2_image/lib -Lvendor/SDL2_mixer/lib -L/usr/lib64 -m64 -shared -Wl,--out-implib="../bin/Debug-windows-x86_64/Shushao/libshushao.lib"
+LIBS += vendor/GLFW/bin/Debug-windows-x86_64/GLFW/GLFW.lib vendor/Glad/bin/Debug-windows-x86_64/Glad/Glad.lib -lboost_context -lboost_coroutine -lopengl32 -lglew32 -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lfreetype -lBox2D -lImGui
+LDDEPS += vendor/GLFW/bin/Debug-windows-x86_64/GLFW/GLFW.lib vendor/Glad/bin/Debug-windows-x86_64/Glad/Glad.lib
+ALL_LDFLAGS += $(LDFLAGS) -Lvendor/boost/stage/lib -Lvendor/Box2D/lib -Lvendor/freetype/lib -Lvendor/SDL2/lib -Lvendor/SDL2_image/lib -Lvendor/SDL2_mixer/lib -L/usr/lib64 -m64 -shared -Wl,--out-implib="../bin/Debug-windows-x86_64/Shushao/libshushao.lib"
 
 else ifeq ($(config),release)
 TARGETDIR = ../bin/Release-windows-x86_64/Shushao
 TARGET = $(TARGETDIR)/libshushao.dll
 OBJDIR = ../obj/Release-windows-x86_64/Shushao
-DEFINES += -DGLEW_STATIC -DSE_PLATFORM_WINDOWS -DSE_BUILD_DLL -DSE_RELEASE
+DEFINES += -DGLEW_STATIC -DSE_PLATFORM_WINDOWS -DSE_BUILD_DLL -DGLFW_INCLUDE_NONE -DSE_RELEASE
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -O2
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -O2 -std=c++17
-ALL_LDFLAGS += $(LDFLAGS) -Lvendor/boost/stage/lib -Lvendor/glew/lib -Lvendor/Box2D/lib -Lvendor/freetype/lib -Lvendor/SDL2/lib -Lvendor/SDL2_image/lib -Lvendor/SDL2_mixer/lib -L/usr/lib64 -m64 -shared -Wl,--out-implib="../bin/Release-windows-x86_64/Shushao/libshushao.lib" -s
+LIBS += vendor/GLFW/bin/Release-windows-x86_64/GLFW/GLFW.lib vendor/Glad/bin/Release-windows-x86_64/Glad/Glad.lib -lboost_context -lboost_coroutine -lopengl32 -lglew32 -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lfreetype -lBox2D -lImGui
+LDDEPS += vendor/GLFW/bin/Release-windows-x86_64/GLFW/GLFW.lib vendor/Glad/bin/Release-windows-x86_64/Glad/Glad.lib
+ALL_LDFLAGS += $(LDFLAGS) -Lvendor/boost/stage/lib -Lvendor/Box2D/lib -Lvendor/freetype/lib -Lvendor/SDL2/lib -Lvendor/SDL2_image/lib -Lvendor/SDL2_mixer/lib -L/usr/lib64 -m64 -shared -Wl,--out-implib="../bin/Release-windows-x86_64/Shushao/libshushao.lib" -s
 
 else
   $(error "invalid configuration $(config)")
@@ -67,11 +69,14 @@ endif
 
 OBJECTS :=
 
+OBJECTS += $(OBJDIR)/Application.o
 OBJECTS += $(OBJDIR)/CanvasUI.o
 OBJECTS += $(OBJDIR)/ImageUI.o
 OBJECTS += $(OBJDIR)/PanelUI.o
 OBJECTS += $(OBJDIR)/RawImageUI.o
 OBJECTS += $(OBJDIR)/TextUI.o
+OBJECTS += $(OBJDIR)/WindowsInput.o
+OBJECTS += $(OBJDIR)/WindowsWindow.o
 OBJECTS += $(OBJDIR)/animation.o
 OBJECTS += $(OBJDIR)/audio.o
 OBJECTS += $(OBJDIR)/baseshader.o
@@ -83,7 +88,6 @@ OBJECTS += $(OBJDIR)/component.o
 OBJECTS += $(OBJDIR)/config.o
 OBJECTS += $(OBJDIR)/coroutineholder.o
 OBJECTS += $(OBJDIR)/curve.o
-OBJECTS += $(OBJDIR)/cycle.o
 OBJECTS += $(OBJDIR)/debug.o
 OBJECTS += $(OBJDIR)/debuggrid.o
 OBJECTS += $(OBJDIR)/debuginfo.o
@@ -203,6 +207,15 @@ endif
 # File Rules
 # #############################################
 
+$(OBJDIR)/WindowsInput.o: src/Platform/Windows/WindowsInput.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/WindowsWindow.o: src/Platform/Windows/WindowsWindow.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/Application.o: src/Shushao/Application.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/animation.o: src/Shushao/animation.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
@@ -228,9 +241,6 @@ $(OBJDIR)/coroutineholder.o: src/Shushao/coroutineholder.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/curve.o: src/Shushao/curve.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/cycle.o: src/Shushao/cycle.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/debug.o: src/Shushao/debug.cpp

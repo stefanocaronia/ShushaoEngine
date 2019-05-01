@@ -1,6 +1,7 @@
 #pragma once
 
-#include "core.h"
+#include "Core.h"
+#include "Window.h"
 
 namespace se {
 
@@ -8,8 +9,9 @@ class SHUSHAO_API GLManager {
 public:
     static SDL_GLContext gContext;
     static SDL_Window* gWindow;
-    static SDL_Renderer* gRenderer;
     static FT_Library lFreetype;
+
+    static std::unique_ptr<Window> window;
 
     static bool fullscreen;
     static bool ready;

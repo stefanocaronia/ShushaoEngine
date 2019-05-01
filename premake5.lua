@@ -5,7 +5,11 @@ workspace "Shushao"
 	configurations {
 		"Debug",
 		"Release"
-	}
+    }
+
+    rebuildcommands {
+        "make %{cfg.buildcfg} rebuild"
+    }
 
     outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
     Game = "Game"
@@ -14,8 +18,8 @@ workspace "Shushao"
     gamebin = "../bin/" .. outputdir .. "/%{Game}/"
     enginebin = "../bin/" .. outputdir .. "/%{Engine}/"
 
-    include "%{Engine}/vendor/GLFW"
-    include "%{Engine}/vendor/Glad"
+    include "Shushao/vendor/GLFW"
+    include "Shushao/vendor/Glad"
 
 project "Shushao"
 	location "Shushao"
@@ -32,55 +36,57 @@ project "Shushao"
 
     configuration { "gmake2" }
         buildoptions {
-                --           "-static-libgcc",
-                --           "-static-libstdc++"
+            -- "-static-libgcc",
+            -- "-static-libstdc++"
         }
 
     files {
 		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
+        "%{prj.name}/src/**.cpp",
+        "%{prj.name}/vendor/glm/glm/**.hpp",
+		"%{prj.name}/vendor/glm/glm/**.inl",
 	}
 
     includedirs {
-		"%{prj.name}/src",
-		"%{prj.name}/vendor/SDL2/include/SDL2",
-		"%{prj.name}/vendor/SDL2_image/include/SDL2",
-		"%{prj.name}/vendor/SDL2_mixer/include/SDL2",
+        "%{prj.name}/src",
+        "%{prj.name}/vendor/spdlog/include",
+		"%{prj.name}/vendor/GLFW/include",
+		"%{prj.name}/vendor/Glad/include",
 		"%{prj.name}/vendor/glm",
 		"%{prj.name}/vendor/boost",
-		"%{prj.name}/vendor/glew/include",
 		"%{prj.name}/vendor/Box2D/include",
-		"%{prj.name}/vendor/freetype/include"
+		"%{prj.name}/vendor/freetype/include",
+		"%{prj.name}/vendor/SDL2/include/SDL2",
+		"%{prj.name}/vendor/SDL2_image/include/SDL2",
+		"%{prj.name}/vendor/SDL2_mixer/include/SDL2"
     }
 
     libdirs {
 		"%{prj.name}/vendor/boost/stage/lib",
-		"%{prj.name}/vendor/glew/lib",
 		"%{prj.name}/vendor/Box2D/lib",
 		"%{prj.name}/vendor/freetype/lib",
-		"%{Engine}/vendor/SDL2/lib",
-		"%{Engine}/vendor/SDL2_image/lib",
-		"%{Engine}/vendor/SDL2_mixer/lib",
+		"%{prj.name}/vendor/SDL2/lib",
+		"%{prj.name}/vendor/SDL2_image/lib",
+		"%{prj.name}/vendor/SDL2_mixer/lib"
     }
 
     links {
         "boost_context",
         "boost_coroutine",
-        "glew32",
         "mingw32",
         "opengl32",
-        "gdi32",
-        "glu32",
-        "freetype",
-        "Box2D",
+        "mingw32",
         "SDL2main",
         "SDL2",
         "SDL2_image",
         "SDL2_mixer",
+        "freetype",
+        "Box2D",
+        "GLFW",
+		"Glad"
     }
 
     defines {
-        "GLEW_STATIC",
     }
 
 	filter "system:windows"
@@ -89,7 +95,8 @@ project "Shushao"
 
 		defines {
 			"SE_PLATFORM_WINDOWS",
-			"SE_BUILD_DLL"
+			"SE_BUILD_DLL",
+			"GLFW_INCLUDE_NONE"
 		}
 
 		postbuildcommands {}
@@ -125,34 +132,16 @@ project "Game"
 
 	includedirs {
         "%{Engine}/src",
-        "%{Engine}/vendor/SDL2/include/SDL2",
-		"%{Engine}/vendor/SDL2_image/include/SDL2",
-		"%{Engine}/vendor/SDL2_mixer/include/SDL2",
-		"%{Engine}/vendor/glm",
+        "%{Engine}/vendor/spdlog/include",
+        "%{Engine}/vendor",
+        "%{Engine}/vendor/glm",
 		"%{Engine}/vendor/boost",
 		"%{Engine}/vendor/Box2D/include",
 		"%{Engine}/vendor/freetype/include",
-		"%{Engine}/vendor/glew/include"
-    }
-
-    libdirs {
-		"%{Engine}/vendor/SDL2/lib",
-		"%{Engine}/vendor/SDL2_image/lib",
-        "%{Engine}/vendor/SDL2_mixer/lib",
-        "%{Engine}/vendor/Box2D/lib",
     }
 
 	links {
-        Engine,
-        "mingw32",
-        "opengl32",
-        "gdi32",
-        "glu32",
-        "SDL2main",
-        "SDL2",
-        "SDL2_image",
-        "SDL2_mixer",
-        "Box2D",
+        Engine
     }
 
     prelinkcommands {

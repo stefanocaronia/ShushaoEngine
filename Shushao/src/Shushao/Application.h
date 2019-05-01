@@ -1,12 +1,13 @@
 #pragma once
 
-#include "core.h"
-
+#include "Core.h"
+#include "Window.h"
+#include "events/ApplicationEvent.h"
 #include "scenemanager.h"
 
 namespace se {
 
-class SHUSHAO_API Cycle {
+class SHUSHAO_API Application {
 public:
     enum class Stage {
         INIT,
@@ -16,17 +17,20 @@ public:
         EXIT
     };
 
-    Cycle();
-    ~Cycle();
+    Application();
+    virtual ~Application();
 
     std::string name;
 
-    bool init();
-    void run();
-    void stop();
+    bool Init();
+    void Run();
+    void Stop();
+
+    inline static Application& Get() { return *instance; }
+
+    void OnEvent(Event& e);
 
 protected:
-    // pure virtual (devo implementare x forza)
     virtual void Awake(){};
     virtual void Start(){};
     virtual void GetInput(){};
@@ -51,7 +55,13 @@ private:
     void render();
     void fixed();
     void exit();
-};
-}  // namespace se
 
-extern se::Cycle* GAME;
+    bool OnWindowClose(WindowCloseEvent& e);
+
+    static Application* instance;
+};
+
+// To be defined in CLIENT
+Application* CreateApplication();
+
+}  // namespace se

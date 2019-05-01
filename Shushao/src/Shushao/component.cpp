@@ -1,5 +1,5 @@
 #include "component.h"
-#include "cycle.h"
+#include "Application.h"
 #include "debug.h"
 #include "entity.h"
 #include "gamedata.h"

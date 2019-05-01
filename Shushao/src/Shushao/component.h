@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core.h"
+#include "Core.h"
 
 #include "coroutineholder.h"
 #include "object.h"
@@ -58,7 +58,7 @@ public:
     void InvokeMethod(std::string methodName);  // Calls the method named methodName on every MonoBehaviour in this game object.
     void InvokeMethodUpwards(std::string methodName);  // Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour.
 
-    // void run(Cycle::Stage stage);
+    // void run(Applications::Stage stage);
     virtual void call(std::string method);
 
     virtual void ReceiveMessage(std::string methodName, Object& parameter);

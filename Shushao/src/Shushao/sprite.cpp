@@ -1,7 +1,7 @@
 #include "pch/std.h"
 
 #include "debug.h"
-#include "core.h"
+#include "Core.h"
 #include "rect.h"
 #include "shaders/shader.h"
 #include "sprite.h"

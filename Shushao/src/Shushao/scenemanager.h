@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core.h"
+#include "Core.h"
 
 #include "gamedata.h"
 #include "scene.h"
@@ -8,7 +8,7 @@
 
 namespace se {
 
-//class Cycle;
+//class Application;
 
 class SHUSHAO_API SceneManager {
 public:

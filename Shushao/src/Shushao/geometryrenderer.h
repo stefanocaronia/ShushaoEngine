@@ -1,10 +1,10 @@
 #pragma once
 
-#include "core.h"
+#include "Core.h"
 
 #include "color.h"
 #include "design.h"
-#include "core.h"
+#include "Core.h"
 #include "renderer.h"
 #include "vao.h"
 

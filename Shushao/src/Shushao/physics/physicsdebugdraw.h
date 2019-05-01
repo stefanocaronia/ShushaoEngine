@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../core.h"
+#include "../Core.h"
 
 #include "../shaders/shader.h"
 #include "../vao.h"

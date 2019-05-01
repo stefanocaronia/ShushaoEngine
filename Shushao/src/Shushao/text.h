@@ -1,10 +1,10 @@
 #pragma once
 
-#include "core.h"
+#include "Core.h"
 
 #include "color.h"
 #include "config.h"
-#include "core.h"
+#include "Core.h"
 #include "rect.h"
 #include "renderer.h"
 

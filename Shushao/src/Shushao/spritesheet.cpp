@@ -2,7 +2,7 @@
 #include "resources.h"
 #include "textureatlas.h"
 #include "rect.h"
-#include "core.h"
+#include "Core.h"
 #include "utility.h"
 
 namespace se {

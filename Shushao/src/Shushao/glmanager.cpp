@@ -1,14 +1,16 @@
-#include "pch/freetype.h"
-#include "pch/opengl.h"
-#include "pch/sdl.h"
-#include "pch/std.h"
-
-#include "config.h"
 #include "glmanager.h"
+#include "Application.h"
+#include "config.h"
+#include "inputinterface.h"
 
 namespace se {
 
+#define BIND_EVENT_FN(x) std::bind(&Application::x, self, std::placeholders::_1)
+
 bool GLManager::Init(std::string title, bool fs) {
+    window = std::unique_ptr<Window>(Window::Create());
+    // window->SetEventCallback(BIND_EVENT_FN(OnEvent));  // TODO: stavolta è static, questa cosa non funziona
+
     fullscreen = fs;
 
     WIDTH = Config::displayWidth;
@@ -50,8 +52,8 @@ bool GLManager::Init(std::string title, bool fs) {
     SDL_GL_MakeCurrent(gWindow, gContext);
 
     // Init GLEW
-    glewExperimental = GL_TRUE;
-    glewInit();
+    // glewExperimental = GL_TRUE;
+    // glewInit();
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -77,15 +79,15 @@ bool GLManager::Init(std::string title, bool fs) {
 }
 
 void GLManager::Update() {
+    window->OnUpdate();
     VIEWPORT = {(float)Config::displayWidth / (Config::pixelPerUnit / 2), (float)Config::displayHeight / (Config::pixelPerUnit / 2)};
     ASPECT = (float)WIDTH / (float)HEIGHT;
 }
 
 void GLManager::Quit() {
-    //SDL_DestroyRenderer(gRenderer);
-    SDL_DestroyWindow(gWindow);
-    gWindow = NULL;
-    SDL_GL_DeleteContext(gContext);
+    // SDL_DestroyWindow(gWindow);
+    // gWindow = NULL;
+    // SDL_GL_DeleteContext(gContext);
     Mix_CloseAudio();
     Mix_Quit();
     SDL_Quit();
@@ -123,14 +125,13 @@ void GLManager::Swap() {
 
 void GLManager::Reset() {
     Clear();
-    glLoadIdentity();
+    // glLoadIdentity(); // old pipeline
 }
 
 // inizialize static properties
 
 SDL_GLContext GLManager::gContext;
 SDL_Window* GLManager::gWindow;
-SDL_Renderer* GLManager::gRenderer;
 FT_Library GLManager::lFreetype = nullptr;
 
 bool GLManager::fullscreen = false;

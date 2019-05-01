@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core.h"
+#include "Core.h"
 
 #include "resource.h"
 #include "resources/resources.h"

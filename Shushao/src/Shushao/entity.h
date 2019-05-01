@@ -1,10 +1,10 @@
 #pragma once
 
-#include "core.h"
+#include "Core.h"
 
 #include "canvas.h"
 #include "component.h"
-#include "core.h"
+#include "Core.h"
 #include "object.h"
 #include "renderer.h"
 #include "utility.h"

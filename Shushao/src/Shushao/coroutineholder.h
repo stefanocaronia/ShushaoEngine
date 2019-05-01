@@ -4,7 +4,7 @@
     Credits: https://github.com/exawon/CoroBehaviour
 */
 
-#include "core.h"
+#include "Core.h"
 
 #include "coroutine.h"
 

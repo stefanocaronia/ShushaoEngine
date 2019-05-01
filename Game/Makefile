@@ -19,7 +19,7 @@ endif
 # #############################################
 
 RESCOMP = windres
-INCLUDES += -I../Shushao/src -I../Shushao/vendor/SDL2/include/SDL2 -I../Shushao/vendor/SDL2_image/include/SDL2 -I../Shushao/vendor/SDL2_mixer/include/SDL2 -I../Shushao/vendor/glm -I../Shushao/vendor/boost -I../Shushao/vendor/Box2D/include -I../Shushao/vendor/freetype/include -I../Shushao/vendor/glew/include
+INCLUDES += -I../Shushao/src -I../Shushao/vendor/spdlog/include -I../Shushao/vendor -I../Shushao/vendor/glm -I../Shushao/vendor/boost -I../Shushao/vendor/Box2D/include -I../Shushao/vendor/freetype/include
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
@@ -36,15 +36,16 @@ OBJDIR = ../obj/Debug-windows-x86_64/Game
 DEFINES += -DSE_PLATFORM_WINDOWS -DSE_DEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -g
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -g -std=c++17
-LIBS += ../bin/Debug-windows-x86_64/Shushao/libshushao.lib -lmingw32 -lopengl32 -lgdi32 -lglu32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lBox2D
+LIBS += ../bin/Debug-windows-x86_64/Shushao/libshushao.lib
 LDDEPS += ../bin/Debug-windows-x86_64/Shushao/libshushao.lib
-ALL_LDFLAGS += $(LDFLAGS) -L../Shushao/vendor/SDL2/lib -L../Shushao/vendor/SDL2_image/lib -L../Shushao/vendor/SDL2_mixer/lib -L../Shushao/vendor/Box2D/lib -L/usr/lib64 -m64
+ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -m64
 define PRELINKCMDS
 	@echo Running prelink commands
 	@IF EXIST res\ (xcopy /Q /E /Y /I res ..\bin\Debug-windows-x86_64\Game > nul) ELSE (xcopy /Q /Y /I res ..\bin\Debug-windows-x86_64\Game > nul)
 	@IF EXIST ..\bin\Debug-windows-x86_64\Shushao\*.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-windows-x86_64\Shushao\*.dll ..\bin\Debug-windows-x86_64\Game > nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-windows-x86_64\Shushao\*.dll ..\bin\Debug-windows-x86_64\Game > nul)
 	@IF EXIST ..\Shushao\vendor\SDL2\bin\SDL2.dll\ (xcopy /Q /E /Y /I ..\Shushao\vendor\SDL2\bin\SDL2.dll ..\bin\Debug-windows-x86_64\Game > nul) ELSE (xcopy /Q /Y /I ..\Shushao\vendor\SDL2\bin\SDL2.dll ..\bin\Debug-windows-x86_64\Game > nul)
 	@IF EXIST ..\Shushao\vendor\SDL2_image\bin\*.dll\ (xcopy /Q /E /Y /I ..\Shushao\vendor\SDL2_image\bin\*.dll ..\bin\Debug-windows-x86_64\Game > nul) ELSE (xcopy /Q /Y /I ..\Shushao\vendor\SDL2_image\bin\*.dll ..\bin\Debug-windows-x86_64\Game > nul)
+	@IF EXIST ..\Shushao\vendor\SDL2_mixer\bin\SDL2_mixer.dll\ (xcopy /Q /E /Y /I ..\Shushao\vendor\SDL2_mixer\bin\SDL2_mixer.dll ..\bin\Debug-windows-x86_64\Game > nul) ELSE (xcopy /Q /Y /I ..\Shushao\vendor\SDL2_mixer\bin\SDL2_mixer.dll ..\bin\Debug-windows-x86_64\Game > nul)
 	@IF EXIST ..\Shushao\vendor\SDL2_mixer\bin\libogg-0.dll\ (xcopy /Q /E /Y /I ..\Shushao\vendor\SDL2_mixer\bin\libogg-0.dll ..\bin\Debug-windows-x86_64\Game > nul) ELSE (xcopy /Q /Y /I ..\Shushao\vendor\SDL2_mixer\bin\libogg-0.dll ..\bin\Debug-windows-x86_64\Game > nul)
 	@IF EXIST ..\Shushao\vendor\SDL2_mixer\bin\libmpg123-0.dll\ (xcopy /Q /E /Y /I ..\Shushao\vendor\SDL2_mixer\bin\libmpg123-0.dll ..\bin\Debug-windows-x86_64\Game > nul) ELSE (xcopy /Q /Y /I ..\Shushao\vendor\SDL2_mixer\bin\libmpg123-0.dll ..\bin\Debug-windows-x86_64\Game > nul)
 endef
@@ -56,15 +57,16 @@ OBJDIR = ../obj/Release-windows-x86_64/Game
 DEFINES += -DSE_PLATFORM_WINDOWS -DSE_RELEASE
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -O2
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -O2 -std=c++17
-LIBS += ../bin/Release-windows-x86_64/Shushao/libshushao.lib -lmingw32 -lopengl32 -lgdi32 -lglu32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lBox2D
+LIBS += ../bin/Release-windows-x86_64/Shushao/libshushao.lib
 LDDEPS += ../bin/Release-windows-x86_64/Shushao/libshushao.lib
-ALL_LDFLAGS += $(LDFLAGS) -L../Shushao/vendor/SDL2/lib -L../Shushao/vendor/SDL2_image/lib -L../Shushao/vendor/SDL2_mixer/lib -L../Shushao/vendor/Box2D/lib -L/usr/lib64 -m64 -s
+ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -m64 -s
 define PRELINKCMDS
 	@echo Running prelink commands
 	@IF EXIST res\ (xcopy /Q /E /Y /I res ..\bin\Release-windows-x86_64\Game > nul) ELSE (xcopy /Q /Y /I res ..\bin\Release-windows-x86_64\Game > nul)
 	@IF EXIST ..\bin\Release-windows-x86_64\Shushao\*.dll\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\Shushao\*.dll ..\bin\Release-windows-x86_64\Game > nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\Shushao\*.dll ..\bin\Release-windows-x86_64\Game > nul)
 	@IF EXIST ..\Shushao\vendor\SDL2\bin\SDL2.dll\ (xcopy /Q /E /Y /I ..\Shushao\vendor\SDL2\bin\SDL2.dll ..\bin\Release-windows-x86_64\Game > nul) ELSE (xcopy /Q /Y /I ..\Shushao\vendor\SDL2\bin\SDL2.dll ..\bin\Release-windows-x86_64\Game > nul)
 	@IF EXIST ..\Shushao\vendor\SDL2_image\bin\*.dll\ (xcopy /Q /E /Y /I ..\Shushao\vendor\SDL2_image\bin\*.dll ..\bin\Release-windows-x86_64\Game > nul) ELSE (xcopy /Q /Y /I ..\Shushao\vendor\SDL2_image\bin\*.dll ..\bin\Release-windows-x86_64\Game > nul)
+	@IF EXIST ..\Shushao\vendor\SDL2_mixer\bin\SDL2_mixer.dll\ (xcopy /Q /E /Y /I ..\Shushao\vendor\SDL2_mixer\bin\SDL2_mixer.dll ..\bin\Release-windows-x86_64\Game > nul) ELSE (xcopy /Q /Y /I ..\Shushao\vendor\SDL2_mixer\bin\SDL2_mixer.dll ..\bin\Release-windows-x86_64\Game > nul)
 	@IF EXIST ..\Shushao\vendor\SDL2_mixer\bin\libogg-0.dll\ (xcopy /Q /E /Y /I ..\Shushao\vendor\SDL2_mixer\bin\libogg-0.dll ..\bin\Release-windows-x86_64\Game > nul) ELSE (xcopy /Q /Y /I ..\Shushao\vendor\SDL2_mixer\bin\libogg-0.dll ..\bin\Release-windows-x86_64\Game > nul)
 	@IF EXIST ..\Shushao\vendor\SDL2_mixer\bin\libmpg123-0.dll\ (xcopy /Q /E /Y /I ..\Shushao\vendor\SDL2_mixer\bin\libmpg123-0.dll ..\bin\Release-windows-x86_64\Game > nul) ELSE (xcopy /Q /Y /I ..\Shushao\vendor\SDL2_mixer\bin\libmpg123-0.dll ..\bin\Release-windows-x86_64\Game > nul)
 endef

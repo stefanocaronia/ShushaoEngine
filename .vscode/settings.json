@@ -12,9 +12,8 @@
     //    "*.bat": true
     //},
     // WINDOWS CMD
-    "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\cmd.exe",
-    //"terminal.integrated.shellArgs.windows": ["/K", "cmdvsc.bat"],
-    "terminal.integrated.shellArgs.windows": ["/u", "/k", "@ver & @prompt $g & cls & @ver"],
+    //"terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\cmd.exe",
+    //"terminal.integrated.shellArgs.windows": ["/u", "/k", "@ver & @prompt $g & cls & @ver"],
     "files.associations": {
         "*.inc": "php",
         "*.php.old": "php",
@@ -80,6 +79,8 @@
         "typeindex": "cpp",
         "variant": "cpp",
         "unordered_set": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "codecvt": "cpp",
+        "csignal": "cpp"
     }
 }

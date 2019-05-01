@@ -1,6 +1,6 @@
-#include "core.h"
+#include "Core.h"
 
-#include "cycle.h"
+#include "Application.h"
 #include "debug.h"
 #include "debuginfo.h"
 #include "scene.h"

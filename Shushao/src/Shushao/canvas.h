@@ -1,10 +1,9 @@
 #pragma once
 
-#include "core.h"
+#include "Core.h"
 
 #include "camera.h"
 #include "config.h"
-#include "core.h"
 #include "rect.h"
 #include "renderer.h"
 

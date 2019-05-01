@@ -2,7 +2,7 @@
 #include "pch/std.h"
 
 #include "debug.h"
-#include "core.h"
+#include "Core.h"
 #include "utility.h"
 
 namespace se {

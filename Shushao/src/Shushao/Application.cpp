@@ -1,10 +1,11 @@
 
-#include "pch/std.h"
+#include "Core.h"
 
+#include "Application.h"
 #include "config.h"
-#include "cycle.h"
 #include "debug.h"
 #include "design.h"
+#include "events/ApplicationEvent.h"
 #include "font.h"
 #include "glmanager.h"
 #include "input.h"
@@ -13,22 +14,22 @@
 #include "scenemanager.h"
 #include "system.h"
 
-se::Cycle* GAME;
-
 namespace se {
 
-Cycle::Cycle() {
-    GAME = this;
+#define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
+
+Application* Application::instance = nullptr;
+
+Application::~Application() {
+    Debug::Log << "Application Destructor" << std::endl;
 }
 
-Cycle::~Cycle() {
-    Debug::Log << "Cycle Destructor" << std::endl;
-}
-
-bool Cycle::init() {
+bool Application::Init() {
     for (bool& k : keys) {
         k = false;
     }
+
+    Debug::Init();
 
     // Load engine configuration files
     if (!Config::LoadEngineConfig()) {
@@ -115,7 +116,7 @@ bool Cycle::init() {
     return true;
 }
 
-void Cycle::run() {
+void Application::Run() {
     if (!SceneManager::sceneSet)
         return;
 
@@ -133,16 +134,16 @@ void Cycle::run() {
         initscan();
 
         // Process input method (derived)
-        //tInput = std::thread(&Cycle::GetInput, this);
+        //tInput = std::thread(&Application::GetInput, this);
         GetInput();
 
-        // Update Cycle
-        //tUpdate = std::thread(&Cycle::update, this);
+        // Update Application
+        //tUpdate = std::thread(&Application::update, this);
         update();
 
         if (Time::fixedDeltaTime >= Time::fixedLimitDuration) {
-            // Fixed Update Cycle (physics)
-            //tFixed = std::thread(&Cycle::fixed, this);
+            // Fixed Update Application (physics)
+            //tFixed = std::thread(&Application::fixed, this);
             fixed();
         }
 
@@ -159,11 +160,11 @@ void Cycle::run() {
     exit();
 }
 
-void Cycle::stop() {
+void Application::Stop() {
     RUNNING = false;
 }
 
-void Cycle::initscan() {
+void Application::initscan() {
     if (SceneManager::activeScene->invalid) {
         SceneManager::activeScene->ScanEntities();
         SceneManager::activeScene->ScanActiveComponents();
@@ -173,7 +174,7 @@ void Cycle::initscan() {
     SceneManager::activeScene->init();
 }
 
-void Cycle::render() {
+void Application::render() {
     Time::renderTime = Time::GetTime();
     GLManager::Reset();
     SceneManager::activeScene->render();
@@ -184,7 +185,7 @@ void Cycle::render() {
     GLManager::Swap();
 }
 
-void Cycle::update() {
+void Application::update() {
     Time::realtimeSinceStartup = Time::GetTime();
     Input::update();  // Update Input Service
     System::update();  // update dei system services
@@ -193,7 +194,7 @@ void Cycle::update() {
     Update();  // (derived)
 }
 
-void Cycle::fixed() {
+void Application::fixed() {
     Time::fixedTime = Time::GetTime();
     Time::inFixedTimeStep = true;
     if (Physics::enabled) Physics::update();
@@ -202,7 +203,7 @@ void Cycle::fixed() {
     Time::inFixedTimeStep = false;
 }
 
-void Cycle::exit() {
+void Application::exit() {
     End();  // (derived)
     SceneManager::activeScene->exit();
     Input::exit();
@@ -212,6 +213,19 @@ void Cycle::exit() {
     Resources::Clear();
     System::Clear();
     GLManager::Quit();
+}
+
+void Application::OnEvent(Event& e) {
+    EventDispatcher dispatcher(e);
+    dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
+
+    // TODO: capire sta cosa dei layer
+
+    /* for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();) {
+        (*--it)->OnEvent(e);
+        if (e.Handled)
+            break;
+    } */
 }
 
 }  // namespace se

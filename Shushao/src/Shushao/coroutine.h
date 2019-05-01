@@ -6,7 +6,7 @@
     Credits: https://github.com/exawon/CoroBehaviour
 */
 
-#include "core.h"
+#include "Core.h"
 
 namespace se {
 

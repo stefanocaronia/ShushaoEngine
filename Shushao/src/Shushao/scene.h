@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core.h"
+#include "Core.h"
 
 #include "component.h"
 #include "debuginfo.h"
@@ -17,11 +17,11 @@ namespace se {
 
 // class Component;
 class Camera;
-class Cycle;
+class Application;
 
 class SHUSHAO_API Scene {
 public:
-    friend class Cycle;
+    friend class Application;
 
     Scene();
     ~Scene();

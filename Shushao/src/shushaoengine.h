@@ -2,10 +2,15 @@
 
 /* include in derived projects */
 
+// ---Entry Point---------------------
+#include "Shushao/Main.h"
+// -----------------------------------
+
 // engine entities
 #include "Shushao/entity/maincamera.h"
 
 // ShushaoEngine Objects
+#include "Shushao/Core.h"
 #include "Shushao/animation.h"
 #include "Shushao/audio.h"
 #include "Shushao/camera.h"
@@ -13,7 +18,6 @@
 #include "Shushao/color.h"
 #include "Shushao/component.h"
 #include "Shushao/config.h"
-#include "Shushao/core.h"
 #include "Shushao/coroutine.h"
 #include "Shushao/cycle.h"
 #include "Shushao/debug.h"

@@ -1,12 +1,9 @@
-[submodule "Shushao/vendor/glm"]
-    path = Shushao/vendor/glm
-    url = https://github.com/g-truc/glm
-[submodule "Shushao/vendor/GLFW"]
-    path = Shushao/vendor/GLFW
-    url = https://github.com/stefanocaronia/glfw
-[submodule "Shushao/vendor/spdlog"]
-    path = Shushao/vendor/spdlog
-    url = https://github.com/gabime/spdlog
 [submodule "Shushao/vendor/imgui"]
-    path = Shushao/vendor/imgui
-    url = https://github.com/TheCherno/imgui
+	path = Shushao/vendor/imgui
+	url = https://github.com/TheCherno/imgui
+[submodule "Shushao/vendor/glm"]
+	url = https://github.com/g-truc/glm
+	active = true
+[submodule "Shushao/vendor/spdlog"]
+	path = Shushao/vendor/spdlog
+	url = https://github.com/gabime/spdlog

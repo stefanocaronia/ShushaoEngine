@@ -19,5 +19,6 @@
 #include <thread>
 #include <typeinfo>
 #include <vector>
+#include <memory>
 
 #endif

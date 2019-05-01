@@ -1,6 +1,6 @@
 #include "config.h"
 #include "debug.h"
-#include "core.h"
+#include "Core.h"
 #include "levelmap.h"
 #include "resources.h"
 #include "time.h"

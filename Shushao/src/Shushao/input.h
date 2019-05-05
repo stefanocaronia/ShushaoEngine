@@ -1,6 +1,9 @@
 #pragma once
 
+#if 0
+
 #include "Core.h"
+#include "sepch.h"
 
 namespace se {
 
@@ -158,3 +161,4 @@ private:
     static std::map<std::string, InputMapping*> inputs;
 };
 }  // namespace se
+#endif

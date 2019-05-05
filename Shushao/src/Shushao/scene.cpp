@@ -1,4 +1,5 @@
 #include "Core.h"
+#include "sepch.h"
 
 #include "Application.h"
 #include "debug.h"

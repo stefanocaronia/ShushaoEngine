@@ -1,6 +1,5 @@
-#include "pch/math.h"
-#include "pch/opengl.h"
-#include "pch/std.h"
+#include "Core.h"
+#include "sepch.h"
 
 #include "canvas.h"
 #include "color.h"

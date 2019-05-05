@@ -1,6 +1,9 @@
 #pragma once
 
+#include <glad/glad.h>
+
 #include "Core.h"
+#include "sepch.h"
 
 #include "object.h"
 #include "resource.h"
@@ -20,15 +23,12 @@ public:
     bool Load(std::string);
     bool LoadEmbedded(int IDRES, std::string library = "");
     bool LoadBytes(std::vector<char> data);
-    bool Bind(SDL_Surface* surface);
 
     GLuint GetTextureID();
-    SDL_Surface* GetSurface();
-
     GLuint TextureID = 0;
 
-    SDL_Surface* Surface;
-    //SDL_Texture* SDLTexture;
+private:
+    void Bind(unsigned char* image_);
 };
 
 }  // namespace se

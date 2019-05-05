@@ -3,6 +3,7 @@
 #include "textureatlas.h"
 #include "rect.h"
 #include "Core.h"
+#include "sepch.h"
 #include "utility.h"
 
 namespace se {

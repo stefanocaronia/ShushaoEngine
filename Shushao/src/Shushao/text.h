@@ -1,12 +1,15 @@
 #pragma once
 
+#include <glad/glad.h>
+
 #include "Core.h"
+#include "sepch.h"
 
 #include "color.h"
 #include "config.h"
-#include "Core.h"
 #include "rect.h"
 #include "renderer.h"
+#include "sepch.h"
 
 namespace se {
 

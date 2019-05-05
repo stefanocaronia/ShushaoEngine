@@ -12,8 +12,8 @@
     //    "*.bat": true
     //},
     // WINDOWS CMD
-    //"terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\cmd.exe",
-    //"terminal.integrated.shellArgs.windows": ["/u", "/k", "@ver & @prompt $g & cls & @ver"],
+    // "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\cmd.exe",
+    // "terminal.integrated.shellArgs.windows": ["/u", "/k", "@ver & @prompt $g & cls & @ver"],
     "files.associations": {
         "*.inc": "php",
         "*.php.old": "php",

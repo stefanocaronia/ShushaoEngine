@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core.h"
+#include "sepch.h"
 
 #include "gamedata.h"
 #include "scene.h"

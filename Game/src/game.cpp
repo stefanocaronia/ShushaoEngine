@@ -3,12 +3,6 @@
 
 using namespace se;
 
-class Game;
-
-se::Application* se::CreateApplication() {
-    return new Game();
-}
-
 class Game : public Application {
     bool perspectiveTest = false;
 
@@ -64,6 +58,7 @@ class Game : public Application {
         [INIT] INPUT MAPPINGS
     */
     bool InitMapping() {
+#if 0
         Input::printActiveControllers();
 
         InputMapping* fire = Input::addMapping("fire");
@@ -99,7 +94,7 @@ class Game : public Application {
         vertical->altNegativeButton = SDL_SCANCODE_DOWN;
         vertical->controllerAxis = SDL_CONTROLLER_AXIS_MAX;
         vertical->deadZone = 0.2f;
-
+#endif
         return true;
     }
 
@@ -134,12 +129,13 @@ class Game : public Application {
         PROCESS INPUT
     */
     void GetInput() {
+#if 0
         if ((Input::getKey(SDL_SCANCODE_LCTRL) && Input::getKeyDown(SDL_SCANCODE_Q)) || Input::getKeyDown(SDL_SCANCODE_ESCAPE))
-            stop();
+            Stop();
 
         // WINDOW
-        if (Input::getKeyDown(SDL_SCANCODE_F11))
-            GLManager::ToggleFullscreen();
+        /* if (Input::getKeyDown(SDL_SCANCODE_F11))
+            GLManager::ToggleFullscreen(); */
 
         if (Input::getButtonDown("fire")) {
             Debug::Log << "FIRE!" << std::endl;
@@ -268,6 +264,10 @@ class Game : public Application {
                                                       particleObj->transform->localPosition.y + Input::getAxis("vertical") * 2.0f * Time::deltaTime,
                                                       particleObj->transform->localPosition.z});
         }
+#endif
     }
+};
 
+Application* CreateApplication() {
+    return new Game();
 }

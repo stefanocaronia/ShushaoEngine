@@ -1,8 +1,12 @@
-#include "pch/std.h"
+#include <glad/glad.h>
 
-#include "debug.h"
 #include "Core.h"
+#include "sepch.h"
+
+#include "Core.h"
+#include "debug.h"
 #include "rect.h"
+#include "sepch.h"
 #include "shaders/shader.h"
 #include "sprite.h"
 

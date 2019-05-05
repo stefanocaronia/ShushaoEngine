@@ -1,4 +1,5 @@
-#include "pch/std.h"
+#include "Core.h"
+#include "sepch.h"
 
 #include "sprite.h"
 #include "timeline.h"

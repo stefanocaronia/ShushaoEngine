@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core.h"
+#include "sepch.h"
 
 #include "resource.h"
 #include "resources/resources.h"

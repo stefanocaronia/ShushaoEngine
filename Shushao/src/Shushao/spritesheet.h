@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core.h"
+#include "sepch.h"
 #include "object.h"
 #include "sprite.h"
 #include "textureatlas.h"

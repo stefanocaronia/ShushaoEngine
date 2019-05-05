@@ -18,6 +18,10 @@ public:
         return ss.str();
     }
 
+    //static EventType GetStaticType() { return EventType::WindowResize; }
+    //virtual EventType GetEventType() const override { return GetStaticType(); }
+    //virtual const char* GetName() const override { return "WindowResize"; }
+
     EVENT_CLASS_TYPE(WindowResize)
     EVENT_CLASS_CATEGORY(EventCategoryApplication)
 private:

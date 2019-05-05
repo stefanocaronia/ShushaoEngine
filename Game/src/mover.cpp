@@ -32,10 +32,12 @@ void Mover::Update() {
 }
 
 void Mover::FixedUpdate() {
+#if 0
     double horizontal = Input::getAxis("horizontal");
     if (Input::getAxis("horizontal") != 0) {
         rb->body->ApplyForceToCenter({(float)horizontal * 10.0f, 0.0f}, true);
     }
+#endif
 }
 
 void Mover::OnCollisionEnter2D(Collision2D& collision) {

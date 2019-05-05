@@ -1,5 +1,6 @@
 
 #include "Core.h"
+#include "sepch.h"
 
 #include "Application.h"
 #include "config.h"
@@ -47,8 +48,17 @@ bool Application::Init() {
         Debug::Log(ERROR) << "Error Initializing Configuration overrides" << std::endl;
     }
 
+    // Init Window
+    window = std::unique_ptr<Window>(Window::Create({
+        Config::title,
+        Config::displayWidth,
+        Config::displayHeight,
+        Config::fullscreen  //
+    }));
+    window->SetEventCallback(BIND_EVENT_FN(OnEvent));
+
     // OpenGL Context init
-    if (!GLManager::Init(Config::title, Config::fullscreen)) {
+    if (!GLManager::Init()) {
         Debug::Log(ERROR) << "Error Initializing GL" << std::endl;
         ::exit(5);
     }
@@ -72,7 +82,7 @@ bool Application::Init() {
         }
     }
     // Init Input service
-    Input::init();
+    // Input::init();
 
     // Init System services
     System::init();
@@ -110,8 +120,7 @@ bool Application::Init() {
 
     Camera* activeCamera = SceneManager::activeScene->activeCamera;
 
-    GLManager::SetFullscreen(Config::fullscreen);
-    GLManager::Clear(activeCamera->backgroundColor.r, activeCamera->backgroundColor.g, activeCamera->backgroundColor.b, 1.0f, 1.0f);
+    window->Clear(activeCamera->backgroundColor.r, activeCamera->backgroundColor.g, activeCamera->backgroundColor.b, 1.0f, 1.0f);
 
     return true;
 }
@@ -176,18 +185,18 @@ void Application::initscan() {
 
 void Application::render() {
     Time::renderTime = Time::GetTime();
-    GLManager::Reset();
+    window->Clear();
+    window->OnUpdate();
     SceneManager::activeScene->render();
     Render();  // (derived)
-    if (Physics::enabled && Physics::debug) Physics::world->DrawDebugData();
     SceneManager::activeScene->renderOverlay();
+    if (Physics::enabled && Physics::debug) Physics::world->DrawDebugData();
     Time::frameCount++;
-    GLManager::Swap();
 }
 
 void Application::update() {
     Time::realtimeSinceStartup = Time::GetTime();
-    Input::update();  // Update Input Service
+    // Input::update();  // Update Input Service
     System::update();  // update dei system services
     GLManager::Update();
     SceneManager::activeScene->update();
@@ -206,7 +215,7 @@ void Application::fixed() {
 void Application::exit() {
     End();  // (derived)
     SceneManager::activeScene->exit();
-    Input::exit();
+    // Input::exit();
     System::exit();
     Physics::exit();
     SceneManager::Clear();
@@ -226,6 +235,11 @@ void Application::OnEvent(Event& e) {
         if (e.Handled)
             break;
     } */
+}
+
+bool Application::OnWindowClose(WindowCloseEvent& e) {
+    RUNNING = false;
+    return true;
 }
 
 }  // namespace se

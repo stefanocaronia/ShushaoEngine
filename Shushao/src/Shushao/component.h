@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core.h"
+#include "sepch.h"
 
 #include "coroutineholder.h"
 #include "object.h"

@@ -2,6 +2,7 @@
 
 #include "component.h"
 #include "Core.h"
+#include "sepch.h"
 
 namespace se {
 

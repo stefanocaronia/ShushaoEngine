@@ -6,7 +6,7 @@
 #include "Shushao/Events/KeyEvent.h"
 #include "Shushao/Events/MouseEvent.h"
 
-#include <glad/glad.h>
+#include "Shushao/glmanager.h"
 
 namespace se {
 
@@ -29,9 +29,10 @@ WindowsWindow::~WindowsWindow() {
 }
 
 void WindowsWindow::Init(const WindowProps& props) {
-    m_Data.Title = props.Title;
-    m_Data.Width = props.Width;
-    m_Data.Height = props.Height;
+    wData.Title = props.Title;
+    wData.Width = props.Width;
+    wData.Height = props.Height;
+    wData.Fullscreen = props.Fullscreen;
 
     DEBUG_CORE_INFO("Creating window {0} ({1}, {2})", props.Title, props.Width, props.Height);
 
@@ -43,12 +44,27 @@ void WindowsWindow::Init(const WindowProps& props) {
         s_GLFWInitialized = true;
     }
 
-    m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
+    m_Window = glfwCreateWindow(
+        (int)props.Width,
+        (int)props.Height,
+        wData.Title.c_str(),
+        (wData.Fullscreen ? glfwGetPrimaryMonitor() : nullptr),
+        nullptr  //
+    );
+
     glfwMakeContextCurrent(m_Window);
+    glfwSetWindowUserPointer(m_Window, &wData);
+    SetVSync(true);
+
+    // init Glad
     int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
     SE_CORE_ASSERT(status, "Failed to initialize Glad!");
-    glfwSetWindowUserPointer(m_Window, &m_Data);
-    SetVSync(true);
+
+    const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+    GLManager::DESKTOP_WIDTH = mode->width;
+    GLManager::DESKTOP_HEIGHT = mode->height;
+
+    return;
 
     // Set GLFW callbacks
     glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height) {
@@ -142,11 +158,50 @@ void WindowsWindow::SetVSync(bool enabled) {
     else
         glfwSwapInterval(0);
 
-    m_Data.VSync = enabled;
+    wData.VSync = enabled;
 }
 
 bool WindowsWindow::IsVSync() const {
-    return m_Data.VSync;
+    return wData.VSync;
+}
+
+void WindowsWindow::Clear() const {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClearDepth(1.0f);
+}
+
+void WindowsWindow::Clear(float r, float g, float b, float a, float depth = 1.0f) const {
+    glClearColor(r, g, b, a);
+    glClearDepth(depth);
+}
+
+void WindowsWindow::SetFullscreen(bool fs) {
+    fullscreen = fs;
+
+    // TODO
+#if 0
+    if (fullscreen) {
+        SDL_SetWindowFullscreen(gWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
+        glViewport(0, 0, DESKTOP_WIDTH, DESKTOP_HEIGHT);
+    } else {
+        SDL_SetWindowFullscreen(gWindow, SDL_FALSE);
+        SDL_GetWindowSize(gWindow, (int*)&WIDTH, (int*)&HEIGHT);
+        glViewport(0, 0, WIDTH, HEIGHT);
+    }
+#endif
+}
+
+void WindowsWindow::ToggleFullscreen() {
+    SetFullscreen(!fullscreen);
+}
+
+void WindowsWindow::Swap() const {
+    glfwSwapBuffers(m_Window);
+}
+
+void WindowsWindow::Reset() const {
+    Clear();
+    // glLoadIdentity(); // old pipeline
 }
 
 }  // namespace se

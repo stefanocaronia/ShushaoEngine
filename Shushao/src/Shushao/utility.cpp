@@ -1,8 +1,8 @@
 
-#include "pch/std.h"
+#include "Core.h"
+#include "sepch.h"
 
 #include "debug.h"
-#include "Core.h"
 #include "utility.h"
 
 namespace se {

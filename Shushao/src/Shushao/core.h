@@ -3,34 +3,45 @@
 #include "sepch.h"
 
 #ifdef SE_PLATFORM_WINDOWS
-	#ifdef SE_BUILD_DLL
-		#define SHUSHAO_API __declspec(dllexport)
-	#else
-		#define SHUSHAO_API __declspec(dllimport)
-	#endif
+#ifdef SE_BUILD_DLL
+#define SHUSHAO_API __declspec(dllexport)
 #else
-    #define SHUSHAO_API
+#define SHUSHAO_API __declspec(dllimport)
+#endif
+#else
+#define SHUSHAO_API __declspec(dllimport)
 #endif
 
 #ifdef SE_DEBUG
-	#define SE_ENABLE_ASSERTS
+#define SE_ENABLE_ASSERTS
 #endif
 
 #ifdef SE_ENABLE_ASSERTS
-	#define SE_ASSERT(x, ...) { if(!(x)) { SE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
-	#define SE_CORE_ASSERT(x, ...) { if(!(x)) { SE_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+#define SE_ASSERT(x, ...)                                      \
+    {                                                          \
+        if (!(x)) {                                            \
+            DEBUG_ERROR("Assertion Failed: {0}", __VA_ARGS__); \
+            __debugbreak();                                    \
+        }                                                      \
+    }
+#define SE_CORE_ASSERT(x, ...)                                      \
+    {                                                               \
+        if (!(x)) {                                                 \
+            DEBUG_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); \
+            __debugbreak();                                         \
+        }                                                           \
+    }
 #else
-	#define SE_ASSERT(x, ...)
-	#define SE_CORE_ASSERT(x, ...)
+#define SE_ASSERT(x, ...)
+#define SE_CORE_ASSERT(x, ...)
 #endif
 
 #define BIT(x) (1 << x)
 
-
 #define _USE_MATH_DEFINES
 
 #ifndef M_PI
-    #define M_PI 3.14159265358979323846
+#define M_PI 3.14159265358979323846
 #endif
 
 #define DEGTORAD 0.0174532925199432957f
@@ -59,6 +70,12 @@ enum class Align {
     BOTTOMLEFT,
     BOTTOMRIGHT,
     CUSTOM
+};
+
+enum class RenderMode {
+    WORLD,
+    SCREEN,
+    CAMERA
 };
 
 namespace PivotPosition {
@@ -96,11 +113,5 @@ namespace AnchorPreset {  //     		       MIN		     MAX
 
     const AnchorPoints STRETCH = {{0.0f, 0.0f}, {1.0f, 1.0f}};
 }  // namespace AnchorPreset
-
-enum class RenderMode {
-    WORLD,
-    SCREEN,
-    CAMERA
-};
 
 }  // namespace se

@@ -1,5 +1,5 @@
-#include "pch/math.h"
-#include "pch/std.h"
+#include "Core.h"
+#include "sepch.h"
 
 #include "color.h"
 #include "geometryrenderer.h"

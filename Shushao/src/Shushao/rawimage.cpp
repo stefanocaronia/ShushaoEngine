@@ -1,5 +1,7 @@
-#include "pch/math.h"
-#include <iostream>
+#include "Core.h"
+#include "sepch.h"
+
+#include <glad/glad.h>
 
 #include "debug.h"
 #include "entity.h"

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core.h"
+#include "sepch.h"
 #include "Window.h"
 #include "events/ApplicationEvent.h"
 #include "scenemanager.h"
@@ -9,6 +10,8 @@ namespace se {
 
 class SHUSHAO_API Application {
 public:
+    static Application* instance;
+
     enum class Stage {
         INIT,
         UPDATE,
@@ -27,6 +30,7 @@ public:
     void Stop();
 
     inline static Application& Get() { return *instance; }
+    inline Window& GetWindow() { return *window; }
 
     void OnEvent(Event& e);
 
@@ -58,7 +62,7 @@ private:
 
     bool OnWindowClose(WindowCloseEvent& e);
 
-    static Application* instance;
+    std::unique_ptr<Window> window;
 };
 
 // To be defined in CLIENT

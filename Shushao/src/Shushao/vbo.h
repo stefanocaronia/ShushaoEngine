@@ -1,6 +1,9 @@
 #pragma once
 
+#include <glad/glad.h>
+
 #include "Core.h"
+#include "sepch.h"
 
 #include "object.h"
 

@@ -2,8 +2,14 @@ project "Glad"
     kind "StaticLib"
     language "C"
 
-    targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-    objdir ("obj/" .. outputdir .. "/%{prj.name}")
+	-- targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+    -- objdir ("obj/" .. outputdir .. "/%{prj.name}")
+
+    configuration { "gmake2" }
+        implibextension (".a")
+
+    targetdir ("lib")
+    objdir ("obj")
 
     makesettings [[
         CC = gcc

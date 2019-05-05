@@ -1,4 +1,5 @@
-#include "pch/math.h"
+#include "Core.h"
+#include "sepch.h"
 
 #include "debug.h"
 #include "vao.h"

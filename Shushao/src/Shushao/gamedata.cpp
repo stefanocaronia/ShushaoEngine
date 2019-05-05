@@ -1,5 +1,6 @@
 
-#include "pch/std.h"
+#include "Core.h"
+#include "sepch.h"
 
 #include "camera.h"
 #include "component.h"

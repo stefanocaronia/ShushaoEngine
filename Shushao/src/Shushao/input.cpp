@@ -1,6 +1,6 @@
-#include "pch/opengl.h"
-#include "pch/sdl.h"
-#include "pch/std.h"
+#if 0
+#include "Core.h"
+#include "sepch.h"
 
 #include "Application.h"
 #include "debug.h"
@@ -81,7 +81,7 @@ void Input::update() {
     while (SDL_PollEvent(&event) != 0) {
         switch (event.type) {
             case SDL_QUIT:
-                GAME->stop();
+                Application::instance->Stop();
                 break;
 
             case SDL_WINDOWEVENT:
@@ -324,3 +324,5 @@ ButtonMap Input::changedMouseButtons;
 ButtonMap Input::buttons;
 ButtonMap Input::changedButtons;
 }  // namespace se
+
+#endif

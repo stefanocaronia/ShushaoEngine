@@ -1,8 +1,9 @@
-#include "pch/std.h"
+#include "Core.h"
+#include "sepch.h"
 
+#include "component.h"
 #include "debug.h"
 #include "entity.h"
-#include "component.h"
 #include "scene.h"
 #include "transform.h"
 

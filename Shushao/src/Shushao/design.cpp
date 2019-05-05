@@ -1,4 +1,7 @@
-#include "pch/std.h"
+#include "Core.h"
+#include "sepch.h"
+
+#include <glad/glad.h>
 
 #include "design.h"
 #include "glmanager.h"

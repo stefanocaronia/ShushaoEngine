@@ -1,7 +1,8 @@
 #pragma once
 
-#include "../Core.h"
+#include <glad/glad.h>
 
+#include "../Core.h"
 #include "../color.h"
 #include "../light.h"
 #include "../object.h"

@@ -1,6 +1,5 @@
 #include "levelmap.h"
 #include "debug.h"
-#include "Core.h"
 
 namespace se {
 

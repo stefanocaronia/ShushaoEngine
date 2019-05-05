@@ -1,5 +1,5 @@
-#include "pch/opengl.h"
-#include "pch/std.h"
+#include "Core.h"
+#include "sepch.h"
 
 #include "font.h"
 #include "glmanager.h"

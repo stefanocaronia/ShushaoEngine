@@ -1,6 +1,7 @@
 #include "config.h"
-#include "debug.h"
 #include "Core.h"
+#include "sepch.h"
+#include "debug.h"
 #include "levelmap.h"
 #include "resources.h"
 #include "time.h"
@@ -17,8 +18,8 @@ unsigned int pixelPerUnit = 16;
 
 // display
 float displayAspect = 16.0f / 9.0f;
-int displayWidth = 1024;
-int displayHeight = (int)(displayWidth / displayAspect);
+unsigned int displayWidth = 1024;
+unsigned int displayHeight = (int)(displayWidth / displayAspect);
 bool fullscreen = false;
 const std::map<std::string, std::pair<int, int>> DisplayModes{
     {"1920x1080", {1920, 1080}},

@@ -1,4 +1,5 @@
-#include "pch/std.h"
+#include "Core.h"
+#include "sepch.h"
 
 #include "debug.h"
 #include "design.h"

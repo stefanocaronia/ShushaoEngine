@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Core.h"
+#include "Shushao/Core.h"
 
 #include "physicscontactfilter.h"
 #include "physicscontactlistener.h"
@@ -8,7 +8,7 @@
 
 namespace se {
 
-class SHUSHAO_API Physics {
+class Physics {
 public:
     static bool enabled;
     static bool debug;

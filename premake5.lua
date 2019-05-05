@@ -14,13 +14,14 @@ workspace "Shushao"
     outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
     Game = "Game"
     Engine = "Shushao"
-    cores = 8
     gamebin = "../bin/" .. outputdir .. "/%{Game}/"
     enginebin = "../bin/" .. outputdir .. "/%{Engine}/"
 
     include "Shushao/vendor/GLFW"
     include "Shushao/vendor/Glad"
     include "Shushao/vendor/SOIL"
+    include "Shushao/vendor/Box2D"
+    include "Shushao/vendor/imgui"
 
 project "Shushao"
 	location "Shushao"
@@ -56,7 +57,7 @@ project "Shushao"
         "%{prj.name}/vendor/spdlog/include",
 		"%{prj.name}/vendor/glm",
 		"%{prj.name}/vendor/boost",
-		"%{prj.name}/vendor/Box2D/include",
+		"%{prj.name}/vendor/Box2D",
 		"%{prj.name}/vendor/freetype/include",
 		-- "%{prj.name}/vendor/SDL2_mixer/include/SDL2"
     }
@@ -71,11 +72,11 @@ project "Shushao"
     links {
         "GLFW",
         "Glad",
-		"SOIL",
+        "SOIL",
+        "Box2D",
         "boost_context",
         "boost_coroutine",
         "freetype",
-        "Box2D",
         "gdi32",
         "mingw32",
         "opengl32",
@@ -135,7 +136,7 @@ project "Game"
         "%{Engine}/vendor/spdlog/include",
 		"%{Engine}/vendor/glm",
 		"%{Engine}/vendor/boost",
-		"%{Engine}/vendor/Box2D/include",
+		"%{Engine}/vendor/Box2D",
 		"%{Engine}/vendor/freetype/include"
     }
 

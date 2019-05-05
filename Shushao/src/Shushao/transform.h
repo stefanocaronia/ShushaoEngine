@@ -2,7 +2,7 @@
 
 #include <glad/glad.h>
 
-#include "Core.h"
+#include "Shushao/Core.h"
 #include "sepch.h"
 
 #include "component.h"

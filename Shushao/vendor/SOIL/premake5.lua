@@ -12,6 +12,7 @@ project "SOIL"
 
     configuration { "gmake2" }
         implibextension (".a")
+        targetextension (".a")
         buildoptions { "-O2","-s","-w" }
 
     files {

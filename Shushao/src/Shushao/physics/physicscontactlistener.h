@@ -1,12 +1,12 @@
 #pragma once
 
-#include "../Core.h"
+#include "Shushao/Core.h"
 
 #include "collider2d.h"
 
 namespace se {
 
-class SHUSHAO_API PhysicsContactListener : public b2ContactListener {
+class PhysicsContactListener : public b2ContactListener {
     void BeginContact(b2Contact* contact);
     void EndContact(b2Contact* contact);
     void PreSolve(b2Contact* contact, const b2Manifold* oldManifold);

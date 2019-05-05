@@ -15,10 +15,8 @@
                 "${workspaceFolder}/Shushao/vendor/spdlog/include/*",
                 "${workspaceFolder}/Shushao/vendor/boost/*",
                 "${workspaceFolder}/Shushao/vendor/glm/*",
-                "${workspaceFolder}/Shushao/vendor/SDL2/include/SDL2/*",
                 "${workspaceFolder}/Shushao/vendor/SOIL/include/*",
-                "${workspaceFolder}/Shushao/vendor/SDL2_mixer/include/SDL2/*",
-                "${workspaceFolder}/Shushao/vendor/Box2D/include/*",
+                "${workspaceFolder}/Shushao/vendor/Box2D/*",
                 "${workspaceFolder}/Shushao/vendor/freetype/include/*"
             ]
         }

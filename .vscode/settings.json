@@ -1,16 +1,17 @@
 {
-    //"files.exclude": {
-    //    "**/bin": true,
-    //    "**/obj": true,
-    //    "**/lib": true,
-    //    "**/se": true,
-    //    "**/include": true,
-    //    "**/.makefiles": true,
-    //    "**/.vscode": true,
-    //    ".gitignore": true,
-    //    "makefile": true,
-    //    "*.bat": true
-    //},
+    "files.exclude": {
+        // "**/bin": true,
+        // "**/obj": true,
+        // "**/lib": true,
+        // "**/include": true,
+        // "**/.makefiles": true,
+        // "**/.vscode": true,
+        // ".gitignore": true,
+        // "makefile": true,
+        // "Makefile": true,
+        // "*.bat": true,
+        // "**/vendor": true
+    },
     // WINDOWS CMD
     // "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\cmd.exe",
     // "terminal.integrated.shellArgs.windows": ["/u", "/k", "@ver & @prompt $g & cls & @ver"],

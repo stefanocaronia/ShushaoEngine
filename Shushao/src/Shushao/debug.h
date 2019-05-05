@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core.h"
+#include "Shushao/Core.h"
 #include "sepch.h"
 
 #include "logger.h"
@@ -29,7 +29,7 @@ public:
     static Logger Log;
 
     inline static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return coreLogger; }
-	inline static std::shared_ptr<spdlog::logger>& GetClientLogger() { return clientLogger; }
+    inline static std::shared_ptr<spdlog::logger>& GetClientLogger() { return clientLogger; }
 
 private:
     static std::shared_ptr<spdlog::logger> coreLogger;

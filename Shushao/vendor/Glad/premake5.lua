@@ -1,3 +1,6 @@
+-- Box2D premake5 script.
+-- https://premake.github.io/
+
 project "Glad"
     kind "StaticLib"
     language "C"
@@ -5,15 +8,15 @@ project "Glad"
 	-- targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     -- objdir ("obj/" .. outputdir .. "/%{prj.name}")
 
-    configuration { "gmake2" }
-        implibextension (".a")
-
     targetdir ("lib")
     objdir ("obj")
 
     makesettings [[
         CC = gcc
     ]]
+
+    configuration { "gmake2" }
+        targetextension (".a")
 
     files
     {

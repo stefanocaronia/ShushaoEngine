@@ -1,8 +1,8 @@
 #pragma once
-#include "Core.h"
+#include "Shushao/Core.h"
 #include "sepch.h"
 
-#include "Core.h"
+#include "Shushao/Core.h"
 #include "rect.h"
 #include "sepch.h"
 #include "transform.h"

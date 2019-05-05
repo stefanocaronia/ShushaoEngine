@@ -10,3 +10,6 @@
 [submodule "Shushao/vendor/GLFW"]
 	path = Shushao/vendor/GLFW
 	url = https://github.com/stefanocaronia/glfw
+[submodule "Shushao/vendor/Box2D"]
+	path = Shushao/vendor/Box2D
+	url = https://github.com/stefanocaronia/Box2D

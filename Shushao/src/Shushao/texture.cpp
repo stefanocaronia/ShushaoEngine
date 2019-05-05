@@ -1,7 +1,7 @@
 
 #include <SOIL.h>
 
-#include "Core.h"
+#include "Shushao/Core.h"
 #include "sepch.h"
 
 #include "resources.h"

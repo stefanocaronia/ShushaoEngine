@@ -2,10 +2,10 @@
 
 #include <glad/glad.h>
 
-#include "../Core.h"
 #include "../color.h"
 #include "../light.h"
 #include "../object.h"
+#include "Shushao/Core.h"
 
 namespace se {
 

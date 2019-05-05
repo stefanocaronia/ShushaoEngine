@@ -1,9 +1,9 @@
 #include "config.h"
-#include "Core.h"
-#include "sepch.h"
+#include "Shushao/Core.h"
 #include "debug.h"
 #include "levelmap.h"
 #include "resources.h"
+#include "sepch.h"
 #include "time.h"
 #include "utility.h"
 

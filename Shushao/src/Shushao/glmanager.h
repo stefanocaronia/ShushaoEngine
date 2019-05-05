@@ -2,9 +2,9 @@
 
 #include <GLFW/glfw3.h>
 
-#include "Core.h"
-#include "sepch.h"
+#include "Shushao/Core.h"
 #include "Window.h"
+#include "sepch.h"
 
 namespace se {
 

@@ -1,8 +1,8 @@
 #pragma once
-#include "Core.h"
+#include "Shushao/Core.h"
 #include "sepch.h"
 
-#include "Core.h"
+#include "Shushao/Core.h"
 #include "canvas.h"
 #include "component.h"
 #include "object.h"

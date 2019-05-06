@@ -1,10 +1,10 @@
 #pragma once
 
+#include "sepch.h"
 #include "Shushao/Core.h"
+
 #include "Window.h"
 #include "events/ApplicationEvent.h"
-#include "scenemanager.h"
-#include "sepch.h"
 
 namespace se {
 

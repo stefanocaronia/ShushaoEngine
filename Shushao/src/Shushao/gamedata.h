@@ -1,8 +1,9 @@
 #pragma once
 
+#include <boost/variant.hpp>
+
 #include "Shushao/Core.h"
 #include "sepch.h"
-
 #include "camera.h"
 #include "component.h"
 

@@ -11,7 +11,8 @@ workspace "Shushao"
         "make %{cfg.buildcfg} rebuild"
     }
 
-    outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+    --outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+    outputdir = "%{cfg.buildcfg}"
     Game = "Game"
     Engine = "Shushao"
     gamebin = "../bin/" .. outputdir .. "/%{Game}/"
@@ -26,10 +27,10 @@ workspace "Shushao"
 project "Shushao"
 	location "Shushao"
 	kind "SharedLib"
-	language "C++"
-    staticruntime "off"
+    language "C++"
+    cppdialect "C++17"
+    staticruntime "on"
     targetname "libshushao"
-
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("obj/" .. outputdir .. "/%{prj.name}")
@@ -39,10 +40,10 @@ project "Shushao"
 
     configuration { "gmake2" }
         implibextension (".a")
-        buildoptions {
-            "-static-libgcc",
-            "-static-libstdc++"
-        }
+        -- buildoptions {
+        --     "-static-libgcc",
+        --     "-static-libstdc++"
+        -- }
 
     files {
 		"%{prj.name}/src/**.h",
@@ -87,7 +88,6 @@ project "Shushao"
     }
 
 	filter "system:windows"
-		cppdialect "C++17"
 		systemversion "latest"
 
 		defines {
@@ -117,8 +117,9 @@ project "Shushao"
 project "Game"
 	location "Game"
 	kind "ConsoleApp"
-	language "C++"
-	staticruntime "off"
+    language "C++"
+    cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("obj/" .. outputdir .. "/%{prj.name}")
@@ -130,14 +131,14 @@ project "Game"
 
 	includedirs {
         "%{Engine}/src",
-        "%{Engine}/vendor/GLFW/include",
-		"%{Engine}/vendor/Glad/include",
-		"%{Engine}/vendor/SOIL/include",
-        "%{Engine}/vendor/spdlog/include",
 		"%{Engine}/vendor/glm",
-		"%{Engine}/vendor/boost",
-		"%{Engine}/vendor/Box2D",
-		"%{Engine}/vendor/freetype/include"
+        -- "%{Engine}/vendor/GLFW/include",
+		-- "%{Engine}/vendor/Glad/include",
+		-- "%{Engine}/vendor/SOIL/include",
+        -- "%{Engine}/vendor/spdlog/include",
+		-- "%{Engine}/vendor/boost",
+		-- "%{Engine}/vendor/Box2D",
+		-- "%{Engine}/vendor/freetype/include"
     }
 
 	links {
@@ -153,7 +154,6 @@ project "Game"
         buildoptions {}
 
 	filter "system:windows"
-		cppdialect "C++17"
 		systemversion "latest"
 
 		defines {

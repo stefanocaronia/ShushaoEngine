@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Shushao/Core.h"
+#include <Box2D/Box2D.h>
 
+#include "Shushao/Core.h"
 #include "../component.h"
 
 namespace se {

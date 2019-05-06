@@ -3,6 +3,7 @@
 #include "debug.h"
 #include "entity.h"
 #include "gamedata.h"
+#include "scene.h"
 #include "physics/collider2d.h"
 #include "physics/collision2d.h"
 #include "renderer.h"

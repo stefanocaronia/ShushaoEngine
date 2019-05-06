@@ -3,6 +3,8 @@
 #include "config.h"
 #include "inputinterface.h"
 
+#include <glad/glad.h>
+
 namespace se {
 
 bool GLManager::Init() {

@@ -1,13 +1,15 @@
 #pragma once
 
-#define COROUTINE [=](RoutinePush & yield_return)
+#include <boost/coroutine2/all.hpp>
+
+#include "Shushao/Core.h"
+#include "sepch.h"
 
 /*
     Credits: https://github.com/exawon/CoroBehaviour
 */
 
-#include "Shushao/Core.h"
-#include "sepch.h"
+#define COROUTINE [=](RoutinePush & yield_return)
 
 namespace se {
 

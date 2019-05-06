@@ -2,15 +2,32 @@
 
 ## How to build
 
-* make
-* make run
-* make rebuild
-* make clean
-* make BUILD=Release
+-   make
+-   make debug
+-   make release
+-   make clean
+
+-   make Shushao
+-   make Game
+
+## Update submodules
+
+first time:
+
+```bash
+git submodule update --init --recursive
+```
+
+dopo:
+
+```bash
+git submodule update --recursive --remote
+```
 
 ## Resources
 
 ### Resource::Load\<type\>(string filename, string name)
+
 Carica una Resource da disco e estituisce un pointer alla risorsa. Se name non è specificato la chiave diventa il nome file senza percorso e senza estensione.
 
 ```c++
@@ -19,6 +36,7 @@ Resources::Load<Textfile>("assets/listadellaspesa.txt", "listasp");
 ```
 
 ### Resource::Load\<type\>(string name, int IDRES, string library)
+
 Carica una Resource embedded nell'exe o da una dll
 
 ```c++
@@ -26,6 +44,7 @@ Texture* avatar = Resources::Load<Texture>("avatar", IMG_AVATAR, LIB_SHUSHAO);
 ```
 
 ### Resource::Add\<type\>(string name)
+
 Aggiunge una Resource vuota.
 
 ```c++
@@ -33,7 +52,8 @@ Texture* tex = Resources::Add<Texture>();
 Texture* tex = Resources::Add<Texture>("texname");
 ```
 
-### Resource::Add(Asset*)
+### Resource::Add(Asset\*)
+
 Aggiunge una Resource già esistente alle resources.
 
 ```c++
@@ -42,6 +62,7 @@ Sprite* spr = Resources::Add(sprite);
 ```
 
 ### Resource::Get\<type\>(string name):
+
 Ottiene una risorsa dal nome. Il nome corrisponde al filename senza percorso e estensione per i file caricati da disco, o il nome specificato dal metodo Add.
 
 ```c++
@@ -49,13 +70,18 @@ Sprite* spr = Resources::Get<Sprite>("ominobuffo");
 ```
 
 ### std::vector\<char\> GetEmbeddedData(int IDRES, string library, LPCSTR type)
+
 Recupera una risorsa embedded nell'eseguibile o in una dll esterna, senza aggiungerla alle resources.
+
 ```c++
 Resources::GetEmbeddedData(IMG_AVATAR);
 Resources::GetEmbeddedData(GONFIG_FILE, "libshushao.dll");
 ```
+
 ### std::string GetEmbeddedText(int IDRES, string library)
+
 Recupera una risorsa embedded nell'eseguibile o in una dll esterna, senza aggiungerla alle resources.
+
 ```c++
 Resources::GetEmbeddedText(JSON_OBJ, "libshushao.dll");
 ```
@@ -63,10 +89,15 @@ Resources::GetEmbeddedText(JSON_OBJ, "libshushao.dll");
 ## Components
 
 ### Sprite Renderer
+
 ### Mesh Renderer
+
 ### Light
+
 ### Transform
+
 ### Canvas
+
 ### Text
 
 ```c++
@@ -89,6 +120,7 @@ text1->SetAlign(Align::TOPLEFT);
 ```
 
 ### Raw Image
+
 ### Image
 
 ## UI
@@ -128,8 +160,8 @@ anchoredText->transform->rectTransform->RegisterPositionLRYH(1.0f, 1.0f, -1.0f, 
 ```
 
 ### Raw Image
-### Image
 
+### Image
 
 https://guides.github.com/features/mastering-markdown/
 alt + 96

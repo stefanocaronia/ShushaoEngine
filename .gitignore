@@ -1,8 +1,9 @@
 # Directories
-bin/
+/bin/
 obj/
 
 Makefile
+!.makefiles/makefile
 
 # vs
 *.user

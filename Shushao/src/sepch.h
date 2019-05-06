@@ -24,10 +24,6 @@
 #include <typeinfo>
 #include <vector>
 
-// boost
-#include <boost/coroutine2/all.hpp>
-#include <boost/variant.hpp>
-
 // math
 #include <cmath>
 #include <glm/glm.hpp>
@@ -38,12 +34,5 @@
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtx/spline.hpp>
 #include <glm/gtx/transform.hpp>
-
-// fonts
-#include <ft2build.h>
-#include FT_FREETYPE_H
-
-// physics
-#include <Box2D/Box2D.h>
 
 #endif

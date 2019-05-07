@@ -1,5 +1,6 @@
 # Directories
 /bin/
+bin-int/
 obj/
 
 Makefile

@@ -135,8 +135,8 @@ project "Game"
         -- "%{Engine}/vendor/GLFW/include",
 		-- "%{Engine}/vendor/Glad/include",
 		-- "%{Engine}/vendor/SOIL/include",
-        -- "%{Engine}/vendor/spdlog/include",
-		-- "%{Engine}/vendor/boost",
+        "%{Engine}/vendor/spdlog/include",
+		"%{Engine}/vendor/boost",
 		-- "%{Engine}/vendor/Box2D",
 		-- "%{Engine}/vendor/freetype/include"
     }

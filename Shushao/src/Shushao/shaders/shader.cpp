@@ -1,3 +1,6 @@
+
+#include <glad/glad.h>
+
 #include "../debug.h"
 #include "../light.h"
 #include "../utility.h"

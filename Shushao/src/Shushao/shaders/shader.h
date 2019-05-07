@@ -1,7 +1,5 @@
 #pragma once
 
-#include <glad/glad.h>
-
 #include "../color.h"
 #include "../light.h"
 #include "../object.h"
@@ -31,16 +29,16 @@ public:
         LIGHT
     };
 
-    Uniform(std::string name_, std::string var_, Uniform::Type type_, GLuint location_, bool locked_ = false) : name(name_), var(var_), type(type_), location(location_), locked(locked_) {}
+    Uniform(std::string name_, std::string var_, Uniform::Type type_, unsigned int location_, bool locked_ = false) : name(name_), var(var_), type(type_), location(location_), locked(locked_) {}
 
     std::string name;
     std::string var;
     Uniform::Type type;
-    GLuint location = 0;
+    unsigned int location = 0;
     bool locked = false;
 
     // values
-    GLenum texture;
+    unsigned int texture;
 
     void SetFloat(GLfloat&);
     void SetInteger(GLint&);
@@ -74,12 +72,12 @@ public:
     void update();
     void exit();
 
-    GLuint GetProgram();
+    unsigned int GetProgram();
 
-    void AddUniform(std::string name_, std::string var_, Uniform::Type type_, GLuint location_ = 0);
-    void AddUniform(std::string var_, Uniform::Type type_, GLuint location_ = 0);
-    void AddShaderUniform(std::string var_, Uniform::Type type_, GLuint location_ = 0);
-    void AddShaderUniform(std::string name_, std::string var_, Uniform::Type type_, GLuint location_ = 0);
+    void AddUniform(std::string name_, std::string var_, Uniform::Type type_, unsigned int location_ = 0);
+    void AddUniform(std::string var_, Uniform::Type type_, unsigned int location_ = 0);
+    void AddShaderUniform(std::string var_, Uniform::Type type_, unsigned int location_ = 0);
+    void AddShaderUniform(std::string name_, std::string var_, Uniform::Type type_, unsigned int location_ = 0);
 
     void SetFloat(std::string, GLfloat);
     void SetInteger(std::string, GLint);
@@ -91,7 +89,7 @@ public:
     void SetColor(std::string, Color);
     void SetLight(std::string, UniformLight&);
 
-    GLenum GetTextureIndex(std::string);
+    unsigned int GetTextureIndex(std::string);
 
     void SetMVP(GLfloat*);
     void SetMV(GLfloat*);
@@ -115,21 +113,21 @@ protected:
     std::string GeometryShaderCode;
 
 private:
-    GLuint programID = 0;
+    unsigned int programID = 0;
 
     bool debug = true;
 
-    GLuint VertexShaderID;
-    GLuint FragmentShaderID;
-    GLuint GeometryShaderID;
+    unsigned int VertexShaderID;
+    unsigned int FragmentShaderID;
+    unsigned int GeometryShaderID;
 
     bool loadWithName(std::string, std::string);
 
     bool compile();
     bool link();
 
-    bool shaderCompilationLog(const GLuint&);
-    bool programCompilationLog(const GLuint&);
+    bool shaderCompilationLog(const unsigned int&);
+    bool programCompilationLog(const unsigned int&);
 };
 
 }  // namespace se

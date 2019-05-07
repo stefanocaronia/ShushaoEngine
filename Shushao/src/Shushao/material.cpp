@@ -1,5 +1,7 @@
-#include "material.h"
+#include <glad/glad.h>
+
 #include "debug.h"
+#include "material.h"
 
 namespace se {
 

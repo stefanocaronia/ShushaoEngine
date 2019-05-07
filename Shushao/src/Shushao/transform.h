@@ -1,7 +1,5 @@
 #pragma once
 
-#include <glad/glad.h>
-
 #include "Shushao/Core.h"
 #include "sepch.h"
 
@@ -64,12 +62,12 @@ public:
     void RemoveChild(Transform* t);
     void AddChild(Transform* t);
 
-    GLfloat* uMVP();  // MVP Matrix for uniforms
-    GLfloat* uMV();  // Model-View Matrix for uniforms
-    GLfloat* uVP();  // Model-View Matrix for uniforms
-    GLfloat* uM();  // Model Matrix for uniforms
-    GLfloat* uP();  // Projection Matrix for uniforms
-    GLfloat* uV();  // View Matrix for uniforms
+    float* uMVP();  // MVP Matrix for uniforms
+    float* uMV();  // Model-View Matrix for uniforms
+    float* uVP();  // Model-View Matrix for uniforms
+    float* uM();  // Model Matrix for uniforms
+    float* uP();  // Projection Matrix for uniforms
+    float* uV();  // View Matrix for uniforms
 
     glm::mat4 GetLocalToParentMatrix();
     glm::mat4 GetLocalToWorldMatrix();

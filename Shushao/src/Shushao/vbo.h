@@ -1,7 +1,5 @@
 #pragma once
 
-#include <glad/glad.h>
-
 #include "Shushao/Core.h"
 #include "sepch.h"
 
@@ -12,14 +10,14 @@ namespace se {
 class SHUSHAO_API VboConfiguration {
 public:
     VboConfiguration(
-        GLenum target_ = GL_ARRAY_BUFFER,
-        GLuint location_ = 0,
-        GLint blocksize_ = 3,
-        GLenum type_ = GL_FLOAT,
-        GLboolean normalized_ = GL_FALSE,
-        GLsizei stride_ = 0,
-        const GLvoid* pointer_ = (void*)0,
-        GLenum usage_ = GL_STATIC_DRAW) {
+        unsigned int target_ = 0x8892,
+        unsigned int location_ = 0,
+        int blocksize_ = 3,
+        unsigned int type_ = 0x1406,
+        unsigned char normalized_ = 0,
+        int stride_ = 0,
+        const void* pointer_ = (void*)0,
+        unsigned int usage_ = 0x88E4) {
         target = target_;
         location = location_;
         blocksize = blocksize_;
@@ -30,14 +28,14 @@ public:
         usage = usage_;
     }
 
-    GLenum target = GL_ARRAY_BUFFER;
-    GLuint location = 0;
-    GLint blocksize = 3;
-    GLenum type = GL_FLOAT;
-    GLboolean normalized = GL_FALSE;
-    GLsizei stride = 0;
-    const GLvoid* pointer = (void*)0;
-    GLenum usage = GL_STATIC_DRAW;
+    unsigned int target = 0x8892;
+    unsigned int location = 0;
+    int blocksize = 3;
+    unsigned int type = 0x1406;
+    unsigned char normalized = 0;
+    int stride = 0;
+    const void* pointer = (void*)0;
+    unsigned int usage = 0x88E4;
 };
 
 extern VboConfiguration VBO_CONFIG_VERTEX;
@@ -59,9 +57,9 @@ public:
     Vbo(VboConfiguration config_) : config(config_) {}
     ~Vbo();
 
-    GLuint Id = 0;  // Vbo ID GL
-    GLsizeiptr buffersize = 0;
-    GLuint size = 0;
+    unsigned int Id = 0;  // Vbo ID GL
+    signed long long int buffersize = 0;
+    unsigned int size = 0;
     bool ready = false;
 
     VboConfiguration config;
@@ -77,16 +75,21 @@ public:
             return this;
         }
         Bind();
-        GLsizeiptr oldsize = buffersize;
+        signed long long int oldsize = buffersize;
         size = elements.size();
         buffersize = elements.size() * sizeof(T);
         if (oldsize == buffersize) {
-            glBufferSubData(config.target, 0, buffersize, &elements[0]);
+            BufferSubData(config.target, 0, buffersize, &elements[0]);
         } else {
-            glBufferData(config.target, buffersize, &elements[0], config.usage);
+            BufferData(config.target, buffersize, &elements[0], config.usage);
         }
         Unbind();
         return this;
     }
+
+    // per mascherare l'implementazione dei metodi glad/opengl
+    void BufferSubData(unsigned int target, signed long long int offset, signed long long int size, const void* data);
+    void BufferData(unsigned int target, signed long long int size, const void* data, int usage);
 };
+
 }  // namespace se

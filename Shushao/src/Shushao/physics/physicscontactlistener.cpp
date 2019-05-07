@@ -1,3 +1,6 @@
+
+#include <Box2D/Box2D.h>
+
 #include "physicscontactlistener.h"
 #include "collision2d.h"
 #include "collider2d.h"

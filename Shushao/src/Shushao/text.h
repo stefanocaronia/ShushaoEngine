@@ -1,7 +1,5 @@
 #pragma once
 
-#include <glad/glad.h>
-
 #include "Shushao/Core.h"
 #include "sepch.h"
 
@@ -65,7 +63,7 @@ private:
     Shader* shader = nullptr;
     Font* font = nullptr;
     Vao* VAO = nullptr;
-    GLuint vbo;
+    unsigned int vbo;
 
     unsigned int _pixelPerUnit = Config::pixelPerUnit;
     BottomAlign _bottomAlign = BottomAlign::HEIGHT;

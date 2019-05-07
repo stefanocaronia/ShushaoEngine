@@ -38,7 +38,7 @@ public:
     std::vector<glm::vec3> normals{
         {0.0f, 0.0f, -1.0f}};
 
-    std::vector<GLushort> indexes{
+    std::vector<unsigned short int> indexes{
         0, 1, 2,
         2, 3, 0};
 

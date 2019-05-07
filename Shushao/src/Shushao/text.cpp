@@ -1,3 +1,5 @@
+#include <glad/glad.h>
+
 #include "Shushao/Core.h"
 #include "sepch.h"
 

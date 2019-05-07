@@ -1,7 +1,5 @@
 #pragma once
 
-#include <Box2D/Box2D.h>
-
 #include "Shushao/Core.h"
 
 #include "physicscontactfilter.h"
@@ -15,9 +13,6 @@ public:
     static bool enabled;
     static bool debug;
 
-    static b2World* world;
-
-    static b2Vec2 gravity;
     static bool doSleep;
     static float32 timeStep;
     static int32 velocityIterations;
@@ -33,7 +28,8 @@ public:
     static void update();
     static void exit();
 
-private:
+    class Impl;  // Pimpl!
+    static std::unique_ptr<Impl> impl;
 };
 
 }  // namespace se

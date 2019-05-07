@@ -1,9 +1,10 @@
-#include "Shushao/Core.h"
-#include "sepch.h"
+#include <glad/glad.h>
 
+#include "Shushao/Core.h"
 #include "entity.h"
 #include "particlesystem.h"
 #include "physics/rigidbody2d.h"
+#include "sepch.h"
 #include "shaders/particlesshader.h"
 #include "transform.h"
 #include "utility.h"

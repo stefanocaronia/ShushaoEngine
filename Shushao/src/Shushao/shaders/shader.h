@@ -40,10 +40,10 @@ public:
     // values
     unsigned int texture;
 
-    void SetFloat(GLfloat&);
-    void SetInteger(GLint&);
-    void SetTextureIndex(GLint&);
-    void SetMatrix(GLfloat*);
+    void SetFloat(float&);
+    void SetInteger(int&);
+    void SetTextureIndex(int&);
+    void SetMatrix(float*);
     void SetVector(glm::vec2&);
     void SetVector(glm::vec3&);
     void SetVector(glm::vec4&);
@@ -79,10 +79,10 @@ public:
     void AddShaderUniform(std::string var_, Uniform::Type type_, unsigned int location_ = 0);
     void AddShaderUniform(std::string name_, std::string var_, Uniform::Type type_, unsigned int location_ = 0);
 
-    void SetFloat(std::string, GLfloat);
-    void SetInteger(std::string, GLint);
-    void SetTextureIndex(std::string, GLint);
-    void SetMatrix(std::string, GLfloat*);
+    void SetFloat(std::string, float);
+    void SetInteger(std::string, int);
+    void SetTextureIndex(std::string, int);
+    void SetMatrix(std::string, float*);
     void SetVector(std::string, glm::vec2);
     void SetVector(std::string, glm::vec3);
     void SetVector(std::string, glm::vec4);
@@ -91,12 +91,12 @@ public:
 
     unsigned int GetTextureIndex(std::string);
 
-    void SetMVP(GLfloat*);
-    void SetMV(GLfloat*);
-    void SetVP(GLfloat*);
-    void SetP(GLfloat*);
-    void SetV(GLfloat*);
-    void SetM(GLfloat*);
+    void SetMVP(float*);
+    void SetMV(float*);
+    void SetVP(float*);
+    void SetP(float*);
+    void SetV(float*);
+    void SetM(float*);
     void SetRenderColor(Color);
 
     void Enable(std::string var);

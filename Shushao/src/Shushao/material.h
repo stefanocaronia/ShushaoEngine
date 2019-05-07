@@ -1,6 +1,5 @@
 #pragma once
 
-#include <glad/glad.h>
 #include "Shushao/Core.h"
 #include "sepch.h"
 
@@ -12,8 +11,8 @@
 namespace se {
 
 struct SHUSHAO_API ParameterValue {
-    GLfloat f = 0;
-    GLint i = 0;
+    float f = 0;
+    int i = 0;
     Texture* tex = nullptr;
     glm::mat4 mat{0};
     glm::vec4 vec{0};
@@ -31,15 +30,15 @@ public:
     Uniform* uniform;
     ParameterValue value;
 
-    GLfloat GetFloat();
-    GLint GetInteger();
+    float GetFloat();
+    int GetInteger();
     Texture* GetTexture();
     glm::vec4 GetVector();
     glm::mat4 GetMatrix();
     Color GetColor();
 
-    void SetFloat(GLfloat);
-    void SetInteger(GLint);
+    void SetFloat(float);
+    void SetInteger(int);
     void SetTexture(Texture*);
     void SetVector(glm::vec4);
     void SetMatrix(glm::mat4);
@@ -66,15 +65,15 @@ public:
     void SetMainTexture(Texture*);
     void AddParameter(std::string, std::string, Uniform*);
 
-    GLfloat GetFloat(std::string var_);
-    GLint GetInteger(std::string var_);
+    float GetFloat(std::string var_);
+    int GetInteger(std::string var_);
     Texture* GetTexture(std::string var_);
     glm::vec4 GetVector(std::string var_);
     glm::mat4 GetMatrix(std::string var_);
     Color GetColor(std::string var_);
 
-    void SetFloat(std::string, GLfloat);
-    void SetInteger(std::string, GLint);
+    void SetFloat(std::string, float);
+    void SetInteger(std::string, int);
     void SetTexture(std::string, Texture*);
     void SetVector(std::string, glm::vec4);
     void SetMatrix(std::string, glm::mat4);

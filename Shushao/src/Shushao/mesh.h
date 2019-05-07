@@ -20,7 +20,7 @@ public:
     std::vector<glm::vec3> vertexData;
     std::vector<glm::vec2> uvData;
     std::vector<glm::vec3> normalsData;
-    std::vector<GLushort> indexesData;
+    std::vector<unsigned short int> indexesData;
 
     bool ready = false;
 

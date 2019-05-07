@@ -1,9 +1,10 @@
-#include "Shushao/Core.h"
-#include "sepch.h"
+#include <glad/glad.h>
 
+#include "Shushao/Core.h"
 #include "debug.h"
 #include "entity.h"
 #include "image.h"
+#include "sepch.h"
 #include "shaders/standardshader.h"
 #include "sprite.h"
 #include "transform.h"

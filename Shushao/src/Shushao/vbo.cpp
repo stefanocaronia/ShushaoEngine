@@ -1,7 +1,8 @@
-#include "Shushao/Core.h"
-#include "sepch.h"
+#include <glad/glad.h>
 
+#include "Shushao/Core.h"
 #include "debug.h"
+#include "sepch.h"
 #include "shaders/shader.h"
 #include "vbo.h"
 
@@ -100,4 +101,12 @@ Vbo* Vbo::Unbind() {
     glBindBuffer(config.target, 0);
     return this;
 }
+
+void Vbo::BufferSubData(unsigned int target, signed long long int offset, signed long long int size, const void* data) {
+    glBufferSubData(target, offset, size, data);
+}
+void Vbo::BufferData(unsigned int target, signed long long int size, const void* data, int usage) {
+    BufferData(target, size, data, usage);
+}
+
 }  // namespace se

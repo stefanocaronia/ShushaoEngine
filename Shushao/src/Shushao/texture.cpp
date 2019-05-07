@@ -1,5 +1,6 @@
 
 #include <SOIL.h>
+#include <glad/glad.h>
 
 #include "Shushao/Core.h"
 #include "sepch.h"
@@ -125,8 +126,7 @@ void Texture::Bind(unsigned char* image_) {
         return false;
 } */
 
-GLuint
-Texture::GetTextureID() {
+unsigned int Texture::GetTextureID() {
     return TextureID;
 }
 

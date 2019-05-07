@@ -1,7 +1,10 @@
+#include <Box2D/Box2D.h>
+
 #include "../entity.h"
 #include "../sprite.h"
 #include "../spriterenderer.h"
 #include "../transform.h"
+
 #include "collider2d.h"
 #include "rigidbody2d.h"
 
@@ -9,54 +12,71 @@ namespace se {
 
 //{ #region Collider2D (base virtual class)
 
+struct Collider2D::Impl {
+    b2FixtureDef fixtureDef;
+    b2Fixture* fixture = nullptr;
+};
+
+Collider2D::Collider2D() : collider(new Impl()) {}
+
 void Collider2D::setup() {
-    fixtureDef.density = density;
-    fixtureDef.friction = friction;
-    fixtureDef.restitution = restitution;
-    fixtureDef.isSensor = isSensor;
-    fixtureDef.userData = this;
+    collider->fixtureDef.density = density;
+    collider->fixtureDef.friction = friction;
+    collider->fixtureDef.restitution = restitution;
+    collider->fixtureDef.isSensor = isSensor;
+    collider->fixtureDef.userData = this;
 }
 
 void Collider2D::OnDestroy() {
     /*if (fixture != nullptr && rigidbody != nullptr) {
-			rigidbody->body->DestroyFixture(fixture);
-		}*/
+		rigidbody->body->DestroyFixture(fixture);
+	}*/
 }
 
 void Collider2D::ColliderEnter(Collider2D* other) {
     auto position = std::find(colliders.begin(), colliders.end(), other);
-    if (position == colliders.end())
+    if (position == colliders.end()) {
         colliders.push_back(other);
+    }
 }
 
 void Collider2D::ColliderExit(Collider2D* other) {
     auto position = std::find(colliders.begin(), colliders.end(), other);
-    if (position != colliders.end())
+    if (position != colliders.end()) {
         colliders.erase(position);
+    }
 }
 
 void Collider2D::SetDensity(float density_) {
     density = density_;
-    fixtureDef.density = density;
-    if (fixture != nullptr) fixture->SetDensity(density);
+    collider->fixtureDef.density = density;
+    if (collider->fixture != nullptr) {
+        collider->fixture->SetDensity(density);
+    }
 }
 
 void Collider2D::SetRestitution(float restitution_) {
     restitution = restitution_;
-    fixtureDef.restitution = restitution;
-    if (fixture != nullptr) fixture->SetRestitution(restitution);
+    collider->fixtureDef.restitution = restitution;
+    if (collider->fixture != nullptr) {
+        collider->fixture->SetRestitution(restitution);
+    }
 }
 
 void Collider2D::SetFriction(float friction_) {
     friction = friction_;
-    fixtureDef.friction = friction;
-    if (fixture != nullptr) fixture->SetFriction(friction);
+    collider->fixtureDef.friction = friction;
+    if (collider->fixture != nullptr) {
+        collider->fixture->SetFriction(friction);
+    }
 }
 
 void Collider2D::SetSensor(bool sensor_) {
     isSensor = sensor_;
-    fixtureDef.isSensor = isSensor;
-    if (fixture != nullptr) fixture->SetSensor(sensor_);
+    collider->fixtureDef.isSensor = isSensor;
+    if (collider->fixture != nullptr) {
+        collider->fixture->SetSensor(sensor_);
+    }
 }
 
 void Collider2D::Awake() {
@@ -77,19 +97,26 @@ void Collider2D::FixedUpdate() {
 
 void Collider2D::Attach() {
     rigidbody = entity->GetComponent<Rigidbody2D>();
-    if (rigidbody == nullptr || rigidbody->body == nullptr)
+    if (rigidbody == nullptr || rigidbody->info->body == nullptr) {
         return;
-    fixture = rigidbody->body->CreateFixture(&fixtureDef);
+    }
+    collider->fixture = rigidbody->info->body->CreateFixture(&(collider->fixtureDef));
 }
 
 void Collider2D::Reset() {
-    rigidbody->body->DestroyFixture(fixture);
-    fixture = rigidbody->body->CreateFixture(&fixtureDef);
+    rigidbody->info->body->DestroyFixture(collider->fixture);
+    collider->fixture = rigidbody->info->body->CreateFixture(&(collider->fixtureDef));
 }
 
 //}
 
 //{ #region CircleCollider2D
+
+struct CircleCollider2D::Impl {
+    b2CircleShape shape;
+};
+
+CircleCollider2D::CircleCollider2D() : info(new CircleCollider2D::Impl()) {}
 
 void CircleCollider2D::SetShape(glm::vec2 position_, float radius_) {
     position = position_;
@@ -97,14 +124,22 @@ void CircleCollider2D::SetShape(glm::vec2 position_, float radius_) {
 
     SpriteRenderer* sr = entity->GetComponent<SpriteRenderer>();
     if (sr != nullptr) {
-        shape.m_p.Set(position_.x - sr->sprite->pivot.x * scale.x, position_.y - sr->sprite->pivot.y * scale.y);
+        info->shape.m_p.Set(position_.x - sr->sprite->pivot.x * scale.x, position_.y - sr->sprite->pivot.y * scale.y);
     } else {
-        shape.m_p.Set(position_.x, position_.y);
+        info->shape.m_p.Set(position_.x, position_.y);
     }
-    shape.m_radius = radius_ * scale.x;
-    fixtureDef.shape = &shape;
+    info->shape.m_radius = radius_ * scale.x;
+    collider->fixtureDef.shape = &(info->shape);
 }
 
+void CircleCollider2D::Copy(CircleCollider2D* other) {
+    if (other == nullptr) return;
+    Collider2D::Copy(other);
+
+    info->shape = other->info->shape;
+    position = other->position;
+    radius = other->radius;
+}
 void CircleCollider2D::ResetShape() {
     scale = {transform->scale.x, transform->scale.y};
     SetShape(position, radius);
@@ -114,17 +149,31 @@ void CircleCollider2D::ResetShape() {
 
 //{ #region BoxCollider2D
 
+struct BoxCollider2D::Impl {
+    b2PolygonShape shape;
+};
+
+BoxCollider2D::BoxCollider2D() : info(new BoxCollider2D::Impl()) {}
+
 void BoxCollider2D::SetShape(glm::vec2 hsize) {
     SpriteRenderer* sr = entity->GetComponent<SpriteRenderer>();
 
     boxHalfSize = hsize;
     if (sr != nullptr) {
         b2Vec2 pivot(sr->sprite->pivot.x * scale.x, sr->sprite->pivot.y * scale.y);
-        shape.SetAsBox(boxHalfSize.x * scale.x, boxHalfSize.y * scale.y, -pivot, 0.0f);
+        info->shape.SetAsBox(boxHalfSize.x * scale.x, boxHalfSize.y * scale.y, -pivot, 0.0f);
     } else {
-        shape.SetAsBox(boxHalfSize.x * scale.x, boxHalfSize.y * scale.y);
+        info->shape.SetAsBox(boxHalfSize.x * scale.x, boxHalfSize.y * scale.y);
     }
-    fixtureDef.shape = &shape;
+    collider->fixtureDef.shape = &(info->shape);
+}
+
+void BoxCollider2D::Copy(BoxCollider2D* other) {
+    if (other == nullptr) return;
+    Collider2D::Copy(other);
+
+    info->shape = other->info->shape;
+    boxHalfSize = other->boxHalfSize;
 }
 
 void BoxCollider2D::ResetShape() {
@@ -136,16 +185,14 @@ void BoxCollider2D::ResetShape() {
 
 //{ #region EdgeCollider2D
 
-void EdgeCollider2D::SetShape(glm::vec2 start, glm::vec2 end) {
-    shape.Set(b2Vec2(start.x, start.y), b2Vec2(end.x, end.y));
-    fixtureDef.shape = &shape;
-}
+// TODO EdgeCollider2D
 
 //}
 
 //{ #region PolygonCollider2D
 
-void PolygonCollider2D::SetShape(std::vector<glm::vec2>) {}
+// TODO PolygonCollider2D
 
 //}
+
 }  // namespace se

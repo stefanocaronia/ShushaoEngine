@@ -1,8 +1,8 @@
+#include <glad/glad.h>
 
 #include "Shushao/Core.h"
-#include "sepch.h"
-
 #include "mesh.h"
+#include "sepch.h"
 #include "utility.h"
 
 namespace se {

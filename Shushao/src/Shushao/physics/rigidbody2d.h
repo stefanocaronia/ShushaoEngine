@@ -1,13 +1,8 @@
 #pragma once
 
-#include <Box2D/Box2D.h>
-
-#include "Shushao/Core.h"
 #include "../component.h"
 
 namespace se {
-
-class Collider2D;
 
 enum class RigidbodyType {
     STATIC = b2_staticBody,
@@ -17,9 +12,9 @@ enum class RigidbodyType {
 
 class SHUSHAO_API Rigidbody2D : public Component {
 public:
-    virtual void setup() { name = "Rigidbody 2D"; }
-
-    b2Body* body = nullptr;
+    virtual void setup() {
+        name = "Rigidbody 2D";
+    }
 
     glm::vec2 position = glm::vec2(0, 0);
     glm::vec2 velocity = glm::vec2(0, 0);
@@ -28,18 +23,8 @@ public:
 
     bool fixedRotation = false;
 
-    void SetType(RigidbodyType type_) {
-        type = type_;
-        bodyDef.type = (b2BodyType)type;
-        if (body != nullptr) body->SetType(bodyDef.type);
-    }
-
-    void SetFixedRotation(bool fr) {
-        fixedRotation = fr;
-        bodyDef.fixedRotation = fr;
-        if (body != nullptr) body->SetFixedRotation(fr);
-    }
-
+    void SetType(RigidbodyType type_);
+    void SetFixedRotation(bool fr);
     void Copy(Rigidbody2D* other);
 
     void Awake();
@@ -49,8 +34,10 @@ public:
     void OnDisable();
     void OnEnable();
 
+    struct Impl;  // Pimpl!
+    std::unique_ptr<Impl> info;
+
 private:
-    b2BodyDef bodyDef;
     RigidbodyType type = RigidbodyType::DYNAMIC;
 };
 

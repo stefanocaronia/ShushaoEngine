@@ -1,9 +1,10 @@
-#include "Shushao/Core.h"
-#include "sepch.h"
+#include <glad/glad.h>
 
+#include "Shushao/Core.h"
 #include "font.h"
 #include "glmanager.h"
 #include "resources.h"
+#include "sepch.h"
 #include "utility.h"
 
 namespace se {

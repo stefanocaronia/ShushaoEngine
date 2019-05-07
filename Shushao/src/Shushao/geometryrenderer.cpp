@@ -1,9 +1,10 @@
-#include "Shushao/Core.h"
-#include "sepch.h"
+#include <glad/glad.h>
 
+#include "Shushao/Core.h"
 #include "color.h"
 #include "geometryrenderer.h"
 #include "glmanager.h"
+#include "sepch.h"
 #include "shaders/wireframeshader.h"
 #include "transform.h"
 

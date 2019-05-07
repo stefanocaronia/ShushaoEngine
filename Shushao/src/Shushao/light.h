@@ -1,6 +1,5 @@
 #pragma once
 
-#include <glad/glad.h>
 #include "Shushao/Core.h"
 #include "sepch.h"
 
@@ -10,9 +9,9 @@
 namespace se {
 
 struct SHUSHAO_API Attenuation {
-    GLfloat constant;
-    GLfloat linear;
-    GLfloat quadratic;
+    float constant;
+    float linear;
+    float quadratic;
 };
 
 struct SHUSHAO_API UniformLight {
@@ -21,10 +20,10 @@ struct SHUSHAO_API UniformLight {
     glm::vec3 ambient;
     glm::vec3 diffuse;
     glm::vec3 specular;
-    GLfloat constant;
-    GLfloat linear;
-    GLfloat quadratic;
-    GLfloat cutoff;
+    float constant;
+    float linear;
+    float quadratic;
+    float cutoff;
 };
 
 class SHUSHAO_API Light : public Component {

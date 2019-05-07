@@ -1,7 +1,5 @@
 #pragma once
 
-#include <glad/glad.h>
-
 #include "Shushao/Core.h"
 #include "sepch.h"
 
@@ -18,7 +16,7 @@ public:
     Vao();
     ~Vao();
 
-    GLuint Id = 0;  // Vao ID GL
+    unsigned int Id = 0;  // Vao ID GL
     bool inUse = false;
     bool ready = false;
 

@@ -1,7 +1,5 @@
 #pragma once
 
-#include <glad/glad.h>
-
 #include "Shushao/Core.h"
 #include "sepch.h"
 
@@ -24,8 +22,8 @@ public:
     bool LoadEmbedded(int IDRES, std::string library = "");
     bool LoadBytes(std::vector<char> data);
 
-    GLuint GetTextureID();
-    GLuint TextureID = 0;
+    unsigned int GetTextureID();
+    unsigned int TextureID = 0;
 
 private:
     void Bind(unsigned char* image_);

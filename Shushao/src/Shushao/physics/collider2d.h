@@ -1,8 +1,5 @@
 #pragma once
 
-#include <Box2D/Box2D.h>
-
-#include "Shushao/Core.h"
 #include "../component.h"
 
 namespace se {
@@ -14,8 +11,6 @@ public:
     virtual void setup();
 
     Rigidbody2D* rigidbody = nullptr;
-    b2FixtureDef fixtureDef;
-    b2Fixture* fixture = nullptr;
 
     glm::vec2 scale = {1.0f, 1.0f};
 
@@ -55,64 +50,47 @@ public:
         isSensor = other->isSensor;
     }
 
+    virtual void ResetShape() = 0;
+
+protected:
+    struct Impl;  // Forward declaration of the implementation class
+    std::unique_ptr<Impl> collider;
+
 protected:
     std::vector<Collider2D*> colliders;
-
-private:
 };
 
 class SHUSHAO_API PolygonCollider2D : public Collider2D {
 public:
-    b2PolygonShape shape;
+    // b2PolygonShape shape;
     void SetShape(std::vector<glm::vec2>);
-
     void ResetShape() {}
-
-    void Copy(PolygonCollider2D* other) {
-        if (other == nullptr) return;
-        Collider2D::Copy(other);
-
-        shape = other->shape;
-    }
-
-protected:
+    void Copy(PolygonCollider2D* other);
 };
 
 class SHUSHAO_API BoxCollider2D : public Collider2D {
 public:
     glm::vec2 boxHalfSize;
 
-    b2PolygonShape shape;
     void SetShape(glm::vec2);
-    void ResetShape();
+    virtual void ResetShape();
+    void Copy(BoxCollider2D* other);
 
-    void Copy(BoxCollider2D* other) {
-        if (other == nullptr) return;
-        Collider2D::Copy(other);
-
-        shape = other->shape;
-        boxHalfSize = other->boxHalfSize;
-    }
-
-protected:
+    struct Impl;  // Forward declaration of the implementation class
+    std::unique_ptr<Impl> info;
 };
 
 class SHUSHAO_API CircleCollider2D : public Collider2D {
 public:
-    b2CircleShape shape;
-    void SetShape(glm::vec2, float);
-    void ResetShape();
-
-    void Copy(CircleCollider2D* other) {
-        if (other == nullptr) return;
-        Collider2D::Copy(other);
-
-        shape = other->shape;
-    }
-
-protected:
     glm::vec2 position;
     float radius;
+
+    void SetShape(glm::vec2 position_, float radius_);
+    virtual void ResetShape();
+    void Copy(CircleCollider2D* other);
+
+    struct Impl;  // Forward declaration of the implementation class
+    std::unique_ptr<Impl> info;
 };
 
 class SHUSHAO_API EdgeCollider2D : public Collider2D {
@@ -130,6 +108,8 @@ public:
         shape = other->shape;
     }
 
-protected:
+private:
+    class B2;  // Forward declaration of the implementation class
+    std::unique_ptr<B2> b2;
 };
 }  // namespace se

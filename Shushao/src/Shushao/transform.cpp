@@ -242,27 +242,27 @@ void Transform::buildMVP() {
     _VP = _P * _V;
 }
 
-GLfloat* Transform::uMVP() {
+float* Transform::uMVP() {
     return &_MVP[0][0];
 }
 
-GLfloat* Transform::uM() {
+float* Transform::uM() {
     return &_M[0][0];
 }
 
-GLfloat* Transform::uP() {
+float* Transform::uP() {
     return &_P[0][0];
 }
 
-GLfloat* Transform::uV() {
+float* Transform::uV() {
     return &_V[0][0];
 }
 
-GLfloat* Transform::uMV() {
+float* Transform::uMV() {
     return &_MV[0][0];
 }
 
-GLfloat* Transform::uVP() {
+float* Transform::uVP() {
     return &_VP[0][0];
 }
 

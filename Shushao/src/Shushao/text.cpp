@@ -1,19 +1,16 @@
 #include <glad/glad.h>
 
-#include "Shushao/Core.h"
-#include "sepch.h"
-
-#include "debug.h"
-#include "design.h"
-#include "entity.h"
+#include "Debug.h"
+#include "Design.h"
+#include "Entity.h"
 #include "font.h"
-#include "glmanager.h"
-#include "rect.h"
-#include "shaders/fontshader.h"
-#include "shaders/shader.h"
-#include "text.h"
-#include "transform.h"
-#include "vao.h"
+#include "GLManager.h"
+#include "Rect.h"
+#include "Shaders/fontShader.h"
+#include "Shaders/Shader.h"
+#include "Text.h"
+#include "Transform.h"
+#include "Vao.h"
 
 namespace se {
 

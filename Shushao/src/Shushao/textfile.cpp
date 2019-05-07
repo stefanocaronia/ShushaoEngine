@@ -1,10 +1,6 @@
-
-#include "Shushao/Core.h"
-#include "sepch.h"
-
-#include "resources.h"
+#include "Resources.h"
+#include "Utility.h"
 #include "textfile.h"
-#include "utility.h"
 
 namespace se {
 

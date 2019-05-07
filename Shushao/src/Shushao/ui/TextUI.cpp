@@ -1,6 +1,5 @@
-
 #include "TextUI.h"
-#include "../text.h"
+#include "Shushao/Text.h"
 
 namespace se {
 namespace ui {

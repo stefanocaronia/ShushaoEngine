@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Shushao/Core.h"
-#include "Shushao/Events/Event.h"
+#include "Core.h"
+#include "Events/Event.h"
 
 namespace se {
 

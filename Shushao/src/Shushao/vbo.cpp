@@ -1,10 +1,8 @@
 #include <glad/glad.h>
 
-#include "Shushao/Core.h"
-#include "debug.h"
-#include "sepch.h"
-#include "shaders/shader.h"
-#include "vbo.h"
+#include "Debug.h"
+#include "Shaders/Shader.h"
+#include "Vbo.h"
 
 namespace se {
 

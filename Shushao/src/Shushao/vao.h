@@ -1,17 +1,17 @@
 #pragma once
 
-#include "Shushao/Core.h"
+#include "Core.h"
 #include "sepch.h"
 
-#include "color.h"
-#include "debug.h"
-#include "object.h"
-#include "shaders/shader.h"
-#include "vbo.h"
+#include "Color.h"
+#include "Debug.h"
+#include "Object.h"
+#include "Shaders/Shader.h"
+#include "Vbo.h"
 
 namespace se {
 
-class SHUSHAO_API Vao : public Object {
+class Vao : public Object {
 public:
     Vao();
     ~Vao();

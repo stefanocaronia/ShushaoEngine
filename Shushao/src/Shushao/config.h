@@ -3,8 +3,8 @@
 #include "Shushao/Core.h"
 #include "sepch.h"
 
-#include "levelmap.h"
-#include "utility.h"
+#include "LevelMap.h"
+#include "Utility.h"
 
 #define USER_CONFIG_FILE "config/config.ini"
 

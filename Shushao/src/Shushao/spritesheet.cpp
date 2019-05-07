@@ -1,10 +1,8 @@
-#include "spritesheet.h"
-#include "Shushao/Core.h"
-#include "rect.h"
-#include "resources.h"
-#include "sepch.h"
-#include "textureatlas.h"
-#include "utility.h"
+#include "SpriteSheet.h"
+#include "Resources.h"
+#include "Utility.h"
+#include "Rect.h"
+#include "TextureAtlas.h"
 
 namespace se {
 

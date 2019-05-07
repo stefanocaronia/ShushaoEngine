@@ -1,12 +1,11 @@
 #pragma once
 
-#include "Shushao/Core.h"
+#include <spdlog/fmt/ostr.h>
+#include <spdlog/spdlog.h>
+
+#include "Core.h"
+#include "Logger.h"
 #include "sepch.h"
-
-#include "logger.h"
-
-#include "spdlog/fmt/ostr.h"
-#include "spdlog/spdlog.h"
 
 namespace se {
 

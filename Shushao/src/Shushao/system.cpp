@@ -1,7 +1,4 @@
-#include <iostream>
-
-#include "debug.h"
-#include "service.h"
+#include "Debug.h"
 #include "system.h"
 
 namespace se {

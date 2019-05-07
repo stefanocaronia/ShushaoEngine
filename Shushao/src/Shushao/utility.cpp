@@ -1,9 +1,5 @@
-
-#include "Shushao/Core.h"
-#include "sepch.h"
-
-#include "debug.h"
-#include "utility.h"
+#include "Debug.h"
+#include "Utility.h"
 
 namespace se {
 

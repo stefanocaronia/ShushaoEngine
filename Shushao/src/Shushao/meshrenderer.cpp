@@ -1,13 +1,13 @@
 
 #include <glad/glad.h>
 
-#include "debug.h"
-#include "glmanager.h"
-#include "mesh.h"
-#include "meshrenderer.h"
+#include "Debug.h"
+#include "GLManager.h"
+#include "Mesh.h"
+#include "MeshRenderer.h"
+#include "Shaders/phongShader.h"
+#include "Transform.h"
 #include "sepch.h"
-#include "shaders/phongshader.h"
-#include "transform.h"
 
 namespace se {
 

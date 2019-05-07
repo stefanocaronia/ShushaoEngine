@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Shushao/Core.h"
+#include "Core.h"
 #include "sepch.h"
 
-#include "object.h"
-#include "resource.h"
+#include "Object.h"
+#include "Resource.h"
 
 namespace se {
 

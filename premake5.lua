@@ -134,7 +134,6 @@ project "Game"
 		"%{Engine}/vendor/glm",
         "%{Engine}/vendor/spdlog/include",
 		"%{Engine}/vendor/boost",
-		-- "%{Engine}/vendor/Box2D",
 		"%{Engine}/vendor/freetype/include"
     }
 

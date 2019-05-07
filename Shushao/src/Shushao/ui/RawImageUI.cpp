@@ -1,6 +1,5 @@
-
 #include "RawImageUI.h"
-#include "../rawimage.h"
+#include "Shushao/RawImage.h"
 
 namespace se {
 namespace ui {
@@ -9,5 +8,6 @@ namespace ui {
         transform->isRectTransform = true;
         AddComponent<se::RawImage>();
     }
+
 }  // namespace ui
 }  // namespace se

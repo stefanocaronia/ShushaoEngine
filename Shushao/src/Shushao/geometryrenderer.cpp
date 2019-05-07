@@ -1,12 +1,12 @@
 #include <glad/glad.h>
 
 #include "Shushao/Core.h"
-#include "color.h"
-#include "geometryrenderer.h"
-#include "glmanager.h"
+#include "Color.h"
+#include "geometryRenderer.h"
+#include "GLManager.h"
 #include "sepch.h"
-#include "shaders/wireframeshader.h"
-#include "transform.h"
+#include "Shaders/wireframeShader.h"
+#include "Transform.h"
 
 namespace se {
 

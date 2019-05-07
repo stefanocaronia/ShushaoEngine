@@ -1,6 +1,6 @@
 #pragma once
 
 #include "Shushao.h"
-#include "resources/resources.h"
+#include "resources/Resources.h"
 
 #include <glm/glm.hpp>

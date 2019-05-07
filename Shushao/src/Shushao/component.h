@@ -1,10 +1,9 @@
 #pragma once
 
-#include "Shushao/Core.h"
+#include "Core.h"
+#include "CoroutineHolder.h"
+#include "Object.h"
 #include "sepch.h"
-
-#include "coroutineholder.h"
-#include "object.h"
 
 namespace se {
 

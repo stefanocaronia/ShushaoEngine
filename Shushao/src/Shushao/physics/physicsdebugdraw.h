@@ -1,15 +1,20 @@
 #pragma once
 
-#include "../shaders/shader.h"
-#include "../vao.h"
 #include "Shushao/Core.h"
+#include "Shushao/shaders/Shader.h"
+#include "Shushao/Vao.h"
 
 namespace se {
 
 class PhysicsDebugDraw {
 public:
-    class Impl;
-    std::unique_ptr<Impl> impl;
+    PhysicsDebugDraw();
+    ~PhysicsDebugDraw() {
+        if (impl) delete impl;
+    }
+
+    class Impl;  // Pimpl!
+    Impl* impl;
 };
 
 }  // namespace se

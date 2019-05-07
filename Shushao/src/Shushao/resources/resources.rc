@@ -1,5 +1,5 @@
 #include <windows.h>
-#include "resources.h"
+#include "Resources.h"
 
 STANDARDSHADER_VERT     RCDATA  "engine/shaders/glsl/standardshader.vert"
 STANDARDSHADER_FRAG     RCDATA  "engine/shaders/glsl/standardshader.frag"

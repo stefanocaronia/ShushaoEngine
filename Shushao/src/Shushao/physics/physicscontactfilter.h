@@ -2,11 +2,15 @@
 
 namespace se {
 
-class b2ContactFilter;
-class b2Fixture;
+class PhysicsContactFilter {
+public:
+    PhysicsContactFilter();
+    ~PhysicsContactFilter() {
+        if (impl) delete impl;
+    }
 
-class PhysicsContactFilter : public b2ContactFilter {
-    bool ShouldCollide(b2Fixture* fixtureA, b2Fixture* fixtureB);
+    class Impl;  // Pimpl!
+    Impl* impl;
 };
 
 }  // namespace se

@@ -1,5 +1,5 @@
-#include "gradient.h"
-#include "debug.h"
+#include "Gradient.h"
+#include "Debug.h"
 
 namespace se {
 

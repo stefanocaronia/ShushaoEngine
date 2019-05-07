@@ -1,5 +1,5 @@
-#include "color.h"
-#include "utility.h"
+#include "Color.h"
+#include "Utility.h"
 
 namespace se {
 

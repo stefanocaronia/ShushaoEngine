@@ -1,7 +1,4 @@
-#include "Shushao/Core.h"
-#include "sepch.h"
-
-#include "sprite.h"
+#include "Sprite.h"
 #include "timeline.h"
 
 namespace se {

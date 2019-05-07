@@ -1,7 +1,4 @@
-#include <iostream>
-#include <sstream>
-
-#include "rect.h"
+#include "Rect.h"
 
 namespace se {
 

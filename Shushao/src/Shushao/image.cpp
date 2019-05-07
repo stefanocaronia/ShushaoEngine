@@ -1,13 +1,13 @@
 #include <glad/glad.h>
 
 #include "Shushao/Core.h"
-#include "debug.h"
-#include "entity.h"
-#include "image.h"
+#include "Debug.h"
+#include "Entity.h"
+#include "Image.h"
 #include "sepch.h"
-#include "shaders/standardshader.h"
-#include "sprite.h"
-#include "transform.h"
+#include "Shaders/StandardShader.h"
+#include "Sprite.h"
+#include "Transform.h"
 
 namespace se {
 

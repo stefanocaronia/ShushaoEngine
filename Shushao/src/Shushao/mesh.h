@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Shushao/Core.h"
+#include "Core.h"
 #include "sepch.h"
 
-#include "object.h"
-#include "texture.h"
-#include "vao.h"
+#include "Object.h"
+#include "Texture.h"
+#include "Vao.h"
 
 namespace se {
 

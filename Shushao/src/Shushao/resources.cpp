@@ -1,11 +1,8 @@
 
-#include "Shushao/Core.h"
-#include "sepch.h"
-
-#include "resources.h"
-#include "shaders/shader.h"
-#include "texture.h"
-#include "utility.h"
+#include "Resources.h"
+#include "Utility.h"
+#include "Shaders/Shader.h"
+#include "Texture.h"
 
 namespace se {
 

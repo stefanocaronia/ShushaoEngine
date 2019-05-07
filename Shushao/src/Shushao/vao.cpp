@@ -1,9 +1,7 @@
 #include <glad/glad.h>
 
-#include "Shushao/Core.h"
-#include "debug.h"
-#include "sepch.h"
-#include "vao.h"
+#include "Debug.h"
+#include "Vao.h"
 
 namespace se {
 

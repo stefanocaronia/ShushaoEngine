@@ -1,12 +1,11 @@
-#include "Shushao/Core.h"
-#include "sepch.h"
-
 #include <glad/glad.h>
 
-#include "design.h"
-#include "glmanager.h"
-#include "scenemanager.h"
-#include "shaders/baseshader.h"
+#include "Core.h"
+#include "Design.h"
+#include "GLManager.h"
+#include "SceneManager.h"
+#include "Shaders/BaseShader.h"
+#include "sepch.h"
 
 namespace se {
 

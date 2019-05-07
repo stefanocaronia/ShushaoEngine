@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Shushao/Core.h"
-#include "object.h"
+#include "Core.h"
+#include "Object.h"
 #include "sepch.h"
-#include "sprite.h"
-#include "textureatlas.h"
+#include "Sprite.h"
+#include "TextureAtlas.h"
 
 namespace se {
 

@@ -2,12 +2,9 @@
 #include <SOIL.h>
 #include <glad/glad.h>
 
-#include "Shushao/Core.h"
-#include "sepch.h"
-
-#include "resources.h"
-#include "texture.h"
-#include "utility.h"
+#include "Resources.h"
+#include "Utility.h"
+#include "Texture.h"
 
 namespace se {
 

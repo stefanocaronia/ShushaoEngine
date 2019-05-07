@@ -3,11 +3,11 @@
 #include "Shushao/Core.h"
 #include "sepch.h"
 
-#include "resource.h"
-#include "resources/resources.h"
-#include "shaders/shader.h"
-#include "texture.h"
-#include "textureatlas.h"
+#include "Resource.h"
+#include "resources/Resources.h"
+#include "Shaders/Shader.h"
+#include "Texture.h"
+#include "TextureAtlas.h"
 
 namespace se {
 

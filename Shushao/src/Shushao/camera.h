@@ -3,9 +3,9 @@
 #include "Shushao/Core.h"
 #include "sepch.h"
 
-#include "color.h"
-#include "component.h"
-#include "rect.h"
+#include "Color.h"
+#include "Component.h"
+#include "Rect.h"
 
 namespace se {
 

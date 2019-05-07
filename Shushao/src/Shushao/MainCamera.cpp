@@ -1,6 +1,5 @@
-#include "maincamera.h"
-#include "../camera.h"
-#include "../transform.h"
+#include "MainCamera.h"
+#include "Transform.h"
 
 namespace se {
 void MainCamera::Awake() {

@@ -2,10 +2,10 @@
 
 #include <boost/variant.hpp>
 
-#include "Shushao/Core.h"
+#include "Core.h"
 #include "sepch.h"
-#include "camera.h"
-#include "component.h"
+#include "Camera.h"
+#include "Component.h"
 
 namespace se {
 

@@ -1,13 +1,13 @@
 #pragma once
 
-#include "../component.h"
+#include "Shushao/Component.h"
 
 namespace se {
 
 enum class RigidbodyType {
-    STATIC = b2_staticBody,
-    KINEMATIC = b2_kinematicBody,
-    DYNAMIC = b2_dynamicBody
+    STATIC = 0, // b2_staticBody
+    KINEMATIC = 1, // b2_kinematicBody
+    DYNAMIC = 2 // b2_dynamicBody
 };
 
 class SHUSHAO_API Rigidbody2D : public Component {
@@ -35,7 +35,7 @@ public:
     void OnEnable();
 
     struct Impl;  // Pimpl!
-    std::unique_ptr<Impl> info;
+    std::shared_ptr<Impl> info;
 
 private:
     RigidbodyType type = RigidbodyType::DYNAMIC;

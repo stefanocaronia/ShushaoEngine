@@ -1,10 +1,8 @@
-#include "debuggrid.h"
-
-#include "../color.h"
-#include "../debug.h"
-#include "../geometryrenderer.h"
-#include "../glmanager.h"
-#include "../scenemanager.h"
+#include "Color.h"
+#include "Debug.h"
+#include "GLManager.h"
+#include "GeometryRenderer.h"
+#include "SceneManager.h"
 
 namespace se {
 

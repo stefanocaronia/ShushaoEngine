@@ -1,11 +1,11 @@
-#include "config.h"
-#include "Shushao/Core.h"
-#include "debug.h"
-#include "levelmap.h"
-#include "resources.h"
+#include "Config.h"
+#include "Core.h"
+#include "Debug.h"
+#include "LevelMap.h"
+#include "Resources.h"
+#include "Time.h"
+#include "Utility.h"
 #include "sepch.h"
-#include "time.h"
-#include "utility.h"
 
 namespace Config {
 

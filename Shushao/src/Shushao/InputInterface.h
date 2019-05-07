@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Shushao/Core.h"
+#include "Core.h"
 
 namespace se {
 

@@ -3,9 +3,9 @@
 #include "Shushao/Core.h"
 #include "sepch.h"
 
-#include "component.h"
-#include "entity.h"
-#include "scene.h"
+#include "Component.h"
+#include "Entity.h"
+#include "Scene.h"
 
 namespace se {
 

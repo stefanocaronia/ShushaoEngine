@@ -3,8 +3,8 @@
 #include "Shushao/Core.h"
 #include "sepch.h"
 
-#include "component.h"
-#include "playable.h"
+#include "Component.h"
+#include "Playable.h"
 
 namespace se {
 

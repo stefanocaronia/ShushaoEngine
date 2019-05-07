@@ -1,7 +1,7 @@
-#include "glmanager.h"
+#include "GLManager.h"
 #include "Application.h"
-#include "config.h"
-#include "inputinterface.h"
+#include "Config.h"
+#include "InputInterface.h"
 
 #include <glad/glad.h>
 

@@ -1,8 +1,8 @@
-#include "canvas.h"
-#include "entity.h"
-#include "glmanager.h"
-#include "scenemanager.h"
-#include "transform.h"
+#include "Canvas.h"
+#include "Entity.h"
+#include "GLManager.h"
+#include "SceneManager.h"
+#include "Transform.h"
 
 namespace se {
 

@@ -3,10 +3,10 @@
 #include "sepch.h"
 
 #include "Application.h"
-#include "debug.h"
-#include "glmanager.h"
+#include "Debug.h"
+#include "GLManager.h"
 #include "input.h"
-#include "stime.h"
+#include "Time.h"
 #include "system.h"
 
 namespace se {

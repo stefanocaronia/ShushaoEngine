@@ -1,20 +1,20 @@
 #pragma once
 
-#include "Shushao/Core.h"
+#include "Core.h"
 #include "sepch.h"
 
-#include "object.h"
-#include "sprite.h"
-#include "spritesheet.h"
+#include "Object.h"
+#include "Sprite.h"
+#include "SpriteSheet.h"
 
 namespace se {
 
 enum class PropertyType {
     INT,
     FLOAT,
-    //VEC2,
+    // VEC2,
     VEC3,
-    //VEC4,
+    // VEC4,
     SPRITE
 };
 

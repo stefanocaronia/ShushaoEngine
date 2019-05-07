@@ -1,8 +1,8 @@
-#include "component.h"
-#include "debug.h"
-#include "gamedata.h"
-#include "scenemanager.h"
-#include "utility.h"
+#include "Debug.h"
+#include "Utility.h"
+#include "Component.h"
+#include "GameData.h"
+#include "SceneManager.h"
 
 namespace se {
 

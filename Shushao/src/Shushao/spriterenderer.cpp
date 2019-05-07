@@ -1,12 +1,11 @@
 #include <glad/glad.h>
 
-#include "debug.h"
-#include "glmanager.h"
-#include "sepch.h"
-#include "shaders/standardshader.h"
-#include "sprite.h"
-#include "spriterenderer.h"
-#include "transform.h"
+#include "Debug.h"
+#include "GLManager.h"
+#include "Shaders/StandardShader.h"
+#include "Sprite.h"
+#include "spriteRenderer.h"
+#include "Transform.h"
 
 namespace se {
 

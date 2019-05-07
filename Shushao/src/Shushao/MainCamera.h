@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../camera.h"
-#include "../entity.h"
+#include "Camera.h"
+#include "Entity.h"
 
 namespace se {
 

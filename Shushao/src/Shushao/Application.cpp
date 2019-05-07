@@ -1,19 +1,20 @@
 
-#include "Shushao/Core.h"
+#include "Core.h"
 #include "sepch.h"
 
 #include "Application.h"
-#include "config.h"
-#include "debug.h"
-#include "design.h"
-#include "events/ApplicationEvent.h"
-#include "font.h"
-#include "glmanager.h"
-#include "input.h"
-#include "physics/physics.h"
-#include "resources.h"
-#include "scenemanager.h"
-#include "system.h"
+#include "Config.h"
+#include "Debug.h"
+#include "Design.h"
+#include "Events/ApplicationEvent.h"
+#include "Font.h"
+#include "GLManager.h"
+#include "Input.h"
+#include "Physics/Physics.h"
+#include "Physics/PhysicsImpl.h"
+#include "Resources.h"
+#include "SceneManager.h"
+#include "System.h"
 
 namespace se {
 
@@ -190,7 +191,7 @@ void Application::render() {
     SceneManager::activeScene->render();
     Render();  // (derived)
     SceneManager::activeScene->renderOverlay();
-    if (Physics::enabled && Physics::debug) Physics::world->DrawDebugData();
+    if (Physics::enabled && Physics::debug) Physics::impl->world->DrawDebugData();
     Time::frameCount++;
 }
 

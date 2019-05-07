@@ -1,6 +1,6 @@
 
-#include "curve.h"
-#include "debug.h"
+#include "Curve.h"
+#include "Debug.h"
 
 namespace se {
 

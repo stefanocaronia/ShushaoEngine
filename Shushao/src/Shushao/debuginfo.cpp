@@ -1,8 +1,8 @@
-#include "debuginfo.h"
-#include "color.h"
-#include "resources.h"
-#include "ui/TextUI.h"
-#include "utility.h"
+#include "DebugInfo.h"
+#include "Resources.h"
+#include "Utility.h"
+#include "Color.h"
+#include "UI/TextUI.h"
 
 namespace se {
 

@@ -2,10 +2,10 @@
 #include "Shushao/Core.h"
 #include "sepch.h"
 
-#include "config.h"
-#include "debug.h"
-#include "logger.h"
-#include "utility.h"
+#include "Debug.h"
+#include "Utility.h"
+#include "Config.h"
+#include "Logger.h"
 
 namespace se {
 

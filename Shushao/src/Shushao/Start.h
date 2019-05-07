@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Shushao/Application.h"
-#include "Shushao/debug.h"
+#include "Shushao/Debug.h"
 
 extern se::Application* se::CreateApplication();
 

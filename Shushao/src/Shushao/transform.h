@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Shushao/Core.h"
+#include "Core.h"
 #include "sepch.h"
 
-#include "component.h"
-#include "rect.h"
+#include "Component.h"
+#include "Rect.h"
 #include "recttransform.h"
 
 namespace se {

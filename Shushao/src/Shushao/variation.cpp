@@ -1,5 +1,5 @@
-#include "variation.h"
-#include "debug.h"
+#include "Variation.h"
+#include "Debug.h"
 
 namespace se {
 

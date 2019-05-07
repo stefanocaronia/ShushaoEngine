@@ -1,6 +1,6 @@
-#include "phongshader.h"
-#include "../resources.h"
-#include "../scenemanager.h"
+#include "PhongShader.h"
+#include "Shushao/Resources.h"
+#include "Shushao/SceneManager.h"
 
 namespace se {
 

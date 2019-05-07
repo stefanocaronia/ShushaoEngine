@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Shushao/Core.h"
-#include "shader.h"
+#include "Shader.h"
 
 namespace se {
 

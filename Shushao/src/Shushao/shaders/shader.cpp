@@ -1,10 +1,9 @@
-
 #include <glad/glad.h>
 
-#include "../debug.h"
-#include "../light.h"
-#include "../utility.h"
-#include "shader.h"
+#include "Shader.h"
+#include "Shushao/Debug.h"
+#include "Shushao/Light.h"
+#include "Shushao/utility.h"
 
 namespace se {
 

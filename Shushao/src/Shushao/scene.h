@@ -1,18 +1,17 @@
 #pragma once
 
-#include "Shushao/Core.h"
-#include "sepch.h"
-
-#include "component.h"
+#include "Component.h"
+#include "Core.h"
+#include "DebugGrid.h"
+#include "Entity.h"
+#include "GameData.h"
+#include "Light.h"
+#include "MainCamera.h"
+#include "Renderer.h"
+#include "Transform.h"
+#include "Utility.h"
 #include "debuginfo.h"
-#include "entity.h"
-#include "entity/debuggrid.h"
-#include "entity/maincamera.h"
-#include "gamedata.h"
-#include "light.h"
-#include "renderer.h"
-#include "transform.h"
-#include "utility.h"
+#include "sepch.h"
 
 namespace se {
 

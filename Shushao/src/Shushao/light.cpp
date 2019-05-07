@@ -1,7 +1,7 @@
-#include "light.h"
-#include "design.h"
-#include "entity.h"
-#include "transform.h"
+#include "Light.h"
+#include "Design.h"
+#include "Entity.h"
+#include "Transform.h"
 
 namespace se {
 

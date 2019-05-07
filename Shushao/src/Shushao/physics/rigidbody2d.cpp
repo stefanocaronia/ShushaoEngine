@@ -1,9 +1,9 @@
 #include <Box2D/Box2D.h>
 
-#include "../entity.h"
-#include "../transform.h"
-#include "physics.h"
-#include "rigidbody2d.h"
+#include "PhysicsImpl.h"
+#include "Rigidbody2d.h"
+#include "Shushao/Entity.h"
+#include "Shushao/transform.h"
 
 namespace se {
 
@@ -11,6 +11,8 @@ struct Rigidbody2D::Impl {
     b2Body* body = nullptr;
     b2BodyDef bodyDef;
 };
+
+Rigidbody2D::Rigidbody2D() : info(new Impl()) {}
 
 void Rigidbody2D::Copy(Rigidbody2D* other) {
     if (other == nullptr) return;
@@ -26,7 +28,7 @@ void Rigidbody2D::Copy(Rigidbody2D* other) {
 
 void Rigidbody2D::OnDestroy() {
     if (info->body == nullptr) return;
-    Physics::world->DestroyBody(body);
+    Physics::impl->world->DestroyBody(info->body);
 }
 
 void Rigidbody2D::Awake() {
@@ -45,7 +47,7 @@ void Rigidbody2D::Awake() {
     info->bodyDef.userData = this;
     info->bodyDef.active = enabled && entity->active;
 
-    info->body = Physics::world->CreateBody(&(info->bodyDef));
+    info->body = Physics::impl->world->CreateBody(&(info->bodyDef));
 }
 
 void Rigidbody2D::OnEnable() {
@@ -91,7 +93,7 @@ void Rigidbody2D::FixedUpdate() {
     position = {p.x, p.y};
     velocity = {v.x, v.y};
     angle = info->body->GetAngle() * RADTODEG;  // DEGREES
-    angularVelocity = body->GetAngularVelocity();
+    angularVelocity = info->body->GetAngularVelocity();
 
     transform->SetPosition({position.x, position.y, transform->position.z});
     transform->SetRotation({0.0f, 0.0f, angle});

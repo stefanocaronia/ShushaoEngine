@@ -1,10 +1,9 @@
 #pragma once
 
-#include "Shushao/Core.h"
+#include "Core.h"
 #include "sepch.h"
-
-#include "color.h"
-#include "component.h"
+#include "Color.h"
+#include "Component.h"
 
 namespace se {
 

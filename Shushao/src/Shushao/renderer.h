@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Shushao/Core.h"
-#include "component.h"
+#include "Core.h"
+#include "Component.h"
 #include "sepch.h"
 
 namespace se {

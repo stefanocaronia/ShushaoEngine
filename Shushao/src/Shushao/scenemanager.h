@@ -1,11 +1,10 @@
 #pragma once
 
-#include "Shushao/Core.h"
+#include "Core.h"
 #include "sepch.h"
-
-#include "gamedata.h"
-#include "scene.h"
-#include "utility.h"
+#include "Utility.h"
+#include "GameData.h"
+#include "Scene.h"
 
 namespace se {
 

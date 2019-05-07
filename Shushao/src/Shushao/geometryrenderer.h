@@ -1,13 +1,12 @@
 #pragma once
-#include "Shushao/Core.h"
+
+#include "Core.h"
 #include "sepch.h"
 
-#include "Shushao/Core.h"
-#include "color.h"
-#include "design.h"
-#include "renderer.h"
-#include "sepch.h"
-#include "vao.h"
+#include "Color.h"
+#include "Design.h"
+#include "Renderer.h"
+#include "Vao.h"
 
 namespace se {
 

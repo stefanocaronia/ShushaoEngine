@@ -1,13 +1,13 @@
 #include <glad/glad.h>
 
-#include "Shushao/Core.h"
-#include "entity.h"
-#include "particlesystem.h"
-#include "physics/rigidbody2d.h"
+#include "Core.h"
+#include "Entity.h"
+#include "ParticleSystem.h"
+#include "Physics/Rigidbody2d.h"
+#include "Shaders/ParticlesShader.h"
+#include "Transform.h"
+#include "Utility.h"
 #include "sepch.h"
-#include "shaders/particlesshader.h"
-#include "transform.h"
-#include "utility.h"
 
 namespace se {
 

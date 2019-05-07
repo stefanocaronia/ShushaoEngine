@@ -1,12 +1,12 @@
 #include "WindowsWindow.h"
 #include "Shushao/Core.h"
-#include "Shushao/debug.h"
+#include "Shushao/Debug.h"
 
 #include "Shushao/Events/ApplicationEvent.h"
 #include "Shushao/Events/KeyEvent.h"
 #include "Shushao/Events/MouseEvent.h"
 
-#include "Shushao/glmanager.h"
+#include "Shushao/GLManager.h"
 
 namespace se {
 

@@ -1,11 +1,10 @@
-#include "Shushao/Core.h"
-#include "sepch.h"
-
+#include "Scene.h"
 #include "Application.h"
-#include "debug.h"
-#include "debuginfo.h"
-#include "scene.h"
-#include "ui/CanvasUI.h"
+#include "Core.h"
+#include "Debug.h"
+#include "DebugInfo.h"
+#include "UI/CanvasUI.h"
+#include "sepch.h"
 
 namespace se {
 

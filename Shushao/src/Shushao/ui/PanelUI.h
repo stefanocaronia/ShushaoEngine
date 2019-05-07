@@ -1,7 +1,7 @@
-#pragma once
+#pragma /once
 
 #include "Shushao/Core.h"
-#include "../transform.h"
+#include "Shushao/transform.h"
 
 #include "ImageUI.h"
 

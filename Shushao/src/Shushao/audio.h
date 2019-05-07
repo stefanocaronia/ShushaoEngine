@@ -3,7 +3,7 @@
 #include "Shushao/Core.h"
 #include "sepch.h"
 
-#include "object.h"
+#include "Object.h"
 
 namespace se {
 

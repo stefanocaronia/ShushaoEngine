@@ -1,11 +1,10 @@
 #pragma once
 
-#include "Shushao/Core.h"
-#include "sepch.h"
-
-#include "color.h"
+#include "Color.h"
+#include "Core.h"
 #include "gradient.h"
-#include "variation.h"
+#include "sepch.h"
+#include "Variation.h"
 
 namespace se {
 

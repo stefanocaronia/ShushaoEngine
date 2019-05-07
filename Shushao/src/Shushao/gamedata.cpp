@@ -1,11 +1,7 @@
-
-#include "Shushao/Core.h"
-#include "sepch.h"
-
-#include "camera.h"
-#include "component.h"
-#include "gamedata.h"
-#include "scene.h"
+#include "Camera.h"
+#include "Component.h"
+#include "GameData.h"
+#include "Scene.h"
 
 namespace se {
 

@@ -1,14 +1,9 @@
 #include <glad/glad.h>
 
-#include "Shushao/Core.h"
-#include "sepch.h"
-
-#include "Shushao/Core.h"
-#include "debug.h"
-#include "rect.h"
-#include "sepch.h"
-#include "shaders/shader.h"
-#include "sprite.h"
+#include "Debug.h"
+#include "Rect.h"
+#include "Shaders/Shader.h"
+#include "Sprite.h"
 
 namespace se {
 

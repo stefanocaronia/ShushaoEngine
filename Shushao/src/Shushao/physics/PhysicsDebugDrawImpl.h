@@ -1,19 +1,18 @@
 #include <Box2D/Box2D.h>
 #include <glad/glad.h>
 
-#include "debug.h"
-#include "design.h"
-#include "glmanager.h"
-#include "physicsdebugdraw.h"
-#include "scenemanager.h"
+#include "PhysicsDebugDraw.h"
+#include "Shushao/Debug.h"
+#include "Shushao/Design.h"
+#include "Shushao/GLManager.h"
+#include "Shushao/SceneManager.h"
+#include "Shushao/shaders/BaseShader.h"
 #include "sepch.h"
-#include "shaders/baseshader.h"
 
 namespace se {
 
-PhysicsDebugDraw::PhysicsDebugDraw() : impl(new Impl()) {}
-
-class PhysicsDebugDraw::impl : public b2draw {
+class PhysicsDebugDraw::Impl : public b2Draw {
+public:
     bool Init();
     float alpha = 0.4f;
     Vao* VAO;
@@ -27,10 +26,11 @@ class PhysicsDebugDraw::impl : public b2draw {
     virtual void DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color) override;
     virtual void DrawTransform(const b2Transform& xf) override;
     virtual void DrawPoint(const b2Vec2& p, float32 size, const b2Color& color) override {}
-}
+};
 
-bool
-PhysicsDebugDraw::impl::Init() {
+PhysicsDebugDraw::PhysicsDebugDraw() : impl(new Impl()) {}
+
+bool PhysicsDebugDraw::Impl::Init() {
     if (!GLManager::ready || !Config::Physics::debug) return false;
     if (ready) return true;
 
@@ -48,7 +48,7 @@ PhysicsDebugDraw::impl::Init() {
     return true;
 }
 
-void PhysicsDebugDraw::impl::DrawPolygon(const b2Vec2* b2vertices, int32 vertexCount, const b2Color& color) {
+void PhysicsDebugDraw::Impl::DrawPolygon(const b2Vec2* b2vertices, int32 vertexCount, const b2Color& color) {
     if (!Init()) return;
 
     std::vector<glm::vec3> vertices;
@@ -74,7 +74,7 @@ void PhysicsDebugDraw::impl::DrawPolygon(const b2Vec2* b2vertices, int32 vertexC
     shader->Leave();
 }
 
-void PhysicsDebugDraw::impl::DrawSolidPolygon(const b2Vec2* b2vertices, int32 vertexCount, const b2Color& color) {
+void PhysicsDebugDraw::Impl::DrawSolidPolygon(const b2Vec2* b2vertices, int32 vertexCount, const b2Color& color) {
     if (!Init()) return;
 
     std::vector<glm::vec3> vertices;
@@ -105,7 +105,7 @@ void PhysicsDebugDraw::impl::DrawSolidPolygon(const b2Vec2* b2vertices, int32 ve
     shader->Leave();
 }
 
-void PhysicsDebugDraw::impl::DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color) {
+void PhysicsDebugDraw::Impl::DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color) {
     if (!Init()) return;
 
     std::vector<glm::vec3> vertices;
@@ -135,7 +135,7 @@ void PhysicsDebugDraw::impl::DrawCircle(const b2Vec2& center, float32 radius, co
     shader->Leave();
 }
 
-void PhysicsDebugDraw::impl::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color) {
+void PhysicsDebugDraw::Impl::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color) {
     if (!Init()) return;
 
     std::vector<glm::vec3> vertices;
@@ -166,7 +166,7 @@ void PhysicsDebugDraw::impl::DrawSolidCircle(const b2Vec2& center, float32 radiu
     shader->Leave();
 }
 
-void PhysicsDebugDraw::impl::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color) {
+void PhysicsDebugDraw::Impl::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color) {
     if (!Init()) return;
 
     std::vector<glm::vec3> vertices;
@@ -196,7 +196,7 @@ void PhysicsDebugDraw::impl::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, con
     shader->Leave();
 }
 
-void PhysicsDebugDraw::impl::DrawTransform(const b2Transform& xf) {
+void PhysicsDebugDraw::Impl::DrawTransform(const b2Transform& xf) {
     if (!Init()) return;
 
     std::vector<glm::vec3> vertices;

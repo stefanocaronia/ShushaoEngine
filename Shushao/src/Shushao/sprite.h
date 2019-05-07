@@ -3,11 +3,11 @@
 #include "Shushao/Core.h"
 #include "sepch.h"
 
-#include "config.h"
-#include "object.h"
-#include "rect.h"
-#include "texture.h"
-#include "vao.h"
+#include "Config.h"
+#include "Object.h"
+#include "Rect.h"
+#include "Texture.h"
+#include "Vao.h"
 
 namespace se {
 

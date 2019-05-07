@@ -1,11 +1,10 @@
-#include "Shushao/Core.h"
+#include "Entity.h"
+#include "Component.h"
+#include "Core.h"
+#include "Debug.h"
+#include "Scene.h"
+#include "Transform.h"
 #include "sepch.h"
-
-#include "component.h"
-#include "debug.h"
-#include "entity.h"
-#include "scene.h"
-#include "transform.h"
 
 namespace se {
 

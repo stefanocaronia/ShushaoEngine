@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Shushao/Core.h"
-#include "color.h"
+#include "Color.h"
 #include "curve.h"
 #include "sepch.h"
 

@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Shushao/Core.h"
-#include "../entity.h"
-#include "../transform.h"
+#include "Shushao/Entity.h"
+#include "Shushao/transform.h"
 
 namespace se {
 namespace ui {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../component.h"
+#include "Shushao/Component.h"
 
 namespace se {
 
@@ -9,6 +9,8 @@ class Rigidbody2D;
 class SHUSHAO_API Collider2D : public Component {
 public:
     virtual void setup();
+
+    Collider2D();
 
     Rigidbody2D* rigidbody = nullptr;
 
@@ -50,11 +52,9 @@ public:
         isSensor = other->isSensor;
     }
 
-    virtual void ResetShape() = 0;
-
 protected:
     struct Impl;  // Forward declaration of the implementation class
-    std::unique_ptr<Impl> collider;
+    std::shared_ptr<Impl> collider;
 
 protected:
     std::vector<Collider2D*> colliders;
@@ -62,6 +62,7 @@ protected:
 
 class SHUSHAO_API PolygonCollider2D : public Collider2D {
 public:
+    PolygonCollider2D();
     // b2PolygonShape shape;
     void SetShape(std::vector<glm::vec2>);
     void ResetShape() {}
@@ -70,46 +71,42 @@ public:
 
 class SHUSHAO_API BoxCollider2D : public Collider2D {
 public:
+    BoxCollider2D();
+
     glm::vec2 boxHalfSize;
 
     void SetShape(glm::vec2);
-    virtual void ResetShape();
+    void ResetShape();
     void Copy(BoxCollider2D* other);
 
     struct Impl;  // Forward declaration of the implementation class
-    std::unique_ptr<Impl> info;
+    std::shared_ptr<Impl> info;
 };
 
 class SHUSHAO_API CircleCollider2D : public Collider2D {
 public:
+    CircleCollider2D();
     glm::vec2 position;
     float radius;
 
     void SetShape(glm::vec2 position_, float radius_);
-    virtual void ResetShape();
+    void ResetShape();
     void Copy(CircleCollider2D* other);
 
     struct Impl;  // Forward declaration of the implementation class
-    std::unique_ptr<Impl> info;
+    std::shared_ptr<Impl> info;
 };
 
 class SHUSHAO_API EdgeCollider2D : public Collider2D {
 public:
-    b2EdgeShape shape;
+
+    EdgeCollider2D();
 
     void SetShape(glm::vec2, glm::vec2);
+    void ResetShape();
+    void Copy(EdgeCollider2D* other);
 
-    void ResetShape() {}
-
-    void Copy(EdgeCollider2D* other) {
-        if (other == nullptr) return;
-        Collider2D::Copy(other);
-
-        shape = other->shape;
-    }
-
-private:
-    class B2;  // Forward declaration of the implementation class
-    std::unique_ptr<B2> b2;
+    struct Impl;  // Forward declaration of the implementation class
+    std::shared_ptr<Impl> info;
 };
 }  // namespace se

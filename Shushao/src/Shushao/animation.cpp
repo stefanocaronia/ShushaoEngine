@@ -1,7 +1,7 @@
-#include "animation.h"
-#include "debug.h"
-#include "stime.h"
-#include "timeline.h"
+#include "Animation.h"
+#include "Debug.h"
+#include "Time.h"
+#include "Timeline.h"
 
 namespace se {
 

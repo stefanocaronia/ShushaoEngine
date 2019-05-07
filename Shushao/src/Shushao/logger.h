@@ -1,13 +1,13 @@
 #pragma once
 
-#include "Shushao/Core.h"
+#include "Core.h"
 #include "sepch.h"
 
 #undef ERROR
 #undef InvokeMethod
 
-#include "stime.h"
-#include "utility.h"
+#include "Utility.h"
+#include "Time.h"
 
 #define SOURCE util::basename(__FILE__) + "::" + __FUNCTION__ + ":" + util::toString(__LINE__) + ""
 #define LOG(MESSAGE) Debug::Log(SOURCE) << MESSAGE << std::endl;

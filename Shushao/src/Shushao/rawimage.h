@@ -3,12 +3,12 @@
 #include "Shushao/Core.h"
 #include "sepch.h"
 
-#include "color.h"
-#include "material.h"
-#include "renderer.h"
-#include "shaders/shader.h"
-#include "sprite.h"
-#include "texture.h"
+#include "Color.h"
+#include "Material.h"
+#include "Renderer.h"
+#include "Shaders/Shader.h"
+#include "Sprite.h"
+#include "Texture.h"
 
 namespace se {
 

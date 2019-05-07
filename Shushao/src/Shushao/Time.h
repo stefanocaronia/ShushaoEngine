@@ -3,8 +3,8 @@
 #include "Shushao/Core.h"
 #include "sepch.h"
 
-#include "config.h"
-#include "utility.h"
+#include "Utility.h"
+#include "Config.h"
 
 namespace se {
 

@@ -1,5 +1,5 @@
-#include "baseshader.h"
-#include "../resources.h"
+#include "BaseShader.h"
+#include "Shushao/Resources.h"
 
 namespace se {
 

@@ -1,11 +1,10 @@
-#include "Shushao/Core.h"
+#include "Camera.h"
+#include "Config.h"
+#include "Core.h"
+#include "Debug.h"
+#include "GLmanager.h"
+#include "Transform.h"
 #include "sepch.h"
-
-#include "camera.h"
-#include "config.h"
-#include "debug.h"
-#include "glmanager.h"
-#include "transform.h"
 
 namespace se {
 

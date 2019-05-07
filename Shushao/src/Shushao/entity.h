@@ -1,14 +1,12 @@
 #pragma once
-#include "Shushao/Core.h"
-#include "sepch.h"
 
-#include "Shushao/Core.h"
+#include "Component.h"
+#include "Core.h"
+#include "Object.h"
+#include "Renderer.h"
+#include "Utility.h"
 #include "canvas.h"
-#include "component.h"
-#include "object.h"
-#include "renderer.h"
 #include "sepch.h"
-#include "utility.h"
 
 namespace se {
 

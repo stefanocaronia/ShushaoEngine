@@ -1,8 +1,4 @@
-
-#include "Shushao/Core.h"
-#include "sepch.h"
-
-#include "scenemanager.h"
+#include "SceneManager.h"
 
 namespace se {
 

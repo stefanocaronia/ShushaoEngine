@@ -2,7 +2,7 @@
 
 #include <boost/coroutine2/all.hpp>
 
-#include "Shushao/Core.h"
+#include "Core.h"
 #include "sepch.h"
 
 /*

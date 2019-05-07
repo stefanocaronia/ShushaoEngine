@@ -1,10 +1,5 @@
-#include "Shushao/Core.h"
-#include "sepch.h"
-
-#include "Shushao/Core.h"
-#include "debug.h"
-#include "sepch.h"
-#include "textureatlas.h"
+#include "Debug.h"
+#include "TextureAtlas.h"
 
 namespace se {
 

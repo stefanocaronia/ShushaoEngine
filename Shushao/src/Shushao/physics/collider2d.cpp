@@ -1,12 +1,13 @@
 #include <Box2D/Box2D.h>
 
-#include "../entity.h"
-#include "../sprite.h"
-#include "../spriterenderer.h"
-#include "../transform.h"
+#include "Shushao/Entity.h"
+#include "Shushao/Sprite.h"
+#include "Shushao/spriteRenderer.h"
+#include "Shushao/transform.h"
 
-#include "collider2d.h"
-#include "rigidbody2d.h"
+#include "Collider2d.h"
+#include "Rigidbody2d.h"
+#include "Rigidbody2dImpl.h"
 
 namespace se {
 

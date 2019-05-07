@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../entity.h"
-#include "../transform.h"
+#include "Shushao/Entity.h"
+#include "Shushao/transform.h"
 #include "Shushao/Core.h"
 
 namespace se {

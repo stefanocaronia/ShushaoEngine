@@ -1,13 +1,13 @@
 #pragma once
 
-#include "Shushao/Core.h"
+#include "Core.h"
 #include "sepch.h"
 
-#include "object.h"
+#include "Object.h"
 
 namespace se {
 
-class SHUSHAO_API VboConfiguration {
+class VboConfiguration {
 public:
     VboConfiguration(
         unsigned int target_ = 0x8892,
@@ -45,7 +45,7 @@ extern VboConfiguration VBO_CONFIG_COLOR;
 extern VboConfiguration VBO_CONFIG_UV;
 extern VboConfiguration VBO_CONFIG_FONT;
 
-class SHUSHAO_API Vbo : public Object {
+class Vbo : public Object {
 public:
     static const std::string VERTICES;
     static const std::string NORMALS;

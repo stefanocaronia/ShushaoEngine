@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../color.h"
-#include "../light.h"
-#include "../object.h"
 #include "Shushao/Core.h"
+#include "Shushao/Color.h"
+#include "Shushao/Light.h"
+#include "Shushao/Object.h"
 
 namespace se {
 

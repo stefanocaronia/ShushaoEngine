@@ -2,9 +2,9 @@
 
 #include "Shushao/Core.h"
 
-#include "physicscontactfilter.h"
-#include "physicscontactlistener.h"
-#include "physicsdebugdraw.h"
+#include "PhysicsContactFilter.h"
+#include "PhysicsContactListener.h"
+#include "PhysicsDebugDraw.h"
 
 namespace se {
 
@@ -14,9 +14,9 @@ public:
     static bool debug;
 
     static bool doSleep;
-    static float32 timeStep;
-    static int32 velocityIterations;
-    static int32 positionIterations;
+    static float timeStep;
+    static int velocityIterations;
+    static int positionIterations;
 
     static PhysicsDebugDraw debugDraw;
     static PhysicsContactListener contactListener;
@@ -29,7 +29,7 @@ public:
     static void exit();
 
     class Impl;  // Pimpl!
-    static std::unique_ptr<Impl> impl;
+    static std::shared_ptr<Impl> impl;
 };
 
 }  // namespace se

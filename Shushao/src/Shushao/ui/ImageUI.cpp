@@ -1,6 +1,5 @@
-
 #include "ImageUI.h"
-#include "../image.h"
+#include "Shushao/Image.h"
 
 namespace se {
 namespace ui {

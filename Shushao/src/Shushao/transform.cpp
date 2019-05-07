@@ -1,12 +1,9 @@
-#include "Shushao/Core.h"
-#include "sepch.h"
-
+#include "Utility.h"
 #include "canvas.h"
-#include "color.h"
-#include "design.h"
-#include "scenemanager.h"
-#include "transform.h"
-#include "utility.h"
+#include "Color.h"
+#include "Design.h"
+#include "SceneManager.h"
+#include "Transform.h"
 
 namespace se {
 

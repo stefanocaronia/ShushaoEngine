@@ -1,7 +1,7 @@
 #include <glad/glad.h>
 
-#include "debug.h"
-#include "material.h"
+#include "Debug.h"
+#include "Material.h"
 
 namespace se {
 

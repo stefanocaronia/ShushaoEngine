@@ -1,16 +1,16 @@
 #pragma once
 
-#include "Shushao/Core.h"
+#include "Core.h"
 #include "sepch.h"
 
-#include "color.h"
-#include "curve.h"
-#include "material.h"
-#include "playable.h"
-#include "renderer.h"
-#include "texture.h"
-#include "transform.h"
-#include "vao.h"
+#include "Color.h"
+#include "Curve.h"
+#include "Material.h"
+#include "Playable.h"
+#include "Renderer.h"
+#include "Texture.h"
+#include "Transform.h"
+#include "Vao.h"
 
 #include "particlemodules.h"
 

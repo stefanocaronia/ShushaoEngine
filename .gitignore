@@ -21,7 +21,10 @@ Makefile
 *.depend
 *.cscope_file_list
 *.save-failed
+*.workspace
+*.cbp
 
 # Precompiled Headers
 *.gch
 *.pch
+

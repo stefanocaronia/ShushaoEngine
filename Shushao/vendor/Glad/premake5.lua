@@ -3,7 +3,8 @@
 
 project "Glad"
     kind "StaticLib"
-    language "C"
+    -- language "C"
+    targetname "libGlad"
 
 	-- targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     -- objdir ("obj/" .. outputdir .. "/%{prj.name}")
@@ -15,8 +16,8 @@ project "Glad"
         CC = gcc
     ]]
 
-    configuration { "gmake2" }
-        targetextension (".a")
+    -- configuration { "gmake2" }
+    --     targetextension (".a")
 
     files
     {

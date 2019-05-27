@@ -1,10 +1,10 @@
-#pragma once
+#ifndef SHUSHAO
+#define SHUSHAO
 
 #include "Shushao/Application.h"
 
-// ---Entry Point---------------------
+// Entry Point
 #include "Shushao/Start.h"
-// -----------------------------------
 
 #include "Shushao/Debug.h"
 #include "Shushao/Resources.h"
@@ -68,3 +68,5 @@
 #include "Shushao/UI/PanelUI.h"
 #include "Shushao/UI/RawImageUI.h"
 #include "Shushao/UI/TextUI.h"
+
+#endif

@@ -1,6 +1,6 @@
 project "SOIL"
     kind "StaticLib"
-    language "C"
+    -- language "C"
     targetname "libSOIL"
 
     targetdir ("lib")
@@ -9,10 +9,6 @@ project "SOIL"
     makesettings [[
         CC = gcc
     ]]
-
-    configuration { "gmake2" }
-        targetextension (".a")
-        buildoptions { "-O2","-s","-w" }
 
     files {
         "src/image_helper.c",
@@ -25,10 +21,12 @@ project "SOIL"
 		"src"
 	}
 
-    postbuildcommands {
-        "@mkdir -p include/",
-        "@cp src/SOIL.h include/"
-    }
+    -- postbuildcommands {
+    --     ("mkdir -p include/"),
+    --     ("xcopy /Q /Y /I src/SOIL.h include/")
+    --     -- "@mkdir -p include/",
+    --     -- "@cp src/SOIL.h include/"
+    -- }
 
     filter "system:windows"
         systemversion "latest"
@@ -36,3 +34,6 @@ project "SOIL"
 
     filter { "system:windows", "configurations:Release" }
         buildoptions "/MT"
+
+    filter { "toolset:gcc" }
+        buildoptions { "-O2","-s","-w" }

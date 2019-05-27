@@ -1,6 +1,6 @@
 workspace "Shushao"
 	architecture "x64"
-	startproject "Game"
+    startproject "Game"
 
 	configurations {
 		"Debug",
@@ -38,12 +38,6 @@ project "Shushao"
 	pchheader "sepch.h"
     pchsource "%{Engine}/src/sepch.cpp"
 
-    configuration { "gmake2" }
-        implibextension (".a")
-        -- buildoptions {
-        --     "-static-libgcc",
-        --     "-static-libstdc++"
-        -- }
 
     files {
 		"%{prj.name}/src/**.h",
@@ -59,8 +53,7 @@ project "Shushao"
 		"%{prj.name}/vendor/glm",
 		"%{prj.name}/vendor/boost",
 		"%{prj.name}/vendor/Box2D",
-		"%{prj.name}/vendor/freetype/include",
-		-- "%{prj.name}/vendor/SDL2_mixer/include/SDL2"
+		"%{prj.name}/vendor/freetype/include"
     }
 
     libdirs {
@@ -96,23 +89,22 @@ project "Shushao"
 			"GLFW_INCLUDE_NONE"
 		}
 
-		postbuildcommands {}
-
 	filter "configurations:Debug"
 		defines "SE_DEBUG"
 		runtime "Debug"
         symbols "On"
 
-    configuration { "Debug", "gmake2" }
-        buildoptions { "-Wall", "-fmax-errors=4", "-Wfatal-errors" }
+    filter { "configurations:Debug", "toolset:gcc" }
+        buildoptions { "-std=c++17", "-Wall", "-fmax-errors=4", "-Wfatal-errors" }
 
 	filter "configurations:Release"
 		defines "SE_RELEASE"
 		runtime "Release"
         optimize "On"
 
-    configuration { "Release", "gmake2" }
-        buildoptions { "-O2" }
+    filter { "configurations:Release", "toolset:gcc" }
+        buildoptions { "-O2", "-std=c++17" }
+        linkoptions { "-s -mwindows"}
 
 project "Game"
 	location "Game"
@@ -122,7 +114,7 @@ project "Game"
 	staticruntime "on"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-	objdir ("obj/" .. outputdir .. "/%{prj.name}")
+    objdir ("obj/" .. outputdir .. "/%{prj.name}")
 
 	files {
 		"%{prj.name}/src/**.h",
@@ -142,16 +134,12 @@ project "Game"
     }
 
     prelinkcommands {
-        ("cp -r res %{gamebin}"),
-        ("cp %{enginebin}/*.dll %{gamebin}")
+        ("@cp -r res %{gamebin}"),
+        ("@cp %{enginebin}/*.dll %{gamebin}")
     }
-
-    configuration { "gmake2" }
-        buildoptions {}
 
 	filter "system:windows"
 		systemversion "latest"
-
 		defines {
 			"SE_PLATFORM_WINDOWS"
 		}
@@ -161,14 +149,14 @@ project "Game"
 		runtime "Debug"
         symbols "On"
 
-    configuration { "Debug", "gmake2" }
-        buildoptions { "-Wall", "-fmax-errors=4", "-Wfatal-errors" }
+    filter { "configurations:Debug", "toolset:gcc" }
+        buildoptions { "-std=c++17", "-Wall", "-fmax-errors=4", "-Wfatal-errors" }
 
 	filter "configurations:Release"
 		defines "SE_RELEASE"
 		runtime "Release"
         optimize "On"
 
-    configuration { "Release", "gmake2" }
-        buildoptions { "-O2" }
+    filter { "configurations:Release", "toolset:gcc" }
+        buildoptions { "-O2", "-std=c++17" }
         linkoptions { "-s -mwindows"}

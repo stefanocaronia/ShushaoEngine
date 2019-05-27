@@ -9,8 +9,7 @@
         // ".gitignore": true,
         // "makefile": true,
         // "Makefile": true,
-        // "*.bat": true,
-        // "**/vendor": true
+        // "*.bat": true
     },
     // WINDOWS CMD
     // "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\cmd.exe",

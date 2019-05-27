@@ -1,5 +1,5 @@
-#ifndef GCH
-#define GCH
+#ifndef SE_GCH
+#define SE_GCH
 
 // std
 #include <dirent.h>

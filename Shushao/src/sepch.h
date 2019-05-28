@@ -2,7 +2,6 @@
 #define SE_GCH
 
 // std
-#include <dirent.h>
 #include <stdlib.h>
 #include <windows.h>
 #include <algorithm>
@@ -23,9 +22,16 @@
 #include <thread>
 #include <typeinfo>
 #include <vector>
-
-// math
 #include <cmath>
+
+// boost
+#include <boost/predef.h>
+
+#if BOOST_COMP_GNUC
+#include <dirent.h>
+#endif
+
+// GLM
 #include <glm/glm.hpp>
 #define GLM_FORCE_SWIZZLE
 #include <glm/gtc/matrix_transform.hpp>

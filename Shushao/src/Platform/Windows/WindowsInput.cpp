@@ -1,12 +1,14 @@
-#include "WindowsInput.h"
+#include "sepch.h"
+
 #include "Shushao/Core.h"
+#include "WindowsInput.h"
 
 #include <GLFW/glfw3.h>
 #include "Shushao/Application.h"
 
 namespace se {
 
-InputInterface* InputInterface::s_Instance = new WindowsInput();
+Input* Input::s_Instance = new WindowsInput();
 
 bool WindowsInput::IsKeyPressedImpl(int keycode) {
     auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());

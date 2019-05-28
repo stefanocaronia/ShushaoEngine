@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Shushao/InputInterface.h"
+#include "Shushao/Input.h"
 
 namespace se {
 
-	class WindowsInput : public InputInterface {
+	class WindowsInput : public Input {
 	protected:
 		virtual bool IsKeyPressedImpl(int keycode) override;
 

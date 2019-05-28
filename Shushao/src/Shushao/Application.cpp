@@ -1,8 +1,5 @@
-
-#include <Box2D/Box2D.h>
-
-#include "Core.h"
 #include "sepch.h"
+#include "Core.h"
 
 #include "Application.h"
 #include "Config.h"
@@ -16,232 +13,233 @@
 #include "Resources.h"
 #include "SceneManager.h"
 #include "System.h"
-
-namespace se {
+#include "Time.h"
 
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
-Application* Application::instance = nullptr;
+namespace se {
 
-Application::~Application() {
-    Debug::Log << "Application Destructor" << std::endl;
-}
+	Application* Application::instance = nullptr;
 
-bool Application::Init() {
-    for (bool& k : keys) {
-        k = false;
-    }
+	Application::~Application() {
+		DEBUG_CORE_INFO("Application Destructor");
+	}
 
-    Debug::Init();
+	bool Application::Init() {
+		for (bool& k : keys) {
+			k = false;
+		}
 
-    // Load engine configuration files
-    if (!Config::LoadEngineConfig()) {
-        Debug::Log(ERROR) << "Error Initializing Engine Configuration" << std::endl;
-        ::exit(5);
-    }
+		Debug::Init();
 
-    // Load user configuration files
-    if (!Config::LoadUserConfig()) {
-        Debug::Log(ERROR) << "Error Initializing User Configuration" << std::endl;
-    }
+		// Load engine configuration files
+		if (!Config::LoadEngineConfig()) {
+			DEBUG_CORE_ERROR("Error Initializing Engine Configuration");
+			::exit(5);
+		}
 
-    // Load configuration overrides
-    if (!InitConfig()) {
-        Debug::Log(ERROR) << "Error Initializing Configuration overrides" << std::endl;
-    }
+		// Load user configuration files
+		if (!Config::LoadUserConfig()) {
+			DEBUG_CORE_ERROR("Error Initializing User Configuration");
+		}
 
-    // Init Window
-    window = std::unique_ptr<Window>(Window::Create({
-        Config::title,
-        Config::displayWidth,
-        Config::displayHeight,
-        Config::fullscreen  //
-    }));
-    window->SetEventCallback(BIND_EVENT_FN(OnEvent));
+		// Load configuration overrides
+		if (!InitConfig()) {
+			DEBUG_CORE_ERROR("Error Initializing Configuration overrides");
+		}
 
-    // OpenGL Context init
-    if (!GLManager::Init()) {
-        Debug::Log(ERROR) << "Error Initializing GL" << std::endl;
-        ::exit(5);
-    }
+		// Init Window
+		window = std::unique_ptr<Window>(Window::Create({
+			Config::title,
+			Config::displayWidth,
+			Config::displayHeight,
+			Config::fullscreen  //
+			}));
+		window->SetEventCallback(BIND_EVENT_FN(OnEvent));
 
-    // load resoruces (derived)
-    if (!InitResources()) {
-        Debug::Log(ERROR) << "Error loading resources" << std::endl;
-    }
+		// OpenGL Context init
+		if (!GLManager::Init()) {
+			DEBUG_CORE_ERROR("Error Initializing GL");
+			::exit(5);
+		}
 
-    // engine resources
-    Resources::Load<Font>("consolas", FONT_CONSOLAS, LIB_SHUSHAO);
+		// load resoruces (derived)
+		if (!InitResources()) {
+			DEBUG_CORE_ERROR("Error loading resources");
+		}
 
-    // Time init
-    Time::setFrameRateLimit(Config::Time::frameRateLimit);
-    Time::setFixedRateLimit(Config::Time::fixedRateLimit);
+		// engine resources
+		Resources::Load<Font>("consolas", FONT_CONSOLAS, LIB_SHUSHAO);
 
-    // Physics 2d init
-    if (Config::Physics::enabled) {
-        if (!Physics::Init()) {
-            Debug::Log(ERROR) << "Error Initializing Physics" << std::endl;
-        }
-    }
-    // Init Input service
-    // Input::init();
+		// Time init
+		Time::setFrameRateLimit(Config::Time::frameRateLimit);
+		Time::setFixedRateLimit(Config::Time::fixedRateLimit);
 
-    // Init System services
-    System::init();
+		// Physics 2d init
+		if (Config::Physics::enabled) {
+			if (!Physics::Init()) {
+				DEBUG_CORE_ERROR("Error Initializing Physics");
+			}
+		}
+		// Init Input service
+		// Input::init();
 
-    // Init input mappings (derived)
-    if (!InitMapping()) {
-        Debug::Log(ERROR) << "Error In input mapping" << std::endl;
-    }
+		// Init System services
+		System::init();
 
-    // init and load starting scene (derived)
-    if (!InitScene()) {
-        Debug::Log(ERROR) << "Error Initializing Scene" << std::endl;
-    }
+		// Init input mappings (derived)
+		if (!InitMapping()) {
+			DEBUG_CORE_ERROR("Error In input mapping");
+		}
 
-    // Awake method (derived)
-    Awake();
+		// init and load starting scene (derived)
+		if (!InitScene()) {
+			DEBUG_CORE_ERROR("Error Initializing Scene");
+		}
 
-    // init all entities
-    SceneManager::activeScene->ScanEntities();
-    SceneManager::activeScene->ScanActiveComponents();
+		// Awake method (derived)
+		Awake();
 
-    SceneManager::activeScene->init();  // vengono chiamati qui gli Awake di tutti gli oggetti attivi
+		// init all entities
+		SceneManager::activeScene->ScanEntities();
+		SceneManager::activeScene->ScanActiveComponents();
 
-    if (Debug::enabled) {
-        SceneManager::activeScene->PrintHierarchy();
-        SceneManager::activeScene->PrintActiveComponentsInScene();
-        SceneManager::activeScene->PrintActiveRenderersInScene();
-        SceneManager::activeScene->PrintActiveLightsInScene();
-        System::ListServices();
-        SceneManager::activeScene->activeCamera->print();
-        Resources::toString();
-        Config::Layers.toString("Layers");
-        Config::SortingLayers.toString("SortingLayers");
-    }
+		SceneManager::activeScene->init();  // vengono chiamati qui gli Awake di tutti gli oggetti attivi
 
-    Camera* activeCamera = SceneManager::activeScene->activeCamera;
+		if (Debug::enabled) {
+			SceneManager::activeScene->PrintHierarchy();
+			SceneManager::activeScene->PrintActiveComponentsInScene();
+			SceneManager::activeScene->PrintActiveRenderersInScene();
+			SceneManager::activeScene->PrintActiveLightsInScene();
+			System::ListServices();
+			SceneManager::activeScene->activeCamera->print();
+			Resources::toString();
+			Config::Layers.toString("Layers");
+			Config::SortingLayers.toString("SortingLayers");
+		}
 
-    window->Clear(activeCamera->backgroundColor.r, activeCamera->backgroundColor.g, activeCamera->backgroundColor.b, 1.0f, 1.0f);
+		Camera* activeCamera = SceneManager::activeScene->activeCamera;
 
-    return true;
-}
+		window->Clear(activeCamera->backgroundColor.r, activeCamera->backgroundColor.g, activeCamera->backgroundColor.b, 1.0f, 1.0f);
 
-void Application::Run() {
-    if (!SceneManager::sceneSet)
-        return;
+		return true;
+	}
 
-    // Start method (derived)
-    Start();
+	void Application::Run() {
+		if (!SceneManager::sceneSet)
+			return;
 
-    while (RUNNING) {
-        Time::Update();
+		// Start method (derived)
+		Start();
 
-        std::thread tInput;
-        std::thread tUpdate;
-        std::thread tFixed;
+		while (RUNNING) {
+			Time::Update();
 
-        // scan scene (se invalid) e init objects
-        initscan();
+			std::thread tInput;
+			std::thread tUpdate;
+			std::thread tFixed;
 
-        // Process input method (derived)
-        //tInput = std::thread(&Application::GetInput, this);
-        GetInput();
+			// scan scene (se invalid) e init objects
+			InitScan();
 
-        // Update Application
-        //tUpdate = std::thread(&Application::update, this);
-        update();
+			// Process input method (derived)
+			//tInput = std::thread(&Application::GetInput, this);
+			GetInput();
 
-        if (Time::fixedDeltaTime >= Time::fixedLimitDuration) {
-            // Fixed Update Application (physics)
-            //tFixed = std::thread(&Application::fixed, this);
-            fixed();
-        }
+			// Update Application
+			//tUpdate = std::thread(&Application::update, this);
+			update();
 
-        if (tInput.joinable()) tInput.join();
-        if (tUpdate.joinable()) tUpdate.join();
-        if (tFixed.joinable()) tFixed.join();
+			if (Time::fixedDeltaTime >= Time::fixedLimitDuration) {
+				// Fixed Update Application (physics)
+				//tFixed = std::thread(&Application::fixed, this);
+				fixed();
+			}
 
-        if (Config::Time::frameRateLimit == 0 || (Time::renderDeltaTime >= Time::frameLimitDuration)) {
-            // Main render cycle
-            render();
-        }
-    }
+			if (tInput.joinable()) tInput.join();
+			if (tUpdate.joinable()) tUpdate.join();
+			if (tFixed.joinable()) tFixed.join();
 
-    exit();
-}
+			if (Config::Time::frameRateLimit == 0 || (Time::renderDeltaTime >= Time::frameLimitDuration)) {
+				// Main render cycle
+				render();
+			}
+		}
 
-void Application::Stop() {
-    RUNNING = false;
-}
+		exit();
+	}
 
-void Application::initscan() {
-    if (SceneManager::activeScene->invalid) {
-        SceneManager::activeScene->ScanEntities();
-        SceneManager::activeScene->ScanActiveComponents();
-    }
+	void Application::Stop() {
+		RUNNING = false;
+	}
 
-    // chiamo awake di tutti i componenti non ancora svegli
-    SceneManager::activeScene->init();
-}
+	void Application::InitScan() {
+		if (SceneManager::activeScene->invalid) {
+			SceneManager::activeScene->ScanEntities();
+			SceneManager::activeScene->ScanActiveComponents();
+		}
 
-void Application::render() {
-    Time::renderTime = Time::GetTime();
-    window->Clear();
-    window->OnUpdate();
-    SceneManager::activeScene->render();
-    Render();  // (derived)
-    SceneManager::activeScene->renderOverlay();
-    if (Physics::enabled && Physics::debug) ((b2World*)Physics::GetWorld())->DrawDebugData();
-    Time::frameCount++;
-}
+		// chiamo awake di tutti i componenti non ancora svegli
+		SceneManager::activeScene->init();
+	}
 
-void Application::update() {
-    Time::realtimeSinceStartup = Time::GetTime();
-    // Input::update();  // Update Input Service
-    System::update();  // update dei system services
-    GLManager::Update();
-    SceneManager::activeScene->update();
-    Update();  // (derived)
-}
+	void Application::render() {
+		Time::renderTime = Time::GetTime();
+		window->Clear();
+		window->OnUpdate();
+		SceneManager::activeScene->render();
+		Render();  // (derived)
+		SceneManager::activeScene->renderOverlay();
+		// if (Physics::enabled && Physics::debug) ((b2World*)Physics::GetWorld())->DrawDebugData();
+		Time::frameCount++;
+	}
 
-void Application::fixed() {
-    Time::fixedTime = Time::GetTime();
-    Time::inFixedTimeStep = true;
-    if (Physics::enabled) Physics::Update();
-    SceneManager::activeScene->fixed();
-    FixedUpdate();  // (derived)
-    Time::inFixedTimeStep = false;
-}
+	void Application::update() {
+		Time::realtimeSinceStartup = Time::GetTime();
+		// Input::update();  // Update Input Service
+		System::update();  // update dei system services
+		GLManager::Update();
+		SceneManager::activeScene->update();
+		Update();  // (derived)
+	}
 
-void Application::exit() {
-    End();  // (derived)
-    SceneManager::activeScene->exit();
-    // Input::exit();
-    System::exit();
-    Physics::Exit();
-    SceneManager::Clear();
-    Resources::Clear();
-    System::Clear();
-    GLManager::Quit();
-}
+	void Application::fixed() {
+		Time::fixedTime = Time::GetTime();
+		Time::inFixedTimeStep = true;
+		if (Physics::enabled) Physics::Update();
+		SceneManager::activeScene->fixed();
+		FixedUpdate();  // (derived)
+		Time::inFixedTimeStep = false;
+	}
 
-void Application::OnEvent(Event& e) {
-    EventDispatcher dispatcher(e);
-    dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
+	void Application::exit() {
+		End();  // (derived)
+		SceneManager::activeScene->exit();
+		// Input::exit();
+		System::exit();
+		Physics::Exit();
+		SceneManager::Clear();
+		Resources::Clear();
+		System::Clear();
+		GLManager::Quit();
+	}
 
-    // TODO: capire sta cosa dei layer
+	void Application::OnEvent(Event& e) {
+		EventDispatcher dispatcher(e);
+		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
 
-    /* for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();) {
-        (*--it)->OnEvent(e);
-        if (e.Handled)
-            break;
-    } */
-}
+		// TODO: capire sta cosa dei layer
 
-bool Application::OnWindowClose(WindowCloseEvent& e) {
-    RUNNING = false;
-    return true;
-}
+		/* for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();) {
+			(*--it)->OnEvent(e);
+			if (e.Handled)
+				break;
+		} */
+	}
+
+	bool Application::OnWindowClose(WindowCloseEvent& e) {
+		RUNNING = false;
+		return true;
+	}
 
 }  // namespace se

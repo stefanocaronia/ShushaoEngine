@@ -1,39 +1,21 @@
-project "SOIL"
+project "SOIL2"
     kind "StaticLib"
-    -- language "C"
-    targetname "libSOIL"
+    language "C++"
+
+    buildoptions { "/TP" }
+    defines { "_CRT_SECURE_NO_WARNINGS" }
 
     targetdir ("lib")
     objdir ("obj")
 
-    makesettings [[
-        CC = gcc
-    ]]
+    files { "src/SOIL2/*.c" }
 
-    files {
-        "src/image_helper.c",
-        "src/stb_image_aug.c",
-        "src/image_DXT.c",
-        "src/SOIL.c",
-    }
+    configuration "debug"
+        defines "DEBUG"
+        runtime "Debug"
+        symbols "On"
 
-    includedirs {
-		"src"
-	}
-
-    -- postbuildcommands {
-    --     ("mkdir -p include/"),
-    --     ("xcopy /Q /Y /I src/SOIL.h include/")
-    --     -- "@mkdir -p include/",
-    --     -- "@cp src/SOIL.h include/"
-    -- }
-
-    filter "system:windows"
-        systemversion "latest"
-        staticruntime "On"
-
-    filter { "system:windows", "configurations:Release" }
-        buildoptions "/MT"
-
-    filter { "toolset:gcc" }
-        buildoptions { "-O2","-s","-w" }
+    configuration "release"
+        defines "NDEBUG"
+        runtime "Release"
+        optimize "On"

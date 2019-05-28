@@ -1,5 +1,0 @@
-#include <windows.h>
-#include "Resources.h"
-
-MAINICON ICON "res/assets/sh.ico"
-CONFIG_ENGINE RCDATA "game/resources/config-engine.ini"

@@ -14,7 +14,7 @@ enum class GridMode {
     PERSPECTIVE
 };
 
-class SHUSHAO_API Debug {
+class Debug {
 public:
     static void Init();
 

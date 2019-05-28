@@ -1,9 +1,0 @@
-# codeblocks
-*.layout
-*.depend
-*.cscope_file_list
-*.save-failed
-*.workspace
-*.cbp
-
-Makefile

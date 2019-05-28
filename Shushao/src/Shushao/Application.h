@@ -4,11 +4,11 @@
 #include "Shushao/Core.h"
 
 #include "Window.h"
-#include "events/ApplicationEvent.h"
+#include "Events/ApplicationEvent.h"
 
 namespace se {
 
-class SHUSHAO_API Application {
+class Application {
 public:
     static Application* instance;
 
@@ -20,7 +20,6 @@ public:
         EXIT
     };
 
-    Application();
     virtual ~Application();
 
     std::string name;
@@ -54,7 +53,7 @@ protected:
     bool keys[350];
 
 private:
-    void initscan();
+    void InitScan();
     void update();
     void render();
     void fixed();

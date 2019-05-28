@@ -1,5 +1,3 @@
-/* https://docs.microsoft.com/en-us/windows/desktop/menurc/resource-types */
-
 // SHADERS
 #define BASESHADER_FRAG         1001
 #define BASESHADER_VERT         1002
@@ -23,5 +21,5 @@
 
 // CONFIG
 #ifndef CONFIG_ENGINE
-#define CONFIG_ENGINE           5000
+	#define CONFIG_ENGINE           5000
 #endif

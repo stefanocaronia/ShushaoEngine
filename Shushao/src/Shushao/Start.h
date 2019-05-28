@@ -6,13 +6,13 @@
 
 extern se::Application* se::CreateApplication();
 
-/* int main(int argc, char** argv) {
+int main(int argc, char** argv) {
     DEBUG_INFO("Test");
 
     //auto app = se::CreateApplication();
     //app->Init();
     //app->Run();
     //delete app;
-} */
+}
 
 #endif

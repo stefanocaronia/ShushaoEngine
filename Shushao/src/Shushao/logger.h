@@ -39,7 +39,7 @@ enum ConsoleColor {
     WHITE
 };
 
-class SHUSHAO_API Logger {
+class Logger {
     std::ostringstream stream;
     DebugLevel streamLevel = DebugLevel::INFO;
     bool logStarted = false;

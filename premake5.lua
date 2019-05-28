@@ -7,9 +7,9 @@ workspace "Shushao"
 		"Release"
     }
 
-    rebuildcommands {
+    --[[ rebuildcommands {
         "make %{cfg.buildcfg} rebuild"
-    }
+    } ]]
 
     --outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
     outputdir = "%{cfg.buildcfg}"
@@ -23,19 +23,6 @@ workspace "Shushao"
     include "Shushao/vendor/SOIL"
     include "Shushao/vendor/Box2D"
     include "Shushao/vendor/imgui"
-
-project "ShushaoDLL"
-    location "Shushao"
-    kind "SharedLib"
-    targetname "libshushao"
-
-    targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-    objdir ("obj/" .. outputdir .. "/%{prj.name}")
-
-    files {
-		"%{prj.name}/src/Shushao/Resources/**.h",
-		"%{prj.name}/src/Shushao/Resources/**.rc"
-	}
 
 project "Shushao"
 	location "Shushao"
@@ -69,27 +56,25 @@ project "Shushao"
     }
 
     libdirs {
-		"%{prj.name}/vendor/boost/stage/lib",
-		"%{prj.name}/vendor/Box2D/lib",
-		"%{prj.name}/vendor/freetype/lib",
-		-- "%{prj.name}/vendor/SDL2_mixer/lib"
+		--"%{Engine}/vendor/boost/stage/lib",
+		"%{Engine}/vendor/Box2D/lib",
+		"%{Engine}/vendor/freetype/lib",
+		"%{Engine}/vendor/SOIL/lib",
+		"%{Engine}/vendor/GLFW/lib",
+		"%{Engine}/vendor/Glad/lib"
     }
 
     links {
         "GLFW",
         "Glad",
-        "SOIL",
+        "SOIL2",
         "Box2D",
-        "boost_context",
-        "boost_coroutine",
         "freetype",
         "gdi32",
-        "mingw32",
         "opengl32",
-        "mingw32"
-    }
-
-    defines {
+        -- "mingw32",
+        --"boost_context",
+        --"boost_coroutine"
     }
 
 	filter "system:windows"
@@ -123,31 +108,52 @@ project "Game"
 	kind "ConsoleApp"
     language "C++"
     cppdialect "C++17"
-	staticruntime "on"
+    staticruntime "on"
+
+    debugdir ("bin/" .. outputdir .. "/%{prj.name}")
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("obj/" .. outputdir .. "/%{prj.name}")
 
 	files {
 		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
+		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/src/**.rc",
 	}
 
 	includedirs {
         "%{Engine}/src",
 		"%{Engine}/vendor/glm",
         "%{Engine}/vendor/spdlog/include",
-		"%{Engine}/vendor/boost",
-		"%{Engine}/vendor/freetype/include"
+		"%{Engine}/vendor/boost"
     }
 
-	links {
-        Engine
+    libdirs {
+		--"%{Engine}/vendor/boost/stage/lib",
+		"%{Engine}/vendor/Box2D/lib",
+		"%{Engine}/vendor/freetype/lib",
+		"%{Engine}/vendor/SOIL/lib",
+		"%{Engine}/vendor/GLFW/lib",
+		"%{Engine}/vendor/Glad/lib"
+    }
+
+    links {
+        Engine,
+        "GLFW",
+        "Glad",
+        "SOIL2",
+        "Box2D",
+        "freetype",
+        "gdi32",
+        "opengl32",
+        -- "mingw32",
+        --"boost_context",
+        --"boost_coroutine"
     }
 
     prelinkcommands {
-        ("@cp -r res %{gamebin}"),
-        ("@cp %{enginebin}/*.dll %{gamebin}")
+        ("{COPY} res %{gamebin}"),
+        ("{COPY} %{enginebin}/*.dll %{gamebin}")
     }
 
 	filter "system:windows"
@@ -159,7 +165,7 @@ project "Game"
 	filter "configurations:Debug"
 		defines "SE_DEBUG"
 		runtime "Debug"
-        symbols "On"
+        symbols "on"
 
     filter { "configurations:Debug", "toolset:gcc" }
         buildoptions { "-std=c++17", "-Wall", "-fmax-errors=4", "-Wfatal-errors" }
@@ -167,8 +173,30 @@ project "Game"
 	filter "configurations:Release"
 		defines "SE_RELEASE"
 		runtime "Release"
-        optimize "On"
+        optimize "on"
 
     filter { "configurations:Release", "toolset:gcc" }
         buildoptions { "-O2", "-std=c++17" }
         linkoptions { "-s -mwindows"}
+
+
+project "Shushao Resources"
+    location "Shushao"
+    kind "SharedLib"
+    targetname "shushaores"
+    staticruntime "Off"
+
+    targetdir ("bin/" .. outputdir .. "/Shushao")
+    objdir ("obj/" .. outputdir .. "/Shushao")
+
+    files {
+        "Shushao/src/Shushao/Resources/**.h",
+        "Shushao/src/Shushao/Resources/**.rc"
+    }
+
+    linkoptions "/NOENTRY"
+
+    configuration "Debug"
+        buildoptions "/MDd"
+    configuration "Release"
+        buildoptions "/MD"

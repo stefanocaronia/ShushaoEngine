@@ -2,16 +2,6 @@
 
 #include "sepch.h"
 
-#ifdef SE_PLATFORM_WINDOWS
-    #ifdef SE_BUILD_DLL
-        #define SHUSHAO_API __declspec(dllexport)
-    #else
-        #define SHUSHAO_API __declspec(dllimport)
-    #endif
-#else
-    #define SHUSHAO_API __declspec(dllimport)
-#endif
-
 #ifdef SE_DEBUG
     #define SE_ENABLE_ASSERTS
 #endif

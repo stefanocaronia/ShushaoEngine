@@ -24,9 +24,22 @@ workspace "Shushao"
     include "Shushao/vendor/Box2D"
     include "Shushao/vendor/imgui"
 
+project "ShushaoDLL"
+    location "Shushao"
+    kind "SharedLib"
+    targetname "libshushao"
+
+    targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+    objdir ("obj/" .. outputdir .. "/%{prj.name}")
+
+    files {
+		"%{prj.name}/src/Shushao/Resources/**.h",
+		"%{prj.name}/src/Shushao/Resources/**.rc"
+	}
+
 project "Shushao"
 	location "Shushao"
-	kind "SharedLib"
+	kind "StaticLib"
     language "C++"
     cppdialect "C++17"
     staticruntime "on"
@@ -37,7 +50,6 @@ project "Shushao"
 
 	pchheader "sepch.h"
     pchsource "%{Engine}/src/sepch.cpp"
-
 
     files {
 		"%{prj.name}/src/**.h",

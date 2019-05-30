@@ -25,6 +25,7 @@
 #include <cmath>
 
 // boost
+#define BOOST_ALL_NO_LIB
 #include <boost/predef.h>
 
 #if BOOST_COMP_GNUC

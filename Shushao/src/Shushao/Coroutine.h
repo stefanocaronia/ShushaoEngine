@@ -1,5 +1,6 @@
 #pragma once
 
+#define BOOST_ALL_NO_LIB
 #include <boost/coroutine2/all.hpp>
 
 #include "Core.h"

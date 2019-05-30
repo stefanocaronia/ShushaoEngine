@@ -55,28 +55,6 @@ project "Shushao"
 		"%{prj.name}/vendor/freetype/include"
     }
 
-    libdirs {
-		--"%{Engine}/vendor/boost/stage/lib",
-		"%{Engine}/vendor/Box2D/lib",
-		"%{Engine}/vendor/freetype/lib",
-		"%{Engine}/vendor/SOIL/lib",
-		"%{Engine}/vendor/GLFW/lib",
-		"%{Engine}/vendor/Glad/lib"
-    }
-
-    links {
-        "GLFW",
-        "Glad",
-        "SOIL2",
-        "Box2D",
-        "freetype",
-        "gdi32",
-        "opengl32",
-        -- "mingw32",
-        "boost_context",
-        "boost_coroutine"
-    }
-
 	filter "system:windows"
 		systemversion "latest"
 
@@ -116,9 +94,10 @@ project "Game"
     objdir ("obj/" .. outputdir .. "/%{prj.name}")
 
 	files {
-		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp",
-		"%{prj.name}/src/**.rc",
+		"%{prj.name}/src/main.cpp",
+		-- "%{prj.name}/src/**.h",
+		-- "%{prj.name}/src/**.cpp",
+		-- "%{prj.name}/src/**.rc",
 	}
 
 	includedirs {
@@ -129,12 +108,12 @@ project "Game"
     }
 
     libdirs {
-		--"%{Engine}/vendor/boost/stage/lib",
 		"%{Engine}/vendor/Box2D/lib",
 		"%{Engine}/vendor/freetype/lib",
 		"%{Engine}/vendor/SOIL/lib",
 		"%{Engine}/vendor/GLFW/lib",
-		"%{Engine}/vendor/Glad/lib"
+		"%{Engine}/vendor/Glad/lib",
+		"%{Engine}/vendor/boost/stage/lib"
     }
 
     links {
@@ -144,11 +123,9 @@ project "Game"
         "SOIL2",
         "Box2D",
         "freetype",
-        "gdi32",
         "opengl32",
-        -- "mingw32",
-        "boost_context",
-        "boost_coroutine"
+        "libboost_context-vc142-mt-sgd-x64-1_70.lib",
+        "libboost_coroutine-vc142-mt-sgd-x64-1_70.lib"
     }
 
     prelinkcommands {
@@ -178,6 +155,7 @@ project "Game"
     filter { "configurations:Release", "toolset:gcc" }
         buildoptions { "-O2", "-std=c++17" }
         linkoptions { "-s -mwindows"}
+        links { "mingw32" }
 
 
 project "Shushao Resources"

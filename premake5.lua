@@ -73,8 +73,8 @@ project "Shushao"
         "gdi32",
         "opengl32",
         -- "mingw32",
-        --"boost_context",
-        --"boost_coroutine"
+        "boost_context",
+        "boost_coroutine"
     }
 
 	filter "system:windows"
@@ -147,8 +147,8 @@ project "Game"
         "gdi32",
         "opengl32",
         -- "mingw32",
-        --"boost_context",
-        --"boost_coroutine"
+        "boost_context",
+        "boost_coroutine"
     }
 
     prelinkcommands {
